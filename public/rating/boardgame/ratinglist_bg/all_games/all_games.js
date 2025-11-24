@@ -42,7 +42,7 @@ const gamesDatabase = [
     },
     {
         "title": "Gloomhaven",
-        "url": "games/GloomHeaven.html",
+        "url": "../../games/GloomHeaven.html",
         "mechanics": 10.0,
         "theme": 9.0,
         "aesthetics": 8.0,
