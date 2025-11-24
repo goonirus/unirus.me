@@ -51,6 +51,8 @@ git push origin main
 git push github main
 ```
 
+> 提示：也可以直接运行 `scripts/push-all.bat`（或 `scripts/push-all.ps1`）一次性推送两个远程。
+
 ## 当前 remote 配置
 
 - **origin**: https://gitlab.com/goonirus/unirus.me (GitLab)
@@ -66,4 +68,5 @@ A: 你可能需要配置 GitHub 的认证，使用 Personal Access Token 或 SSH
 
 **Q: 如何修改 GitHub remote 地址?**  
 A: 使用 `git remote set-url github <新的URL>`
+
 

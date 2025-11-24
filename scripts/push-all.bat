@@ -1,5 +1,7 @@
 @echo off
+setlocal
 chcp 65001 >nul
+pushd "%~dp0.."
 echo ====================================
 echo   推送到所有远程仓库
 echo ====================================
@@ -30,4 +32,5 @@ echo GitLab: https://gitlab.com/goonirus/unirus.me
 echo GitHub: https://github.com/goonirus/unirus.me
 echo.
 pause
-
+popd
+endlocal

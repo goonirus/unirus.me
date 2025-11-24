@@ -1,4 +1,7 @@
 # PowerShell 脚本：同时推送到所有远程仓库
+$scriptDir = Split-Path -Parent $MyInvocation.MyCommand.Path
+$repoRoot = Resolve-Path (Join-Path $scriptDir "..")
+Set-Location $repoRoot
 Write-Host "====================================" -ForegroundColor Cyan
 Write-Host "   推送到所有远程仓库" -ForegroundColor Cyan
 Write-Host "====================================" -ForegroundColor Cyan
@@ -29,4 +32,5 @@ Write-Host "====================================" -ForegroundColor Green
 Write-Host "GitLab: https://gitlab.com/goonirus/unirus.me" -ForegroundColor Cyan
 Write-Host "GitHub: https://github.com/goonirus/unirus.me" -ForegroundColor Cyan
 Write-Host ""
+
 

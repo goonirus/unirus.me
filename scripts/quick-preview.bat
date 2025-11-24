@@ -6,11 +6,12 @@ echo ====================================
 echo.
 
 REM 尝试在浏览器中直接打开文件
-start "" "%~dp0home.html"
+start "" "%~dp0..\\public\\index.html"
 
-echo 正在浏览器中打开 home.html...
+echo 正在浏览器中打开 public\index.html...
 echo.
-echo 如果需要在服务器模式下运行（推荐），请运行 start-server.bat
+echo 如果需要在服务器模式下运行（推荐），请运行 scripts\start-server.bat
 echo.
 timeout /t 3 >nul
+
 

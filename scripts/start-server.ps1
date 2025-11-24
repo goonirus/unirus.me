@@ -1,12 +1,17 @@
 # PowerShell 启动脚本
+$scriptDir = Split-Path -Parent $MyInvocation.MyCommand.Path
+$repoRoot = Resolve-Path (Join-Path $scriptDir "..")
+Set-Location $repoRoot
 Write-Host "正在启动本地服务器..." -ForegroundColor Green
+Write-Host "根目录: $repoRoot" -ForegroundColor Cyan
+Write-Host "访问地址: http://localhost:8000/public/index.html" -ForegroundColor Cyan
 Write-Host ""
 
 # 检查 Python 3
 try {
     $python3 = Get-Command python3 -ErrorAction Stop
     Write-Host "使用 Python 3 启动服务器..." -ForegroundColor Yellow
-    Write-Host "服务器地址: http://localhost:8000" -ForegroundColor Cyan
+    Write-Host "服务器地址: http://localhost:8000/public/index.html" -ForegroundColor Cyan
     Write-Host "按 Ctrl+C 停止服务器" -ForegroundColor Gray
     Write-Host ""
     python3 -m http.server 8000
@@ -15,7 +20,7 @@ try {
     try {
         $python = Get-Command python -ErrorAction Stop
         Write-Host "使用 Python 启动服务器..." -ForegroundColor Yellow
-        Write-Host "服务器地址: http://localhost:8000" -ForegroundColor Cyan
+        Write-Host "服务器地址: http://localhost:8000/public/index.html" -ForegroundColor Cyan
         Write-Host "按 Ctrl+C 停止服务器" -ForegroundColor Gray
         Write-Host ""
         python -m http.server 8000
@@ -30,3 +35,4 @@ try {
         Read-Host "按 Enter 键退出"
     }
 }
+
