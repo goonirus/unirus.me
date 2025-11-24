@@ -1,6 +1,7 @@
 const gamesDatabase = [
     {
         "title": "Ark Nova",
+        "url": "review_detail.html", // 你可以在这里指定特定的页面，如 review_ark_nova.html
         "mechanics": 9.5,
         "theme": 8.5,
         "aesthetics": 8.0,
@@ -14,6 +15,7 @@ const gamesDatabase = [
     },
     {
         "title": "Terraforming Mars",
+        "url": "review_detail.html",
         "mechanics": 9.5,
         "theme": 9.0,
         "aesthetics": 5.0,
@@ -51,11 +53,7 @@ const gamesDatabase = [
         "others": 7.0,
         "total": 9.8
     },
-    // 以下是生成的数据用于演示分页，你可以删除或修改
-    { "title": "Game A", "mechanics": 8.0, "theme": 8.0, "aesthetics": 8.0, "balance": 8.0, "replayability": 8.0, "interactivity": 8.0, "complexity": 8.0, "flow": 8.0, "others": 8.0, "total": 8.0 },
-    { "title": "Game B", "mechanics": 7.0, "theme": 7.0, "aesthetics": 7.0, "balance": 7.0, "replayability": 7.0, "interactivity": 7.0, "complexity": 7.0, "flow": 7.0, "others": 7.0, "total": 7.0 },
-    { "title": "Game C", "mechanics": 6.0, "theme": 6.0, "aesthetics": 6.0, "balance": 6.0, "replayability": 6.0, "interactivity": 6.0, "complexity": 6.0, "flow": 6.0, "others": 6.0, "total": 6.0 },
-    { "title": "Game D", "mechanics": 5.0, "theme": 5.0, "aesthetics": 5.0, "balance": 5.0, "replayability": 5.0, "interactivity": 5.0, "complexity": 5.0, "flow": 5.0, "others": 5.0, "total": 5.0 },
+    // 示例数据，用于演示分页功能
     { "title": "Elden Ring", "mechanics": 10.0, "theme": 10.0, "aesthetics": 10.0, "balance": 9.0, "replayability": 9.5, "interactivity": 8.0, "complexity": 9.0, "flow": 9.0, "others": 9.0, "total": 10.0 },
     { "title": "Baldur's Gate 3", "mechanics": 10.0, "theme": 10.0, "aesthetics": 9.5, "balance": 8.5, "replayability": 10.0, "interactivity": 10.0, "complexity": 9.5, "flow": 8.5, "others": 9.5, "total": 10.0 },
     { "title": "Hades", "mechanics": 9.8, "theme": 9.5, "aesthetics": 9.8, "balance": 9.5, "replayability": 9.0, "interactivity": 5.0, "complexity": 7.0, "flow": 10.0, "others": 9.0, "total": 9.7 },

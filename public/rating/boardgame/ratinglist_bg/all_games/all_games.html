@@ -8,8 +8,8 @@
     <script src="https://unpkg.com/lucide@latest"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
     
-    <!-- 引入你的数据库文件 -->
-    <script src="all_games.js"></script>
+    <!-- 引入数据库文件 -->
+    <script src="games_data.js"></script>
 
     <script>
         tailwind.config = {
@@ -30,24 +30,32 @@
     </script>
     <style>
         body { background-color: #fdfbf7; color: #1a1a1a; }
+        
+        /* 表格样式优化 */
         th { white-space: nowrap; }
         td { white-space: nowrap; }
+        
+        /* 排序图标样式 */
         .sort-icon { display: inline-block; width: 12px; height: 12px; margin-left: 4px; opacity: 0.3; transition: opacity 0.2s; }
         th:hover .sort-icon { opacity: 1; }
         th.active-sort .sort-icon { opacity: 1; color: #c2410c; }
+
+        /* 固定首列和尾列 */
         .sticky-col-left { position: sticky; left: 0; z-index: 10; background-color: #fdfbf7; }
         .sticky-col-right { position: sticky; right: 0; z-index: 10; background-color: #fdfbf7; box-shadow: -2px 0 5px rgba(0,0,0,0.05); }
-        
-        /* Dynamic Score Colors */
+
+        /* 统一的分数颜色类 (由 JS 动态添加) */
         .score-high { color: #16a34a !important; font-weight: 700; } /* Green >= 9.0 */
         .score-low { color: #ef4444 !important; font-weight: 700; }  /* Red <= 5.0 */
-        .score-mid { color: #4b5563; } /* Gray */
+        .score-mid { color: #4b5563; } /* Gray (Default) */
     </style>
 </head>
 <body class="font-sans antialiased" onload="initPage()">
 
+    <!-- Navigation -->
     <nav class="fixed w-full z-50 top-0 bg-paper/90 backdrop-blur-sm border-b border-gray-200/50 h-20 flex items-center px-6 justify-between">
         <div class="flex items-center">
+            <!-- Back to the Overview Page -->
             <a href="rating_list.html" class="flex items-center text-gray-500 hover:text-accent transition-colors group mr-8">
                 <i data-lucide="arrow-left" class="w-5 h-5 mr-2 group-hover:-translate-x-1 transition-transform"></i>
                 Back to Overview
@@ -60,6 +68,7 @@
     </nav>
 
     <main class="pt-32 pb-24 px-6 max-w-[95%] mx-auto">
+        
         <header class="mb-8 flex flex-col md:flex-row justify-between items-end">
             <div>
                 <h1 class="text-3xl font-bold text-ink mb-2">All Games Matrix</h1>
@@ -70,13 +79,17 @@
             </div>
         </header>
 
+        <!-- Table Container -->
         <div class="overflow-x-auto border border-gray-200 rounded-sm shadow-sm bg-white mb-6">
             <table class="w-full text-sm text-left" id="ratingTable">
                 <thead class="text-xs text-gray-500 uppercase bg-secondary border-b border-gray-200">
                     <tr>
+                        <!-- Game Name (Sticky Left) -->
                         <th scope="col" class="px-6 py-4 font-bold text-ink cursor-pointer sticky-col-left hover:bg-gray-100 transition-colors" onclick="sortTable('title')">
                             Game <i data-lucide="chevrons-up-down" class="sort-icon"></i>
                         </th>
+                        
+                        <!-- Data Columns -->
                         <th scope="col" class="px-4 py-4 cursor-pointer hover:bg-gray-100 transition-colors" onclick="sortTable('mechanics')">
                             Mechanics <i data-lucide="chevrons-up-down" class="sort-icon"></i>
                         </th>
@@ -104,74 +117,76 @@
                         <th scope="col" class="px-4 py-4 cursor-pointer hover:bg-gray-100 transition-colors" onclick="sortTable('others')">
                             Others <i data-lucide="chevrons-up-down" class="sort-icon"></i>
                         </th>
+
+                        <!-- Total Score (Sticky Right) -->
                         <th scope="col" class="px-6 py-4 font-bold text-accent cursor-pointer sticky-col-right hover:bg-gray-50 transition-colors text-right" onclick="sortTable('total')">
                             Total <i data-lucide="chevrons-up-down" class="sort-icon"></i>
                         </th>
                     </tr>
                 </thead>
-                <!-- TBody is empty now, filled by JS -->
-                <tbody class="divide-y divide-gray-100" id="tableBody"></tbody>
+                <tbody class="divide-y divide-gray-100" id="tableBody">
+                    <!-- 内容将由 JS 自动生成 -->
+                </tbody>
             </table>
         </div>
 
         <!-- Pagination Controls -->
         <div class="flex flex-col sm:flex-row justify-between items-center pt-6 border-t border-gray-200">
+            <!-- Left side: Showing info -->
             <div class="text-xs text-gray-400 mb-4 sm:mb-0">
                 Showing <span class="font-bold text-gray-600">20</span> items per page
             </div>
+
+            <!-- Right side: Pagination buttons -->
             <div class="flex items-center space-x-6">
                 <button onclick="prevPage()" id="btnPrev" class="flex items-center px-3 py-1 text-sm font-medium text-gray-500 bg-white border border-gray-200 rounded-sm hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors">
                     <i data-lucide="chevron-left" class="w-4 h-4 mr-1"></i> Previous
                 </button>
+                
                 <span class="text-sm text-gray-600">
                     Page <span id="pageSpan" class="font-bold text-ink">1</span> of <span id="totalPageSpan" class="font-bold text-ink">--</span>
                 </span>
+
                 <button onclick="nextPage()" id="btnNext" class="flex items-center px-3 py-1 text-sm font-medium text-gray-500 bg-white border border-gray-200 rounded-sm hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors">
                     Next <i data-lucide="chevron-right" class="w-4 h-4 ml-1"></i>
                 </button>
             </div>
         </div>
+
     </main>
 
     <script>
         lucide.createIcons();
 
-        // Global state
         let currentPage = 1;
         const rowsPerPage = 20;
-        let currentData = []; // Will hold the data from games_data.js
+        let currentData = []; 
         let currentSortKey = 'total';
-        let currentSortDir = 'desc'; // Default sorting
+        let currentSortDir = 'desc';
 
         function initPage() {
-            // Load data from the external file (games_data.js defines 'gamesDatabase')
             if (typeof gamesDatabase !== 'undefined') {
-                currentData = [...gamesDatabase]; // Make a copy
-                // Initial sort
+                currentData = [...gamesDatabase]; 
+                // 默认按总分降序排列
                 sortData('total', true); 
                 renderTable();
             } else {
-                alert("Error: games_data.js not found or loaded!");
+                // 如果没找到数据文件，显示一个友好的错误提示
+                document.getElementById('tableBody').innerHTML = '<tr><td colspan="11" class="px-6 py-4 text-center text-red-500">Error: games_data.js not found. Please ensure the database file is in the same folder.</td></tr>';
             }
         }
 
         function sortTable(key) {
-            // Toggle direction if clicking the same header, otherwise default to desc for numbers, asc for text
             if (currentSortKey === key) {
                 currentSortDir = currentSortDir === 'asc' ? 'desc' : 'asc';
             } else {
                 currentSortKey = key;
-                // Default sort directions: Title (Asc), Scores (Desc)
+                // 默认排序方向：标题升序，分数降序
                 currentSortDir = key === 'title' ? 'asc' : 'desc';
             }
             
-            // Update sorting indicators visually
             updateHeaderClasses(key);
-            
-            // Perform sort
             sortData(key);
-            
-            // Reset to page 1 and render
             currentPage = 1;
             renderTable();
         }
@@ -190,8 +205,7 @@
         }
 
         function updateHeaderClasses(activeKey) {
-            // Basic visual update logic for headers could go here
-            // (For brevity, relying on data update)
+            // 简单的视觉反馈：可以扩展为更改图标方向
         }
 
         function renderTable() {
@@ -201,7 +215,6 @@
             const totalRows = currentData.length;
             const totalPages = Math.ceil(totalRows / rowsPerPage);
             
-            // Update Controls
             document.getElementById("pageSpan").innerText = currentPage;
             document.getElementById("totalPageSpan").innerText = totalPages;
             document.getElementById("btnPrev").disabled = currentPage === 1;
@@ -214,15 +227,19 @@
                 const game = currentData[i];
                 const tr = document.createElement('tr');
                 tr.className = "hover:bg-accent/5 transition-colors cursor-pointer group";
-                tr.onclick = () => window.location = 'review_detail.html';
+                
+                // 核心跳转逻辑：优先使用数据库中的 url，如果没有则默认跳到 review_detail.html
+                const targetUrl = game.url || 'review_detail.html';
+                tr.onclick = () => window.location = targetUrl;
 
-                // Helper to get color class
+                // 颜色辅助函数
                 const getColorClass = (val) => {
                     if (val >= 9.0) return 'score-high';
                     if (val <= 5.0) return 'score-low';
                     return 'score-mid';
                 };
 
+                // 渲染行
                 tr.innerHTML = `
                     <td class="px-6 py-4 font-bold text-ink sticky-col-left group-hover:bg-[#fffbf5] transition-colors">
                         ${game.title}
