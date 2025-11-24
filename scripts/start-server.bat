@@ -4,7 +4,7 @@ chcp 65001 >nul
 pushd "%~dp0.."
 echo 正在启动本地服务器...
 echo 根目录: %CD%
-echo 访问地址: http://localhost:8000/public/index.html
+echo 访问地址: http://localhost:8000/home.html
 echo.
 
 REM 尝试使用 Python 3

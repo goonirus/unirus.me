@@ -5,8 +5,8 @@ Offline-friendly作品集，包含主页、项目详情与文章详情三张静�
 ## 项目结构
 
 ```
-public/          # 所有对外访问的静态页面
-  index.html
+home.html        # 主页入口
+public/
   articles/detail.html
   projects/detail.html
 scripts/         # 常用脚本（本地服务 & 推送）
@@ -20,7 +20,7 @@ README.md
 2. 启动本地服务器  
    - 批处理：`scripts\start-server.bat`  
    - PowerShell：`powershell -ExecutionPolicy Bypass -File scripts\start-server.ps1`
-3. 浏览器访问 `http://localhost:8000/public/index.html`
+3. 浏览器访问 `http://localhost:8000/home.html`
 
 更多方式见 `docs/running.md`。
 
@@ -29,7 +29,7 @@ README.md
 | 脚本 | 作用 |
 | --- | --- |
 | `scripts/start-server.*` | 启动本地静态服务器（端口 8000） |
-| `scripts/quick-preview.bat` | 直接在浏览器打开 `public/index.html`（无服务器） |
+| `scripts/quick-preview.bat` | 直接在浏览器打开 `home.html`（无服务器） |
 | `scripts/push-all.*` | 同时推送到 GitLab `origin` 与 GitHub `github` |
 
 ## 推送到远程
