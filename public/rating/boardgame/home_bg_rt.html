@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tabletop Favorites | Overview</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: { 
+                        sans: ['Inter', 'Noto Sans SC', 'sans-serif'] 
+                    },
+                    colors: { 
+                        'paper': '#fdfbf7', 
+                        'ink': '#1a1a1a', 
+                        'accent': '#c2410c',
+                        'secondary': '#f3f4f6'
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body { background-color: #fdfbf7; color: #1a1a1a; }
+        /* 删除了可能导致冲突的 .lang-cn CSS 规则 */
+        
+        /* 右侧链接卡片的悬停效果 */
+        .nav-card:hover {
+            transform: translateX(5px);
+            border-color: #c2410c;
+        }
+    </style>
+</head>
+<body class="font-sans antialiased">
+
+    <!-- Navigation -->
+    <nav class="fixed w-full z-50 top-0 bg-paper/90 backdrop-blur-sm border-b border-gray-200/50 h-20 flex items-center px-6 justify-between">
+        <div class="flex items-center">
+            <a href="game_designer_portfolio.html" class="flex items-center text-gray-500 hover:text-accent transition-colors group mr-8">
+                <i data-lucide="arrow-left" class="w-5 h-5 mr-2 group-hover:-translate-x-1 transition-transform"></i>
+                <span class="lang-en">Back to Home</span>
+                <!-- 给所有中文元素加上 hidden 类 -->
+                <span class="lang-cn hidden">返回首页</span>
+            </a>
+            <div class="h-6 w-px bg-gray-300 mr-8 hidden md:block"></div>
+            <span class="font-bold tracking-widest uppercase text-sm text-ink hidden md:inline">
+                <span class="lang-en">Tabletop Overview</span>
+                <span class="lang-cn hidden">桌游板块导读</span>
+            </span>
+        </div>
+
+        <!-- Language Toggle -->
+        <button onclick="toggleLanguage()" class="flex items-center space-x-2 border border-gray-300 px-4 py-2 rounded-full hover:border-accent hover:text-accent transition-all text-xs font-bold tracking-widest uppercase bg-white">
+            <i data-lucide="globe" class="w-4 h-4"></i>
+            <span id="lang-label">EN / 中文</span>
+        </button>
+    </nav>
+
+    <main class="pt-32 pb-24 px-6 max-w-7xl mx-auto">
+        
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-12">
+            
+            <!-- LEFT COLUMN: Introduction & Essay (占据 8/12) -->
+            <div class="lg:col-span-8">
+                
+                <!-- Header -->
+                <header class="mb-12 border-b border-gray-200 pb-8">
+                    <div class="flex items-center space-x-4 mb-6">
+                        <div class="p-3 bg-accent/10 rounded-full">
+                            <i data-lucide="dice-5" class="w-8 h-8 text-accent"></i>
+                        </div>
+                        <h1 class="text-4xl md:text-5xl font-bold text-ink">
+                            <span class="lang-en">Board Game Overview</span>
+                            <span class="lang-cn hidden">桌游板块导览</span>
+                        </h1>
+                    </div>
+                    <p class="text-gray-400 text-sm uppercase tracking-widest font-bold">
+                        <span class="lang-en">Last Updated: October 2023</span>
+                        <span class="lang-cn hidden">最后更新：2023年10月</span>
+                    </p>
+                </header>
+
+                <!-- Main Text Content -->
+                <article class="prose prose-lg max-w-none text-gray-600 leading-loose">
+                    
+                    <!-- ENGLISH CONTENT -->
+                    <div class="lang-en space-y-8">
+                        <p class="text-xl text-ink font-light italic">
+                            "Board games are not just about mechanics; they are engines for human interaction. A collection is a curated history of shared moments."
+                        </p>
+
+                        <h3>My Rating Philosophy</h3>
+                        <p>
+                            Unlike digital games, where the computer handles the heavy lifting, board games require players to internalize the rules. Therefore, my rating system heavily penalizes "complexity for complexity's sake." I value <strong>elegance</strong> above all else—the ratio of strategic depth to rulebook length.
+                        </p>
+                        <p>
+                            I categorize my collection not just by genre (Worker Placement, Area Control), but by the "social contract" they fulfill. Is this a game for deep, silent contemplation? Or is it a catalyst for shouting and laughter?
+                        </p>
+
+                        <h3>The "Magic Circle"</h3>
+                        <p>
+                            Huizinga's concept of the "Magic Circle" is central to how I critique games. Does the theme successfully transport us? When we play <em>Root</em>, do we feel like woodland creatures in a political struggle, or are we just pushing wood cubes? The ratings you will find in the sub-lists on the right reflect this immersion factor.
+                        </p>
+                        
+                        <hr class="my-8 border-gray-200">
+                        
+                        <p>
+                            Please select a category from the sidebar to view specific rankings and detailed reviews.
+                        </p>
+                    </div>
+
+                    <!-- CHINESE CONTENT (Added hidden class) -->
+                    <div class="lang-cn hidden space-y-8">
+                        <p class="text-xl text-ink font-light italic">
+                            “桌游不仅仅是机制的堆砌，它是人际交互的引擎。每一个收藏，都是一段被封存的记忆。”
+                        </p>
+
+                        <p>
+                            本专区用来给桌游进行多元化的打分，试图采用一个综合而客观的视角对桌游进行评价。可能会从大众视角，个人视角，玩家视角和设计师视角来看待同一个游戏。
+                        </p>
+                        <p>
+                            我之前在中国的一个app集石上对玩过的所有桌游进行了一个粗浅的打分。但是有很多问题，比如说评分太过模糊，而且之前玩的桌游量不够大，会出现初期给一个桌游打了高分，但是后来反而给一个更好的桌游打了低分的情况。因此想过建立一套完整的机制再将评分移植到bgg平台。但是对于完善的，完全客观公正的评分标准，一直没有办法敲定（实际上也不太可能存在完美的评分标准）。在询问和参考了michael heron教授对于评分标准的建议，他认为凭借感觉打分就足够了。于此，我设计了一个感受的区度表，来稍微的衡量一下，避免跨级的情况出现。
+                        </p>
+
+                        <table class="min-w-full border-collapse border text-sm">
+                            <thead>
+                              <tr>
+                                <th class="border px-4 py-2">评分区间</th>
+                                <th class="border px-4 py-2">评价等级</th>
+                                <th class="border px-4 py-2">说明</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <tr>
+                                <td class="border px-4 py-2">100–90</td>
+                                <td class="border px-4 py-2">人生必玩 / GOAT</td>
+                                <td class="border px-4 py-2">
+                                  几乎完美的桌游，在自身生存位的 GOAT，具有非常高的不可替代性。
+                                  机制、体验、美术都极佳；几乎永远不会腻。或者非常均衡但是在某些领域异常突出。
+                                </td>
+                              </tr>
+                              <tr>
+                                <td class="border px-4 py-2">89–80</td>
+                                <td class="border px-4 py-2">强烈推荐</td>
+                                <td class="border px-4 py-2">
+                                  优秀桌游，各方面都非常均衡，没有显著缺陷。核心玩法和互动性突出，沉浸感高；
+                                  重玩多次仍然有趣，值得收藏或推荐给大部分玩家。
+                                </td>
+                              </tr>
+                              <tr>
+                                <td class="border px-4 py-2">79–70</td>
+                                <td class="border px-4 py-2">推荐 / 值得尝试</td>
+                                <td class="border px-4 py-2">
+                                  玩法和体验都不错，部分方面可能略有欠缺；适合多数玩家，偶尔重玩仍有新鲜感。
+                                  或者特别有特点，非常值得玩一次。
+                                </td>
+                              </tr>
+                              <tr>
+                                <td class="border px-4 py-2">69–60</td>
+                                <td class="border px-4 py-2">值得尝试 / 挑人玩</td>
+                                <td class="border px-4 py-2">
+                                  只有第一把体验不错的游戏，值得尝试。玩法有趣但深度或平衡性一般，
+                                  适合特定玩家群体；重玩价值有限。
+                                </td>
+                              </tr>
+                              <tr>
+                                <td class="border px-4 py-2">59–50</td>
+                                <td class="border px-4 py-2">不太推荐</td>
+                                <td class="border px-4 py-2">
+                                  游玩体验乐趣大于煎熬。游戏体验或机制存在明显缺陷，
+                                  可能只适合入门玩家或极短时间娱乐。
+                                </td>
+                              </tr>
+                              <tr>
+                                <td class="border px-4 py-2">49–40</td>
+                                <td class="border px-4 py-2">差 / 勉强可玩</td>
+                                <td class="border px-4 py-2">
+                                  第一次玩感觉还算可以，可以玩到结束。玩法单调或失衡，
+                                  互动性差，美术 / 组件一般。
+                                </td>
+                              </tr>
+                              <tr>
+                                <td class="border px-4 py-2">39–30</td>
+                                <td class="border px-4 py-2">非常差</td>
+                                <td class="border px-4 py-2">
+                                  玩到一半就不想玩了。体验差，美术 / 组件糟糕，重玩毫无价值。
+                                </td>
+                              </tr>
+                              <tr>
+                                <td class="border px-4 py-2">29–20</td>
+                                <td class="border px-4 py-2">极差</td>
+                                <td class="border px-4 py-2">
+                                  几乎没有可玩性，严重不平衡，强烈不推荐。
+                                </td>
+                              </tr>
+                              <tr>
+                                <td class="border px-4 py-2">19–10</td>
+                                <td class="border px-4 py-2">灾难级</td>
+                                <td class="border px-4 py-2">
+                                  臭名昭著。
+                                </td>
+                              </tr>
+                            </tbody>
+                          </table>
+                          
+
+                        <p>
+                            另外，我还是保有设立一个所有玩家适用的的榜单的雄心壮志的。所以我对评分的内容进行了细分，对不同维度进行评价，再对各个方面进行重要度的评判，最后通过Σ各方面评分*重要度加权得到一个桌游的整体评分。这个得到的得分应该也会符合感受的分数区间。（肯定是的，不然我会调整的，这是结果导向的，除非有些私心太重的我会单独说明）
+                        </p>
+                        <p>
+                            同时值得一提的是，我会为这个区块的内容给出中英两个版本。因为一些原因，中国和西方文化存在差异，并且双方都无法完全接触到彼此的社会情况，游戏界也是如此。在中国家喻户晓的飞行棋其实跟西方的ludo完全不一样。因此，中英版本在有些地方会不完全一样，根据彼此的认知做出一些微调。
+                        </p>
+                        <p>
+                            最后，欢迎在评论区留言。对于友善的优质建议，作者会予以采纳并修改文中内容。如果你的观点没有被作者采纳，欢迎进一步跟作者讨论，联系方式：donglinyan2000@outlook.com。
+                        </p>
+                        
+                        <hr class="my-8 border-gray-200">
+                        
+                        <p>
+                            请从右侧侧边栏选择一个感兴趣的类别，查看具体的排名表和详细评测。
+                        </p>
+                    </div>
+
+                </article>
+            </div>
+
+            <!-- RIGHT COLUMN: Category Navigation (占据 4/12) -->
+            <div class="lg:col-span-4">
+                <div class="sticky top-32 bg-white p-8 border border-gray-100 shadow-sm rounded-sm">
+                    <h3 class="text-sm font-bold text-gray-400 uppercase tracking-widest mb-6 flex items-center">
+                        <i data-lucide="list" class="w-4 h-4 mr-2"></i>
+                        <span class="lang-en">Rating Lists</span>
+                        <span class="lang-cn hidden">分类榜单入口</span>
+                    </h3>
+                    
+                    <div class="flex flex-col space-y-3">
+                        
+                        <!-- Link 1: All -->
+                        <a href="rating_list_all.html" class="nav-card block p-4 border-l-4 border-gray-200 bg-gray-50 hover:bg-white transition-all group">
+                            <div class="flex justify-between items-center">
+                                <span class="font-bold text-ink">
+                                    <span class="lang-en">All Games</span>
+                                    <span class="lang-cn hidden">所有游戏总榜</span>
+                                </span>
+                                <i data-lucide="chevron-right" class="w-4 h-4 text-gray-300 group-hover:text-accent"></i>
+                            </div>
+                            <p class="text-xs text-gray-500 mt-1">
+                                <span class="lang-en">The complete collection (50+)</span>
+                                <span class="lang-cn hidden">包含完整的50+款游戏收录</span>
+                            </p>
+                        </a>
+
+                        <!-- Link 2: Strategy -->
+                        <a href="rating_list_strategy.html" class="nav-card block p-4 border-l-4 border-gray-200 bg-gray-50 hover:bg-white transition-all group">
+                            <div class="flex justify-between items-center">
+                                <span class="font-bold text-ink">
+                                    <span class="lang-en">Heavy Strategy</span>
+                                    <span class="lang-cn hidden">重度策略类</span>
+                                </span>
+                                <i data-lucide="chevron-right" class="w-4 h-4 text-gray-300 group-hover:text-accent"></i>
+                            </div>
+                            <p class="text-xs text-gray-500 mt-1">
+                                <span class="lang-en">Euro games, 4X, Engine building</span>
+                                <span class="lang-cn hidden">德式刷分、4X、引擎构筑</span>
+                            </p>
+                        </a>
+
+                        <!-- Link 3: Family -->
+                        <a href="rating_list_family.html" class="nav-card block p-4 border-l-4 border-gray-200 bg-gray-50 hover:bg-white transition-all group">
+                            <div class="flex justify-between items-center">
+                                <span class="font-bold text-ink">
+                                    <span class="lang-en">Family & Gateway</span>
+                                    <span class="lang-cn hidden">家庭与推新</span>
+                                </span>
+                                <i data-lucide="chevron-right" class="w-4 h-4 text-gray-300 group-hover:text-accent"></i>
+                            </div>
+                            <p class="text-xs text-gray-500 mt-1">
+                                <span class="lang-en">Easy to learn, hard to master</span>
+                                <span class="lang-cn hidden">易上手，适合春节聚会</span>
+                            </p>
+                        </a>
+
+                        <!-- Link 4: Party -->
+                        <a href="rating_list_party.html" class="nav-card block p-4 border-l-4 border-gray-200 bg-gray-50 hover:bg-white transition-all group">
+                            <div class="flex justify-between items-center">
+                                <span class="font-bold text-ink">
+                                    <span class="lang-en">Party Games</span>
+                                    <span class="lang-cn hidden">欢乐派对</span>
+                                </span>
+                                <i data-lucide="chevron-right" class="w-4 h-4 text-gray-300 group-hover:text-accent"></i>
+                            </div>
+                            <p class="text-xs text-gray-500 mt-1">
+                                <span class="lang-en">High interaction, social deduction</span>
+                                <span class="lang-cn hidden">嘴炮、身份猜测、动作类</span>
+                            </p>
+                        </a>
+
+                        <!-- Link 5: Cute -->
+                        <a href="rating_list_cute.html" class="nav-card block p-4 border-l-4 border-gray-200 bg-gray-50 hover:bg-white transition-all group">
+                            <div class="flex justify-between items-center">
+                                <span class="font-bold text-ink">
+                                    <span class="lang-en">Cute & Cozy</span>
+                                    <span class="lang-cn hidden">画风可爱治愈</span>
+                                </span>
+                                <i data-lucide="chevron-right" class="w-4 h-4 text-gray-300 group-hover:text-accent"></i>
+                            </div>
+                            <p class="text-xs text-gray-500 mt-1">
+                                <span class="lang-en">Great art, relaxing gameplay</span>
+                                <span class="lang-cn hidden">高颜值，各种小动物</span>
+                            </p>
+                        </a>
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <script>
+        lucide.createIcons();
+
+        // 修复后的语言切换逻辑
+        function toggleLanguage() {
+            // 找到所有的英文元素和中文元素
+            const enEls = document.querySelectorAll('.lang-en');
+            const cnEls = document.querySelectorAll('.lang-cn');
+
+            // 使用 Tailwind 的 'hidden' 类来控制显示/隐藏
+            // 这种方法最安全，因为它尊重元素原本的 display 属性（block/inline 等）
+            enEls.forEach(el => el.classList.toggle('hidden'));
+            cnEls.forEach(el => el.classList.toggle('hidden'));
+        }
+    </script>
+</body>
+</html>
