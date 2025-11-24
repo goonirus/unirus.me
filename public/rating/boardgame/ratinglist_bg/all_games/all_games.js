@@ -70,4 +70,5 @@ const gamesDatabase = [
     { "title": "Just One", "mechanics": 8.0, "theme": 5.0, "aesthetics": 6.0, "balance": 10.0, "replayability": 9.0, "interactivity": 9.5, "complexity": 2.0, "flow": 10.0, "others": 8.0, "total": 8.5 },
     { "title": "Azul", "mechanics": 9.0, "theme": 6.0, "aesthetics": 9.0, "balance": 9.0, "replayability": 8.5, "interactivity": 7.0, "complexity": 4.0, "flow": 9.5, "others": 8.0, "total": 8.8 },
     { "title": "Patchwork", "mechanics": 9.0, "theme": 6.0, "aesthetics": 7.0, "balance": 9.5, "replayability": 8.5, "interactivity": 6.0, "complexity": 4.0, "flow": 9.0, "others": 8.0, "total": 8.7 }
+    { "title": "pate", "mechanics": 9.0, "theme": 6.0, "aesthetics": 7.0, "balance": 9.5, "replayability": 8.5, "interactivity": 6.0, "complexity": 4.0, "flow": 9.0, "others": 8.0, "total": 8.7 }
 ];
