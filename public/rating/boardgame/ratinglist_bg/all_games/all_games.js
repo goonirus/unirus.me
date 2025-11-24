@@ -42,6 +42,7 @@ const gamesDatabase = [
     },
     {
         "title": "Gloomhaven",
+        "url": "games/GloomHeaven.html", // 你可以在这里指定特定的页面，如 review_ark_nova.html
         "mechanics": 10.0,
         "theme": 9.0,
         "aesthetics": 8.0,

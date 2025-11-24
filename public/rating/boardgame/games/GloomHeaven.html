@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Review: Gloomhaven</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: { sans: ['Inter', 'Noto Sans SC', 'sans-serif'] },
+                    colors: { 'paper': '#fdfbf7', 'ink': '#1a1a1a', 'accent': '#c2410c', 'secondary': '#f3f4f6' }
+                }
+            }
+        }
+    </script>
+    <style>
+        body { background-color: #fdfbf7; color: #1a1a1a; }
+        
+        /* 左侧文章样式 */
+        .prose p { margin-bottom: 1.5em; line-height: 1.8; color: #4b5563; }
+        .prose h3 { font-weight: 700; font-size: 1.5rem; margin-top: 2.5rem; margin-bottom: 1rem; color: #1a1a1a; border-left: 4px solid #c2410c; padding-left: 1rem; }
+        
+        /* 右侧表格样式 */
+        .score-table th { text-align: left; padding: 0.75rem 1rem; border-bottom: 1px solid #e5e7eb; color: #9ca3af; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.05em; }
+        .score-table td { padding: 0.75rem 1rem; border-bottom: 1px solid #f3f4f6; font-size: 0.875rem; }
+        .score-table tr:last-child td { border-bottom: none; }
+        
+        /* 分数颜色 */
+        .score-high { color: #16a34a; font-weight: 700; }
+        .score-mid { color: #4b5563; }
+    </style>
+</head>
+<body class="font-sans antialiased">
+
+    <nav class="fixed w-full z-50 top-0 bg-paper/90 backdrop-blur-sm border-b border-gray-200/50 h-20 flex items-center px-6 justify-between">
+        <div class="flex items-center">
+            <!-- 返回按钮 -->
+            <a href="../ratinglist_bg/all_games/all_games.html" class="flex items-center text-gray-500 hover:text-accent transition-colors group mr-8">
+                <i data-lucide="arrow-left" class="w-5 h-5 mr-2 group-hover:-translate-x-1 transition-transform"></i>
+                <span class="lang-en">Back to List</span>
+                <span class="lang-cn hidden">返回列表</span>
+            </a>
+        </div>
+
+        <!-- 中英文切换按钮 (新增) -->
+        <button onclick="toggleLanguage()" class="flex items-center space-x-2 border border-gray-300 px-4 py-2 rounded-full hover:border-accent hover:text-accent transition-all text-xs font-bold tracking-widest uppercase bg-white">
+            <i data-lucide="globe" class="w-4 h-4"></i>
+            <span id="lang-label">EN / 中文</span>
+        </button>
+    </nav>
+
+    <main class="pt-32 pb-24 px-6">
+        <article class="max-w-7xl mx-auto">
+            
+            <!-- Review Header -->
+            <header class="flex flex-col md:flex-row justify-between items-start md:items-end mb-12 border-b border-gray-200 pb-12">
+                <div>
+                    <span class="text-accent font-bold tracking-widest uppercase text-xs mb-2 block">
+                        <span class="lang-en">Dungeon Crawler / Card Driven</span>
+                        <span class="lang-cn hidden">地牢探险 / 卡牌驱动</span>
+                    </span>
+                    <h1 class="text-5xl font-bold text-ink mb-2">
+                        <span class="lang-en">Gloomhaven</span>
+                        <span class="lang-cn hidden">幽港迷城</span>
+                    </h1>
+                    <p class="text-gray-500 text-lg">Isaac Childres (2017)</p>
+                </div>
+                <div class="mt-6 md:mt-0 flex flex-col items-end">
+                    <div class="text-6xl font-bold text-accent">9.8</div>
+                </div>
+            </header>
+
+            <!-- 布局核心：左 2/3 内容，右 1/3 表格 -->
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-16">
+                
+                <!-- Left Content Area (2/3) -->
+                <div class="lg:col-span-2 prose max-w-none">
+                    
+                    <!-- Introduction -->
+                    <h3>
+                        <span class="lang-en">Introduction</span>
+                        <span class="lang-cn hidden">简介</span>
+                    </h3>
+                    <div class="lang-en">
+                        <p>
+                            Start with a hook about the game. Why does it matter? What is the core premise? This area is for your subjective thoughts, anecdotes from your play sessions, and general introduction.
+                        </p>
+                        <p>
+                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                        </p>
+                    </div>
+                    <div class="lang-cn hidden">
+                        <p>
+                            在此处写下游戏的开篇介绍。为什么这款游戏值得一玩？它的核心设定是什么？这部分主要用于记录你的主观想法、游玩过程中的趣事以及整体介绍。
+                        </p>
+                        <p>
+                            （中文占位符）这是一款重新定义了地牢探险类型的游戏。它抛弃了传统的“投掷骰子判定”，转而使用了一套极具策略深度的卡牌管理系统。
+                        </p>
+                    </div>
+                    
+                    <!-- Mechanical Analysis -->
+                    <h3>
+                        <span class="lang-en">Mechanical Analysis</span>
+                        <span class="lang-cn hidden">机制分析</span>
+                    </h3>
+                    <div class="lang-en">
+                        <p>
+                            Discuss the core loop here. How does the hand management feel? Is the randomness input or output? 
+                        </p>
+                        <p>
+                            Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                        </p>
+                    </div>
+                    <div class="lang-cn hidden">
+                        <p>
+                            在此处讨论核心玩法循环。手牌管理的感觉如何？随机性是输入随机还是输出随机？
+                        </p>
+                        <p>
+                            （中文占位符）其核心机制在于每回合必须打出两张牌，这就要求玩家必须精打细算。每一次休息都会导致手牌上限减少，从而给游戏带来了一种紧迫的“疲劳感”倒计时。
+                        </p>
+                    </div>
+
+                    <!-- Thematic Integration -->
+                    <h3>
+                        <span class="lang-en">Thematic Integration</span>
+                        <span class="lang-cn hidden">主题结合</span>
+                    </h3>
+                    <div class="lang-en">
+                        <p>
+                            Does the theme paste on, or is it woven into the mechanics?
+                        </p>
+                    </div>
+                    <div class="lang-cn hidden">
+                        <p>
+                            主题是生硬地贴上去的，还是与机制紧密交织？
+                        </p>
+                    </div>
+
+                    <!-- Conclusion -->
+                    <h3>
+                        <span class="lang-en">Conclusion</span>
+                        <span class="lang-cn hidden">总结</span>
+                    </h3>
+                    <div class="lang-en">
+                        <p>
+                           Final verdict summary.
+                        </p>
+                    </div>
+                    <div class="lang-cn hidden">
+                        <p>
+                           最终的评价总结。虽然设置极其繁琐，但一旦开始游戏，它就是目前市面上最好的合作战术游戏标杆。
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Right Sidebar: Score Table (1/3) -->
+                <div class="lg:col-span-1">
+                    <div class="bg-white border border-gray-200 rounded-sm shadow-sm overflow-hidden sticky top-32">
+                        <div class="bg-secondary/30 px-6 py-4 border-b border-gray-200">
+                            <h3 class="text-sm font-bold text-ink uppercase tracking-widest">
+                                <span class="lang-en">Rating Breakdown</span>
+                                <span class="lang-cn hidden">评分细则</span>
+                            </h3>
+                        </div>
+                        
+                        <table class="w-full score-table">
+                            <thead>
+                                <tr>
+                                    <th>
+                                        <span class="lang-en">Criterion</span>
+                                        <span class="lang-cn hidden">维度</span>
+                                    </th>
+                                    <th class="text-right">
+                                        <span class="lang-en">Score</span>
+                                        <span class="lang-cn hidden">分数</span>
+                                    </th>
+                                    <th class="text-right">
+                                        <span class="lang-en">Weight</span>
+                                        <span class="lang-cn hidden">权重</span>
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td class="font-medium text-gray-700">
+                                        <span class="lang-en">Mechanics</span>
+                                        <span class="lang-cn hidden">机制</span>
+                                    </td>
+                                    <td class="text-right score-high">10.0</td>
+                                    <td class="text-right text-gray-400">20%</td>
+                                </tr>
+                                <tr>
+                                    <td class="font-medium text-gray-700">
+                                        <span class="lang-en">Theme</span>
+                                        <span class="lang-cn hidden">主题</span>
+                                    </td>
+                                    <td class="text-right score-high">9.0</td>
+                                    <td class="text-right text-gray-400">10%</td>
+                                </tr>
+                                <tr>
+                                    <td class="font-medium text-gray-700">
+                                        <span class="lang-en">Aesthetics</span>
+                                        <span class="lang-cn hidden">美术</span>
+                                    </td>
+                                    <td class="text-right text-gray-600">8.0</td>
+                                    <td class="text-right text-gray-400">10%</td>
+                                </tr>
+                                <tr>
+                                    <td class="font-medium text-gray-700">
+                                        <span class="lang-en">Balance</span>
+                                        <span class="lang-cn hidden">平衡性</span>
+                                    </td>
+                                    <td class="text-right score-high">9.0</td>
+                                    <td class="text-right text-gray-400">10%</td>
+                                </tr>
+                                <tr>
+                                    <td class="font-medium text-gray-700">
+                                        <span class="lang-en">Replayability</span>
+                                        <span class="lang-cn hidden">重玩性</span>
+                                    </td>
+                                    <td class="text-right score-high">9.5</td>
+                                    <td class="text-right text-gray-400">15%</td>
+                                </tr>
+                                <tr>
+                                    <td class="font-medium text-gray-700">
+                                        <span class="lang-en">Interactivity</span>
+                                        <span class="lang-cn hidden">交互性</span>
+                                    </td>
+                                    <td class="text-right text-gray-600">8.0</td>
+                                    <td class="text-right text-gray-400">10%</td>
+                                </tr>
+                                <tr>
+                                    <td class="font-medium text-gray-700">
+                                        <span class="lang-en">Complex/Depth</span>
+                                        <span class="lang-cn hidden">深度</span>
+                                    </td>
+                                    <td class="text-right score-high">9.5</td>
+                                    <td class="text-right text-gray-400">10%</td>
+                                </tr>
+                                <tr>
+                                    <td class="font-medium text-gray-700">
+                                        <span class="lang-en">Flow/Pacing</span>
+                                        <span class="lang-cn hidden">节奏</span>
+                                    </td>
+                                    <td class="text-right text-gray-600">7.0</td>
+                                    <td class="text-right text-gray-400">10%</td>
+                                </tr>
+                                <tr>
+                                    <td class="font-medium text-gray-700">
+                                        <span class="lang-en">Innovation</span>
+                                        <span class="lang-cn hidden">创新</span>
+                                    </td>
+                                    <td class="text-right score-high">10.0</td>
+                                    <td class="text-right text-gray-400">5%</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        
+                        <div class="bg-gray-50 px-6 py-4 border-t border-gray-200 flex justify-between items-center">
+                            <span class="font-bold text-xs uppercase tracking-widest text-gray-400">
+                                <span class="lang-en">Weighted Total</span>
+                                <span class="lang-cn hidden">加权总分</span>
+                            </span>
+                            <span class="font-bold text-2xl text-accent">9.8</span>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </article>
+    </main>
+
+    <script>
+        lucide.createIcons();
+
+        // 语言切换逻辑
+        function toggleLanguage() {
+            // 找到所有的英文元素和中文元素
+            const enEls = document.querySelectorAll('.lang-en');
+            const cnEls = document.querySelectorAll('.lang-cn');
+
+            // 切换它们的显示状态
+            enEls.forEach(el => el.classList.toggle('hidden'));
+            cnEls.forEach(el => el.classList.toggle('hidden'));
+        }
+    </script>
+</body>
+</html>
