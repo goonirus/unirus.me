@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Essays & Thoughts | Archive</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: { 
+                        sans: ['Inter', 'Noto Sans SC', 'sans-serif'] 
+                    },
+                    colors: { 
+                        'paper': '#fdfbf7', 
+                        'ink': '#1a1a1a', 
+                        'accent': '#c2410c',
+                        'secondary': '#f3f4f6'
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body { background-color: #fdfbf7; color: #1a1a1a; }
+        
+        /* 卡片交互 */
+        .archive-card { 
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); 
+            border: 1px solid #e5e7eb;
+            background-color: white;
+        }
+        .archive-card:hover { 
+            border-color: #c2410c; 
+            transform: translateY(-4px); 
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05); 
+        }
+        
+        /* 标签样式 */
+        .tag-essay { color: #c2410c; border: 1px solid #c2410c; }
+        .tag-thought { color: #4b5563; border: 1px solid #9ca3af; }
+    </style>
+</head>
+<body class="font-sans antialiased" onload="initArchive()">
+
+    <!-- Navigation -->
+    <nav class="fixed w-full z-50 top-0 bg-paper/90 backdrop-blur-sm border-b border-gray-200/50 h-20 flex items-center px-6 justify-between">
+        <div class="flex items-center">
+            <a href="../../home.html" class="flex items-center text-gray-500 hover:text-accent transition-colors group mr-8">
+                <i data-lucide="arrow-left" class="w-5 h-5 mr-2 group-hover:-translate-x-1 transition-transform"></i>
+                Back to Home
+            </a>
+            <div class="h-6 w-px bg-gray-300 mr-8 hidden md:block"></div>
+            <span class="font-bold tracking-widest uppercase text-sm text-ink hidden md:inline">
+                Essays & Thoughts
+            </span>
+        </div>
+    </nav>
+
+    <main class="pt-32 pb-24 px-6 max-w-6xl mx-auto">
+        
+        <!-- Header -->
+        <header class="mb-16 max-w-3xl">
+            <h1 class="text-4xl md:text-6xl font-bold text-ink mb-6 tracking-tight">Essays & Thoughts</h1>
+            <p class="text-xl text-gray-500 leading-relaxed font-light">
+                A collection of design theories, historical musings, and unpolished ideas. <br>
+                Divided into structured <strong>Essays</strong> and experimental <strong>Thoughts</strong>.
+            </p>
+        </header>
+
+        <!-- ==================== SECTION: ESSAYS ==================== -->
+        <section class="mb-24">
+            <div class="flex items-center justify-between mb-6">
+                <div class="flex items-center gap-4">
+                    <h2 class="text-3xl font-bold text-ink">Essays</h2>
+                    <span class="text-sm text-gray-400 font-mono" id="essayTotalCount">-- items</span>
+                </div>
+                <div class="h-px bg-gray-200 flex-grow ml-6"></div>
+            </div>
+
+            <!-- Essay Controls (Top) -->
+            <div class="flex justify-between items-center mb-6">
+                <div class="text-xs text-gray-400">
+                    Page <span id="essayPageSpanTop" class="font-bold text-ink">1</span> of <span id="essayTotalPageSpanTop">--</span>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <button onclick="changePage('essay', -1)" id="essayBtnPrevTop" class="p-2 text-gray-500 bg-white border border-gray-200 rounded-sm hover:border-accent hover:text-accent disabled:opacity-30 disabled:cursor-not-allowed transition-colors">
+                        <i data-lucide="chevron-left" class="w-4 h-4"></i>
+                    </button>
+                    <button onclick="changePage('essay', 1)" id="essayBtnNextTop" class="p-2 text-gray-500 bg-white border border-gray-200 rounded-sm hover:border-accent hover:text-accent disabled:opacity-30 disabled:cursor-not-allowed transition-colors">
+                        <i data-lucide="chevron-right" class="w-4 h-4"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Essay Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 min-h-[200px]" id="essayGrid">
+                <!-- JS Injected -->
+            </div>
+
+            <!-- Essay Controls (Bottom) -->
+            <div class="flex justify-between items-center mt-8 pt-4 border-t border-gray-100">
+                <div class="text-xs text-gray-400">
+                    Page <span id="essayPageSpanBottom" class="font-bold text-ink">1</span> of <span id="essayTotalPageSpanBottom">--</span>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <button onclick="changePage('essay', -1)" id="essayBtnPrevBottom" class="flex items-center px-3 py-1.5 text-sm font-medium text-gray-500 bg-white border border-gray-200 rounded-sm hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors">
+                        <i data-lucide="chevron-left" class="w-4 h-4 mr-1"></i> Prev
+                    </button>
+                    <button onclick="changePage('essay', 1)" id="essayBtnNextBottom" class="flex items-center px-3 py-1.5 text-sm font-medium text-gray-500 bg-white border border-gray-200 rounded-sm hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors">
+                        Next <i data-lucide="chevron-right" class="w-4 h-4 ml-1"></i>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- ==================== SECTION: THOUGHTS ==================== -->
+        <section>
+            <div class="flex items-center justify-between mb-6">
+                <div class="flex items-center gap-4">
+                    <h2 class="text-3xl font-bold text-ink">Thoughts</h2>
+                    <span class="text-sm text-gray-400 font-mono" id="thoughtTotalCount">-- items</span>
+                </div>
+                <div class="h-px bg-gray-200 flex-grow ml-6"></div>
+            </div>
+
+            <!-- Thought Controls (Top) -->
+            <div class="flex justify-between items-center mb-6">
+                <div class="text-xs text-gray-400">
+                    Page <span id="thoughtPageSpanTop" class="font-bold text-ink">1</span> of <span id="thoughtTotalPageSpanTop">--</span>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <button onclick="changePage('thought', -1)" id="thoughtBtnPrevTop" class="p-2 text-gray-500 bg-white border border-gray-200 rounded-sm hover:border-accent hover:text-accent disabled:opacity-30 disabled:cursor-not-allowed transition-colors">
+                        <i data-lucide="chevron-left" class="w-4 h-4"></i>
+                    </button>
+                    <button onclick="changePage('thought', 1)" id="thoughtBtnNextTop" class="p-2 text-gray-500 bg-white border border-gray-200 rounded-sm hover:border-accent hover:text-accent disabled:opacity-30 disabled:cursor-not-allowed transition-colors">
+                        <i data-lucide="chevron-right" class="w-4 h-4"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Thought Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 min-h-[200px]" id="thoughtGrid">
+                <!-- JS Injected -->
+            </div>
+
+            <!-- Thought Controls (Bottom) -->
+            <div class="flex justify-between items-center mt-8 pt-4 border-t border-gray-100">
+                <div class="text-xs text-gray-400">
+                    Page <span id="thoughtPageSpanBottom" class="font-bold text-ink">1</span> of <span id="thoughtTotalPageSpanBottom">--</span>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <button onclick="changePage('thought', -1)" id="thoughtBtnPrevBottom" class="flex items-center px-3 py-1.5 text-sm font-medium text-gray-500 bg-white border border-gray-200 rounded-sm hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors">
+                        <i data-lucide="chevron-left" class="w-4 h-4 mr-1"></i> Prev
+                    </button>
+                    <button onclick="changePage('thought', 1)" id="thoughtBtnNextBottom" class="flex items-center px-3 py-1.5 text-sm font-medium text-gray-500 bg-white border border-gray-200 rounded-sm hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors">
+                        Next <i data-lucide="chevron-right" class="w-4 h-4 ml-1"></i>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <script>
+        lucide.createIcons();
+
+        // 原始数据源
+        const rawData = [
+            { type: "Essay", date: "Nov 9, 2025", title: "It Is a Waste of Time, but Not a Game", desc: " If a product called “game” by everyone but you feel it nothing more than a waste of time, then under this definition, it isn’t a game for you.", link: "essay/WhatIsGame.html" },
+            { type: "Essay", date: "Oct 24, 2023", title: "The Illusion of Choice in 4X Diplomacy", desc: "Why AI behavior often breaks suspension of disbelief.", link: "thought_detail.html" },
+            { type: "Thought", date: "Oct 12, 2023", title: "Simulating Supply Lines", desc: "Reflections on starvation mechanics.", link: "thought_detail.html" },
+            { type: "Essay", date: "Sep 28, 2023", title: "History as a Mechanic", desc: "How games gamify historical events properly.", link: "thought_detail.html" },
+            { type: "Thought", date: "Aug 15, 2023", title: "Why I love \"Bad\" Mechanics", desc: "Defending roll-to-move in party games.", link: "thought_detail.html" },
+            { type: "Essay", date: "Jul 20, 2023", title: "Balancing Asymmetry", desc: "Ensuring fairness in asymmetric design.", link: "thought_detail.html" },
+            { type: "Thought", date: "Jun 10, 2023", title: "The Color of Strategy", desc: "Color theory in area control games.", link: "thought_detail.html" },
+            { type: "Essay", date: "May 05, 2023", title: "Narrative through Systems", desc: "Emergent storytelling vs scripted events.", link: "thought_detail.html" },
+            { type: "Thought", date: "Apr 22, 2023", title: "Dice vs. Cards", desc: "Input randomness analysis.", link: "thought_detail.html" },
+            { type: "Essay", date: "Mar 15, 2023", title: "The Cost of Complexity", desc: "Finding the breaking point of rule weight.", link: "thought_detail.html" },
+            { type: "Thought", date: "Feb 01, 2023", title: "Legacy Mechanics", desc: "Is tearing cards sacrilegious?", link: "thought_detail.html" },
+            // 补充数据以演示翻页
+            { type: "Essay", date: "Jan 10, 2023", title: "Game Theory 101", desc: "Basic concepts for board game designers.", link: "thought_detail.html" },
+            { type: "Thought", date: "Dec 05, 2022", title: "Meeple Shapes", desc: "Does the shape of the wood matter?", link: "thought_detail.html" },
+            { type: "Thought", date: "Nov 20, 2022", title: "Box Inserts", desc: "The unsung heroes of setup time.", link: "thought_detail.html" },
+            { type: "Essay", date: "Oct 01, 2022", title: "The psychology of 'Take That'", desc: "Why we love to hurt our friends in games.", link: "thought_detail.html" }
+        ];
+
+        // 状态管理
+        const state = {
+            essay: {
+                data: [],
+                currentPage: 1,
+                itemsPerPage: 4 // Essay 每页4个
+            },
+            thought: {
+                data: [],
+                currentPage: 1,
+                itemsPerPage: 4 // Thought 每页4个
+            }
+        };
+
+        function initArchive() {
+            // 1. 分离数据
+            state.essay.data = rawData.filter(item => item.type === "Essay");
+            state.thought.data = rawData.filter(item => item.type === "Thought");
+
+            // 2. 初始化渲染
+            renderSection('essay');
+            renderSection('thought');
+        }
+
+        // 通用翻页函数
+        function changePage(type, direction) {
+            const sectionState = state[type];
+            const totalPages = Math.ceil(sectionState.data.length / sectionState.itemsPerPage);
+            
+            const newPage = sectionState.currentPage + direction;
+            
+            if (newPage >= 1 && newPage <= totalPages) {
+                sectionState.currentPage = newPage;
+                renderSection(type);
+            }
+        }
+
+        // 通用渲染函数
+        function renderSection(type) {
+            const sectionState = state[type];
+            const gridId = `${type}Grid`;
+            const grid = document.getElementById(gridId);
+            
+            // 清空容器
+            grid.innerHTML = '';
+
+            // 计算分页切片
+            const totalItems = sectionState.data.length;
+            const totalPages = Math.ceil(totalItems / sectionState.itemsPerPage);
+            const startIndex = (sectionState.currentPage - 1) * sectionState.itemsPerPage;
+            const endIndex = Math.min(startIndex + sectionState.itemsPerPage, totalItems);
+
+            // 渲染卡片
+            for (let i = startIndex; i < endIndex; i++) {
+                const item = sectionState.data[i];
+                const isEssay = type === 'essay';
+                const tagClass = isEssay ? "tag-essay" : "tag-thought";
+                const btnText = isEssay ? "Read Article" : "Read Note";
+
+                const card = document.createElement('a');
+                card.href = item.link;
+                card.className = "archive-card block p-8 rounded-sm group h-full flex flex-col";
+                card.innerHTML = `
+                    <div class="flex justify-between items-start mb-4">
+                        <span class="${tagClass} text-[10px] font-bold px-2 py-0.5 rounded-sm uppercase tracking-wider">${item.type}</span>
+                        <span class="text-xs text-gray-400 font-mono">${item.date}</span>
+                    </div>
+                    <h2 class="text-2xl font-bold text-ink mb-3 group-hover:text-accent transition-colors leading-tight">
+                        ${item.title}
+                    </h2>
+                    <p class="text-gray-500 text-sm leading-relaxed flex-grow">
+                        ${item.desc}
+                    </p>
+                    <div class="mt-6 flex items-center text-xs font-bold uppercase tracking-widest text-gray-300 group-hover:text-accent transition-colors">
+                        ${btnText} <i data-lucide="arrow-right" class="w-4 h-4 ml-2"></i>
+                    </div>
+                `;
+                grid.appendChild(card);
+            }
+
+            // 更新所有控件状态 (Top & Bottom)
+            updateControls(type, 'Top', totalPages, totalItems);
+            updateControls(type, 'Bottom', totalPages, totalItems);
+            
+            // 更新总数显示
+            document.getElementById(`${type}TotalCount`).innerText = `${totalItems} items`;
+
+            // 重绘图标
+            lucide.createIcons();
+        }
+
+        function updateControls(type, position, totalPages, totalItems) {
+            // 更新页码显示
+            const pageSpan = document.getElementById(`${type}PageSpan${position}`);
+            const totalPageSpan = document.getElementById(`${type}TotalPageSpan${position}`);
+            
+            if (pageSpan) pageSpan.innerText = state[type].currentPage;
+            if (totalPageSpan) totalPageSpan.innerText = totalPages;
+
+            // 更新按钮禁用状态
+            const btnPrev = document.getElementById(`${type}BtnPrev${position}`);
+            const btnNext = document.getElementById(`${type}BtnNext${position}`);
+
+            if (btnPrev) btnPrev.disabled = state[type].currentPage === 1;
+            if (btnNext) btnNext.disabled = state[type].currentPage >= totalPages;
+        }
+    </script>
+</body>
+</html>

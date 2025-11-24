@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simulating Supply Lines | Thought</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: { 
+                        sans: ['Inter', 'Noto Sans SC', 'sans-serif'],
+                    },
+                    colors: { 'paper': '#fdfbf7', 'ink': '#1a1a1a', 'accent': '#c2410c' }
+                }
+            }
+        }
+    </script>
+    <style>
+        body { background-color: #fdfbf7; color: #1a1a1a; }
+        
+        /* Thought 的排版略有不同，字体稍小，段落间距稍紧，更像日志 */
+        .prose p { margin-bottom: 1.5em; line-height: 1.7; color: #4b5563; font-family: 'Inter', sans-serif; }
+        
+        /* Thought 标签样式 */
+        .tag-thought { color: #4b5563; border: 1px solid #9ca3af; }
+        
+        /* 强调框 */
+        .note-box { background-color: #f3f4f6; padding: 1.5rem; border-radius: 0.25rem; border-left: 4px solid #9ca3af; margin: 2rem 0; font-size: 0.95rem; }
+    </style>
+</head>
+<body class="font-sans antialiased">
+
+    <!-- Navigation -->
+    <nav class="fixed w-full z-50 top-0 bg-paper/90 backdrop-blur-sm border-b border-gray-200/50 h-20 flex items-center px-6 justify-between">
+        <div class="flex items-center">
+            <a href="../artical_main.html" class="flex items-center text-gray-500 hover:text-accent transition-colors group mr-8">
+                <i data-lucide="arrow-left" class="w-5 h-5 mr-2 group-hover:-translate-x-1 transition-transform"></i>
+                Back to Archive
+            </a>
+        </div>
+        <div class="hidden md:block text-xs font-bold text-gray-300 uppercase tracking-widest">
+            Design Note
+        </div>
+    </nav>
+
+    <main class="pt-32 pb-24 px-6">
+        <article class="max-w-2xl mx-auto">
+            
+            <!-- Thought Header (Simpler than Essay) -->
+            <header class="mb-10">
+                <div class="flex items-center gap-3 mb-4">
+                    <span class="tag-thought text-[10px] font-bold px-2 py-0.5 rounded-sm uppercase tracking-wider">Thought</span>
+                    <span class="text-sm text-gray-400 font-mono">Oct 12, 2023</span>
+                </div>
+                <h1 class="text-3xl md:text-4xl font-bold text-ink leading-tight">
+                    Simulating Supply Lines:<br>A Logistical Nightmare
+                </h1>
+            </header>
+
+            <!-- Thought Content -->
+            <div class="prose prose-lg max-w-none">
+                <p>
+                    I've been banging my head against the wall for the past week trying to make "starvation" fun.
+                </p>
+                <p>
+                    I'm working on a Napoleonic prototype where logistics <em>should</em> be the main enemy. Historically, more soldiers died from disease and hunger than from cannonballs. But translating that into a game mechanic is incredibly frustrating.
+                </p>
+                
+                <div class="note-box">
+                    <strong>Current Iteration:</strong><br>
+                    Players have to trace a path of hexes back to a Supply Depot. If the path is blocked by enemy ZOC (Zone of Control), units take attrition damage.
+                </div>
+
+                <p>
+                    The problem is the <strong>bookkeeping</strong>. Checking supply status for 50 individual units every turn is boring. It slows the game down to a crawl.
+                </p>
+                <p>
+                    I tried simplifying it: "If you are in enemy territory, lose 1 Supply Token per turn." But then it feels too abstract. It loses the feeling of being <em>cut off</em>.
+                </p>
+                <p>
+                    <strong>Idea for next playtest:</strong> What if supply isn't a state, but an <em>action</em>? You have to spend Command Points to "Push Supply". If you don't push, your frontline freezes. This makes it an active choice rather than a passive punishment.
+                </p>
+                <p>
+                    Will try this on Tuesday. Hopefully, it doesn't result in another spreadsheet simulator.
+                </p>
+            </div>
+
+            <!-- Footer -->
+            <div class="mt-16 pt-8 border-t border-gray-200 flex justify-between text-sm text-gray-400">
+                <span>Status: <strong>In Progress</strong></span>
+                <span>Tags: #Wargame #Prototype #Logistics</span>
+            </div>
+
+        </article>
+    </main>
+
+    <script>lucide.createIcons();</script>
+</body>
+</html>
