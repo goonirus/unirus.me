@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>All Games | Rating Matrix</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
+    
+    <!-- 引入你的数据库文件 -->
+    <script src="all_games.js"></script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: { 
+                        sans: ['Inter', 'Noto Sans SC', 'sans-serif'] 
+                    },
+                    colors: { 
+                        'paper': '#fdfbf7', 
+                        'ink': '#1a1a1a', 
+                        'accent': '#c2410c',
+                        'secondary': '#f3f4f6'
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body { background-color: #fdfbf7; color: #1a1a1a; }
+        th { white-space: nowrap; }
+        td { white-space: nowrap; }
+        .sort-icon { display: inline-block; width: 12px; height: 12px; margin-left: 4px; opacity: 0.3; transition: opacity 0.2s; }
+        th:hover .sort-icon { opacity: 1; }
+        th.active-sort .sort-icon { opacity: 1; color: #c2410c; }
+        .sticky-col-left { position: sticky; left: 0; z-index: 10; background-color: #fdfbf7; }
+        .sticky-col-right { position: sticky; right: 0; z-index: 10; background-color: #fdfbf7; box-shadow: -2px 0 5px rgba(0,0,0,0.05); }
+        
+        /* Dynamic Score Colors */
+        .score-high { color: #16a34a !important; font-weight: 700; } /* Green >= 9.0 */
+        .score-low { color: #ef4444 !important; font-weight: 700; }  /* Red <= 5.0 */
+        .score-mid { color: #4b5563; } /* Gray */
+    </style>
+</head>
+<body class="font-sans antialiased" onload="initPage()">
+
+    <nav class="fixed w-full z-50 top-0 bg-paper/90 backdrop-blur-sm border-b border-gray-200/50 h-20 flex items-center px-6 justify-between">
+        <div class="flex items-center">
+            <a href="rating_list.html" class="flex items-center text-gray-500 hover:text-accent transition-colors group mr-8">
+                <i data-lucide="arrow-left" class="w-5 h-5 mr-2 group-hover:-translate-x-1 transition-transform"></i>
+                Back to Overview
+            </a>
+            <div class="h-6 w-px bg-gray-300 mr-8 hidden md:block"></div>
+            <span class="font-bold tracking-widest uppercase text-sm text-ink hidden md:inline">
+                Master Rating Matrix
+            </span>
+        </div>
+    </nav>
+
+    <main class="pt-32 pb-24 px-6 max-w-[95%] mx-auto">
+        <header class="mb-8 flex flex-col md:flex-row justify-between items-end">
+            <div>
+                <h1 class="text-3xl font-bold text-ink mb-2">All Games Matrix</h1>
+                <p class="text-gray-500">
+                    A comprehensive breakdown of scores across 10 design dimensions. <br>
+                    <span class="text-accent text-xs font-bold uppercase tracking-wide">Click column headers to sort</span>
+                </p>
+            </div>
+        </header>
+
+        <div class="overflow-x-auto border border-gray-200 rounded-sm shadow-sm bg-white mb-6">
+            <table class="w-full text-sm text-left" id="ratingTable">
+                <thead class="text-xs text-gray-500 uppercase bg-secondary border-b border-gray-200">
+                    <tr>
+                        <th scope="col" class="px-6 py-4 font-bold text-ink cursor-pointer sticky-col-left hover:bg-gray-100 transition-colors" onclick="sortTable('title')">
+                            Game <i data-lucide="chevrons-up-down" class="sort-icon"></i>
+                        </th>
+                        <th scope="col" class="px-4 py-4 cursor-pointer hover:bg-gray-100 transition-colors" onclick="sortTable('mechanics')">
+                            Mechanics <i data-lucide="chevrons-up-down" class="sort-icon"></i>
+                        </th>
+                        <th scope="col" class="px-4 py-4 cursor-pointer hover:bg-gray-100 transition-colors" onclick="sortTable('theme')">
+                            Theme <i data-lucide="chevrons-up-down" class="sort-icon"></i>
+                        </th>
+                        <th scope="col" class="px-4 py-4 cursor-pointer hover:bg-gray-100 transition-colors" onclick="sortTable('aesthetics')">
+                            Aesthetics <i data-lucide="chevrons-up-down" class="sort-icon"></i>
+                        </th>
+                        <th scope="col" class="px-4 py-4 cursor-pointer hover:bg-gray-100 transition-colors" onclick="sortTable('balance')">
+                            Balance <i data-lucide="chevrons-up-down" class="sort-icon"></i>
+                        </th>
+                        <th scope="col" class="px-4 py-4 cursor-pointer hover:bg-gray-100 transition-colors" onclick="sortTable('replayability')">
+                            Replayability <i data-lucide="chevrons-up-down" class="sort-icon"></i>
+                        </th>
+                        <th scope="col" class="px-4 py-4 cursor-pointer hover:bg-gray-100 transition-colors" onclick="sortTable('interactivity')">
+                            Interactivity <i data-lucide="chevrons-up-down" class="sort-icon"></i>
+                        </th>
+                        <th scope="col" class="px-4 py-4 cursor-pointer hover:bg-gray-100 transition-colors" onclick="sortTable('complexity')">
+                            Complex/Depth <i data-lucide="chevrons-up-down" class="sort-icon"></i>
+                        </th>
+                        <th scope="col" class="px-4 py-4 cursor-pointer hover:bg-gray-100 transition-colors" onclick="sortTable('flow')">
+                            Flow/Pacing <i data-lucide="chevrons-up-down" class="sort-icon"></i>
+                        </th>
+                        <th scope="col" class="px-4 py-4 cursor-pointer hover:bg-gray-100 transition-colors" onclick="sortTable('others')">
+                            Others <i data-lucide="chevrons-up-down" class="sort-icon"></i>
+                        </th>
+                        <th scope="col" class="px-6 py-4 font-bold text-accent cursor-pointer sticky-col-right hover:bg-gray-50 transition-colors text-right" onclick="sortTable('total')">
+                            Total <i data-lucide="chevrons-up-down" class="sort-icon"></i>
+                        </th>
+                    </tr>
+                </thead>
+                <!-- TBody is empty now, filled by JS -->
+                <tbody class="divide-y divide-gray-100" id="tableBody"></tbody>
+            </table>
+        </div>
+
+        <!-- Pagination Controls -->
+        <div class="flex flex-col sm:flex-row justify-between items-center pt-6 border-t border-gray-200">
+            <div class="text-xs text-gray-400 mb-4 sm:mb-0">
+                Showing <span class="font-bold text-gray-600">20</span> items per page
+            </div>
+            <div class="flex items-center space-x-6">
+                <button onclick="prevPage()" id="btnPrev" class="flex items-center px-3 py-1 text-sm font-medium text-gray-500 bg-white border border-gray-200 rounded-sm hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors">
+                    <i data-lucide="chevron-left" class="w-4 h-4 mr-1"></i> Previous
+                </button>
+                <span class="text-sm text-gray-600">
+                    Page <span id="pageSpan" class="font-bold text-ink">1</span> of <span id="totalPageSpan" class="font-bold text-ink">--</span>
+                </span>
+                <button onclick="nextPage()" id="btnNext" class="flex items-center px-3 py-1 text-sm font-medium text-gray-500 bg-white border border-gray-200 rounded-sm hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors">
+                    Next <i data-lucide="chevron-right" class="w-4 h-4 ml-1"></i>
+                </button>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        lucide.createIcons();
+
+        // Global state
+        let currentPage = 1;
+        const rowsPerPage = 20;
+        let currentData = []; // Will hold the data from games_data.js
+        let currentSortKey = 'total';
+        let currentSortDir = 'desc'; // Default sorting
+
+        function initPage() {
+            // Load data from the external file (games_data.js defines 'gamesDatabase')
+            if (typeof gamesDatabase !== 'undefined') {
+                currentData = [...gamesDatabase]; // Make a copy
+                // Initial sort
+                sortData('total', true); 
+                renderTable();
+            } else {
+                alert("Error: games_data.js not found or loaded!");
+            }
+        }
+
+        function sortTable(key) {
+            // Toggle direction if clicking the same header, otherwise default to desc for numbers, asc for text
+            if (currentSortKey === key) {
+                currentSortDir = currentSortDir === 'asc' ? 'desc' : 'asc';
+            } else {
+                currentSortKey = key;
+                // Default sort directions: Title (Asc), Scores (Desc)
+                currentSortDir = key === 'title' ? 'asc' : 'desc';
+            }
+            
+            // Update sorting indicators visually
+            updateHeaderClasses(key);
+            
+            // Perform sort
+            sortData(key);
+            
+            // Reset to page 1 and render
+            currentPage = 1;
+            renderTable();
+        }
+
+        function sortData(key) {
+            currentData.sort((a, b) => {
+                let valA = a[key];
+                let valB = b[key];
+
+                if (currentSortDir === 'asc') {
+                    return valA > valB ? 1 : -1;
+                } else {
+                    return valA < valB ? 1 : -1;
+                }
+            });
+        }
+
+        function updateHeaderClasses(activeKey) {
+            // Basic visual update logic for headers could go here
+            // (For brevity, relying on data update)
+        }
+
+        function renderTable() {
+            const tbody = document.getElementById('tableBody');
+            tbody.innerHTML = '';
+
+            const totalRows = currentData.length;
+            const totalPages = Math.ceil(totalRows / rowsPerPage);
+            
+            // Update Controls
+            document.getElementById("pageSpan").innerText = currentPage;
+            document.getElementById("totalPageSpan").innerText = totalPages;
+            document.getElementById("btnPrev").disabled = currentPage === 1;
+            document.getElementById("btnNext").disabled = currentPage >= totalPages;
+
+            const startIndex = (currentPage - 1) * rowsPerPage;
+            const endIndex = Math.min(startIndex + rowsPerPage, totalRows);
+
+            for (let i = startIndex; i < endIndex; i++) {
+                const game = currentData[i];
+                const tr = document.createElement('tr');
+                tr.className = "hover:bg-accent/5 transition-colors cursor-pointer group";
+                tr.onclick = () => window.location = 'review_detail.html';
+
+                // Helper to get color class
+                const getColorClass = (val) => {
+                    if (val >= 9.0) return 'score-high';
+                    if (val <= 5.0) return 'score-low';
+                    return 'score-mid';
+                };
+
+                tr.innerHTML = `
+                    <td class="px-6 py-4 font-bold text-ink sticky-col-left group-hover:bg-[#fffbf5] transition-colors">
+                        ${game.title}
+                    </td>
+                    <td class="px-4 py-4 ${getColorClass(game.mechanics)}">${game.mechanics.toFixed(1)}</td>
+                    <td class="px-4 py-4 ${getColorClass(game.theme)}">${game.theme.toFixed(1)}</td>
+                    <td class="px-4 py-4 ${getColorClass(game.aesthetics)}">${game.aesthetics.toFixed(1)}</td>
+                    <td class="px-4 py-4 ${getColorClass(game.balance)}">${game.balance.toFixed(1)}</td>
+                    <td class="px-4 py-4 ${getColorClass(game.replayability)}">${game.replayability.toFixed(1)}</td>
+                    <td class="px-4 py-4 ${getColorClass(game.interactivity)}">${game.interactivity.toFixed(1)}</td>
+                    <td class="px-4 py-4 ${getColorClass(game.complexity)}">${game.complexity.toFixed(1)}</td>
+                    <td class="px-4 py-4 ${getColorClass(game.flow)}">${game.flow.toFixed(1)}</td>
+                    <td class="px-4 py-4 ${getColorClass(game.others)}">${game.others.toFixed(1)}</td>
+                    <td class="px-6 py-4 text-xl text-right sticky-col-right group-hover:bg-[#fffbf5] ${getColorClass(game.total)}">${game.total.toFixed(1)}</td>
+                `;
+                tbody.appendChild(tr);
+            }
+        }
+
+        function prevPage() {
+            if (currentPage > 1) {
+                currentPage--;
+                renderTable();
+            }
+        }
+
+        function nextPage() {
+            const totalPages = Math.ceil(currentData.length / rowsPerPage);
+            if (currentPage < totalPages) {
+                currentPage++;
+                renderTable();
+            }
+        }
+    </script>
+</body>
+</html>

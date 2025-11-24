@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>桌游机制拆解：为什么我们需要“随机性”？</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: { sans: ['Inter', 'Noto Sans SC', 'sans-serif'] },
+                    colors: { 'paper': '#fdfbf7', 'ink': '#1a1a1a', 'accent': '#cca43b' }
+                }
+            }
+        }
+    </script>
+    <style>
+        body { background-color: #fdfbf7; color: #1a1a1a; }
+        /* 优化阅读体验的文字样式 */
+        .prose p { margin-bottom: 1.5em; line-height: 1.8; }
+        .prose h2 { margin-top: 2em; margin-bottom: 1em; font-weight: 700; color: #1a1a1a; }
+    </style>
+</head>
+<body class="font-sans antialiased">
+
+    <nav class="fixed w-full z-50 top-0 bg-paper/90 backdrop-blur-sm border-b border-gray-200/50 h-20 flex items-center px-6">
+        <div class="max-w-3xl mx-auto w-full flex justify-between items-center">
+            <a href="../../home.html" class="flex items-center text-gray-500 hover:text-accent transition-colors group">
+                <i data-lucide="arrow-left" class="w-5 h-5 mr-2 group-hover:-translate-x-1 transition-transform"></i>
+                返回首页
+            </a>
+            <span class="font-bold tracking-widest uppercase text-sm text-gray-400">Analysis</span>
+        </div>
+    </nav>
+
+    <main class="pt-32 pb-24 px-6">
+        <article class="max-w-3xl mx-auto">
+            
+            <!-- 文章头部 -->
+            <header class="mb-12 border-b border-gray-200 pb-12">
+                <div class="flex items-center space-x-4 text-sm text-accent font-bold uppercase tracking-widest mb-6">
+                    <span>Game Design</span>
+                    <span>•</span>
+                    <span>Mechanics</span>
+                </div>
+                <h1 class="text-3xl md:text-5xl font-bold text-ink leading-tight mb-6">
+                    桌游机制拆解：<br>为什么我们需要“随机性”？
+                </h1>
+                <div class="flex items-center justify-between text-gray-400 text-sm">
+                    <div class="flex items-center">
+                        <img src="https://placehold.co/50x50/e5e5e5/333" class="w-8 h-8 rounded-full mr-3">
+                        <span>By [你的名字]</span>
+                    </div>
+                    <time>Oct 24, 2023</time>
+                </div>
+            </header>
+
+            <!-- 文章正文 -->
+            <div class="prose prose-lg prose-stone max-w-none text-gray-600">
+                <p>
+                    很多重度策略玩家（Euro gamers）声称他们讨厌运气。他们想要完全的可控性，想要胜负完全取决于智力。但我认为，一个没有任何随机性的游戏，往往是干瘪的，甚至是可以被“解开”的。
+                </p>
+                <p>
+                    随机性在游戏中主要扮演两个角色：**输入随机性（Input Randomness）**和**输出随机性（Output Randomness）**。
+                </p>
+                
+                <h2>输入随机性：给你发一手牌</h2>
+                <p>
+                    输入随机性发生在玩家做决策**之前**。比如《卡坦岛》每一局的地图板块分布，或者《展翅翱翔》中你起始抽到的鸟类卡牌。这种随机性是健康的，因为它迫使玩家根据当前的局势调整策略，而不是背诵固定的开局套路（Scripting）。它测试的是玩家的**适应能力**。
+                </p>
+                
+                <h2>输出随机性：掷骰子判定</h2>
+                <p>
+                    输出随机性发生在玩家做决策**之后**。比如在美式战棋中，你决定攻击敌人，然后掷骰子看是否命中。如果掷出1，你依然失败了。这往往是带来挫败感的来源，但它也有存在的价值——它模拟了现实世界的不确定性，创造了戏剧性的时刻。
+                </p>
+
+                <blockquote class="pl-6 border-l-4 border-accent italic text-xl text-gray-800 my-8">
+                    "优秀的游戏设计不是消除随机性，而是让玩家学会管理风险。"
+                </blockquote>
+
+                <h2>结论</h2>
+                <p>
+                    作为设计师，我们在设计时需要警惕的是“让随机性决定胜负”，而不是随机性本身。如果一个新手仅仅因为运气好就击败了大师，这可能会伤害游戏的竞技性；但如果大师因为运气不好而不得不绞尽脑汁去翻盘，这反而是游戏最精彩的时刻。
+                </p>
+            </div>
+
+            <!-- 底部标签 -->
+            <div class="mt-16 pt-8 border-t border-gray-200">
+                <div class="flex space-x-3">
+                    <span class="bg-gray-100 px-3 py-1 text-sm text-gray-600 rounded-full">#GameTheory</span>
+                    <span class="bg-gray-100 px-3 py-1 text-sm text-gray-600 rounded-full">#DesignDiary</span>
+                </div>
+            </div>
+
+        </article>
+    </main>
+
+    <script>lucide.createIcons();</script>
+</body>
+</html>
