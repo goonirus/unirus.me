@@ -191,58 +191,62 @@
         </div>
     </section>
 
-    <!-- Analysis Section -->
+
+    <!-- Analysis Section (Deconstruct Design) -->
     <section id="analysis" class="py-24 px-6 bg-paper border-t border-gray-100">
         <div class="max-w-7xl mx-auto">
-            <div class="mb-16 max-w-2xl">
-                <h2 class="text-3xl font-bold mb-6">Deconstructing Design</h2>
-                <div class="w-12 h-1 bg-accent mb-6"></div>
-                <p class="text-gray-600 leading-relaxed">
-                    A habit of the trade: always taking fun apart to see how it works. <br>
-                    I deconstruct experiences into mechanical units, whether it's the tactile feel of a card or the algorithm behind the screen.
-                </p>
+            
+            <!-- Header: Button Right, Title Left -->
+            <div class="flex flex-col md:flex-row justify-between items-center mb-16 gap-6">
+                <div class="max-w-2xl">
+                    <h2 class="text-3xl font-bold mb-6">Deconstructing Design</h2>
+                    <div class="w-12 h-1 bg-accent mb-6"></div>
+                    <p class="text-gray-600 leading-relaxed">
+                        A habit of the trade: always taking fun apart to see how it works. <br>
+                        I deconstruct experiences into mechanical units, whether it's the tactile feel of a card or the algorithm behind the screen.
+                    </p>
+                </div>
+                <!-- Button: More Prominent Style (Accent color, larger, shadow, hover scale) -->
+                <a href="public/deconstruction/decon_index.html" class="flex-shrink-0 px-10 py-5 bg-accent text-white text-base font-bold tracking-widest uppercase hover:bg-ink hover:scale-105 hover:shadow-2xl transition-all duration-300 flex items-center gap-3 shadow-lg transform">
+                    Deconstruct <i data-lucide="arrow-right" class="w-5 h-5"></i>
+                </a>
             </div>
             
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <!-- Analysis Items -->
-                <a href="public/deconstruction/detail.html" class="block group bg-white p-8 border border-gray-200 hover:border-accent hover:shadow-lg transition-all duration-300">
-                    <div class="mb-6 inline-block p-3 bg-paper rounded-full group-hover:bg-accent/10 transition-colors">
-                        <i data-lucide="box" class="w-8 h-8 text-ink group-hover:text-accent transition-colors"></i>
+                
+                <!-- Item 1: Tabletop (Static Blueprint Style) -->
+                <!-- 修改点：bg-gray-50 (灰底), border-2 border-dashed (虚线框) -->
+                <div class="block bg-gray-50 p-8 border-2 border-dashed border-gray-300 cursor-default h-full">
+                    <div class="mb-6 inline-block">
+                        <i data-lucide="box" class="w-8 h-8 text-gray-400"></i>
                     </div>
-                    <h3 class="text-xl font-bold mb-3 group-hover:text-accent transition-colors">Tabletop Mechanics</h3>
-                    <p class="text-sm text-gray-500 mb-6 leading-relaxed">
+                    <h3 class="text-xl font-bold mb-3 text-gray-700">Board Game Mechanics</h3>
+                    <p class="text-sm text-gray-500 leading-relaxed">
                         Analyzing the math models of Euro games, the narrative drive of Ameritrash, and social ice-breaking mechanics in Party games.
                     </p>
-                    <div class="flex items-center text-xs font-bold tracking-widest uppercase text-gray-400 group-hover:text-ink transition-colors">
-                        Read Article <i data-lucide="arrow-right" class="w-4 h-4 ml-2"></i>
-                    </div>
-                </a>
+                </div>
 
-                <a href="public/deconstruction/detail.html" class="block group bg-white p-8 border border-gray-200 hover:border-accent hover:shadow-lg transition-all duration-300">
-                    <div class="mb-6 inline-block p-3 bg-paper rounded-full group-hover:bg-accent/10 transition-colors">
-                        <i data-lucide="monitor" class="w-8 h-8 text-ink group-hover:text-accent transition-colors"></i>
+                <!-- Item 2: PC (Static Blueprint Style) -->
+                <div class="block bg-gray-50 p-8 border-2 border-dashed border-gray-300 cursor-default h-full">
+                    <div class="mb-6 inline-block">
+                        <i data-lucide="monitor" class="w-8 h-8 text-gray-400"></i>
                     </div>
-                    <h3 class="text-xl font-bold mb-3 group-hover:text-accent transition-colors">PC Game Deep Dive</h3>
-                    <p class="text-sm text-gray-500 mb-6 leading-relaxed">
+                    <h3 class="text-xl font-bold mb-3 text-gray-700">PC Game Deep Dive</h3>
+                    <p class="text-sm text-gray-500 leading-relaxed">
                         From the "One more turn" loop of Civilization to the narrative integration in Hades. Balancing immersion with complex systems.
                     </p>
-                    <div class="flex items-center text-xs font-bold tracking-widest uppercase text-gray-400 group-hover:text-ink transition-colors">
-                        Read Article <i data-lucide="arrow-right" class="w-4 h-4 ml-2"></i>
-                    </div>
-                </a>
+                </div>
 
-                <a href="public/deconstruction/detail.html" class="block group bg-white p-8 border border-gray-200 hover:border-accent hover:shadow-lg transition-all duration-300">
-                    <div class="mb-6 inline-block p-3 bg-paper rounded-full group-hover:bg-accent/10 transition-colors">
-                        <i data-lucide="smartphone" class="w-8 h-8 text-ink group-hover:text-accent transition-colors"></i>
+                <!-- Item 3: Mobile (Static Blueprint Style) -->
+                <div class="block bg-gray-50 p-8 border-2 border-dashed border-gray-300 cursor-default h-full">
+                    <div class="mb-6 inline-block">
+                        <i data-lucide="smartphone" class="w-8 h-8 text-gray-400"></i>
                     </div>
-                    <h3 class="text-xl font-bold mb-3 group-hover:text-accent transition-colors">Mobile UX Research</h3>
-                    <p class="text-sm text-gray-500 mb-6 leading-relaxed">
+                    <h3 class="text-xl font-bold mb-3 text-gray-700">Mobile UX Research</h3>
+                    <p class="text-sm text-gray-500 leading-relaxed">
                         Focusing on fragmented play sessions, FTUE (First Time User Experience) design, and retention logic in live-service games.
                     </p>
-                    <div class="flex items-center text-xs font-bold tracking-widest uppercase text-gray-400 group-hover:text-ink transition-colors">
-                        Read Article <i data-lucide="arrow-right" class="w-4 h-4 ml-2"></i>
-                    </div>
-                </a>
+                </div>
             </div>
         </div>
     </section>
@@ -306,7 +310,7 @@
                     <div class="space-y-1">
                         <a href="review_detail.html" class="rating-link block py-3 px-4 border-b border-gray-200 rounded-sm">
                             <div class="flex justify-between items-center">
-                                <span class="text-gray-800 font-medium">Elden Ring</span>
+                                <span class="text-gray-800 font-medium">Europa Universalis IV</span>
                                 <span class="text-accent font-bold">10.0</span>
                             </div>
                         </a>
@@ -318,7 +322,7 @@
                         </a>
                         <a href="review_detail.html" class="rating-link block py-3 px-4 border-b border-gray-200 rounded-sm">
                             <div class="flex justify-between items-center">
-                                <span class="text-gray-800 font-medium">Hades</span>
+                                <span class="text-gray-800 font-medium">Crusader Kings III</span>
                                 <span class="text-accent font-bold">9.7</span>
                             </div>
                         </a>
@@ -369,7 +373,7 @@
                 My personal corner for unpolished ideas, theoretical musings, and design diaries.<br><br>
                 Unlike the "Analysis" section which deconstructs existing games, these are my own hypotheses and notes on the craft.
             </p>
-            <a href="public/artical/artical_main.html" class="mt-8 inline-flex items-center text-sm font-bold text-ink hover:text-accent transition-colors border border-gray-300 px-6 py-3 rounded-sm hover:border-accent hover:bg-white">
+            <a href="public/thoughts/thoughts_main.html" class="mt-8 inline-flex items-center text-sm font-bold text-ink hover:text-accent transition-colors border border-gray-300 px-6 py-3 rounded-sm hover:border-accent hover:bg-white">
                 View Archive <i data-lucide="arrow-right" class="w-4 h-4 ml-2"></i>
             </a>
         </div>

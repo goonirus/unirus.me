@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>It Is a Waste of Time, but Not a Game | Essay</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Sans+SC:wght@300;400;500;700&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+    
+    <!-- 引入数据文件 -->
+    <script src="../thoughts_artical.js"></script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: { 
+                        sans: ['Inter', 'Noto Sans SC', 'sans-serif'],
+                        serif: ['Playfair Display', 'serif'],
+                    },
+                    colors: { 'paper': '#fdfbf7', 'ink': '#1a1a1a', 'accent': '#c2410c', 'secondary': '#f3f4f6' }
+                }
+            }
+        }
+    </script>
+    <style>
+        body { background-color: #fdfbf7; color: #1a1a1a; overflow-x: hidden; }
+        
+        /* 侧边栏样式 */
+        .sidebar-sticky {
+            position: sticky;
+            top: 6rem;
+        }
+
+        /* 文章排版优化 */
+        .prose p { margin-bottom: 1.8em; line-height: 1.9; color: #374151; font-family: 'Inter', sans-serif; font-size: 1.125rem; }
+        .prose h2 { font-family: 'Inter', sans-serif; font-weight: 700; font-size: 1.75rem; margin-top: 3.5rem; margin-bottom: 1.5rem; color: #1a1a1a; border-bottom: 1px solid #e5e7eb; padding-bottom: 0.5rem; scroll-margin-top: 100px; }
+        .prose h3 { font-family: 'Inter', sans-serif; font-weight: 600; font-size: 1.35rem; margin-top: 2.5rem; margin-bottom: 1rem; color: #1a1a1a; scroll-margin-top: 100px; }
+        .prose blockquote { border-left: 4px solid #c2410c; padding-left: 1.5rem; font-style: italic; color: #6b7280; margin: 2.5rem 0; font-family: 'Playfair Display', serif; font-size: 1.25rem; background-color: rgba(194, 65, 12, 0.05); padding: 1.5rem; border-radius: 0 0.5rem 0.5rem 0; }
+        
+        /* 目录链接样式 */
+        .toc-link {
+            display: block;
+            padding: 0.3rem 0;
+            color: #6b7280;
+            text-decoration: none;
+            transition: all 0.2s;
+            font-size: 0.9rem;
+            border-left: 2px solid transparent;
+            padding-left: 1rem;
+        }
+        .toc-link:hover { color: #c2410c; border-left-color: #c2410c; background-color: rgba(194, 65, 12, 0.05); }
+        .toc-sub-link {
+            padding-left: 2rem;
+            font-size: 0.85rem;
+            color: #9ca3af;
+        }
+
+        /* Essay 标签样式 */
+        .tag-essay { color: #c2410c; border: 1px solid #c2410c; }
+        
+        /* 右侧栏链接 */
+        .recent-link:hover h4 { color: #c2410c; }
+    </style>
+</head>
+<body class="font-sans antialiased">
+
+    <!-- Navigation -->
+    <nav class="fixed w-full z-50 top-0 bg-paper/90 backdrop-blur-sm border-b border-gray-200/50 h-20 flex items-center px-6 justify-between">
+        <div class="flex items-center">
+            <a href="../thoughts_main.html" class="flex items-center text-gray-500 hover:text-accent transition-colors group mr-8">
+                <i data-lucide="arrow-left" class="w-5 h-5 mr-2 group-hover:-translate-x-1 transition-transform"></i>
+                Back to Archive
+            </a>
+        </div>
+        <div class="hidden md:block text-xs font-bold text-gray-300 uppercase tracking-widest">
+            Academic Essay
+        </div>
+    </nav>
+
+    <!-- Main Layout Container (3:11:2 Ratio) -->
+    <div class="pt-20 w-full max-w-[95%] mx-auto px-6 py-12">
+        
+        <div class="grid grid-cols-1 lg:grid-cols-[3fr_11fr_2fr] gap-12">
+        
+            <!-- 1. Left Sidebar (Table of Contents) -->
+            <aside class="hidden lg:block">
+                <div class="sidebar-sticky pt-4 border-r border-gray-200 pr-6">
+                    <h3 class="text-xs font-bold uppercase tracking-widest text-gray-400 mb-6 flex items-center">
+                        <i data-lucide="list" class="w-4 h-4 mr-2"></i> Contents
+                    </h3>
+                    <nav class="space-y-1 max-h-[calc(100vh-10rem)] overflow-y-auto pr-2 custom-scrollbar">
+                        <a href="#definition" class="toc-link font-medium">1. Definition of Game</a>
+                        
+                        <a href="#concepts" class="toc-link font-medium">2. Concepts & Theories</a>
+                        <a href="#rules" class="toc-link toc-sub-link">2.1 Rules and Systems</a>
+                        <a href="#goals" class="toc-link toc-sub-link">2.2 Goals and Outcomes</a>
+                        <a href="#player" class="toc-link toc-sub-link">2.3 Player Participation</a>
+                        <a href="#conflict" class="toc-link toc-sub-link">2.4 Conflict and Competition</a>
+                        <a href="#freedom" class="toc-link toc-sub-link">2.5 Freedom and Voluntariness</a>
+                        <a href="#uncertainty" class="toc-link toc-sub-link">2.6 Uncertainty and Chance</a>
+                        <a href="#fiction" class="toc-link toc-sub-link">2.7 Fiction and Magic Circle</a>
+                        
+                        <a href="#borderline" class="toc-link font-medium mt-2">3. Borderline Cases</a>
+                        <a href="#highjump" class="toc-link toc-sub-link">3.1 High Jump</a>
+                        <a href="#sudoku" class="toc-link toc-sub-link">3.2 Sudoku</a>
+                        <a href="#gambling" class="toc-link toc-sub-link">3.3 Gambling</a>
+                        <a href="#ai-chess" class="toc-link toc-sub-link">3.4 AI vs AI Chess</a>
+                        <a href="#sims" class="toc-link toc-sub-link">3.5 The Sims</a>
+                        <a href="#rpgs" class="toc-link toc-sub-link">3.6 Pen & Paper RPGs</a>
+                        <a href="#dog" class="toc-link toc-sub-link">3.7 Dog Catching Frisbee</a>
+                        <a href="#interactive" class="toc-link toc-sub-link">3.8 Interactive Movies</a>
+                        <a href="#poor-design" class="toc-link toc-sub-link">3.9 Poorly Designed Games</a>
+                    </nav>
+                </div>
+            </aside>
+
+            <!-- 2. Main Content -->
+            <main>
+                <article>
+                    
+                    <!-- Article Header -->
+                    <header class="mb-16 border-b border-gray-200 pb-12 text-center">
+                        <div class="flex justify-center items-center gap-3 mb-6">
+                            <span class="tag-essay text-[10px] font-bold px-2 py-0.5 rounded-sm uppercase tracking-wider">Essay</span>
+                            <time class="text-sm text-gray-400 font-mono">Nov, 2025</time>
+                        </div>
+                        <h1 class="text-4xl md:text-6xl font-bold text-ink leading-tight mb-6 tracking-tight">
+                            It Is a Waste of Time,<br>
+                            <span class="font-serif italic font-normal text-4xl md:text-5xl text-gray-600">But Not a Game</span>
+                        </h1>
+                        <div class="text-gray-500 text-sm flex justify-center items-center gap-2 mt-4">
+                            <i data-lucide="user" class="w-4 h-4"></i> <span class="font-medium text-ink">Donglin Yan</span>
+                            <span class="mx-2">•</span>
+                            <span class="italic">University of Gothenburg</span>
+                        </div>
+                    </header>
+
+                    <!-- Content -->
+                    <div class="prose prose-lg max-w-none">
+                        
+                        <h2 id="definition">1. Definition of Game</h2>
+                        <p>
+                            The question "What is a game?" has been discussed for many years by researchers and game designers. Also for public, different people can define games in their different ways. In academia, from Huizinga's (1938) experience-centered and "not serious" perspective to Salen & Zimmerman's (2003) rigorous system-based model, each definition reflects a different emphasis—some focus on structure and rules, some highlight experience, even conflict.
+                        </p>
+                        <p>
+                            In my view, a good definition of a game should combine the systematic structure and the player experience. Games are not only systems of rules, but also activities that make players think, decide and feel. They have goals that guide the player's actions, and these actions lead to emotions and interactions that allow players to gain spiritual value.
+                        </p>
+                        <blockquote>
+                            So my definition is: A game is a system with rules and goals where players make decisions that can affect what happens, and this process gives them emotional and interactive experiences, provides spiritual value.
+                        </blockquote>
+                        <p>
+                            This definition highlights three essential aspects: the formal structure of rules, the player's capacity of meaningful decision-making, and the emergent experience created by interaction. These aspects reveal games as spaces shaped by both player intention and structural design.
+                        </p>
+                        <p>
+                            The definition also mentions an uncommon and abstract concept "Spiritual value", which requires an explanation: It includes spiritual growth, deeply moving tragic aesthetics, pure happiness, and other things that you personally find valuable on a spiritual level. So, this definition of games depends heavily on you personally. If a product called "game" by most of people but you feel it like nothing more than a waste of time, then under this definition, it isn't a game for you.
+                        </p>
+
+                        <h2 id="concepts">2. Concepts of the Definition Compared with Other Theories</h2>
+                        <p>
+                            In this section, I don't want to compare each theory one by one. Instead, I will use a framework that compares each concept individually and then compares the relevant theories. I believe this method of categorization is clearer and more suitable for refining the definition.
+                        </p>
+
+                        <h3 id="rules">2.1. Rules and Systems</h3>
+                        <p>
+                            Almost every researchers regard rules as a prerequisite for games. D. Parlett (1999) succinctly states, "every game is its rules". C. Crawford (1984) calls a game "A closed formal system". This is echoed by the course textbook author, T. Fullerton et al. (2004) "A closed formal system", and Salen & Zimmerman (2003) "A game is a system in which players engage... defined by rules". J. Juul's (2005) six-point model also begins with "Rules" as its first criterion. J. Huizinga (1938), R. Caillois (2001) and Avedon & Sutton-Smith (1971) also mentioned rules in their definitions.
+                        </p>
+                        <p>
+                            Following the researchers' perspective, a game is defined as a system with rules in my definition. Rules give the game structure, boundaries and logic. Without rules, there is only free play, not a game. If we define games without rules, the definition of a game becomes so broad that it loses its value altogether. Rules are not only restrictions but also the framework that makes decisions meaningful. (When you play a game with children and they don't follow the rules, you get really annoyed.) They tell players what is feasible, creating the conditions for interaction and emotion.
+                        </p>
+                        <p>
+                            And not all things with rules are system. For example, rolling dice to see the number, which includes rule, but it isn't a game when it isn't a system. However, no matter how small a structured and rule-based system is, like a designed frisbee game (we will mention in Borderline Cases), it can still be considered a game while it meets the other criteria of the definition.
+                        </p>
+
+                        <h3 id="goals">2.2. Goals and Outcomes</h3>
+                        <p>
+                            A "goal" or "outcome" is a common thread in most definitions. C.C. Abt (1970) states it as "seeking to achieve their objectives". G. Costikyan (1994) includes the "pursuit of a goal". Stricter definitions focus on the outcome of the goal: Fullerton's (2004) "unequal outcome", Salen & Zimmerman's (2003) "quantifiable outcome"; and Avedon & Sutton-Smith (1971) "disequilibrial outcome". Juul (2005) splits this concept in two: "Variable, quantifiable outcome" and "Value assigned to possible outcomes".
+                        </p>
+                        <p>
+                            By comparing and analyzing those definitions, I adopted "goal" instead of "outcome" as a constraint in my definition. An "outcome" seems more like the objective result of a game, but that's not necessarily what the player looking for. If a player give up before seeing the outcome of the game, does that mean what they played can't be considered a game? I want to emphasize player intention rather than system output. I hope players can use my definition to find their own dynamic understanding of what a game is, setting their own "goals" to establish the meaning of the game. Just like the choices in life, the outcome of a game might not what the player pursuit in the game. Goals in games are not always about winning or losing; they can also be about exploration, creation, or understanding.
+                        </p>
+
+                        <h3 id="player">2.3. Player Participation and Decision-making</h3>
+                        <p>
+                            Many researchers emphasize that games cannot exist without active players making meaningful decisions. C.C. Abt (1970) and Von Neumann & Morgenstern (1944) both describe games as "interactive decision problems", highlighting that participation is a necessary condition for play. G. Costikyan (1994) and C. Crawford (1984) expand this idea by stressing interaction—players continuously make meaningful decisions that affect the game state, turning abstract rules into lived experience. Juul (2005) and Salen & Zimmerman (2003) further connect this process to player effort and meaningful play, arguing that choices must have perceivable consequences that give players a sense of involvement.
+                        </p>
+                        <p>
+                            In my definition, I describe a game as a system "where players make decisions that can affect what happens", which means rules alone do not make a game, but the interaction makes the game alive. Therefore, my view is the similar to theirs: I consider player agency, especially Juul's (2005) idea of "player effort", as the heart of a game. If players' decisions are invalid, it isn't a game, but a film.
+                        </p>
+                        <p>
+                            However, my definition of player might different with some of them. In some of their context, such as G. Costikyan's (1994), "player" may only refer to humans. But in my definition, a player is who can gain emotional and interactive experiences as well as spiritual value. As a result, it could be some sentient animals, like dogs.
+                        </p>
+
+                        <h3 id="conflict">2.4. Conflict and Competition</h3>
+                        <p>
+                            Conflict is discussed by several theorists, but it does not mean competition. Crawford (1984), Fullerton (2004), and Salen & Zimmerman (2003) all list it explicitly. Bernard Suits's (1978) definition, however, provides the most precise articulation: the "voluntary effort to overcome unnecessary obstacles". He explains that the function of "constitutive rules" is to "prohibit use of more efficient in favour of less efficient means". At the same time, competition is also mentioned as a defining concept by Caillois (2001) and Avedon & Sutton-Smith (1971).
+                        </p>
+                        <p>
+                            Suits's (1978) definition perfectly explains the relationship between "rules", "goals", and "decisions" in my definition. The reason a player must "make decisions" is because the rules ("unnecessary obstacles") forbid the simple, decision-less path to the goal. (A console is acceptable, but it cannot be considered part of the in-game rules.)
+                        </p>
+                        <p>
+                            However, I did not use the word "conflict", as it can easily be understood as opposition, excluding cooperative and single-player games. For the same reason, I also don't consider "contest" or "Agôn” as a definition of games, which is too one-sided.
+                        </p>
+
+                        <h3 id="freedom">2.5. Freedom and Voluntariness</h3>
+                        <p>
+                            The notion of freedom is central in many classical definitions of games. Huizinga (1938) defines it as "a free activity standing quite consciously outside 'ordinary' life". Caillois (2001) also placed "freedom" at the very beginning of his definition. At the same time, Suits (1978) and Avedon & Sutton-Smith (1971) regarded playing games as a "voluntary effort".
+                        </p>
+                        <p>
+                            I did not inherit the scholars' view of voluntary. If we are playing a game arranged as part of a course, does that mean it is not a game? ...
+                        </p>
+                        <p>
+                            However, I guess what they actually meant was "willingness." In my definition, this aspect is covered by "spiritual value"—if the player still feels unwilling in the end, they probably cannot gain any "spiritual value."
+                        </p>
+
+                        <h3 id="uncertainty">2.6. Uncertainty and Chance</h3>
+                        <p>
+                            Theories of games often regard uncertainty as a key element that gives play its tension and meaning. Caillois (2001) identified "Alea" (chance), as one of the four fundamental forms of play...
+                        </p>
+                        <p>
+                            In my understanding, randomness is not a necessary condition for games. Many games lack random elements, such as Go or chess. However, uncertainty is essential, reflected in the opponent's unknown next move...
+                        </p>
+
+                        <h3 id="fiction">2.7. Fiction and Magic Circle</h3>
+                        <p>
+                            Many classical theories describe play as existing within a distinct frame separated from ordinary life. Huizinga (1938) introduced the idea of the magic circle...
+                        </p>
+                        <p>
+                            However, I do not believe that the game world and the real world are completely separate. This view no longer applies to many contemporary games...
+                        </p>
+
+                        <h3>2.8. Some one-sided concepts</h3>
+                        <p>
+                            Concepts such as resource management mentioned by Costikyan (1994), or competition mentioned in 2.4, are one-sided views and should not be included in a universal definition.
+                        </p>
+
+                        <h3>2.9. Reflection</h3>
+                        <p>
+                            Based on the comparative analysis above, my definition differs from traditional ones by emphasizing the player's experience.
+                        </p>
+
+                        <h2 id="borderline">3. Borderline Cases</h2>
+
+                        <h3 id="highjump">3.1. High Jump</h3>
+                        <p>
+                            In several classical definitions, the high jump is not considered a game...
+                        </p>
+                        <p>
+                            In my definition, it still depends on the participant's attitude. If an athlete truly enjoys themselves while doing the high jump, who can deny they are playing a game?
+                        </p>
+
+                        <h3 id="sudoku">3.2. Sudoku</h3>
+                        <p>
+                            According to Crawford (1984) and Costikyan (1994), Sudoku falls outside the definition of a game...
+                        </p>
+                        <p>
+                            In my definition, it can be a game if you gain enjoyment from it...
+                        </p>
+
+                        <h3 id="gambling">3.3. Gambling</h3>
+                        <p>
+                            Gambling challenges the idea of non-productivity central to Huizinga (1938) and Caillois (2001)...
+                        </p>
+                        <p>
+                            This issue depends on the type of gambling...
+                        </p>
+
+                        <h3 id="ai-chess">3.4. AI vs AI Chess</h3>
+                        <p>
+                            Most theorists... agree that when two artificial agents play chess without human involvement, no real game occurs...
+                        </p>
+                        <p>
+                            It also not a game in my definition...
+                        </p>
+
+                        <h3 id="sims">3.5. The Sims</h3>
+                        <p>
+                            Definitions by Caillois (2001), Juul (2005), and Suits (1978) tend to exclude The Sims due to its lack of fixed goals...
+                        </p>
+                        <p>
+                            So in my definition, it could be a game, if you define your own goal in the game.
+                        </p>
+
+                        <h3 id="rpgs">3.6. Pen & Paper RPGs</h3>
+                        <p>
+                            Role-playing games occupy an ambiguous space...
+                        </p>
+                        <p>
+                            That is absolutely a game in my definition. Unlike the rigid definitions of the past, I focus on goals and spiritual value, both of which it fulfills.
+                        </p>
+
+                        <h3 id="dog">3.7. Designed Dog Catching a Frisbee</h3>
+                        <p>
+                            Crawford (1984), Costikyan (1994), Abt (1970), and Suits (1978) would not consider a dog catching a frisbee a game...
+                        </p>
+                        <p>
+                            In my opinion, dog could be. As a sentient creature, dog can understand the simple rules...
+                        </p>
+
+                        <h3 id="interactive">3.8. Interactive Movies</h3>
+                        <p>
+                            Interactive movies occupy a complex position in game theory...
+                        </p>
+                        <p>
+                            My view is similar to that of Juul (2005) and Fullerton (2004): interactive experiences where decisions alter outcomes can be considered as games in my definition.
+                        </p>
+
+                        <h3 id="poor-design">3.9. Poorly Designed "Game"</h3>
+                        <p>
+                            If a game meets all the definitions but feels like pure torture to you, while others find joy in it, is it still a game?
+                        </p>
+                        <p>
+                            But not in my definition. So, this is merely a boundary issue of my definition while my definition grants users full agency to reject such a game.
+                        </p>
+
+                    </div>
+
+                    <!-- Footer References -->
+                    <div id="references" class="mt-24 pt-12 border-t border-gray-200 text-sm text-gray-500">
+                        <h4 class="font-bold text-ink uppercase tracking-widest mb-6 flex items-center">
+                            <i data-lucide="book-open" class="w-4 h-4 mr-2"></i> References
+                        </h4>
+                        <ul class="space-y-4">
+                            <li class="pl-4 border-l-2 border-gray-100"><span class="font-bold text-ink">Abt, C. C. (1970).</span> Serious games. Viking Press.</li>
+                            <li class="pl-4 border-l-2 border-gray-100"><span class="font-bold text-ink">Avedon, E. M., & Sutton-Smith, B. (1971).</span> The study of games. John Wiley & Sons.</li>
+                            <li class="pl-4 border-l-2 border-gray-100"><span class="font-bold text-ink">Caillois, R. (2001).</span> Man, play and games. University of Illinois Press.</li>
+                            <li class="pl-4 border-l-2 border-gray-100"><span class="font-bold text-ink">Costikyan, G. (1994).</span> I have no words & i must design. Tampere University Press.</li>
+                            <li class="pl-4 border-l-2 border-gray-100"><span class="font-bold text-ink">Crawford, C. (1984).</span> The art of computer game design. Osborne/McGraw-Hill.</li>
+                            <li class="pl-4 border-l-2 border-gray-100"><span class="font-bold text-ink">Fullerton, T. (2004).</span> Game design workshop. Morgan Kaufmann.</li>
+                            <li class="pl-4 border-l-2 border-gray-100"><span class="font-bold text-ink">Huizinga, J. (1938).</span> Homo ludens. Routledge & Kegan Paul.</li>
+                            <li class="pl-4 border-l-2 border-gray-100"><span class="font-bold text-ink">Juul, J. (2005).</span> Half-real. MIT Press.</li>
+                            <li class="pl-4 border-l-2 border-gray-100"><span class="font-bold text-ink">Parlett, D. (1999).</span> The oxford history of board games. Oxford University Press.</li>
+                            <li class="pl-4 border-l-2 border-gray-100"><span class="font-bold text-ink">Salen, K., & Zimmerman, E. (2003).</span> Rules of play. MIT Press.</li>
+                            <li class="pl-4 border-l-2 border-gray-100"><span class="font-bold text-ink">Suits, B. (1978).</span> The grasshopper. University of Toronto Press.</li>
+                            <li class="pl-4 border-l-2 border-gray-100"><span class="font-bold text-ink">von Neumann, J., & Morgenstern, O. (1944).</span> Theory of games and economic behavior. Princeton University Press.</li>
+                        </ul>
+                    </div>
+
+                </article>
+            </main>
+            
+            <!-- 3. Right Sidebar (Recent Thoughts) -->
+            <aside class="hidden lg:block">
+                <div class="pt-4 border-l border-gray-200 pl-6">
+                    <h3 class="text-xs font-bold uppercase tracking-widest text-gray-400 mb-6 flex items-center">
+                        <i data-lucide="message-square" class="w-4 h-4 mr-2"></i> Recent Thoughts
+                    </h3>
+                    
+                    <!-- Container for dynamic articles -->
+                    <div id="recent-articles-list" class="space-y-6"></div>
+
+                    <!-- Tags -->
+                    <div class="mt-10 pt-8 border-t border-gray-100">
+                        <h3 class="text-xs font-bold uppercase tracking-widest text-gray-400 mb-4">Focus Areas</h3>
+                        <div class="flex flex-wrap gap-2">
+                            <a href="#" class="text-xs text-gray-500 bg-gray-100 px-2 py-1 rounded-sm hover:bg-accent hover:text-white transition-colors">#Definitions</a>
+                            <a href="#" class="text-xs text-gray-500 bg-gray-100 px-2 py-1 rounded-sm hover:bg-accent hover:text-white transition-colors">#Philosophy</a>
+                            <a href="#" class="text-xs text-gray-500 bg-gray-100 px-2 py-1 rounded-sm hover:bg-accent hover:text-white transition-colors">#Ontology</a>
+                        </div>
+                    </div>
+
+                </div>
+            </aside>
+
+        </div>
+    </div>
+
+    <!-- Script for Dynamic Article Loading -->
+    <script>
+        function renderRecentArticles() {
+            const container = document.getElementById('recent-articles-list');
+            if (!container) return;
+
+            // 检查外部数据是否加载
+            if (typeof recentArticlesData === 'undefined') {
+                console.error("Error: recentArticlesData is not defined.");
+                container.innerHTML = "<p class='text-xs text-red-500'>Failed to load recent thoughts.</p>";
+                return;
+            }
+
+            // Limit to max 10 items
+            const displayData = recentArticlesData.slice(0, 10);
+
+            const html = displayData.map(article => `
+                <a href="${article.link}" class="recent-link block group">
+                    <div class="h-24 bg-gray-100 rounded-sm mb-3 overflow-hidden relative">
+                        <img src="${article.image}" alt="${article.title}" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105 opacity-80 group-hover:opacity-100">
+                    </div>
+                    <span class="text-[10px] font-bold ${article.categoryColor} uppercase tracking-wider mb-1 block">${article.category}</span>
+                    <h4 class="text-sm font-bold text-ink leading-snug transition-colors">${article.title}</h4>
+                </a>
+            `).join('');
+
+            container.innerHTML = html;
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            renderRecentArticles();
+            lucide.createIcons();
+        });
+    </script>
+</body>
+</html>

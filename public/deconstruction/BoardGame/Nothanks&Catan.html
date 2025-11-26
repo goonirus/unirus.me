@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Analysis of Design Structures in No Thanks! and Catan</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Sans+SC:wght@300;400;500;700&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+    
+    <!-- 引入外部数据文件 -->
+    <script src="../decon_artical.js"></script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: { 
+                        sans: ['Inter', 'sans-serif'],
+                        serif: ['Playfair Display', 'serif'],
+                    },
+                    colors: { 
+                        'paper': '#fdfbf7', 
+                        'ink': '#1a1a1a', 
+                        'accent': '#c2410c',
+                        'secondary': '#f3f4f6'
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* 防止页面出现不必要的横向滚动条 */
+        body { 
+            background-color: #fdfbf7; 
+            color: #1a1a1a; 
+            overflow-x: hidden; 
+        }
+        
+        /* 侧边栏样式 */
+        .sidebar-sticky {
+            position: sticky;
+            top: 6rem;
+            /* 之前移除了高度限制，让其自然生长 */
+        }
+
+        /* 文章排版优化 */
+        .prose p { margin-bottom: 1.5em; line-height: 1.8; color: #374151; font-family: 'Inter', sans-serif; font-size: 1.05rem; }
+        .prose h2 { font-family: 'Inter', sans-serif; font-weight: 700; font-size: 1.75rem; margin-top: 3.5rem; margin-bottom: 1.5rem; color: #1a1a1a; border-bottom: 1px solid #e5e7eb; padding-bottom: 0.5rem; scroll-margin-top: 100px; }
+        .prose h3 { font-family: 'Inter', sans-serif; font-weight: 600; font-size: 1.35rem; margin-top: 2.5rem; margin-bottom: 1rem; color: #1a1a1a; scroll-margin-top: 100px; }
+        .prose ul { list-style-type: disc; padding-left: 1.5rem; margin-bottom: 1.5rem; color: #374151; }
+        .prose li { margin-bottom: 0.5rem; }
+        
+        /* Pattern 样式 */
+        .pattern { 
+            text-transform: uppercase; 
+            font-weight: 400;
+            font-family: inherit; 
+            color: inherit; 
+        }
+
+        /* 图片占位符样式 */
+        .img-placeholder {
+            width: 100%;
+            background-color: transparent; /* 或直接删这行 */
+            border: none;                  /* 去掉虚线 */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: #9ca3af;
+            margin: 2rem 0;                /* 想缩小上下空白可以减小这个 */
+            border-radius: 0.5rem;
+            padding: 0;                    /* 不想让图离边缘太远可调这里 */
+        }
+        .img-label {
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 0.5rem;
+            color: #6b7280;
+            text-align: center;
+        }
+        .figure-container {
+            margin-bottom: 2rem;
+        }
+        .figure-caption {
+            text-align: center;
+            font-size: 0.9rem;
+            color: #6b7280;
+            margin-top: -2rem;
+            margin-bottom: 3rem;
+            font-style: italic;
+        }
+        .figure-number {
+            font-weight: 600;
+            font-style: normal;
+            color: #374151;
+        }
+        
+        /* Patterns 列表样式 */
+        .pattern-list ul {
+            columns: 2;
+            -webkit-columns: 2;
+            -moz-columns: 2;
+        }
+        @media (max-width: 768px) {
+            .pattern-list ul {
+                columns: 1;
+            }
+        }
+
+        /* 目录链接样式 */
+        .toc-link {
+            display: block;
+            padding: 0.5rem 0;
+            color: #6b7280;
+            text-decoration: none;
+            transition: all 0.2s;
+            font-size: 0.9rem;
+            border-left: 2px solid transparent;
+            padding-left: 1rem;
+        }
+        .toc-link:hover {
+            color: #c2410c;
+            border-left-color: #c2410c;
+            background-color: rgba(194, 65, 12, 0.05);
+        }
+        
+        /* Recent Articles 侧边栏链接 */
+        .recent-link:hover h4 { color: #c2410c; }
+        
+        /* Custom scrollbar for sidebars */
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #e5e7eb;
+            border-radius: 3px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #d1d5db;
+        }
+    </style>
+</head>
+<body class="font-sans antialiased">
+
+    <!-- Navigation -->
+    <nav class="fixed w-full z-50 top-0 bg-paper/90 backdrop-blur-sm border-b border-gray-200/50 h-20 flex items-center px-6 justify-between z-50">
+        <div class="flex items-center">
+            <a href="../decon_index.html" class="flex items-center text-gray-500 hover:text-accent transition-colors group mr-8">
+                <i data-lucide="arrow-left" class="w-5 h-5 mr-2 group-hover:-translate-x-1 transition-transform"></i>
+                Back to Archive
+            </a>
+        </div>
+        
+        <div class="hidden md:flex items-center space-x-2 text-xs font-bold uppercase tracking-widest text-gray-400">
+            <span class="w-2 h-2 rounded-full bg-accent"></span>
+            <span>Comparative Analysis</span>
+        </div>
+    </nav>
+
+    <!-- Main Layout Container -->
+    <div class="pt-20 w-full max-w-[95%] mx-auto px-6 py-12">
+        
+        <div class="grid grid-cols-1 lg:grid-cols-[3fr_11fr_2fr] gap-12">
+        
+            <!-- 1. Left Sidebar (Table of Contents) -->
+            <aside class="hidden lg:block">
+                <div class="sidebar-sticky pt-4 border-r border-gray-200 pr-6">
+                    <h3 class="text-xs font-bold uppercase tracking-widest text-gray-400 mb-6 flex items-center">
+                        <i data-lucide="list" class="w-4 h-4 mr-2"></i> Contents
+                    </h3>
+                    <nav class="space-y-1">
+                        <a href="#theoretical-tools" class="toc-link">1. Theoretical Tools Used</a>
+                        <a href="#game-description" class="toc-link">2. Game Description</a>
+                        <a href="#player-engagement" class="toc-link">3. Player Engagement</a>
+                        <a href="#game-pace" class="toc-link">4. Game Pace</a>
+                        <a href="#player-interaction" class="toc-link">5. Player Interaction</a>
+                        <a href="#achievement" class="toc-link">6. A Sense of Achievement</a>
+                        <a href="#limitations" class="toc-link">7. Limitations & Reflections</a>
+                        <a href="#references" class="toc-link">References</a>
+                    </nav>
+                </div>
+            </aside>
+
+            <!-- 2. Main Content (Middle) -->
+            <main>
+                <article>
+                    
+                    <!-- Article Header -->
+                    <header class="mb-12 border-b border-gray-200 pb-10">
+                        <div class="inline-flex items-center justify-center px-3 py-1 mb-6 border border-orange-200 bg-orange-50 text-orange-600 text-xs font-bold uppercase tracking-widest rounded-full">
+                            System Design
+                        </div>
+                        <h1 class="text-3xl md:text-5xl font-bold text-ink leading-tight mb-6">
+                            Analysis of Design Structures in <span class="italic text-accent">No Thanks!</span> and <span class="italic text-accent">Catan</span>
+                        </h1>
+                        
+                        <div class="flex items-center gap-6 mt-6 text-sm text-gray-400 font-mono">
+                            <span>Nov 2025</span>
+                            <span>•</span>
+                            <span>Donglin Yan & Huage Zhang</span>
+                        </div>
+                    </header>
+
+                    <!-- Mobile Table of Contents -->
+                    <div class="lg:hidden mb-12 p-6 bg-white border border-gray-200 rounded-sm shadow-sm">
+                        <h3 class="text-xs font-bold uppercase tracking-widest text-gray-400 mb-4 flex items-center">
+                            <i data-lucide="list" class="w-4 h-4 mr-2"></i> Contents
+                        </h3>
+                        <ul class="space-y-2 text-sm text-gray-600">
+                            <li><a href="#theoretical-tools" class="hover:text-accent border-b border-transparent hover:border-accent">1. Theoretical Tools Used</a></li>
+                            <li><a href="#game-description" class="hover:text-accent border-b border-transparent hover:border-accent">2. Game Description</a></li>
+                            <li><a href="#player-engagement" class="hover:text-accent border-b border-transparent hover:border-accent">3. Player Engagement</a></li>
+                            <li><a href="#game-pace" class="hover:text-accent border-b border-transparent hover:border-accent">4. Game Pace</a></li>
+                            <li><a href="#player-interaction" class="hover:text-accent border-b border-transparent hover:border-accent">5. Player Interaction</a></li>
+                            <li><a href="#achievement" class="hover:text-accent border-b border-transparent hover:border-accent">6. A Sense of Achievement</a></li>
+                            <li><a href="#limitations" class="hover:text-accent border-b border-transparent hover:border-accent">7. Limitations & Reflections</a></li>
+                        </ul>
+                    </div>
+
+                    <!-- Content -->
+                    <div class="prose prose-lg max-w-none">
+                        <!-- 1. Theoretical Tools -->
+                        <h2 id="theoretical-tools">1. Theoretical Tools Used</h2>
+                        <ul>
+                            <li><strong>MDA</strong> (Hunicke et al., 2004): represented with superscripts in the paper.</li>
+                            <li><strong>Gameplay design patterns:</strong> represented in ALL CAPS in the paper.</li>
+                            <li><strong>Machinations diagrams</strong> for modeling progression toward end states and feedback loop.</li>
+                        </ul>
+
+                        <!-- 2. Game Description -->
+                        <h2 id="game-description">2. Game Description</h2>
+                        
+                        <h3>2.1. Gameplay Patterns Overview</h3>
+                        <p>To enable the use of academic concepts when describing our games and to support the further analysis, we adopt Gameplay Design Patterns to standardize the terminology we will use. Throughout the rest of this paper, these patterns will be written in ALL CAPS for consistency.</p>
+                        <p>Patterns in the Gameplay design patterns Wiki (Chalmers University of Technology):</p>
+                        <div class="pattern-list text-sm bg-gray-50 p-6 rounded-lg mb-6">
+                            <ul>
+                                <li><span class="pattern">Area Control</span></li>
+                                <li><span class="pattern">Betting</span></li>
+                                <li><span class="pattern">Cards</span></li>
+                                <li><span class="pattern">Collections</span></li>
+                                <li><span class="pattern">Construction</span></li>
+                                <li><span class="pattern">Dice</span></li>
+                                <li><span class="pattern">End State Scoring</span></li>
+                                <li><span class="pattern">First Player Advantages</span></li>
+                                <li><span class="pattern">Game Over</span></li>
+                                <li><span class="pattern">Luck</span></li>
+                                <li><span class="pattern">Negative Feedback Loops</span></li>
+                                <li><span class="pattern">Player Balance</span></li>
+                                <li><span class="pattern">Player Unpredictability</span></li>
+                                <li><span class="pattern">Positive Feedback Loops</span></li>
+                                <li><span class="pattern">PvP</span></li>
+                                <li><span class="pattern">Randomness</span></li>
+                                <li><span class="pattern">Replayability</span></li>
+                                <li><span class="pattern">Resource Management</span></li>
+                                <li><span class="pattern">Resources</span></li>
+                                <li><span class="pattern">Scores</span></li>
+                                <li><span class="pattern">Startgame</span></li>
+                                <li><span class="pattern">Tactical Planning</span></li>
+                                <li><span class="pattern">Tiles</span></li>
+                                <li><span class="pattern">Trading</span></li>
+                                <li><span class="pattern">Turn Taking</span></li>
+                                <li><span class="pattern">Uncertainty of Information</span></li>
+                                <li><span class="pattern">Winning by Ending Gameplay</span></li>
+                            </ul>
+                        </div>
+                        <p class="mt-4">Patterns defined by ourselves:</p>
+                        <ul class="text-sm bg-gray-50 p-6 rounded-lg mb-6">
+                            <li><span class="pattern font-bold">Tokens</span>: A physical or digital piece that represents something in the game.</li>
+                            <li><span class="pattern font-bold">Card sequences</span>: A set of adjacent number <span class="pattern">Cards</span>.</li>
+                            <li><span class="pattern font-bold">Downtime</span>: The time you spend waiting while other players take their turns.</li>
+                            <li><span class="pattern font-bold">Serpentine order</span>: An order moves back and forth like a snake.</li>
+                            <li><span class="pattern font-bold">Fair round</span>: Finish the round so all players have an equal number of turns.</li>
+                            <li><span class="pattern font-bold">Robbery</span>: Players can prevent other players from acquiring resources or stealing resources from other players.</li>
+                        </ul>
+
+                        <h3>2.2. <em>No Thanks!</em></h3>
+                        <p><em>No Thanks!</em> is a minimalist push-your-luck <span class="pattern">card</span> game built around a shared deck, an amount of <span class="pattern">tokens</span> as <span class="pattern">RESOURCES</span>, and A simple <span class="pattern">betting</span>-based accept–reject mechanism.</p>
+                        <p>At the <span class="pattern">Startgame</span>, nine <span class="pattern">cards</span> are removed <span class="pattern">Randomness</span>, and each players get 11 <span class="pattern">tokens</span>.</p>
+                        <p>Players <span class="pattern">TAKE TURNS</span> to play this game. First player revealing the top number-<span class="pattern">card</span> and must either take it—an <span class="pattern">IRREVERSIBLE EVENT</span> that adds its value to their <span class="pattern">scores</span> or refuse it by using a <span class="pattern">token</span>. The <span class="pattern">card</span> you reject, along with the <span class="pattern">tokens</span> accumulated on it, will be passed to the next player. This <span class="pattern">card</span> will circulate among the players until someone takes it with all the <span class="pattern">tokens</span> on it and then flips the next <span class="pattern">card</span>.</p>
+                        <p>When the deck is exhausted, the <span class="pattern">game over</span> occurs and <span class="pattern">END STATE SCORING</span> is triggered: Each player’s <span class="pattern">score</span> is the sum of their number <span class="pattern">card</span> minus their tokens, with <span class="pattern">Card sequences</span> only counting the value of the smallest <span class="pattern">card</span>. The player with the lowest <span class="pattern">scores</span> wins in the end.</p>
+
+                        <!-- Figure 1 -->
+                        <div class="figure-container">
+                            <div class="img-placeholder bg-gray-50 border-gray-300">
+                                <img
+                                    src="../../../picture/deconstruction/BoardGame/No&Catan/Nothanks_MDA.png"
+                                    alt="Nothanks_MDA"
+                                    class="w-full h-auto object-contain"
+                                />
+                            </div>
+                            <div class="figure-caption">
+                                <span class="figure-number">Figure 1:</span> The MDA and pattern diagram of <em>No thanks</em>
+                            </div>
+                        </div>
+
+                        <h3>2.3. <em>Catan</em></h3>
+                        <p>This <span class="pattern">MULTIPLAYER GAME</span> has players acting as pioneers focused on <span class="pattern">CONSTRUCTION</span>, <span class="pattern">COLLECTION</span>, and expansion. They build settlements, cities, and roads, choose <span class="pattern">COOPERATION</span> or <span class="pattern">COMPETITION</span>, and aim to reach 10 victory points to <span class="pattern">WIN BY ENDING GAMEPLAY</span>. Players gain <span class="pattern">resources</span> through <span class="pattern">DICE</span> rolls, handle <span class="pattern">RANDOMNESS</span>, practice <span class="pattern">RESOURCE MANAGEMENT</span>, make <span class="pattern">AREA CONTROL</span> decisions, engage in <span class="pattern">TRADING</span>, and use or avoid <span class="pattern">ROBBERY</span> to affect opponents.</p>
+                        <p>Each turn begins with rolling two <span class="pattern">DICE</span> to determine which <span class="pattern">Tiles</span> produce <span class="pattern">Resources</span>. Rolling a 7 activates the robber, blocking a <span class="pattern">TILES</span> and allowing the player to hinder others. Otherwise, adjacent settlements gain 1 <span class="pattern">Resource</span> and cities gain 2. The player may then initiate <span class="pattern">TRADE</span>, exchanging <span class="pattern">Resources</span> with the supplier at 4:1, negotiating any ratio with other players. Next, the player chooses whether to proceed with <span class="pattern">CONSTRUCTION</span>. Settlements and cities increase income and points (cities require upgrading from settlements); roads expand building options but give no points; development <span class="pattern">Cards</span> provide single-use abilities.</p>
+                        <p>Figure 2 illustrates the relevant important patterns and their relations.</p>
+
+                        <!-- Figure 2 -->
+                        <div class="figure-container">
+                            <div class="img-placeholder bg-gray-50 border-gray-300">
+                                <img
+                                    src="../../../picture/deconstruction/BoardGame/No&Catan/Catan_Pattern_Diagram.png"
+                                    alt="Catan_Pattern_Diagram"
+                                    class="w-full h-auto object-contain"
+                                />
+                            </div>
+                            <div class="figure-caption">
+                                <span class="figure-number">Figure 2:</span> The pattern diagram of Catan
+                            </div>
+                        </div>
+
+                        <!-- 3. Player Engagement -->
+                        <h2 id="player-engagement">3. Player Engagement</h2>
+
+                        <h3>3.1. <em>No Thanks!</em></h3>
+                        <p><strong><span class="pattern">Downtime</span></strong></p>
+                        <p><em>No Thanks!</em> maintains player engagement by <span class="pattern">betting</span> and <span class="pattern">Tactical PLANNING</span> with high decision density on minimal rules. Because turns are fast and the choice space is small but meaningful, players keep making decision with short <span class="pattern">Downtime</span>.</p>
+                        
+                        <p><strong><span class="pattern">token</span> <sup>M</sup> → <span class="pattern">Resource Management</span> <sup>D</sup> and <span class="pattern">NEGATIVE FEEDBACK LOOPS</span></strong></p>
+                        <p>As Figure 1 shows, the <span class="pattern">token</span> system uses <span class="pattern">RESOURCE MANAGEMENT</span> and <span class="pattern">RESOURCE CAPS</span> to make every decision feel valuable. Each “No thanks” spends a limited number of <span class="pattern">tokens</span>, turning refuse into a carefully weighted choice: on the one hand, the player can temporarily avoid taking a high-value penalty <span class="pattern">Card</span>; on the other hand, they reduce their flexibility in future turns. As more <span class="pattern">tokens</span> are placed on the same <span class="pattern">Card</span>, that <span class="pattern">Card</span> becomes increasingly valuable to players.</p>
+
+                        <!-- Figure 3 -->
+                        <div class="figure-container">
+                            <div class="img-placeholder bg-gray-50 border-gray-300">
+                                <img
+                                    src="../../../picture/deconstruction/BoardGame/No&Catan/Nothanks_mechinations.png"
+                                    alt="Nothanks_mechinations"
+                                    class="w-full h-auto object-contain"
+                                />
+                            </div>
+                            <div class="figure-caption">
+                                <span class="figure-number">Figure 3:</span> The feedback loop and game end condition in <em>No Thanks !</em>
+                            </div>
+                        </div>
+
+                        <p>This structure effectively creates a kind of <span class="pattern">NEGATIVE FEEDBACK LOOPS</span> in the orange part of Figure 3 within the flow of play. When players have many <span class="pattern">tokens</span>, they are more willing to refuse <span class="pattern">cards</span> and reduce their token supply; at the same time, the more tokens accumulate on a <span class="pattern">Card</span>, which means token in players' hands decrease, players tend to take it even its <span class="pattern">Scores</span> value is high, because the tokens partly offset for the penalty. This tends to pull the token pile toward a <span class="pattern">Player Balance</span>.</p>
+                        <p>In players side, players who frequently use tokens to avoid risk are more likely to run out later and be forced to take suffocating <span class="pattern">Cards</span>, and receive some tokens as compensation. In the short term, this restores part of their ability to choose, bringing the situation back to a relatively controllable range.</p>
+                        
+                        <p><strong><span class="pattern">randomness</span></strong></p>
+                        <p><span class="pattern">randomness</span> and <span class="pattern">Uncertainty of Information</span> information help sustain interest over repeated plays. Removing nine <span class="pattern">Cards</span> from the deck at the start introduces <span class="pattern">UNCERTAINTY OF INFORMATION</span>: perhaps you had planned everything well, but an unknown discarded <span class="pattern">Card</span> could completely ruin your overall strategy.</p>
+
+                        <h3>3.2. <em>Catan</em></h3>
+                        <p><strong><span class="pattern">Dice</span> <sup>M</sup> → <span class="pattern">Randomness</span> <sup>D</sup> → <span class="pattern">Luck</span> <sup>A</sup></strong></p>
+                        <p>The game has each player take turns rolling the <span class="pattern">Dice</span> and the result does not affect only the player who rolls, it affects everyone. Based on the <span class="pattern">Dice</span> as <strong>Mechanics</strong>, it leads to <span class="pattern">Randomness</span> as <strong>Dynamics</strong>, and finally generate the feeling of <span class="pattern">Luck</span> which is one kind of <strong>Aesthetics</strong>. As a result, all players must pay attention, keeping them consistently engaged. Because the outcome is purely random, players naturally hope for a result that benefits them. And even if it doesn’t, it doesn’t matter, the next random roll comes immediately, giving them a new chance.</p>
+                        
+                        <p><strong><span class="pattern">Area Control</span></strong></p>
+                        <p>This is one of the most important decisions in the game. Players must choose which nodes to occupy and how to place their roads. To do this, they need to constantly watch how the <span class="pattern">Tiles</span> change and whether other players are approaching the nodes they intend to claim. They must also consider how to build their own roads to reach those target nodes. This continuously shifting situation keeps players thinking and making decisions, which in turn sustains their engagement.</p>
+
+                        <h3>3.3. Comparison</h3>
+                        <p>This two game both introduce <span class="pattern">randomness</span> to keep players exception to the match, but the way and the impact of <span class="pattern">randomness</span> are different. In <em>Catan</em>, the main influence on the game state comes from <span class="pattern">Dice</span>-driven internal <span class="pattern">randomness</span>, which adds uncertainty but also reduces the weight of player decisions and creates a sense of losing control. The internal <span class="pattern">randomness</span> in <em>No Thanks!</em> comes from the revealed <span class="pattern">Cards</span>, which is generally fair and manageable for all players. The main <span class="pattern">randomness</span> in <em>No Thanks!</em> is an external <span class="pattern">randomness</span> - the nine discarded <span class="pattern">Cards</span>, which are the biggest strategic uncertainty. This kind of <span class="pattern">randomness</span> increases the amount of player interaction and also enhances <span class="pattern">Replayability</span>. <em>Catan</em> also has external <span class="pattern">randomness</span> — the placement of the starting map <span class="pattern">Tiles</span>. This is a good design choice that increases <span class="pattern">Replayability</span> without reducing strategic depth. The map setup variation in <em>Gaia Project</em> is similar to this.</p>
+                        <p>Both games make use of <span class="pattern">RESOURCE MANAGEMENT</span>, but the feedback structures are fundamentally different. In <em>Catan</em>, <span class="pattern">Resources</span> primarily create a snowballing <span class="pattern">POSITIVE FEEDBACK LOOP</span> that allows players to expand their advantage and move toward victory. In <em>No Thanks!</em>, tokens instead function as a kind of <span class="pattern">NEGATIVE FEEDBACK LOOPS</span>: keeping too many tokens until the end is no longer valuable, but running out of tokens is also dangerous, so managing the count of <span class="pattern">token</span> becomes crucial for players.</p>
+                        <p>Like <em>No Thanks!</em>, in order to keep players constantly focused, most well-designed party games try to minimize <span class="pattern">Downtime</span> to create a fast-paced and cheerful atmosphere, from simple as <em>Scout</em> to more complex as <em>Heat: Pedal to the Metal</em>. In contrast, games with higher strategic depth generally find this much harder to achieve. Besides, although Catan’s rules are not difficult, the actions are quite numerous, which often leads to very long downtime in beginner games and generate a very poor player experience.</p>
+
+                        <!-- 4. Game Pace -->
+                        <h2 id="game-pace">4. Game Pace</h2>
+
+                        <h3>4.1. <em>No Thanks!</em></h3>
+                        <p>In <em>No Thanks!</em>, the game ends when the draw deck has been completely exhausted, as illustrated in the red part of Figure 3. If we treat the process from revealing a <span class="pattern">Card</span> until that <span class="pattern">Card</span> is finally taken by some player as one macro-turn, the game is effectively capped at 24 such turns. This places an overall cap on the game’s total duration.</p>
+                        <p>Within each of these macro-turns, the amount of play that can happen is also tightly controlled. The current <span class="pattern">Card</span> can only circulate around the table through a sequence of simple pass-or-take decisions, and this binary decision involves no additional multi-step action chains. So with the quickly decisions, <span class="pattern">downtime</span> stays short, which fit with the fast-paced Principle of party games.</p>
+
+                        <h3>4.2. <em>Catan</em></h3>
+                        <p><strong><span class="pattern">Winning by Ending Gameplay</span>, <span class="pattern">Main Goal</span> and <span class="pattern">Positive Feedback Loops</span></strong></p>
+                        <p>Players have clear goals and a clear win condition: reaching 10 <span class="pattern">Scores</span>. As each match progresses, someone will eventually hit 10 points first, so the game reliably ends around the expected timeframe. But, having that goal alone isn’t enough. If players simply gained <span class="pattern">Resources</span> at a constant rate, they would quickly get bored because the pace of change would be too uniform. However, as Figure 4 shows, the game builds a Positive Feedback Loop to resource production: the more buildings a player constructs, the faster they generate <span class="pattern">Resources</span>, and the easier it becomes to construct even more buildings. As rounds progress, <span class="pattern">Construction</span> accelerates, and the pace of change increases. This ensures the game won’t remain in a stable equilibrium; instead, it will escalate toward an increasingly unbalanced state over time, eventually producing a winner.</p>
+
+                        <!-- Figure 4 -->
+                        <div class="figure-container">
+                            <div class="img-placeholder bg-gray-50 border-gray-300">
+                                <img
+                                    src="../../../picture/deconstruction/BoardGame/No&Catan/Catan_Mechination.png"
+                                    alt="Catan_Mechination"
+                                    class="w-full h-auto object-contain"
+                                />
+                            </div>
+                            <div class="figure-caption">
+                                <span class="figure-number">Figure 4:</span> The Positive Feedback Loop of Catan
+                            </div>
+                        </div>
+
+                        <h3>4.3. Comparison</h3>
+                        <p><em>No Thanks!</em> uses a linear, fixed number of turns, controlling the game’s duration through a simplified binary decision structure. <em>Love Letter</em> and <em>6 nimmt! Plus</em> also use a similar approach. Besides, Catan ends when someone achieves victory, so in theory the number of rounds in Catan can be unlimited. However, because of the <span class="pattern">positive feedback loops</span>, the speed of <span class="pattern">Resource</span> acquisition keeps accelerating, creating a converging pace that eventually brings the game to an end.</p>
+
+                        <!-- 5. Player Interaction -->
+                        <h2 id="player-interaction">5. Player Interaction</h2>
+
+                        <h3>5.1. <em>No Thanks!</em></h3>
+                        <p><strong><span class="pattern">Player Unpredictability</span> <sup>D</sup> → <span class="pattern">Tactical Planning</span> <sup>D</sup> → <span class="pattern">End State Scoring</span> <sup>D</sup></strong></p>
+                        <p>In <em>No Thanks!</em>, all decisions are made in a fully shared <span class="pattern">GAME BOARD</span> without a individual area. This common focus means that, when deciding whether to accept or refuse the <span class="pattern">Card</span>, players must not only evaluate its face value, but also use the same public information to infer other players' risk tolerance and likely responses, creating a continuous psychological mind game, just as shown in Figure 1. In some situations, passing means potentially gaining one token from each opponent if the <span class="pattern">Card</span> eventually returns, but there is also the risk that the <span class="pattern">Card</span> you want might be taken by an opponent.</p>
+                        <p>At the same time, the rule that <span class="pattern">Card sequence</span> only score as their lowest value turns some card-taking decisions from merely “losing fewer points” into genuine structural optimizations of the entire <span class="pattern">Card</span> set. An unattractive <span class="pattern">Card</span> might immediately decrease one's expected <span class="pattern">Scores</span> if it can be merged into an existing sequence. So players may sacrifice their own benefit to cut dowm someone else’s <span class="pattern">Card</span> sequence to prevent them from gaining more advantage. However, in this lose-lose situation, the only ones who benefit are the other players who haven't participate in. Therefore, when you decide to break someone else’s sequence, you must also consider whether other players are willing to intervene, and whether the player holding the sequence might push their <span class="pattern">luck</span> for one more round of tokens. In this intense psychological game, whether your decisions are correct depends entirely on your opponents’ choices. This pushes interaction to its extreme.</p>
+
+                        <h3>5.2. <em>Catan</em></h3>
+                        <p><strong><span class="pattern">Resources</span> <sup>M</sup> → <span class="pattern">Trading</span>/<span class="pattern">Area Control</span> <sup>D</sup> → <span class="pattern">Cooperation</span>/<span class="pattern">Competition</span> <sup>A</sup></strong></p>
+                        <p>As Figure 2 shows, <span class="pattern">Resources</span> are the basic Mechanics, and using <span class="pattern">trade</span> and <span class="pattern">Area Control</span> as Dynamics, the game generates <span class="pattern">cooperation</span> and the feeling of <span class="pattern">Competition</span>. <span class="pattern">Trading</span> is one of the most engaging parts of the game. You must negotiate with other players and convince them to use <span class="pattern">Resources</span> to <span class="pattern">trade</span> with you. Players can also lie—making promises and then breaking them. This interaction forces players to think: Should I trade? Will this help the other player surpass me? These questions make the decision-making process fun, and the social interaction happens naturally in the thinking. On the other hand, about <span class="pattern">Area Control</span>, because players cannot occupy the same node, and the spaces around a building cannot be occupied, <span class="pattern">COMPETITION</span> naturally forms around valuable nodes. Players must rush to claim favorable positions while blocking others whenever possible. So, these dynamics works together to let players feel they are both in <span class="pattern">cooperation</span> and <span class="pattern">COMPETITION</span>.</p>
+                        
+                        <p><strong><span class="pattern">Robbery</span></strong></p>
+                        <p>This is another highly entertaining system. When a player rolls a 7, they can move the robber to any tile to block its resource production and steal one <span class="pattern">Resource</span> from a player adjacent to that tile. This makes players consider which <span class="pattern">Resources</span> they can take advantage of and which <span class="pattern">Resources</span> they should block to hinder others. Creates more direct <span class="pattern">COMPETITION</span> between players.</p>
+
+                        <h3>5.3. Comparison</h3>
+                        <p>No Thanks! offers players a purely competitive form of interaction. Even when multiple players need to work together to stop someone who is about to win, this doesn’t create real <span class="pattern">cooperation</span>—because each player is often unwilling to take on extra penalties just to block the leading player.</p>
+                        <p>In Catan, although everyone is ultimately trying to win, <span class="pattern">trading</span> creates opportunities for mutual benefit. Interaction is no longer just about hindering others; it can genuinely help both sides develop. As a result, player interaction in Catan is much more complex. Players must think about whether to <span class="pattern">trade</span>, when to initiate a <span class="pattern">trade</span>, and what each exchange means—not simply how to obstruct opponents.</p>
+
+                        <!-- 6. A Sense of Achievement -->
+                        <h2 id="achievement">6. A Sense of Achievement</h2>
+
+                        <h3>6.1. <em>No Thanks!</em></h3>
+                        <p><strong><span class="pattern">tactical planning</span><sup>D</sup> → Achievement <sup>A</sup></strong></p>
+                        <p>In <em>No Thanks!</em>, completing a <span class="pattern">Card sequence</span> can decrease a big amount of your <span class="pattern">Scores</span>, but you must consider the risk that such a <span class="pattern">Card</span> will be deliberately taken by an opponent or discarded in the <span class="pattern">startgame</span> and never appear. Therefore, it's both difficult and getting closer to winning, and also provides a feeling of “correct” decision-making, which can provide a strong sense of achievement.</p>
+                        <p>Meanwhile, as stated in 4.1, every decision is a psychological game involving everyone. Successfully judging this <span class="pattern">trade-off</span> and “winning” these mind games also contributes to the player’s feeling of achievement.</p>
+                        <p>Also, <span class="pattern">Luck</span> will influence the sense of achievement. We will discuss it more in Comparison. All these relationships are shown in Figure 1.</p>
+
+                        <h3>6.2. <em>Catan</em></h3>
+                        <p><strong><span class="pattern">Resources</span> <sup>M</sup> → <span class="pattern">Resource Management</span> <sup>D</sup> → <span class="pattern">Difficulty</span>/Achievement <sup>A</sup></strong></p>
+                        <p>As Figure 2 shows, the early game is intentionally difficult: players gather <span class="pattern">Resources</span> and build at a very slow pace. However, with <span class="pattern">Resource Management</span> and the <span class="pattern">Construction</span> of buildings, once the Positive Feedback Loop starts operating, their resource production accelerates dramatically. This contrast between the slow beginning and the rapid mid-to-late-game progression gives players a sense of overcoming obstacles and experiencing growth.</p>
+                        
+                        <p><strong><span class="pattern">Scores</span><sup>M</sup> → <span class="pattern">Main Goal</span>/<span class="pattern">Winning by Ending Gameplay</span> <sup>D</sup> → Achievement <sup>A</sup></strong></p>
+                        <p>One of the player’s main goals is simply to gain enough <span class="pattern">Scores</span>, win against others. Starting from a fair beginning and achieving victory despite opponents’ interference—even with some <span class="pattern">luck</span> involved—creates a strong sense of accomplishment. Winning also allows players to validate their ideas and strategies. Although a well-designed game shouldn’t have a single dominant solution, players are always fascinated by the search for an optimal strategy, and victory feels like proof that their approach worked. Because of this, winning delivers not only in-game satisfaction but also the meta-level feeling of “I solved this problem.”</p>
+                        <p>Beyond the main win condition, the game provides two additional scoring paths: the longest road and the largest army (most knight <span class="pattern">Cards</span>). Neither belongs to anyone at the start, but once the game reaches the mid-game, a player may claim one of these bonuses first. This makes <span class="pattern">COMPETITION</span> more intense and turns these goals into meaningful strategic targets. Securing either bonus often brings a player close to victory, giving alternative playstyles their own moments of surprise and achievement. For designers, offering multiple victory routes—rather than a single fixed path—is crucial for maintaining variety and rewarding unconventional strategies.</p>
+
+                        <h3>6.3. Comparison</h3>
+                        <p>No Thanks! is a very fast-paced decision-making game, with each match ending quickly. In contrast, Catan requires players to manage <span class="pattern">Resources</span>, build settlements, and make long-term strategic decisions—actions that naturally create a sense of achievement. Beyond this, Catan also encourages off-table thinking as players explore optimal strategies. Because of its higher complexity and deeper decision-making, players must consider multiple layers of information: how to use <span class="pattern">Resources</span>, how to negotiate and compete with others, and how to claim key nodes on the map. As a result, winning in Catan feels far more rewarding. By comparison, much of the achievement in No Thanks! comes from <span class="pattern">Luck</span>. The decision space is narrower, and <span class="pattern">Randomness</span> has a greater influence on the outcome.</p>
+                        <p><span class="pattern">Player Balance</span> also greatly affects players’ sense of accomplishment. If the outcome is caused by imbalance, the losing players may feel even more upset while their effort was wasted; and the winning players can’t fully enjoy a sense of achievement either, since it doesn’t feel like they won through their own skill. Going first in <em>No Thanks!</em> isn’t necessarily an advantage, and players’ decisions don’t differ much because of turn order, so the game tends to stay balanced overall. In Catan, although the <span class="pattern">serpentine order</span> is used during the <span class="pattern">startgame</span> to handle <span class="pattern">first player advantages</span>, the <span class="pattern">winning by ending gameplay</span> causes players earlier in turn get one extra action compared to the later, creating a severe imbalance. Many games solve this kind of imbalance through <span class="pattern">fair rounds</span>, such as <em>Splendor</em> and <em>Dune: Imperium</em>.</p>
+
+                        <!-- 7. Limitations -->
+                        <h2 id="limitations">7. Limitations of Models and Critical Reflections</h2>
+                        <p>When using patterns, we spent a lot of time trying to match our ideas with the patterns already on the list. But many mechanics can be explained in different ways, trying to draw strict lines between these vague actions can feel unnecessary. This level of detail is useful in academic writing, but when we use patterns for our own design or analysis, we don’t need to follow the pattern wiki so strictly.</p>
+                        <p>However, it must be acknowledged that the analytical approach of patterns is highly effective, both in game design and game analysis. Moreover, even when two patterns are similar, there are definitional differences between them. Understanding why these differences exist helps us gain a deeper insight into game mechanics and the purposes for which certain patterns are used in games.</p>
+                        <p>Additionally, patterns lack a hierarchical structure, so we must rely on frameworks like MDA or others to clarify the connections and influences between them, but the boundaries of the MDA framework are also very blurry. While thinking through this process helps us speculate about the designer's intentions behind certain patterns, the overall approach can still seem quite chaotic.</p>
+                        <p>Furthermore, even if we deconstruct all the patterns within a game and reconstruct the structure as completely as possible, there is still no way to fully represent the player's decision-making process. How players think, how they make decisions, and what factors influence their decisions cannot be conveyed through patterns and MDA. Yet, this is a crucial part of the player experience and a key focus that designers should pay attention to.</p>
+
+                    </div>
+
+                    <!-- Footer References -->
+                    <div id="references" class="mt-20 pt-12 border-t border-gray-200 text-sm text-gray-500">
+                        <h3 class="font-bold text-ink uppercase tracking-widest mb-4 flex items-center">
+                            <i data-lucide="book-open" class="w-4 h-4 mr-2"></i> References
+                        </h3>
+                        <ul class="space-y-4">
+                            <li>Gameplay design patterns. (n.d.). Chalmers University of Technology.</li>
+                            <li>Hunicke, R., LeBlanc, M., Zubek, R., et al. (2004). Mda: A formal approach to game design and game research.</li>
+                            <li>
+                                <strong>BGG reference:</strong>
+                                <ul class="list-disc pl-5 mt-2 space-y-1">
+                                    <li>No thanks!: <a href="https://boardgamegeek.com/boardgame/12942/no-thanks" class="text-accent hover:underline">https://boardgamegeek.com/boardgame/12942/no-thanks</a></li>
+                                    <li>Catan: <a href="https://boardgamegeek.com/boardgame/13/catan" class="text-accent hover:underline">https://boardgamegeek.com/boardgame/13/catan</a></li>
+                                    <li>Gaia Project: <a href="https://boardgamegeek.com/boardgame/220308/gaia-project" class="text-accent hover:underline">https://boardgamegeek.com/boardgame/220308/gaia-project</a></li>
+                                    <li>Heat: Pedal to the Metal: <a href="https://boardgamegeek.com/boardgame/366013/heat-pedal-to-the-metal" class="text-accent hover:underline">https://boardgamegeek.com/boardgame/366013/heat-pedal-to-the-metal</a></li>
+                                    <li>SCOUT: <a href="https://boardgamegeek.com/boardgame/291453/scout" class="text-accent hover:underline">https://boardgamegeek.com/boardgame/291453/scout</a></li>
+                                    <li>Love Letter: <a href="https://boardgamegeek.com/boardgame/129622/love-letter" class="text-accent hover:underline">https://boardgamegeek.com/boardgame/129622/love-letter</a></li>
+                                    <li>6 nimmt! Plus: <a href="https://boardgamegeek.com/boardgameexpansion/20030/6-nimmt-plus" class="text-accent hover:underline">https://boardgamegeek.com/boardgameexpansion/20030/6-nimmt-plus</a></li>
+                                    <li>Splendor: <a href="https://boardgamegeek.com/boardgame/148228/splendor" class="text-accent hover:underline">https://boardgamegeek.com/boardgame/148228/splendor</a></li>
+                                    <li>Dune: Imperium: <a href="https://boardgamegeek.com/boardgame/316554/dune-imperium" class="text-accent hover:underline">https://boardgamegeek.com/boardgame/316554/dune-imperium</a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+
+                </article>
+            </main>
+            
+            <!-- 3. Right Sidebar (Recent Deconstructions) -->
+            <aside class="hidden lg:block">
+                <!-- 关键修改：这里移除了 sidebar-sticky 类 -->
+                <!-- 现在的 class 只有边距和边框样式，它会像普通元素一样随页面滚动 -->
+                <div class="pt-4 border-l border-gray-200 pl-6">
+                    <h3 class="text-xs font-bold uppercase tracking-widest text-gray-400 mb-6 flex items-center">
+                        <i data-lucide="trending-up" class="w-4 h-4 mr-2"></i> Recent Deconstructions
+                    </h3>
+                    
+                    <!-- Dynamic container for JS rendering -->
+                    <div id="recent-articles-list" class="space-y-6">
+                        <!-- JS will inject content here -->
+                    </div>
+
+                    <!-- Tags -->
+                    <div class="mt-10 pt-8 border-t border-gray-100">
+                        <h3 class="text-xs font-bold uppercase tracking-widest text-gray-400 mb-4">Popular Tags</h3>
+                        <div class="flex flex-wrap gap-2">
+                            <a href="#" class="text-xs text-gray-500 bg-gray-100 px-2 py-1 rounded-sm hover:bg-accent hover:text-white transition-colors">#MDA</a>
+                            <a href="#" class="text-xs text-gray-500 bg-gray-100 px-2 py-1 rounded-sm hover:bg-accent hover:text-white transition-colors">#Economy</a>
+                            <a href="#" class="text-xs text-gray-500 bg-gray-100 px-2 py-1 rounded-sm hover:bg-accent hover:text-white transition-colors">#Psychology</a>
+                            <a href="#" class="text-xs text-gray-500 bg-gray-100 px-2 py-1 rounded-sm hover:bg-accent hover:text-white transition-colors">#Balance</a>
+                        </div>
+                    </div>
+
+                </div>
+            </aside>
+
+        </div>
+        
+    </div>
+
+    <!-- Script for Dynamic Article Loading -->
+    <script>
+        // Data is now loaded from articles_data.js - no hardcoded data here!
+
+        function renderRecentArticles() {
+            const container = document.getElementById('recent-articles-list');
+            if (!container) return;
+
+            // Ensure recentArticlesData exists (loaded from external file)
+            if (typeof recentArticlesData === 'undefined') {
+                console.error("Error: recentArticlesData is not defined. Make sure articles_data.js is loaded.");
+                container.innerHTML = "<p class='text-xs text-red-500'>Error loading data.</p>";
+                return;
+            }
+
+            // Limit to max 10 items
+            const displayData = recentArticlesData.slice(0, 10);
+
+            const html = displayData.map(article => `
+                <a href="${article.link}" class="recent-link block group">
+                    <div class="h-24 bg-gray-100 rounded-sm mb-3 overflow-hidden relative">
+                        <img src="${article.image}" alt="${article.title}" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105 opacity-80 group-hover:opacity-100">
+                    </div>
+                    <span class="text-[10px] font-bold ${article.categoryColor} uppercase tracking-wider mb-1 block">${article.category}</span>
+                    <h4 class="text-sm font-bold text-ink leading-snug transition-colors">${article.title}</h4>
+                </a>
+            `).join('');
+
+            container.innerHTML = html;
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            renderRecentArticles();
+            lucide.createIcons();
+        });
+    </script>
+</body>
+</html>

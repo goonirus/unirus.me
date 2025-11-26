@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Deconstructing Design | Archive</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: { 
+                        sans: ['Inter', 'Noto Sans SC', 'sans-serif'] 
+                    },
+                    colors: { 
+                        'paper': '#fdfbf7', 
+                        'ink': '#1a1a1a', 
+                        'accent': '#c2410c',
+                        'secondary': '#f3f4f6'
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body { background-color: #fdfbf7; color: #1a1a1a; }
+        
+        .archive-card { 
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); 
+            border: 1px solid #e5e7eb;
+            background-color: white;
+        }
+        .archive-card:hover { 
+            border-color: #c2410c; 
+            transform: translateY(-4px); 
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05); 
+        }
+        
+        /* Category Tags */
+        .tag-BoardGame { color: #c2410c; border: 1px solid #c2410c; }
+        .tag-pc { color: #2563eb; border: 1px solid #2563eb; }
+        .tag-mobile { color: #059669; border: 1px solid #059669; }
+    </style>
+</head>
+<body class="font-sans antialiased" onload="initArchive()">
+
+    <!-- Navigation -->
+    <nav class="fixed w-full z-50 top-0 bg-paper/90 backdrop-blur-sm border-b border-gray-200/50 h-20 flex items-center px-6 justify-between">
+        <div class="flex items-center">
+            <a href="../../home.html" class="flex items-center text-gray-500 hover:text-accent transition-colors group mr-8">
+                <i data-lucide="arrow-left" class="w-5 h-5 mr-2 group-hover:-translate-x-1 transition-transform"></i>
+                Back to Home
+            </a>
+            <div class="h-6 w-px bg-gray-300 mr-8 hidden md:block"></div>
+            <span class="font-bold tracking-widest uppercase text-sm text-ink hidden md:inline">
+                Deconstructing Design
+            </span>
+        </div>
+    </nav>
+
+    <main class="pt-32 pb-24 px-6 max-w-6xl mx-auto">
+        
+        <!-- Header -->
+        <header class="mb-16 max-w-3xl">
+            <h1 class="text-4xl md:text-6xl font-bold text-ink mb-6 tracking-tight">Deconstructing Design</h1>
+            <p class="text-xl text-gray-500 leading-relaxed font-light">
+                Taking fun apart to see how it works. <br>
+                A deep dive into mechanics, systems, and user experience across three distinct mediums.
+            </p>
+        </header>
+
+        <!-- ==================== SECTION: BOARD GAME ==================== -->
+        <section id="BoardGame" class="mb-24 scroll-mt-32">
+            <div class="flex items-center justify-between mb-6">
+                <div class="flex items-center gap-4">
+                    <div class="p-2 bg-accent/10 rounded-full"><i data-lucide="box" class="w-6 h-6 text-accent"></i></div>
+                    <h2 class="text-3xl font-bold text-ink">Board Game Mechanics</h2>
+                    <span class="text-sm text-gray-400 font-mono" id="BoardGameTotalCount">-- items</span>
+                </div>
+                <div class="h-px bg-gray-200 flex-grow ml-6"></div>
+            </div>
+
+            <!-- Pagination Top -->
+            <div class="flex justify-between items-center mb-6">
+                <div class="text-xs text-gray-400">Page <span id="BoardGamePageSpanTop">1</span> of <span id="BoardGameTotalPageSpanTop">--</span></div>
+                <div class="flex items-center space-x-2">
+                    <button onclick="changePage('BoardGame', -1)" id="BoardGameBtnPrevTop" class="p-2 bg-white border border-gray-200 hover:text-accent disabled:opacity-30"><i data-lucide="chevron-left" class="w-4 h-4"></i></button>
+                    <button onclick="changePage('BoardGame', 1)" id="BoardGameBtnNextTop" class="p-2 bg-white border border-gray-200 hover:text-accent disabled:opacity-30"><i data-lucide="chevron-right" class="w-4 h-4"></i></button>
+                </div>
+            </div>
+
+            <!-- Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6" id="BoardGameGrid"></div>
+        </section>
+
+
+        <!-- ==================== SECTION: PC GAMES ==================== -->
+        <section id="pc" class="mb-24 scroll-mt-32">
+            <div class="flex items-center justify-between mb-6">
+                <div class="flex items-center gap-4">
+                    <div class="p-2 bg-blue-100 rounded-full"><i data-lucide="monitor" class="w-6 h-6 text-blue-600"></i></div>
+                    <h2 class="text-3xl font-bold text-ink">PC Game Deep Dive</h2>
+                    <span class="text-sm text-gray-400 font-mono" id="pcTotalCount">-- items</span>
+                </div>
+                <div class="h-px bg-gray-200 flex-grow ml-6"></div>
+            </div>
+
+            <div class="flex justify-between items-center mb-6">
+                <div class="text-xs text-gray-400">Page <span id="pcPageSpanTop">1</span> of <span id="pcTotalPageSpanTop">--</span></div>
+                <div class="flex items-center space-x-2">
+                    <button onclick="changePage('pc', -1)" id="pcBtnPrevTop" class="p-2 bg-white border border-gray-200 hover:text-blue-600 disabled:opacity-30"><i data-lucide="chevron-left" class="w-4 h-4"></i></button>
+                    <button onclick="changePage('pc', 1)" id="pcBtnNextTop" class="p-2 bg-white border border-gray-200 hover:text-blue-600 disabled:opacity-30"><i data-lucide="chevron-right" class="w-4 h-4"></i></button>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6" id="pcGrid"></div>
+        </section>
+
+
+        <!-- ==================== SECTION: MOBILE ==================== -->
+        <section id="mobile" class="scroll-mt-32">
+            <div class="flex items-center justify-between mb-6">
+                <div class="flex items-center gap-4">
+                    <div class="p-2 bg-green-100 rounded-full"><i data-lucide="smartphone" class="w-6 h-6 text-green-600"></i></div>
+                    <h2 class="text-3xl font-bold text-ink">Mobile UX Research</h2>
+                    <span class="text-sm text-gray-400 font-mono" id="mobileTotalCount">-- items</span>
+                </div>
+                <div class="h-px bg-gray-200 flex-grow ml-6"></div>
+            </div>
+
+            <div class="flex justify-between items-center mb-6">
+                <div class="text-xs text-gray-400">Page <span id="mobilePageSpanTop">1</span> of <span id="mobileTotalPageSpanTop">--</span></div>
+                <div class="flex items-center space-x-2">
+                    <button onclick="changePage('mobile', -1)" id="mobileBtnPrevTop" class="p-2 bg-white border border-gray-200 hover:text-green-600 disabled:opacity-30"><i data-lucide="chevron-left" class="w-4 h-4"></i></button>
+                    <button onclick="changePage('mobile', 1)" id="mobileBtnNextTop" class="p-2 bg-white border border-gray-200 hover:text-green-600 disabled:opacity-30"><i data-lucide="chevron-right" class="w-4 h-4"></i></button>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6" id="mobileGrid"></div>
+        </section>
+
+    </main>
+
+    <script>
+        lucide.createIcons();
+
+        // 模拟数据源
+        const rawData = [
+            // Board Game
+            { type: "BoardGame", date: "Nov 2025", title: "Analysis of Design Structures in No Thanks! and Catan", desc: "Analysis of Design Structures in No Thanks! and Catan", link: "BoardGame/Nothanks&Catan.html" },
+            { type: "BoardGame", date: "Oct 2023", title: "Worker Placement Evolution", desc: "From Caylus to Arnak: How the worker lost its job.", link: "article_detail.html" },
+            { type: "BoardGame", date: "Sep 2023", title: "The Math of Deckbuilders", desc: "Probability curves in Dominion vs. Ascension.", link: "article_detail.html" },
+            { type: "BoardGame", date: "Aug 2023", title: "Social Deduction Dynamics", desc: "Why 'The Resistance' breaks friendships and why we love it.", link: "article_detail.html" },
+            { type: "BoardGame", date: "Jul 2023", title: "Legacy Systems", desc: "Destruction as creation in Pandemic Legacy.", link: "article_detail.html" },
+            { type: "BoardGame", date: "Jun 2023", title: "Drafting Mechanics", desc: "Simultaneous play and the reduction of downtime.", link: "article_detail.html" },
+            
+            // PC
+            { type: "pc", date: "Oct 2023", title: "Civilization's 'One More Turn'", desc: "Deconstructing the compulsion loop of 4X games.", link: "article_detail.html" },
+            { type: "pc", date: "Sep 2023", title: "Hades: Narrative Integration", desc: "How roguelikes can tell a coherent story through failure.", link: "article_detail.html" },
+            { type: "pc", date: "Aug 2023", title: "Paradox UI Design", desc: "Managing information overload in Grand Strategy.", link: "article_detail.html" },
+            { type: "pc", date: "Jul 2023", title: "RTS Micro vs Macro", desc: "The decline of APM-based gameplay in modern strategy.", link: "article_detail.html" },
+            
+            // Mobile
+            { type: "mobile", date: "Oct 2023", title: "Gacha Psychology", desc: "Variable ratio reinforcement schedules in Genshin Impact.", link: "article_detail.html" },
+            { type: "mobile", date: "Sep 2023", title: "Touch Controls in Strategy", desc: "Why porting RTS to mobile usually fails, and how to fix it.", link: "article_detail.html" },
+            { type: "mobile", date: "Aug 2023", title: "Session Length Optimization", desc: "Designing for the bus stop vs. the couch.", link: "article_detail.html" },
+            { type: "mobile", date: "Jul 2023", title: "The 'Match-3' Meta", desc: "How meta-progression layers transformed casual puzzles.", link: "article_detail.html" }
+        ];
+
+        const state = {
+            BoardGame: { data: [], currentPage: 1, itemsPerPage: 4 },
+            pc: { data: [], currentPage: 1, itemsPerPage: 4 },
+            mobile: { data: [], currentPage: 1, itemsPerPage: 4 }
+        };
+
+        function initArchive() {
+            state.BoardGame.data = rawData.filter(i => i.type === "BoardGame");
+            state.pc.data = rawData.filter(i => i.type === "pc");
+            state.mobile.data = rawData.filter(i => i.type === "mobile");
+
+            renderSection('BoardGame');
+            renderSection('pc');
+            renderSection('mobile');
+        }
+
+        function changePage(type, direction) {
+            const s = state[type];
+            const totalPages = Math.ceil(s.data.length / s.itemsPerPage);
+            const newPage = s.currentPage + direction;
+            
+            if (newPage >= 1 && newPage <= totalPages) {
+                s.currentPage = newPage;
+                renderSection(type);
+            }
+        }
+
+        function renderSection(type) {
+            const s = state[type];
+            const grid = document.getElementById(`${type}Grid`);
+            grid.innerHTML = '';
+
+            const totalItems = s.data.length;
+            const totalPages = Math.ceil(totalItems / s.itemsPerPage);
+            const start = (s.currentPage - 1) * s.itemsPerPage;
+            const end = Math.min(start + s.itemsPerPage, totalItems);
+
+            // Colors mapping
+            const colors = {
+                BoardGame: { tag: 'tag-BoardGame', btnText: 'Read Analysis' },
+                pc: { tag: 'tag-pc', btnText: 'Read Deep Dive' },
+                mobile: { tag: 'tag-mobile', btnText: 'Read UX Case' }
+            };
+
+            for (let i = start; i < end; i++) {
+                const item = s.data[i];
+                const card = document.createElement('a');
+                card.href = item.link;
+                card.className = "archive-card block p-8 rounded-sm group h-full flex flex-col";
+                card.innerHTML = `
+                    <div class="flex justify-between items-start mb-4">
+                        <span class="${colors[type].tag} text-[10px] font-bold px-2 py-0.5 rounded-sm uppercase tracking-wider">${type}</span>
+                        <span class="text-xs text-gray-400 font-mono">${item.date}</span>
+                    </div>
+                    <h2 class="text-2xl font-bold text-ink mb-3 group-hover:text-accent transition-colors leading-tight">${item.title}</h2>
+                    <p class="text-gray-500 text-sm leading-relaxed flex-grow">${item.desc}</p>
+                    <div class="mt-6 flex items-center text-xs font-bold uppercase tracking-widest text-gray-300 group-hover:text-accent transition-colors">
+                        ${colors[type].btnText} <i data-lucide="arrow-right" class="w-4 h-4 ml-2"></i>
+                    </div>
+                `;
+                grid.appendChild(card);
+            }
+
+            // Update UI controls
+            document.getElementById(`${type}PageSpanTop`).innerText = s.currentPage;
+            document.getElementById(`${type}TotalPageSpanTop`).innerText = totalPages;
+            document.getElementById(`${type}TotalCount`).innerText = `${totalItems} items`;
+            
+            document.getElementById(`${type}BtnPrevTop`).disabled = s.currentPage === 1;
+            document.getElementById(`${type}BtnNextTop`).disabled = s.currentPage >= totalPages;
+
+            lucide.createIcons();
+        }
+    </script>
+</body>
+</html>
