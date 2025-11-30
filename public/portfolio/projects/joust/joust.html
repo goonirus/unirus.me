@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project: Joust</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: { 
+                        sans: ['Inter', 'Noto Sans SC', 'sans-serif'],
+                    },
+                    colors: { 
+                        'paper': '#fdfbf7', 
+                        'ink': '#1a1a1a', 
+                        'accent': '#c2410c',
+                        'secondary': '#f3f4f6'
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body { background-color: #fdfbf7; color: #1a1a1a; scroll-behavior: smooth; }
+        
+        .sidebar-sticky {
+            position: sticky;
+            top: 8rem;
+            height: calc(100vh - 8rem);
+            overflow-y: auto;
+        }
+
+        h1, h2, h3 { color: #1a1a1a; }
+        .section-title {
+            font-family: 'Inter', 'Noto Sans SC', sans-serif;
+            font-weight: 700;
+            font-size: 1.5rem;
+            margin-top: 3rem;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        p { margin-bottom: 1.5em; line-height: 1.8; color: #4b5563; font-size: 1.05rem; }
+        
+        .project-img {
+            width: 100%;
+            background-color: #020617;
+            border: 1px solid #e5e7eb;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #aab1ff;
+            margin: 2rem 0;
+            border-radius: 0.25rem;
+            overflow: hidden;
+            position: relative;
+        }
+        .project-img img {
+            width: 100%;
+            height: auto;
+            display: block;
+            transition: transform 0.5s ease;
+        }
+        .project-img:hover img {
+            transform: scale(1.02);
+        }
+
+        #backToTopBtn {
+            display: none;
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            z-index: 99;
+            border: none;
+            outline: none;
+            background-color: rgba(26, 26, 26, 0.8);
+            color: white;
+            cursor: pointer;
+            padding: 0.75rem;
+            border-radius: 50%;
+            backdrop-filter: blur(4px);
+            transition: all 0.3s ease;
+        }
+        #backToTopBtn:hover {
+            background-color: rgba(194, 65, 12, 0.9);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+        }
+
+        .info-table th { 
+            text-align: left; 
+            padding: 0.5rem 0; 
+            font-size: 0.75rem; 
+            text-transform: uppercase; 
+            letter-spacing: 0.05em; 
+            color: #9ca3af;
+        }
+        .info-table td { 
+            text-align: right; 
+            padding: 0.5rem 0; 
+            font-size: 0.875rem; 
+            color: #4b5563;
+        }
+    </style>
+</head>
+<body class="font-sans antialiased">
+
+    <!-- Navigation + language toggle -->
+    <nav class="fixed w-full z-50 top-0 bg-paper/90 backdrop-blur-sm border-b border-gray-200/50 h-20 flex items-center px-6 justify-between">
+        <div class="flex items-center">
+            <a href="../../portfolio_home.html" class="flex items-center text-gray-500 hover:text-accent transition-colors group mr-8">
+                <i data-lucide="arrow-left" class="w-5 h-5 mr-2 group-hover:-translate-x-1 transition-transform"></i>
+                <span class="lang-en">Back to All Works</span>
+                <span class="lang-cn hidden">返回作品集</span>
+            </a>
+        </div>
+
+        <button onclick="toggleLanguage()" class="flex items-center space-x-2 border border-gray-300 px-4 py-2 rounded-full hover:border-accent hover:text-accent transition-all text-xs font-bold tracking-widest uppercase bg-white">
+            <i data-lucide="globe" class="w-4 h-4"></i>
+            <span id="lang-label">EN / 中文</span>
+        </button>
+    </nav>
+
+    <!-- Main Content Container -->
+    <div class="pt-32 pb-24 max-w-7xl mx-auto px-6 flex flex-col lg:flex-row gap-16">
+
+        <!-- Left Sidebar -->
+        <aside class="lg:w-1/4">
+            <div class="lg:sidebar-sticky">
+
+                <!-- Title -->
+                <h1 class="text-4xl font-bold text-ink mb-2 leading-tight">
+                    <span class="lang-en">Joust</span>
+                    <span class="lang-cn hidden">Joust：比武夺心</span>
+                </h1>
+                <p class="text-lg text-accent font-medium mb-4">
+                    <span class="lang-en">Social Bluffing / Heart Economy</span>
+                    <span class="lang-cn hidden">社交诈唬 / “芳心”经济</span>
+                </p>
+
+                <!-- Game Summary card -->
+                <div class="bg-white border border-gray-200 rounded-sm shadow-sm mb-8 overflow-hidden">
+                    <div class="bg-secondary/50 px-4 py-3 border-b border-gray-200">
+                        <h2 class="text-xs font-bold text-ink uppercase tracking-widest">
+                            <span class="lang-en">Game Summary</span>
+                            <span class="lang-cn hidden">游戏速览</span>
+                        </h2>
+                    </div>
+                    <div class="px-4 py-3">
+                        <table class="w-full info-table">
+                            <tbody>
+                                <tr>
+                                    <th>
+                                        <span class="lang-en">Players</span>
+                                        <span class="lang-cn hidden">玩家人数</span>
+                                    </th>
+                                    <td>
+                                        <span class="lang-en">3 – 8</span>
+                                        <span class="lang-cn hidden">3 – 8 人</span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
+                                        <span class="lang-en">Play Time</span>
+                                        <span class="lang-cn hidden">游戏时长</span>
+                                    </th>
+                                    <td>
+                                        <span class="lang-en">30 – 45 min</span>
+                                        <span class="lang-cn hidden">30 – 45 分钟</span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
+                                        <span class="lang-en">Genre</span>
+                                        <span class="lang-cn hidden">类型</span>
+                                    </th>
+                                    <td>
+                                        <span class="lang-en">Bluffing / Betting</span>
+                                        <span class="lang-cn hidden">诈唬 / 押注</span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
+                                        <span class="lang-en">Core Systems</span>
+                                        <span class="lang-cn hidden">核心机制</span>
+                                    </th>
+                                    <td>
+                                        <span class="lang-en">Hidden info, “Courage” bag, heart payouts</span>
+                                        <span class="lang-cn hidden">隐藏信息、“勇气”盲袋、芳心分配</span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
+                                        <span class="lang-en">Player Elimination</span>
+                                        <span class="lang-cn hidden">玩家出局</span>
+                                    </th>
+                                    <td>
+                                        <span class="lang-en">Yes (when hearts reach 0)</span>
+                                        <span class="lang-cn hidden">是（心 token 用尽时）</span>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="bg-gray-50 px-4 py-3 border-t border-gray-200 text-xs text-gray-500">
+                        <span class="lang-en">
+                            Starting player: the knight “most skilled at charming or deceiving”.
+                        </span>
+                        <span class="lang-cn hidden">
+                            起始玩家：自认最会蛊惑人心或“嘴最甜”的骑士。
+                        </span>
+                    </div>
+                </div>
+
+                <!-- Meta: role / status / year -->
+                <div class="space-y-6 text-sm">
+                    <div>
+                        <h4 class="font-bold text-ink uppercase tracking-widest mb-2 text-xs">
+                            <span class="lang-en">Role</span>
+                            <span class="lang-cn hidden">个人职责</span>
+                        </h4>
+                        <p class="text-gray-600">
+                            <span class="lang-en">Game Designer</span>
+                            <span class="lang-cn hidden">游戏设计</span>
+                        </p>
+                    </div>
+
+                    <div>
+                        <h4 class="font-bold text-ink uppercase tracking-widest mb-2 text-xs">
+                            <span class="lang-en">Status</span>
+                            <span class="lang-cn hidden">项目状态</span>
+                        </h4>
+                        <p class="text-gray-600">
+                            <span class="lang-en">Prototype</span>
+                            <span class="lang-cn hidden">原型阶段</span>
+                        </p>
+                    </div>
+
+                    <div>
+                        <h4 class="font-bold text-ink uppercase tracking-widest mb-2 text-xs">
+                            <span class="lang-en">Year</span>
+                            <span class="lang-cn hidden">年份</span>
+                        </h4>
+                        <p class="text-gray-600">2025</p>
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Right Column: main content -->
+        <main class="lg:w-3/4">
+            
+            <!-- Hero image card -->
+            <div class="project-img aspect-[4/3] mb-12">
+                <!-- 背景图：改成你自己的路径 -->
+                <img 
+                    src="../../../picture/portfolio/joust/joust_overview.png"
+                    alt="Joust prototype board overview"
+                    class="absolute inset-0 w-full h-full object-contain opacity-25 hover:opacity-40 transition-all duration-300">
+                <div class="relative z-10 text-center px-6">
+                    <i data-lucide="shield" class="w-16 h-16 mx-auto mb-4 text-accent"></i>
+                    <p class="text-base md:text-lg font-semibold text-white drop-shadow">
+                        <span class="lang-en">A jousting arena where every heart is on the line.</span>
+                        <span class="lang-cn hidden">每一颗“心”都押在比武场上的骑士身上。</span>
+                    </p>
+                </div>
+            </div>
+
+            <!-- Introduction -->
+            <section>
+                <h2 class="section-title">
+                    <span class="lang-en">Introduction</span>
+                    <span class="lang-cn hidden">游戏简介</span>
+                </h2>
+                <div class="lang-en">
+                    <p>
+                        <em>Joust</em> is a social bluffing game about knights competing in a grand tournament
+                        to win the crowd’s hearts. Each player holds a pool of heart-shaped tokens that represent both
+                        their stamina in the tourney and the affection they command from the audience.
+                    </p>
+                    <p>
+                        On your turn, you challenge another knight to a duel by secretly committing “Courage”
+                        into a blind bag. The rest of the table cannot stay neutral: every bystander must send their
+                        own hearts as <em>Adoration</em> to one of the two combatants. After the reveal, hearts flow toward
+                        the winner — unless the duel is so spectacular that the crowd splits their love evenly between both.
+                    </p>
+                </div>
+                <div class="lang-cn hidden">
+                    <p>
+                        <em>《Joust：比武夺心》</em> 是一款围绕“读人”和押注展开的社交诈唬游戏。
+                        每位玩家都是参加大会武的骑士，手中的心形 token 既代表你的体力与资金，
+                        也代表观众对你的倾慕与支持。
+                    </p>
+                    <p>
+                        在你的回合，你会向另一名骑士发起比武挑战，将若干“勇气”投入盲袋；
+                        其余旁观的骑士无法置身事外，必须把自己的心 token 作为“芳心”，押注给其中一位参战骑士。
+                        当勇气被公开时，胜利者会赢得战利品与芳心——除非这场对决精彩到让观众决定
+                        把芳心平均献给双方。
+                    </p>
+                </div>
+            </section>
+
+            <!-- Components & Setup -->
+            <section>
+                <h2 class="section-title">
+                    <span class="lang-en">Components &amp; Setup</span>
+                    <span class="lang-cn hidden">组件与游戏配置</span>
+                </h2>
+
+                <div class="lang-en">
+                    <p><strong>Components</strong></p>
+                    <ul class="list-disc pl-5 mb-4 text-gray-700">
+                        <li>1 shared jousting arena board</li>
+                        <li>Heart tokens (recommended 120)</li>
+                        <li>2 “Courage” blind bags</li>
+                    </ul>
+
+                    <p><strong>Setup</strong></p>
+                    <ul class="list-disc pl-5 text-gray-700">
+                        <li>Each player takes <strong>15 heart tokens</strong> as their starting pool.</li>
+                        <li>Place the arena board in the centre of the table. Put the two “Courage” bags nearby.</li>
+                        <li>All remaining hearts form a general supply next to the board.</li>
+                        <li>
+                            Choose the starting player as the knight “most skilled at charming or deceiving”,
+                            or at random if nobody dares to claim the title.
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="lang-cn hidden">
+                    <p><strong>组件</strong></p>
+                    <ul class="list-disc pl-5 mb-4 text-gray-700">
+                        <li>1 个公共的比武竞技场面板</li>
+                        <li>若干心形 token（建议 120 颗）</li>
+                        <li>2 个“勇气”盲抽袋</li>
+                    </ul>
+
+                    <p><strong>准备阶段</strong></p>
+                    <ul class="list-disc pl-5 text-gray-700">
+                        <li>每位玩家获得 <strong>15 颗“心”</strong> 作为起始筹码。</li>
+                        <li>将比武面板放在桌子中央，把 2 个“勇气”盲袋放在一旁备用。</li>
+                        <li>其余所有心 token 作为公共供应放在面板旁边。</li>
+                        <li>起始玩家为自认为“最会迷惑人心或最善于骗人”的骑士；若人人谦虚，则随机决定。</li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- Turn Structure -->
+            <section>
+                <h2 class="section-title">
+                    <span class="lang-en">Turn Structure</span>
+                    <span class="lang-cn hidden">回合流程</span>
+                </h2>
+
+                <div class="lang-en">
+                    <p>
+                        On your turn, you must challenge exactly one other player to a joust. The two of you step into
+                        the arena, while all remaining players become the audience, ready to offer their hearts.
+                    </p>
+                    <ol class="list-decimal pl-5 text-gray-700 space-y-3">
+                        <li>
+                            <strong>Secretly commit Courage</strong><br>
+                            You and your chosen opponent each secretly place any number of your own heart tokens
+                            into a “Courage” bag. These hearts represent how far you are willing to go in this duel.
+                        </li>
+                        <li>
+                            <strong>The crowd sends their Adoration</strong><br>
+                            Every other player must choose one of the two duelling knights and place any number of
+                            their hearts in front of that knight as <em>Adoration</em>. You cannot split Adoration in a single duel:
+                            all hearts must support exactly one combatant.
+                        </li>
+                        <li>
+                            <strong>Reveal Courage &amp; determine the victor</strong><br>
+                            Open the bag and compare how many hearts each knight committed as Courage.
+                            The knight who committed more hearts wins the joust.
+                        </li>
+                        <li>
+                            <strong>Collect the hearts</strong><br>
+                            Combine:
+                            <ul class="list-disc pl-5 mt-1">
+                                <li>All Courage hearts from both knights, and</li>
+                                <li>All Adoration hearts bet on the losing knight.</li>
+                            </ul>
+                            This pile forms the spoils of the duel.
+                        </li>
+                        <li>
+                            <strong>Reward your fans</strong><br>
+                            For each player who bet their Adoration on the winning knight, pay them a share from the spoils:
+                            they receive <em>⌊ total spoils ÷ number of supporters ⌋</em> hearts (at least 1),
+                            but never more than <strong>twice</strong> the number of hearts they used as Adoration.
+                            The winning knight keeps all remaining hearts.
+                        </li>
+                    </ol>
+                </div>
+
+                <div class="lang-cn hidden">
+                    <p>
+                        在你的回合，你必须向一名其他玩家发起一场比武。你们两人走入比武场，
+                        其余玩家则化身观众，将自己的“芳心”押在支持的骑士身上。
+                    </p>
+                    <ol class="list-decimal pl-5 text-gray-700 space-y-3">
+                        <li>
+                            <strong>投入“勇气”</strong><br>
+                            你与被挑战的骑士各自秘密地从自己的心 token 中，拿出任意数量放入“勇气”盲袋。
+                            这些“心”代表你在本场比武中愿意付出的程度。
+                        </li>
+                        <li>
+                            <strong>观众献上芳心</strong><br>
+                            其余每位玩家必须在两名骑士中选择一位，将任意数量的心 token
+                            作为“芳心”放在该骑士面前，以示支持。  
+                            在同一场比武中，观众不能分摊芳心：所有心必须押给同一位骑士。
+                        </li>
+                        <li>
+                            <strong>揭晓勇气，判定胜负</strong><br>
+                            打开“勇气”盲袋，比较两名骑士投入的心数量。  
+                            投入“勇气”更多的一方赢得本场比武。
+                        </li>
+                        <li>
+                            <strong>收集战利品</strong><br>
+                            将以下 token 汇总在一起，形成战利品堆：
+                            <ul class="list-disc pl-5 mt-1">
+                                <li>两名骑士投入的所有勇气之心；</li>
+                                <li>所有押注失败那一方骑士的芳心。</li>
+                            </ul>
+                        </li>
+                        <li>
+                            <strong>回馈支持者</strong><br>
+                            对于每位押中获胜骑士的观众：  
+                            从战利品堆中给他分发 <em>⌊ 战利品总数 ÷ 支持者人数 ⌋</em> 颗心，
+                            向下取整且至少为 1，但<strong>不得超过该玩家押注芳心数量的两倍</strong>。  
+                            获胜骑士获得战利品中剩余的所有心。
+                        </li>
+                    </ol>
+                </div>
+            </section>
+
+            <!-- Endgame & Ranking -->
+            <section>
+                <h2 class="section-title">
+                    <span class="lang-en">Endgame &amp; Ranking</span>
+                    <span class="lang-cn hidden">结束与计分</span>
+                </h2>
+
+                <div class="lang-en">
+                    <p>
+                        If at any moment a player has no hearts left, they are exhausted and leave the tournament:
+                        that player is eliminated from the game.
+                    </p>
+                    <p>
+                        Play continues clockwise until the table has completed two full rounds of turns
+                        (or as close as possible if players are eliminated mid-way). At the end of the second round,
+                        each remaining knight counts the hearts they still hold. The player with the most hearts wins
+                        the tourney. Ties are shared honours, reflecting a duel where the crowd’s love is perfectly balanced.
+                    </p>
+                    <p>
+                        In a rare situation where a duel ends in an exact tie of Courage, the joust is declared
+                        breathtakingly even: both duelling knights evenly split <strong>all</strong> hearts involved in that duel
+                        (Courage and Adoration together). Any leftover hearts that cannot be split evenly are returned to the general supply.
+                    </p>
+                </div>
+
+                <div class="lang-cn hidden">
+                    <p>
+                        若在任意时刻，某名玩家的心 token 被耗尽，则视为精疲力竭、无力再战，
+                        立即离开比武场——该玩家直接出局。
+                    </p>
+                    <p>
+                        游戏顺时针继续进行，直到桌面完成两大轮回合
+                        （若有人中途出局，则以当下最接近“两轮”的状态为准）。
+                        第二轮结束时，仍在场的骑士统计自己剩余的心数量，
+                        拥有最多“心”的玩家赢得大会武的桂冠。  
+                        若出现并列，则视为共享荣誉——观众把同等的芳心献给了多位骑士。
+                    </p>
+                    <p>
+                        若某场比武中，两名骑士投入的“勇气”完全相同，则这场对决被视为精彩绝伦的平局：
+                        两名骑士<strong>平均分配本场比武中所有参与的“心”</strong>
+                        （包括勇气与芳心）。若无法完全平分，多余的心放回公共供应，象征献给整个比赛的掌声。
+                    </p>
+                </div>
+            </section>
+
+            <!-- Design Notes -->
+            <section>
+                <h2 class="section-title">
+                    <span class="lang-en">Design Notes</span>
+                    <span class="lang-cn hidden">设计思路</span>
+                </h2>
+
+                <div class="lang-en">
+                    <p>
+                        <em>Joust</em> pushes players into constant social reading: you are never just watching,
+                        because every duel forces you to spend hearts as Adoration. The “Courage” bag creates a clean,
+                        binary comparison that is easy to resolve but hard to predict, while the payout cap prevents
+                        a single lucky bet from completely breaking the economy.
+                    </p>
+                    <p>
+                        Re-theming money into hearts reinforces the idea that you are gambling not only with resources
+                        but also with reputation and affection. The tournament ends quickly—just two rounds—so players
+                        are encouraged to make bold, characterful moves rather than hoarding until the very end.
+                    </p>
+                </div>
+
+                <div class="lang-cn hidden">
+                    <p>
+                        在 <em>《Joust：比武夺心》</em> 中，玩家几乎没有“吃瓜旁观”的空间：
+                        每一场比武都强制所有人投入芳心，迫使你不断判断谁在虚张声势、谁在孤注一掷。
+                        “勇气”盲袋提供的是一个非常干脆的比较机制——结算简单，但过程高度不可预知，
+                        同时通过收益上限，避免单次幸运押注直接摧毁整体经济结构。
+                    </p>
+                    <p>
+                        将钱币改为“心”，强化了主题：你押上的不仅是资源，也是声望与爱慕。
+                        游戏只进行两大轮，比武节奏较快，鼓励玩家做出符合角色的大胆决定，
+                        而不是一味屯心到最后再出手。
+                    </p>
+                </div>
+            </section>
+
+        </main>
+    </div>
+
+    <!-- Back to Top Button -->
+    <button id="backToTopBtn" onclick="scrollToTop()" title="Go to top">
+        <i data-lucide="arrow-up" class="w-6 h-6"></i>
+    </button>
+
+    <script>
+        lucide.createIcons();
+
+        const backToTopBtn = document.getElementById("backToTopBtn");
+
+        window.addEventListener('scroll', function() {
+            const nav = document.querySelector('nav');
+            if (window.scrollY > 50) {
+                nav.classList.add('shadow-sm');
+                nav.classList.replace('bg-paper/90', 'bg-white/95');
+            } else {
+                nav.classList.remove('shadow-sm');
+                nav.classList.replace('bg-white/95', 'bg-paper/90');
+            }
+
+            if (window.scrollY > 300) {
+                backToTopBtn.style.display = "block";
+            } else {
+                backToTopBtn.style.display = "none";
+            }
+        });
+
+        function scrollToTop() {
+            window.scrollTo({top: 0, behavior: 'smooth'});
+        }
+
+        function toggleLanguage() {
+            const enEls = document.querySelectorAll('.lang-en');
+            const cnEls = document.querySelectorAll('.lang-cn');
+            enEls.forEach(el => el.classList.toggle('hidden'));
+            cnEls.forEach(el => el.classList.toggle('hidden'));
+        }
+    </script>
+</body>
+</html>

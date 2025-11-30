@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project: Crazy Ludo</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: { 
+                        sans: ['Inter', 'sans-serif'],
+                        serif: ['Playfair Display', 'serif'],
+                    },
+                    colors: { 
+                        'paper': '#fdfbf7', 
+                        'ink': '#1a1a1a', 
+                        'accent': '#c2410c',
+                        'secondary': '#f3f4f6'
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body { background-color: #fdfbf7; color: #1a1a1a; scroll-behavior: smooth; }
+        
+        /* 侧边栏粘性定位 */
+        .sidebar-sticky {
+            position: sticky;
+            top: 8rem;
+            height: calc(100vh - 8rem);
+            overflow-y: auto;
+        }
+
+        /* 标题样式 */
+        h1, h2, h3 { color: #1a1a1a; }
+        .section-title {
+            font-family: 'Inter', sans-serif;
+            font-weight: 700;
+            font-size: 1.5rem;
+            margin-top: 3rem;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        /* 正文排版 */
+        p { margin-bottom: 1.5em; line-height: 1.8; color: #4b5563; font-size: 1.05rem; }
+        
+        /* 图片占位符（封面图） */
+        .project-img {
+            width: 100%;
+            background-color: #0f1226;
+            border: 1px solid #e5e7eb;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #aab1ff;
+            margin: 2rem 0;
+            border-radius: 0.25rem;
+            overflow: hidden;
+            position: relative;
+        }
+        .project-img img {
+            width: 100%;
+            height: auto;
+            display: block;
+            transition: transform 0.5s ease;
+        }
+        .project-img:hover img {
+            transform: scale(1.02);
+        }
+
+        /* Back to Top Button */
+        #backToTopBtn {
+            display: none;
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            z-index: 99;
+            border: none;
+            outline: none;
+            background-color: rgba(26, 26, 26, 0.8);
+            color: white;
+            cursor: pointer;
+            padding: 0.75rem;
+            border-radius: 50%;
+            backdrop-filter: blur(4px);
+            transition: all 0.3s ease;
+        }
+        #backToTopBtn:hover {
+            background-color: rgba(194, 65, 12, 0.9);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+<body class="font-sans antialiased">
+
+    <!-- Navigation -->
+    <nav class="fixed w-full z-50 top-0 bg-paper/90 backdrop-blur-sm border-b border-gray-200/50 h-20 flex items-center px-6 justify-between">
+        <div class="flex items-center">
+            <a href="../../portfolio_home.html" class="flex items-center text-gray-500 hover:text-accent transition-colors group mr-8">
+                <i data-lucide="arrow-left" class="w-5 h-5 mr-2 group-hover:-translate-x-1 transition-transform"></i>
+                Back to All Works
+            </a>
+        </div>
+        <div class="hidden md:block text-xs font-bold text-gray-300 uppercase tracking-widest">
+            Digital Board Game
+        </div>
+    </nav>
+
+    <!-- Main Content Container -->
+    <div class="pt-32 pb-24 max-w-7xl mx-auto px-6 flex flex-col lg:flex-row gap-16">
+
+        <!-- Left Sidebar: Project Metadata -->
+        <aside class="lg:w-1/4">
+            <div class="lg:sidebar-sticky">
+                <h1 class="text-4xl font-bold text-ink mb-2 leading-tight">Crazy Ludo</h1>
+                <p class="text-lg text-accent font-medium mb-8">Digital Board Game / Web</p>
+
+                <div class="space-y-8 text-sm">
+                    <div>
+                        <h4 class="font-bold text-ink uppercase tracking-widest mb-2 text-xs">Role</h4>
+                        <p class="text-gray-600">Full Stack Developer</p>
+                        <p class="text-gray-600">Game Logic Design</p>
+                    </div>
+                    
+                    <div>
+                        <h4 class="font-bold text-ink uppercase tracking-widest mb-2 text-xs">Platform</h4>
+                        <p class="text-gray-600">Web Browser (Canvas)</p>
+                    </div>
+
+                    <div>
+                        <h4 class="font-bold text-ink uppercase tracking-widest mb-2 text-xs">Tech Stack</h4>
+                        <p class="text-gray-600">Vanilla JavaScript</p>
+                        <p class="text-gray-600">HTML5 Canvas</p>
+                    </div>
+
+                    <div>
+                        <h4 class="font-bold text-ink uppercase tracking-widest mb-2 text-xs">Year</h4>
+                        <p class="text-gray-600">2025</p>
+                    </div>
+                    
+                    <!-- Links -->
+                    <div class="pt-4 border-t border-gray-200">
+                        <!-- 左侧 Play Demo：新标签打开 ludo_play.html -->
+                        <a href="ludo_play.html" target="_blank" class="flex items-center text-ink hover:text-accent font-bold transition-colors">
+                            <i data-lucide="play-circle" class="w-4 h-4 mr-2"></i> Play Demo
+                        </a>
+                        <a href="#" class="flex items-center text-ink hover:text-accent font-bold transition-colors mt-2">
+                            <i data-lucide="github" class="w-4 h-4 mr-2"></i> View Code
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Right Column: Detailed Case Study -->
+        <main class="lg:w-3/4">
+
+            <!-- Hero Cover: 中间 “Crazy Ludo” 改成按钮，点击也跳转到 ludo_play.html -->
+            <div class="project-img aspect-[4/3] mb-12 relative overflow-hidden">
+                <div class="absolute inset-0 flex items-center justify-center">
+                    <img
+                      src="../../../../picture/portfilio/crazyludo/crazyludo_overview.png"
+                      alt="Crazy Ludo Gameplay"
+                      class="max-w-none max-h-none scale-75 opacity-30 hover:opacity-45 transition-all duration-300"
+                    />
+                </div>
+
+                <!-- 前景内容 -->
+                <div class="relative z-10 text-center px-6">
+                    <i data-lucide="dice-5" class="w-16 h-16 mx-auto mb-4 text-accent"></i>
+                    
+                    <!-- 这里从文本改成按钮 -->
+                    <a href="ludo_play.html" target="_blank"
+                       class="inline-flex items-center px-6 py-3 rounded-full bg-accent text-white font-semibold tracking-wide text-base md:text-lg shadow-md hover:bg-ink hover:shadow-lg transition">
+                        <span class="mr-2">Crazy Ludo (飞行棋)</span>
+                        <i data-lucide="play" class="w-4 h-4"></i>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Project Overview -->
+            <section>
+                <h2 class="section-title">The Overview</h2>
+                <p>
+                    <em>Crazy Ludo</em> is a modern, web-based implementation of the classic board game (known as 飞行棋 in China). Unlike traditional board games, this digital version focuses on a streamlined, offline-first experience with a custom-designed 52-grid track.
+                </p>
+                <p>
+                    The project was built entirely from scratch using <strong>Vanilla JavaScript</strong> and the <strong>HTML5 Canvas API</strong>, demonstrating efficient rendering and game state management without the overhead of heavy game engines.
+                </p>
+            </section>
+
+            <!-- Key Features -->
+            <section>
+                <h2 class="section-title">Key Features & Mechanics</h2>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 my-8">
+                    <div class="bg-white p-6 border border-gray-200 rounded-sm">
+                        <div class="p-2 bg-accent/10 inline-block rounded-full mb-4"><i data-lucide="cpu" class="w-6 h-6 text-accent"></i></div>
+                        <h3 class="text-lg font-bold mb-2">Hybrid AI System</h3>
+                        <p class="text-sm text-gray-500">
+                            Supports mixed gameplay with both Human and AI players. The AI automatically handles dice rolling and move selection, allowing for single-player practice or filling empty slots.
+                        </p>
+                    </div>
+                    <div class="bg-white p-6 border border-gray-200 rounded-sm">
+                        <div class="p-2 bg-accent/10 inline-block rounded-full mb-4"><i data-lucide="move" class="w-6 h-6 text-accent"></i></div>
+                        <h3 class="text-lg font-bold mb-2">Custom Track Logic</h3>
+                        <p class="text-sm text-gray-500">
+                            Features a 52-grid outer loop with corner bases. Implements classic "Jump" (same color +4) and "Eat" (capture opponent) mechanics for high-stakes interaction.
+                        </p>
+                    </div>
+                </div>
+
+                <p>
+                    The game includes a <strong>6-grid Victory Runway</strong> that requires precise dice rolls to finish, adding tension to the end-game phase. The starting mechanism aligns the launch pad with the track entrance, ensuring a smooth visual flow from base to board.
+                </p>
+            </section>
+
+            <!-- Technical Implementation -->
+            <section>
+                <h2 class="section-title">Technical Implementation</h2>
+                <p>
+                    The core challenge was creating a responsive, procedurally drawn board that scales across devices.
+                </p>
+                <ul class="list-disc pl-5 space-y-2 mb-6 text-gray-600">
+                    <li><strong>Canvas Rendering:</strong> The board, including the complex "Hollow Plus" shape and individual grid cells, is drawn via JS functions like <code>buildRing()</code> and <code>drawBoard()</code>. This allows for infinite resolution scaling.</li>
+                    <li><strong>State Machine:</strong> A central <code>S</code> object manages the game state (Current Player, Dice Result, Tokens Position), enabling features like "Auto-skip" when no moves are available.</li>
+                    <li><strong>Dynamic UI:</strong> The "Roll Dice" button dynamically positions itself relative to the canvas to ensure accessibility on both mobile and desktop screens.</li>
+                </ul>
+            </section>
+
+        </main>
+
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-ink text-white py-20 px-6 mt-12">
+        <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+            <div>
+                <h2 class="text-4xl font-bold mb-6">Let's talk Strategy.</h2>
+                <a href="mailto:donglinyan2000@outlook.com" class="inline-flex items-center text-accent hover:text-white transition-colors text-lg font-medium">
+                    donglinyan2000@outlook.com <i data-lucide="arrow-right" class="ml-2 w-5 h-5"></i>
+                </a>
+            </div>
+            
+            <div class="flex flex-col md:items-end space-y-4">
+                <p class="text-sm text-gray-500 uppercase tracking-widest mb-4">Social Media</p>
+                <a href="#" class="text-gray-300 hover:text-accent transition-colors flex items-center"><i data-lucide="twitter" class="w-5 h-5 mr-3"></i> Twitter / X</a>
+                <a href="#" class="text-gray-300 hover:text-accent transition-colors flex items-center"><i data-lucide="linkedin" class="w-5 h-5 mr-3"></i> LinkedIn</a>
+            </div>
+        </div>
+        <div class="max-w-7xl mx-auto mt-20 pt-8 border-t border-gray-800 text-center md:text-left text-xs text-gray-600">
+            &copy; 2023 Game Designer Portfolio. All rights reserved.
+        </div>
+    </footer>
+
+    <!-- Back to Top Button -->
+    <button id="backToTopBtn" onclick="scrollToTop()" title="Go to top">
+        <i data-lucide="arrow-up" class="w-6 h-6"></i>
+    </button>
+
+    <script>
+        lucide.createIcons();
+
+        const backToTopBtn = document.getElementById("backToTopBtn");
+
+        window.addEventListener('scroll', function() {
+            const nav = document.querySelector('nav');
+            if (window.scrollY > 50) {
+                nav.classList.add('shadow-sm');
+                nav.classList.replace('bg-paper/90', 'bg-white/95');
+            } else {
+                nav.classList.remove('shadow-sm');
+                nav.classList.replace('bg-white/95', 'bg-paper/90');
+            }
+
+            if (window.scrollY > 300) {
+                backToTopBtn.style.display = "block";
+            } else {
+                backToTopBtn.style.display = "none";
+            }
+        });
+
+        function scrollToTop() {
+            window.scrollTo({top: 0, behavior: 'smooth'});
+        }
+    </script>
+</body>
+</html>

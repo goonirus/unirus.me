@@ -38,27 +38,75 @@
 <body class="font-sans antialiased">
 
     <!-- Navigation -->
-    <nav class="fixed w-full z-50 top-0 bg-paper/90 backdrop-blur-sm border-b border-gray-200/50 h-20 flex items-center px-6 justify-between">
-        <div class="flex items-center">
-            <a href="../../../home.html" class="flex items-center text-gray-500 hover:text-accent transition-colors group mr-8">
-                <i data-lucide="arrow-left" class="w-5 h-5 mr-2 group-hover:-translate-x-1 transition-transform"></i>
-                <span class="lang-en">Back to Home</span>
-                <!-- 给所有中文元素加上 hidden 类 -->
-                <span class="lang-cn hidden">返回首页</span>
-            </a>
-            <div class="h-6 w-px bg-gray-300 mr-8 hidden md:block"></div>
-            <span class="font-bold tracking-widest uppercase text-sm text-ink hidden md:inline">
+    <nav class="fixed w-full z-50 top-0 bg-paper/90 backdrop-blur-sm border-b border-gray-200/50 transition-all duration-300" id="navbar">
+      <div class="max-w-7xl mx-auto px-6 h-20 flex justify-between items-center">
+          <!-- Logo links back to Home -->
+          <div class="flex items-center">
+              <!-- Left: Back to Home link -->
+              <a href="../../../home.html" class="flex items-center text-gray-500 hover:text-accent transition-colors group mr-8">
+                  <i data-lucide="arrow-left" class="w-5 h-5 mr-2 group-hover:-translate-x-1 transition-transform"></i>
+                  <span class="lang-en">Back to Home</span>
+                  <!-- 给所有中文元素加上 hidden 类 -->
+                  <span class="lang-cn hidden">返回首页</span>
+              </a>
+              
+              <!-- Vertical Divider -->
+              <div class="h-6 w-px bg-gray-300 mr-8 hidden md:block"></div>
+              
+              <!-- Current Page Title (Breadcrumb style) -->
+              <span class="font-bold tracking-widest uppercase text-sm text-ink hidden md:inline">
                 <span class="lang-en">Board Game Overview</span>
                 <span class="lang-cn hidden">桌游板块导读</span>
-            </span>
-        </div>
+              </span>
+          </div>
+          
+          <div class="hidden md:flex space-x-8 text-sm font-medium tracking-wide text-gray-600 items-center">
+              <a href="../../../home.html" class="hover:text-black transition-colors"><span class="lang-en">Home</span><span class="lang-cn hidden">首页</span></a>
+              <a href="../../portfolio/portfolio_home.html" class="hover:text-black transition-colors"><span class="lang-en">Portfolio</span><span class="lang-cn hidden">作品集</span></a> <!-- Active State -->
+              <a href="../../deconstruction/deconstruction_home.html" class="hover:text-black transition-colors"><span class="lang-en">Deconstruction</span><span class="lang-cn hidden">解构设计</span></a>                <!-- Modified Ratings Link with Dropdown -->
+              <div class="relative group h-20 flex items-center">
+                  <a href="#" class="hover:text-black transition-colors flex items-center cursor-pointer">
+                    <span class="lang-en">Ratings</span><span class="lang-cn hidden">评分</span> <i data-lucide="chevron-down" class="w-3 h-3 ml-1 text-gray-400 group-hover:text-black transition-colors"></i>
+                  </a>
+                  
+                  <!-- Dropdown Menu -->
+                  <div class="dropdown-menu absolute left-1/2 -translate-x-1/2 top-full w-40 bg-white border border-gray-100 shadow-lg rounded-sm hidden group-hover:block pt-1">
+                      <a href="#" class="block px-5 py-3 text-amber-700 font-bold hover:bg-gray-50 hover:text-accent transition-colors border-b border-gray-50"><span class="lang-en">Board Game</span><span class="lang-cn hidden">桌游</span></a>
+                      <a href="../pcgame/rating_pc_home.html" class="block px-5 py-3 text-gray-500 hover:bg-gray-50 hover:text-accent transition-colors border-b border-gray-50"><span class="lang-en">PC Game</span><span class="lang-cn hidden">电脑游戏</span></a>
+                      <a href="../travel/rating_travel_home.html" class="block px-5 py-3 text-gray-500 hover:bg-gray-50 hover:text-accent transition-colors"><span class="lang-en">Sightseeing</span><span class="lang-cn hidden">观光旅游</span></a>
+                  </div>
+              </div>
+              <a href="../../thoughts/thoughts_home.html" class="hover:text-black transition-colors"><span class="lang-en">Thoughts</span><span class="lang-cn hidden">思考</span></a>
+          </div>
 
-        <!-- Language Toggle -->
-        <button onclick="toggleLanguage()" class="flex items-center space-x-2 border border-gray-300 px-4 py-2 rounded-full hover:border-accent hover:text-accent transition-all text-xs font-bold tracking-widest uppercase bg-white">
+          <button class="md:hidden" onclick="toggleMenu()"><i data-lucide="menu" class="w-6 h-6"></i></button>
+          
+          <button onclick="toggleLanguage()" class="flex items-center space-x-2 border border-gray-300 px-4 py-2 rounded-full hover:border-accent hover:text-accent transition-all text-xs font-bold tracking-widest uppercase bg-white">
             <i data-lucide="globe" class="w-4 h-4"></i>
             <span id="lang-label">EN / 中文</span>
-        </button>
-    </nav>
+          </button>
+      </div>
+      
+      <!-- Mobile Menu -->
+      <div id="mobile-menu" class="hidden md:hidden bg-white border-t absolute w-full px-6 py-4 space-y-4 shadow-lg">
+          <a href="../../home.html" class="block text-gray-600">Home</a>
+          <a href="../../portfolio/portfolio_home.html" class="block text-gray-600">Portfolio</a>
+          <a href="../deconstruction/deconstruction_home.html" class="block text-gray-600">Deconstruction</a>                <!-- Modified Ratings Link with Dropdown -->
+          <div class="relative group h-20 flex items-center">
+              <a href="#" class="block text-gray-600 flex items-center cursor-pointer">
+                  Ratings <i data-lucide="chevron-down" class="w-3 h-3 ml-1 text-gray-400 group-hover:text-black transition-colors"></i>
+              </a>
+              
+              <!-- Dropdown Menu -->
+              <div class="dropdown-menu absolute left-1/2 -translate-x-1/2 top-full w-40 bg-white border border-gray-100 shadow-lg rounded-sm hidden group-hover:block pt-1">
+                  <a href="#" class="block px-5 py-3 text-gray-500 hover:bg-gray-50 hover:text-accent transition-colors border-b border-gray-50">Board Game</a>
+                  <a href="../pcgame/rating_pc_home.html" class="block px-5 py-3 text-gray-500 hover:bg-gray-50 hover:text-accent transition-colors border-b border-gray-50">PC Game</a>
+                  <a href="../travel/rating_travel_home.html" class="block px-5 py-3 text-gray-500 hover:bg-gray-50 hover:text-accent transition-colors">Sightseeing</a>
+              </div>
+          </div>
+          <a href="thoughts_list.html" class="block text-gray-600">Thoughts</a>
+      </div>
+  </nav>
 
     <main class="pt-32 pb-24 px-6 max-w-7xl mx-auto">
         

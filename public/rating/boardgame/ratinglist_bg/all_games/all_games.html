@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!DOCTYPE html> 
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -56,25 +56,42 @@
     <nav class="fixed w-full z-50 top-0 bg-paper/90 backdrop-blur-sm border-b border-gray-200/50 h-20 flex items-center px-6 justify-between">
         <div class="flex items-center">
             <!-- Back to the Overview Page -->
-            <a href="../../home_bg_rt.html" class="flex items-center text-gray-500 hover:text-accent transition-colors group mr-8">
+            <a href="../../rating_boardgame_home.html" class="flex items-center text-gray-500 hover:text-accent transition-colors group mr-8">
                 <i data-lucide="arrow-left" class="w-5 h-5 mr-2 group-hover:-translate-x-1 transition-transform"></i>
-                Back to Overview
+                <span class="lang-en">Back to Overview</span>
+                <span class="lang-cn hidden">返回导览页</span>
             </a>
             <div class="h-6 w-px bg-gray-300 mr-8 hidden md:block"></div>
             <span class="font-bold tracking-widest uppercase text-sm text-ink hidden md:inline">
-                Master Rating Matrix
+                <span class="lang-en">Master Rating Matrix</span>
+                <span class="lang-cn hidden">总评分矩阵</span>
             </span>
         </div>
+
+        <!-- 语言切换按钮 -->
+        <button onclick="toggleLanguage()" class="flex items-center space-x-2 border border-gray-300 px-4 py-2 rounded-full hover:border-accent hover:text-accent transition-all text-xs font-bold tracking-widest uppercase bg-white">
+            <i data-lucide="globe" class="w-4 h-4"></i>
+            <span id="lang-label">EN / 中文</span>
+        </button>
     </nav>
 
     <main class="pt-32 pb-24 px-6 max-w-[95%] mx-auto">
         
         <header class="mb-8 flex flex-col md:flex-row justify-between items-end">
             <div>
-                <h1 class="text-3xl font-bold text-ink mb-2">All Board Games Matrix</h1>
+                <h1 class="text-3xl font-bold text-ink mb-2">
+                    <span class="lang-en">All Board Games Matrix</span>
+                    <span class="lang-cn hidden">所有桌游评分矩阵</span>
+                </h1>
                 <p class="text-gray-500">
-                    A comprehensive breakdown of scores across 8 design dimensions and some others. <br>
-                    <span class="text-accent text-xs font-bold uppercase tracking-wide">Click column headers to sort</span>
+                    <span class="lang-en">
+                        A comprehensive breakdown of scores across 8 design dimensions and some others. <br>
+                        <span class="text-accent text-xs font-bold uppercase tracking-wide">Click column headers to sort</span>
+                    </span>
+                    <span class="lang-cn hidden">
+                        这里展示了所有桌游在 8 个设计维度（以及若干附加维度）上的详细评分。<br>
+                        <span class="text-accent text-xs font-bold uppercase tracking-wide">点击列表头可以切换排序</span>
+                    </span>
                 </p>
             </div>
         </header>
@@ -86,41 +103,63 @@
                     <tr>
                         <!-- Game Name (Sticky Left) -->
                         <th scope="col" class="px-6 py-4 font-bold text-ink cursor-pointer sticky-col-left hover:bg-gray-100 transition-colors" onclick="sortTable('title')">
-                            Game <i data-lucide="chevrons-up-down" class="sort-icon"></i>
+                            <span class="lang-en">Game</span>
+                            <span class="lang-cn hidden">游戏</span>
+                            <i data-lucide="chevrons-up-down" class="sort-icon"></i>
                         </th>
                         
                         <!-- Data Columns -->
                         <th scope="col" class="px-4 py-4 cursor-pointer hover:bg-gray-100 transition-colors" onclick="sortTable('mechanics')">
-                            Mechanics <i data-lucide="chevrons-up-down" class="sort-icon"></i>
+                            <span class="lang-en">Mechanics</span>
+                            <span class="lang-cn hidden">机制</span>
+                            <i data-lucide="chevrons-up-down" class="sort-icon"></i>
                         </th>
                         <th scope="col" class="px-4 py-4 cursor-pointer hover:bg-gray-100 transition-colors" onclick="sortTable('theme')">
-                            Theme <i data-lucide="chevrons-up-down" class="sort-icon"></i>
+                            <span class="lang-en">Theme</span>
+                            <span class="lang-cn hidden">主题</span>
+                            <i data-lucide="chevrons-up-down" class="sort-icon"></i>
                         </th>
                         <th scope="col" class="px-4 py-4 cursor-pointer hover:bg-gray-100 transition-colors" onclick="sortTable('aesthetics')">
-                            Aesthetics <i data-lucide="chevrons-up-down" class="sort-icon"></i>
+                            <span class="lang-en">Aesthetics</span>
+                            <span class="lang-cn hidden">美术</span>
+                            <i data-lucide="chevrons-up-down" class="sort-icon"></i>
                         </th>
                         <th scope="col" class="px-4 py-4 cursor-pointer hover:bg-gray-100 transition-colors" onclick="sortTable('balance')">
-                            Balance <i data-lucide="chevrons-up-down" class="sort-icon"></i>
+                            <span class="lang-en">Balance</span>
+                            <span class="lang-cn hidden">平衡性</span>
+                            <i data-lucide="chevrons-up-down" class="sort-icon"></i>
                         </th>
                         <th scope="col" class="px-4 py-4 cursor-pointer hover:bg-gray-100 transition-colors" onclick="sortTable('replayability')">
-                            Replayability <i data-lucide="chevrons-up-down" class="sort-icon"></i>
+                            <span class="lang-en">Replayability</span>
+                            <span class="lang-cn hidden">重玩价值</span>
+                            <i data-lucide="chevrons-up-down" class="sort-icon"></i>
                         </th>
                         <th scope="col" class="px-4 py-4 cursor-pointer hover:bg-gray-100 transition-colors" onclick="sortTable('interactivity')">
-                            Interactivity <i data-lucide="chevrons-up-down" class="sort-icon"></i>
+                            <span class="lang-en">Interactivity</span>
+                            <span class="lang-cn hidden">互动性</span>
+                            <i data-lucide="chevrons-up-down" class="sort-icon"></i>
                         </th>
                         <th scope="col" class="px-4 py-4 cursor-pointer hover:bg-gray-100 transition-colors" onclick="sortTable('complexity')">
-                            Complex/Depth <i data-lucide="chevrons-up-down" class="sort-icon"></i>
+                            <span class="lang-en">Complex/Depth</span>
+                            <span class="lang-cn hidden">复杂度 / 深度</span>
+                            <i data-lucide="chevrons-up-down" class="sort-icon"></i>
                         </th>
                         <th scope="col" class="px-4 py-4 cursor-pointer hover:bg-gray-100 transition-colors" onclick="sortTable('flow')">
-                            Flow/Pacing <i data-lucide="chevrons-up-down" class="sort-icon"></i>
+                            <span class="lang-en">Flow/Pacing</span>
+                            <span class="lang-cn hidden">节奏 / 流畅度</span>
+                            <i data-lucide="chevrons-up-down" class="sort-icon"></i>
                         </th>
                         <th scope="col" class="px-4 py-4 cursor-pointer hover:bg-gray-100 transition-colors" onclick="sortTable('others')">
-                            Others <i data-lucide="chevrons-up-down" class="sort-icon"></i>
+                            <span class="lang-en">Others</span>
+                            <span class="lang-cn hidden">其他</span>
+                            <i data-lucide="chevrons-up-down" class="sort-icon"></i>
                         </th>
 
                         <!-- Total Score (Sticky Right) -->
                         <th scope="col" class="px-6 py-4 font-bold text-accent cursor-pointer sticky-col-right hover:bg-gray-50 transition-colors text-right" onclick="sortTable('total')">
-                            Total <i data-lucide="chevrons-up-down" class="sort-icon"></i>
+                            <span class="lang-en">Total</span>
+                            <span class="lang-cn hidden">总分</span>
+                            <i data-lucide="chevrons-up-down" class="sort-icon"></i>
                         </th>
                     </tr>
                 </thead>
@@ -134,21 +173,36 @@
         <div class="flex flex-col sm:flex-row justify-between items-center pt-6 border-t border-gray-200">
             <!-- Left side: Showing info -->
             <div class="text-xs text-gray-400 mb-4 sm:mb-0">
-                Showing <span class="font-bold text-gray-600">20</span> items per page
+                <span class="lang-en">
+                    Showing <span class="font-bold text-gray-600">20</span> items per page
+                </span>
+                <span class="lang-cn hidden">
+                    每页显示 <span class="font-bold text-gray-600">20</span> 条记录
+                </span>
             </div>
 
             <!-- Right side: Pagination buttons -->
             <div class="flex items-center space-x-6">
                 <button onclick="prevPage()" id="btnPrev" class="flex items-center px-3 py-1 text-sm font-medium text-gray-500 bg-white border border-gray-200 rounded-sm hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors">
-                    <i data-lucide="chevron-left" class="w-4 h-4 mr-1"></i> Previous
+                    <i data-lucide="chevron-left" class="w-4 h-4 mr-1"></i>
+                    <span class="lang-en">Previous</span>
+                    <span class="lang-cn hidden">上一页</span>
                 </button>
                 
                 <span class="text-sm text-gray-600">
-                    Page <span id="pageSpan" class="font-bold text-ink">1</span> of <span id="totalPageSpan" class="font-bold text-ink">--</span>
+                    <span class="lang-en">Page</span>
+                    <span class="lang-cn hidden">第</span>
+                    <span id="pageSpan" class="font-bold text-ink">1</span>
+                    <span class="lang-en">of</span>
+                    <span class="lang-cn hidden">页 / 共</span>
+                    <span id="totalPageSpan" class="font-bold text-ink">--</span>
+                    <span class="lang-cn hidden">页</span>
                 </span>
 
                 <button onclick="nextPage()" id="btnNext" class="flex items-center px-3 py-1 text-sm font-medium text-gray-500 bg-white border border-gray-200 rounded-sm hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors">
-                    Next <i data-lucide="chevron-right" class="w-4 h-4 ml-1"></i>
+                    <span class="lang-en">Next</span>
+                    <span class="lang-cn hidden">下一页</span>
+                    <i data-lucide="chevron-right" class="w-4 h-4 ml-1"></i>
                 </button>
             </div>
         </div>
@@ -158,6 +212,7 @@
     <script>
         lucide.createIcons();
 
+        let currentLang = 'en';   // ✅ 当前语言，默认英文
         let currentPage = 1;
         const rowsPerPage = 20;
         let currentData = []; 
@@ -240,9 +295,15 @@
                 };
 
                 // 渲染行
+                // 根据当前语言选择显示的游戏名
+                const displayTitle = (currentLang === 'cn' && game.title_cn)
+                    ? game.title_cn
+                    : game.title;
+
+                // 渲染行
                 tr.innerHTML = `
                     <td class="px-6 py-4 font-bold text-ink sticky-col-left group-hover:bg-[#fffbf5] transition-colors">
-                        ${game.title}
+                        ${displayTitle}
                     </td>
                     <td class="px-4 py-4 ${getColorClass(game.mechanics)}">${game.mechanics.toFixed(1)}</td>
                     <td class="px-4 py-4 ${getColorClass(game.theme)}">${game.theme.toFixed(1)}</td>
@@ -273,6 +334,22 @@
                 renderTable();
             }
         }
+
+        // === 语言切换逻辑：跟页面 1 一样 ===
+        function toggleLanguage() {
+            const enEls = document.querySelectorAll('.lang-en');
+            const cnEls = document.querySelectorAll('.lang-cn');
+
+            enEls.forEach(el => el.classList.toggle('hidden'));
+            cnEls.forEach(el => el.classList.toggle('hidden'));
+
+            // ✅ 切换当前语言状态
+            currentLang = (currentLang === 'en') ? 'cn' : 'en';
+
+            // ✅ 重新渲染表格，让游戏名跟着变
+            renderTable();
+        }
+
     </script>
 </body>
 </html>

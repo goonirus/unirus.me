@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Travel Ratings | 全球足迹</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Sans+SC:wght@300;400;500;700&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: { 
+                        sans: ['Inter', 'Noto Sans SC', 'sans-serif'],
+                        serif: ['Playfair Display', 'serif'],
+                    },
+                    colors: { 
+                        'paper': '#fdfbf7', 
+                        'ink': '#1a1a1a', 
+                        'accent': '#c2410c',
+                        'secondary': '#f3f4f6'
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body { background-color: #fdfbf7; color: #1a1a1a; }
+        
+        /* 折叠面板样式 */
+        details > summary {
+            list-style: none;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        details > summary::-webkit-details-marker {
+            display: none;
+        }
+        
+        /* 一级目录：大洲 */
+        .continent-summary {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            font-weight: 600;
+            padding: 1.5rem 0;
+            border-bottom: 1px solid #e5e7eb;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .continent-summary:hover {
+            color: #c2410c;
+        }
+        /* 展开时的高亮 */
+        details[open] > .continent-summary {
+            color: #c2410c;
+            border-bottom-color: #c2410c;
+        }
+
+        /* 二级目录：区域 */
+        .region-details {
+            margin-left: 1.5rem;
+            margin-top: 1rem;
+            border-left: 1px solid #e5e7eb;
+            padding-left: 1.5rem;
+        }
+        .region-summary {
+            font-size: 1.1rem;
+            font-weight: 500;
+            padding: 0.75rem 0;
+            color: #4b5563;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .region-summary:hover {
+            color: #1a1a1a;
+        }
+        details[open] > .region-summary {
+            color: #1a1a1a;
+            font-weight: 600;
+        }
+
+        /* 三级目录：国家 */
+        .country-list {
+            margin-left: 1rem;
+            margin-top: 0.5rem;
+            margin-bottom: 1.5rem;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 0.75rem;
+        }
+        .country-link {
+            display: block;
+            padding: 0.5rem 1rem;
+            background-color: white;
+            border: 1px solid #e5e7eb;
+            border-radius: 0.25rem;
+            font-size: 0.9rem;
+            color: #6b7280;
+            transition: all 0.2s;
+            text-align: center;
+        }
+        .country-link:hover {
+            border-color: #c2410c;
+            color: #c2410c;
+            background-color: #fffbf0;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+        }
+
+        /* 图标旋转动画 */
+        details > summary .icon-chevron {
+            transition: transform 0.3s ease;
+        }
+        details[open] > summary .icon-chevron {
+            transform: rotate(180deg);
+        }
+
+    </style>
+</head>
+<body class="font-sans antialiased">
+
+    <!-- Navigation -->
+    <nav class="fixed w-full z-50 top-0 bg-paper/90 backdrop-blur-sm border-b border-gray-200/50 transition-all duration-300" id="navbar">
+        <div class="max-w-7xl mx-auto px-6 h-20 flex justify-between items-center">
+            <!-- Logo links back to Home -->
+            <div class="flex items-center">
+                <!-- Left: Back to Home link -->
+                <a href="../../../home.html" class="flex items-center text-gray-500 hover:text-accent transition-colors group mr-8">
+                    <i data-lucide="arrow-left" class="w-5 h-5 mr-2 group-hover:-translate-x-1 transition-transform"></i>
+                    <span class="lang-en">Back to Home</span>
+                    <!-- 给所有中文元素加上 hidden 类 -->
+                    <span class="lang-cn hidden">返回首页</span>
+                </a>
+                
+                <!-- Vertical Divider -->
+                <div class="h-6 w-px bg-gray-300 mr-8 hidden md:block"></div>
+                
+                <!-- Current Page Title (Breadcrumb style) -->
+                <span class="font-bold tracking-widest uppercase text-sm text-ink hidden md:inline">
+                  <span class="lang-en">Global Footprints</span>
+                  <span class="lang-cn hidden">全球行旅足迹</span>
+                </span>
+            </div>
+            
+            <div class="hidden md:flex space-x-8 text-sm font-medium tracking-wide text-gray-600 items-center">
+                <a href="../../../home.html" class="hover:text-black transition-colors"><span class="lang-en">Home</span><span class="lang-cn hidden">首页</span></a>
+                <a href="../../portfolio/portfolio_home.html" class="hover:text-black transition-colors"><span class="lang-en">Portfolio</span><span class="lang-cn hidden">作品集</span></a> <!-- Active State -->
+                <a href="../../deconstruction/deconstruction_home.html" class="hover:text-black transition-colors"><span class="lang-en">Deconstruction</span><span class="lang-cn hidden">解构设计</span></a>                <!-- Modified Ratings Link with Dropdown -->
+                <div class="relative group h-20 flex items-center">
+                    <a href="#" class="hover:text-black transition-colors flex items-center cursor-pointer">
+                      <span class="lang-en">Ratings</span><span class="lang-cn hidden">评分</span> <i data-lucide="chevron-down" class="w-3 h-3 ml-1 text-gray-400 group-hover:text-black transition-colors"></i>
+                    </a>
+                    
+                    <!-- Dropdown Menu -->
+                    <div class="dropdown-menu absolute left-1/2 -translate-x-1/2 top-full w-40 bg-white border border-gray-100 shadow-lg rounded-sm hidden group-hover:block pt-1">
+                        <a href="../boardgame/rating_boardgame_home.html" class="block px-5 py-3 text-gray-500 hover:bg-gray-50 hover:text-accent transition-colors border-b border-gray-50"><span class="lang-en">Board Game</span><span class="lang-cn hidden">桌游</span></a>
+                        <a href="../pcgame/rating_pc_home.html" class="block px-5 py-3 text-gray-500 hover:bg-gray-50 hover:text-accent transition-colors border-b border-gray-50"><span class="lang-en">PC Game</span><span class="lang-cn hidden">电脑游戏</span></a>
+                        <a href="#" class="block px-5 py-3 text-amber-700 font-bold hover:bg-gray-50 hover:text-accent transition-colors border-b border-gray-50"><span class="lang-en">Sightseeing</span><span class="lang-cn hidden">观光旅游</span></a>
+                    </div>
+                </div>
+                <a href="../../thoughts/thoughts_home.html" class="hover:text-black transition-colors"><span class="lang-en">Thoughts</span><span class="lang-cn hidden">思考</span></a>
+            </div>
+  
+            <button class="md:hidden" onclick="toggleMenu()"><i data-lucide="menu" class="w-6 h-6"></i></button>
+            
+            <button onclick="toggleLanguage()" class="flex items-center space-x-2 border border-gray-300 px-4 py-2 rounded-full hover:border-accent hover:text-accent transition-all text-xs font-bold tracking-widest uppercase bg-white">
+              <i data-lucide="globe" class="w-4 h-4"></i>
+              <span id="lang-label">EN / 中文</span>
+            </button>
+        </div>
+        
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden md:hidden bg-white border-t absolute w-full px-6 py-4 space-y-4 shadow-lg">
+            <a href="../../home.html" class="block text-gray-600">Home</a>
+            <a href="../../portfolio/portfolio_home.html" class="block text-gray-600">Portfolio</a>
+            <a href="../deconstruction/deconstruction_home.html" class="block text-gray-600">Deconstruction</a>                <!-- Modified Ratings Link with Dropdown -->
+            <div class="relative group h-20 flex items-center">
+                <a href="#" class="block text-gray-600 flex items-center cursor-pointer">
+                    Ratings <i data-lucide="chevron-down" class="w-3 h-3 ml-1 text-gray-400 group-hover:text-black transition-colors"></i>
+                </a>
+                
+                <!-- Dropdown Menu -->
+                <div class="dropdown-menu absolute left-1/2 -translate-x-1/2 top-full w-40 bg-white border border-gray-100 shadow-lg rounded-sm hidden group-hover:block pt-1">
+                    <a href="../boardgame/rating_boardgame_home.html" class="block px-5 py-3 text-gray-500 hover:bg-gray-50 hover:text-accent transition-colors border-b border-gray-50">Board Game</a>
+                    <a href="../pcgame/rating_pc_home.html" class="block px-5 py-3 text-gray-500 hover:bg-gray-50 hover:text-accent transition-colors border-b border-gray-50">PC Game</a>
+                    <a href="#" class="block px-5 py-3 text-gray-500 hover:bg-gray-50 hover:text-accent transition-colors">Sightseeing</a>
+                </div>
+            </div>
+            <a href="thoughts_list.html" class="block text-gray-600">Thoughts</a>
+        </div>
+    </nav>
+
+    <main class="pt-32 pb-24 px-6 max-w-5xl mx-auto">
+        
+        <!-- Header -->
+        <header class="mb-16 text-center">
+            <div class="inline-flex items-center justify-center px-3 py-1 mb-6 border border-orange-200 bg-orange-50 text-orange-600 text-xs font-bold uppercase tracking-widest rounded-full">
+                <span class="lang-en">World Map</span>
+                <span class="lang-cn hidden">世界足迹</span>
+            </div>
+            <h1 class="text-4xl md:text-6xl font-bold text-ink mb-6 font-serif">
+                <span class="lang-en">Global Footprints</span>
+                <span class="lang-cn hidden">全球行旅足迹</span>
+            </h1>
+            <p class="text-xl text-gray-500 leading-relaxed max-w-2xl mx-auto font-light">
+                <span class="lang-en">
+                    "The world is a book and those who do not travel read only one page."<br>
+                    A curated list of places I've visited, rated by experience and memory.
+                </span>
+                <span class="lang-cn hidden">
+                    “世界是一本书，不旅行的人只读了一页。”<br>
+                    这里记录了我造访过的每一个角落，以及我对这些目的地的私人评分与回忆。
+                </span>
+            </p>
+        </header>
+
+        <!-- Directory Container -->
+        <div class="max-w-4xl mx-auto border-t border-gray-200">
+            
+            <!-- Level 1: Asia -->
+            <details class="group/continent" open>
+                <summary class="continent-summary">
+                    <span class="lang-en">Asia</span>
+                    <span class="lang-cn hidden">亚洲</span>
+                    <i data-lucide="chevron-down" class="icon-chevron w-6 h-6 text-gray-400"></i>
+                </summary>
+                
+                <!-- Level 2: East Asia -->
+                <div class="region-details">
+                    <details class="group/region" open>
+                        <summary class="region-summary">
+                            <i data-lucide="map-pin" class="w-4 h-4 text-accent"></i>
+                            <span class="lang-en">East Asia</span>
+                            <span class="lang-cn hidden">东亚</span>
+                            <i data-lucide="chevron-down" class="icon-chevron w-4 h-4 text-gray-300 ml-auto"></i>
+                        </summary>
+                        <!-- Level 3: Countries -->
+                        <div class="country-list">
+                            <a href="Asia/EastAsia/China.html" class="country-link">
+                                <span class="lang-en">China</span>
+                                <span class="lang-cn hidden">中国</span>
+                            </a>
+                            <a href="Asia/EastAsia/Japan.html" class="country-link">
+                                <span class="lang-en">Japan</span>
+                                <span class="lang-cn hidden">日本</span>
+                            </a>
+                            <a href="#" class="country-link">
+                                <span class="lang-en">South Korea</span>
+                                <span class="lang-cn hidden">韩国</span>
+                            </a>
+                        </div>
+                    </details>
+                </div>
+
+                <!-- Level 2: Southeast Asia -->
+                <div class="region-details">
+                    <details class="group/region">
+                        <summary class="region-summary">
+                            <i data-lucide="map-pin" class="w-4 h-4 text-accent"></i>
+                            <span class="lang-en">Southeast Asia</span>
+                            <span class="lang-cn hidden">东南亚</span>
+                            <i data-lucide="chevron-down" class="icon-chevron w-4 h-4 text-gray-300 ml-auto"></i>
+                        </summary>
+                        <div class="country-list">
+                            <a href="#" class="country-link">
+                                <span class="lang-en">Thailand</span>
+                                <span class="lang-cn hidden">泰国</span>
+                            </a>
+                            <a href="#" class="country-link">
+                                <span class="lang-en">Vietnam</span>
+                                <span class="lang-cn hidden">越南</span>
+                            </a>
+                            <a href="#" class="country-link">
+                                <span class="lang-en">Singapore</span>
+                                <span class="lang-cn hidden">新加坡</span>
+                            </a>
+                            <a href="#" class="country-link">
+                                <span class="lang-en">Malaysia</span>
+                                <span class="lang-cn hidden">马来西亚</span>
+                            </a>
+                        </div>
+                    </details>
+                </div>
+            </details>
+
+            <!-- Level 1: Europe -->
+            <details class="group/continent">
+                <summary class="continent-summary">
+                    <span class="lang-en">Europe</span>
+                    <span class="lang-cn hidden">欧洲</span>
+                    <i data-lucide="chevron-down" class="icon-chevron w-6 h-6 text-gray-400"></i>
+                </summary>
+                
+                <!-- Level 2: Western Europe -->
+                <div class="region-details">
+                    <details class="group/region">
+                        <summary class="region-summary">
+                            <i data-lucide="map-pin" class="w-4 h-4 text-accent"></i>
+                            <span class="lang-en">Western Europe</span>
+                            <span class="lang-cn hidden">西欧</span>
+                            <i data-lucide="chevron-down" class="icon-chevron w-4 h-4 text-gray-300 ml-auto"></i>
+                        </summary>
+                        <div class="country-list">
+                            <a href="#" class="country-link">
+                                <span class="lang-en">France</span>
+                                <span class="lang-cn hidden">法国</span>
+                            </a>
+                            <a href="#" class="country-link">
+                                <span class="lang-en">Netherlands</span>
+                                <span class="lang-cn hidden">荷兰</span>
+                            </a>
+                            <a href="#" class="country-link">
+                                <span class="lang-en">Belgium</span>
+                                <span class="lang-cn hidden">比利时</span>
+                            </a>
+                        </div>
+                    </details>
+                </div>
+
+                <!-- Level 2: Northern Europe -->
+                <div class="region-details">
+                    <details class="group/region">
+                        <summary class="region-summary">
+                            <i data-lucide="map-pin" class="w-4 h-4 text-accent"></i>
+                            <span class="lang-en">Northern Europe</span>
+                            <span class="lang-cn hidden">北欧</span>
+                            <i data-lucide="chevron-down" class="icon-chevron w-4 h-4 text-gray-300 ml-auto"></i>
+                        </summary>
+                        <div class="country-list">
+                            <a href="#" class="country-link">
+                                <span class="lang-en">Sweden</span>
+                                <span class="lang-cn hidden">瑞典</span>
+                            </a>
+                            <a href="#" class="country-link">
+                                <span class="lang-en">Norway</span>
+                                <span class="lang-cn hidden">挪威</span>
+                            </a>
+                            <a href="#" class="country-link">
+                                <span class="lang-en">Denmark</span>
+                                <span class="lang-cn hidden">丹麦</span>
+                            </a>
+                            <a href="#" class="country-link">
+                                <span class="lang-en">Iceland</span>
+                                <span class="lang-cn hidden">冰岛</span>
+                            </a>
+                        </div>
+                    </details>
+                </div>
+
+                <!-- Level 2: Southern Europe -->
+                <div class="region-details">
+                    <details class="group/region">
+                        <summary class="region-summary">
+                            <i data-lucide="map-pin" class="w-4 h-4 text-accent"></i>
+                            <span class="lang-en">Southern Europe</span>
+                            <span class="lang-cn hidden">南欧</span>
+                            <i data-lucide="chevron-down" class="icon-chevron w-4 h-4 text-gray-300 ml-auto"></i>
+                        </summary>
+                        <div class="country-list">
+                            <a href="#" class="country-link">
+                                <span class="lang-en">Italy</span>
+                                <span class="lang-cn hidden">意大利</span>
+                            </a>
+                            <a href="#" class="country-link">
+                                <span class="lang-en">Spain</span>
+                                <span class="lang-cn hidden">西班牙</span>
+                            </a>
+                            <a href="#" class="country-link">
+                                <span class="lang-en">Portugal</span>
+                                <span class="lang-cn hidden">葡萄牙</span>
+                            </a>
+                            <a href="#" class="country-link">
+                                <span class="lang-en">Greece</span>
+                                <span class="lang-cn hidden">希腊</span>
+                            </a>
+                        </div>
+                    </details>
+                </div>
+            </details>
+
+            <!-- Level 1: North America -->
+            <details class="group/continent">
+                <summary class="continent-summary">
+                    <span class="lang-en">North America</span>
+                    <span class="lang-cn hidden">北美洲</span>
+                    <i data-lucide="chevron-down" class="icon-chevron w-6 h-6 text-gray-400"></i>
+                </summary>
+                
+                <div class="region-details">
+                    <details class="group/region">
+                        <summary class="region-summary">
+                            <i data-lucide="map-pin" class="w-4 h-4 text-accent"></i>
+                            <span class="lang-en">Northern America</span>
+                            <span class="lang-cn hidden">北美</span>
+                            <i data-lucide="chevron-down" class="icon-chevron w-4 h-4 text-gray-300 ml-auto"></i>
+                        </summary>
+                        <div class="country-list">
+                            <a href="#" class="country-link">
+                                <span class="lang-en">United States</span>
+                                <span class="lang-cn hidden">美国</span>
+                            </a>
+                            <a href="#" class="country-link">
+                                <span class="lang-en">Canada</span>
+                                <span class="lang-cn hidden">加拿大</span>
+                            </a>
+                        </div>
+                    </details>
+                </div>
+            </details>
+
+        </div>
+    </main>
+
+    <script>
+        lucide.createIcons();
+
+        // 语言切换逻辑
+        function toggleLanguage() {
+            const enEls = document.querySelectorAll('.lang-en');
+            const cnEls = document.querySelectorAll('.lang-cn');
+            
+            // 切换所有语言元素的 hidden 类
+            enEls.forEach(el => el.classList.toggle('hidden'));
+            cnEls.forEach(el => el.classList.toggle('hidden'));
+        }
+    </script>
+</body>
+</html>

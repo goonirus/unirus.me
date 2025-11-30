@@ -1,6 +1,7 @@
 const gamesDatabase = [
     {
         "title": "Ark Nova",
+        "title_cn": "方舟动物园",
         "url": "review_detail.html", // 你可以在这里指定特定的页面，如 review_ark_nova.html
         "mechanics": 9.5,
         "theme": 8.5,
@@ -15,6 +16,7 @@ const gamesDatabase = [
     },
     {
         "title": "Terraforming Mars",
+        "title_cn": "殖民火星",
         "url": "review_detail.html",
         "mechanics": 9.5,
         "theme": 9.0,
@@ -29,6 +31,7 @@ const gamesDatabase = [
     },
     {
         "title": "Dune: Imperium",
+        "title_cn": "沙丘：帝国",
         "mechanics": 9.0,
         "theme": 9.5,
         "aesthetics": 8.0,
@@ -42,6 +45,7 @@ const gamesDatabase = [
     },
     {
         "title": "Gloomhaven",
+        "title_cn": "幽港迷城",
         "url": "../../games/GloomHeaven.html",
         "mechanics": 10.0,
         "theme": 9.0,
@@ -55,21 +59,21 @@ const gamesDatabase = [
         "total": 9.8
     },
     // 示例数据，用于演示分页功能
-    { "title": "Elden Ring", "mechanics": 10.0, "theme": 10.0, "aesthetics": 10.0, "balance": 9.0, "replayability": 9.5, "interactivity": 8.0, "complexity": 9.0, "flow": 9.0, "others": 9.0, "total": 10.0 },
-    { "title": "Baldur's Gate 3", "mechanics": 10.0, "theme": 10.0, "aesthetics": 9.5, "balance": 8.5, "replayability": 10.0, "interactivity": 10.0, "complexity": 9.5, "flow": 8.5, "others": 9.5, "total": 10.0 },
-    { "title": "Hades", "mechanics": 9.8, "theme": 9.5, "aesthetics": 9.8, "balance": 9.5, "replayability": 9.0, "interactivity": 5.0, "complexity": 7.0, "flow": 10.0, "others": 9.0, "total": 9.7 },
-    { "title": "Slay the Spire", "mechanics": 10.0, "theme": 7.0, "aesthetics": 7.0, "balance": 9.5, "replayability": 10.0, "interactivity": 5.0, "complexity": 8.0, "flow": 9.5, "others": 8.0, "total": 9.0 },
-    { "title": "Civilization VI", "mechanics": 9.0, "theme": 8.5, "aesthetics": 8.5, "balance": 8.0, "replayability": 9.5, "interactivity": 7.0, "complexity": 9.0, "flow": 6.0, "others": 9.0, "total": 9.3 },
-    { "title": "Stellaris", "mechanics": 8.5, "theme": 9.5, "aesthetics": 9.0, "balance": 7.0, "replayability": 9.0, "interactivity": 7.5, "complexity": 9.5, "flow": 7.0, "others": 8.5, "total": 8.8 },
-    { "title": "Crusader Kings III", "mechanics": 9.0, "theme": 10.0, "aesthetics": 9.0, "balance": 8.0, "replayability": 9.5, "interactivity": 8.5, "complexity": 9.0, "flow": 8.0, "others": 9.5, "total": 9.5 },
-    { "title": "Spirit Island", "mechanics": 9.5, "theme": 9.0, "aesthetics": 8.5, "balance": 9.5, "replayability": 9.0, "interactivity": 8.5, "complexity": 9.0, "flow": 8.0, "others": 8.0, "total": 9.3 },
-    { "title": "Brass: Birmingham", "mechanics": 9.8, "theme": 8.0, "aesthetics": 9.0, "balance": 9.5, "replayability": 9.0, "interactivity": 9.0, "complexity": 8.5, "flow": 8.5, "others": 8.0, "total": 9.8 },
-    { "title": "Concordia", "mechanics": 9.0, "theme": 6.0, "aesthetics": 7.0, "balance": 9.5, "replayability": 8.5, "interactivity": 7.0, "complexity": 6.5, "flow": 9.5, "others": 8.0, "total": 8.8 },
-    { "title": "Wingspan", "mechanics": 8.0, "theme": 9.5, "aesthetics": 10.0, "balance": 8.0, "replayability": 8.5, "interactivity": 5.0, "complexity": 5.5, "flow": 9.0, "others": 8.5, "total": 8.5 },
-    { "title": "Cascadia", "mechanics": 8.5, "theme": 8.0, "aesthetics": 9.0, "balance": 9.0, "replayability": 8.5, "interactivity": 4.0, "complexity": 4.0, "flow": 9.5, "others": 8.0, "total": 8.9 },
-    { "title": "The Crew", "mechanics": 9.0, "theme": 7.0, "aesthetics": 7.0, "balance": 9.0, "replayability": 9.0, "interactivity": 8.5, "complexity": 4.5, "flow": 9.5, "others": 8.0, "total": 8.8 },
-    { "title": "Just One", "mechanics": 8.0, "theme": 5.0, "aesthetics": 6.0, "balance": 10.0, "replayability": 9.0, "interactivity": 9.5, "complexity": 2.0, "flow": 10.0, "others": 8.0, "total": 8.5 },
-    { "title": "Azul", "mechanics": 9.0, "theme": 6.0, "aesthetics": 9.0, "balance": 9.0, "replayability": 8.5, "interactivity": 7.0, "complexity": 4.0, "flow": 9.5, "others": 8.0, "total": 8.8 },
-    { "title": "Patchwork", "mechanics": 9.0, "theme": 6.0, "aesthetics": 7.0, "balance": 9.5, "replayability": 8.5, "interactivity": 6.0, "complexity": 4.0, "flow": 9.0, "others": 8.0, "total": 8.7 },
-    { "title": "pate", "mechanics": 9.0, "theme": 6.0, "aesthetics": 7.0, "balance": 9.5, "replayability": 8.5, "interactivity": 6.0, "complexity": 4.0, "flow": 9.0, "others": 8.0, "total": 8.7 }
+    { "title": "Elden Ring", "title_cn": "艾尔登法环", "mechanics": 10.0, "theme": 10.0, "aesthetics": 10.0, "balance": 9.0, "replayability": 9.5, "interactivity": 8.0, "complexity": 9.0, "flow": 9.0, "others": 9.0, "total": 10.0 },
+    { "title": "Baldur's Gate 3", "title_cn": "博德之门3", "mechanics": 10.0, "theme": 10.0, "aesthetics": 9.5, "balance": 8.5, "replayability": 10.0, "interactivity": 10.0, "complexity": 9.5, "flow": 8.5, "others": 9.5, "total": 10.0 },
+    { "title": "Hades", "title_cn": "哈迪斯", "mechanics": 9.8, "theme": 9.5, "aesthetics": 9.8, "balance": 9.5, "replayability": 9.0, "interactivity": 5.0, "complexity": 7.0, "flow": 10.0, "others": 9.0, "total": 9.7 },
+    { "title": "Slay the Spire", "title_cn": "杀戮尖塔", "mechanics": 10.0, "theme": 7.0, "aesthetics": 7.0, "balance": 9.5, "replayability": 10.0, "interactivity": 5.0, "complexity": 8.0, "flow": 9.5, "others": 8.0, "total": 9.0 },
+    { "title": "Civilization VI", "title_cn": "文明6", "mechanics": 9.0, "theme": 8.5, "aesthetics": 8.5, "balance": 8.0, "replayability": 9.5, "interactivity": 7.0, "complexity": 9.0, "flow": 6.0, "others": 9.0, "total": 9.3 },
+    { "title": "Stellaris", "title_cn": "星际拓荒", "mechanics": 8.5, "theme": 9.5, "aesthetics": 9.0, "balance": 7.0, "replayability": 9.0, "interactivity": 7.5, "complexity": 9.5, "flow": 7.0, "others": 8.5, "total": 8.8 },
+    { "title": "Crusader Kings III", "title_cn": "十字军之王3", "mechanics": 9.0, "theme": 10.0, "aesthetics": 9.0, "balance": 8.0, "replayability": 9.5, "interactivity": 8.5, "complexity": 9.0, "flow": 8.0, "others": 9.5, "total": 9.5 },
+    { "title": "Spirit Island", "title_cn": "精神岛", "mechanics": 9.5, "theme": 9.0, "aesthetics": 8.5, "balance": 9.5, "replayability": 9.0, "interactivity": 8.5, "complexity": 9.0, "flow": 8.0, "others": 8.0, "total": 9.3 },
+    { "title": "Brass: Birmingham", "title_cn": "布里斯托尔", "mechanics": 9.8, "theme": 8.0, "aesthetics": 9.0, "balance": 9.5, "replayability": 9.0, "interactivity": 9.0, "complexity": 8.5, "flow": 8.5, "others": 8.0, "total": 9.8 },
+    { "title": "Concordia", "title_cn": "康科迪亚", "mechanics": 9.0, "theme": 6.0, "aesthetics": 7.0, "balance": 9.5, "replayability": 8.5, "interactivity": 7.0, "complexity": 6.5, "flow": 9.5, "others": 8.0, "total": 8.8 },
+    { "title": "Wingspan", "title_cn": "翼展", "mechanics": 8.0, "theme": 9.5, "aesthetics": 10.0, "balance": 8.0, "replayability": 8.5, "interactivity": 5.0, "complexity": 5.5, "flow": 9.0, "others": 8.5, "total": 8.5 },
+    { "title": "Cascadia", "title_cn": "卡斯卡迪亚", "mechanics": 8.5, "theme": 8.0, "aesthetics": 9.0, "balance": 9.0, "replayability": 8.5, "interactivity": 4.0, "complexity": 4.0, "flow": 9.5, "others": 8.0, "total": 8.9 },
+    { "title": "The Crew", "title_cn": "车队", "mechanics": 9.0, "theme": 7.0, "aesthetics": 7.0, "balance": 9.0, "replayability": 9.0, "interactivity": 8.5, "complexity": 4.5, "flow": 9.5, "others": 8.0, "total": 8.8 },
+    { "title": "Just One", "title_cn": "只有一次", "mechanics": 8.0, "theme": 5.0, "aesthetics": 6.0, "balance": 10.0, "replayability": 9.0, "interactivity": 9.5, "complexity": 2.0, "flow": 10.0, "others": 8.0, "total": 8.5 },
+    { "title": "Azul", "title_cn": "阿祖尔", "mechanics": 9.0, "theme": 6.0, "aesthetics": 9.0, "balance": 9.0, "replayability": 8.5, "interactivity": 7.0, "complexity": 4.0, "flow": 9.5, "others": 8.0, "total": 8.8 },
+    { "title": "Patchwork", "title_cn": "拼布", "mechanics": 9.0, "theme": 6.0, "aesthetics": 7.0, "balance": 9.5, "replayability": 8.5, "interactivity": 6.0, "complexity": 4.0, "flow": 9.0, "others": 8.0, "total": 8.7 },
+    { "title": "pate", "title_cn": "帕特", "mechanics": 9.0, "theme": 6.0, "aesthetics": 7.0, "balance": 9.5, "replayability": 8.5, "interactivity": 6.0, "complexity": 4.0, "flow": 9.0, "others": 8.0, "total": 8.7 }
 ];

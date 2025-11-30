@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio | All Works</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: { 
+                        sans: ['Inter', 'sans-serif'],
+                        serif: ['Playfair Display', 'serif'],
+                    },
+                    colors: { 
+                        'paper': '#fdfbf7', 
+                        'ink': '#1a1a1a', 
+                        'accent': '#c2410c',
+                        'secondary': '#f3f4f6'
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body { background-color: #fdfbf7; color: #1a1a1a; scroll-behavior: smooth; }
+        .game-card:hover .card-image { transform: scale(1.03); }
+        
+        /* Filter Button Active State */
+        .filter-btn.active {
+            background-color: #1a1a1a;
+            color: white;
+            border-color: #1a1a1a;
+        }
+
+        /* Back to Top Button - Floating Style */
+        #backToTopBtn {
+            display: none;
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            z-index: 99;
+            border: none;
+            outline: none;
+            background-color: rgba(26, 26, 26, 0.7);
+            color: white;
+            cursor: pointer;
+            padding: 0.75rem;
+            border-radius: 50%;
+            backdrop-filter: blur(4px);
+            transition: all 0.3s ease;
+        }
+        
+        #backToTopBtn:hover {
+            background-color: rgba(194, 65, 12, 0.9);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+    </style>
+</head>
+<body class="font-sans antialiased" onload="initPortfolio()">
+
+    <!-- Navigation -->
+    <nav class="fixed w-full z-50 top-0 bg-paper/90 backdrop-blur-sm border-b border-gray-200/50 transition-all duration-300" id="navbar">
+        <div class="max-w-7xl mx-auto px-6 h-20 flex justify-between items-center">
+            <!-- Logo links back to Home -->
+            <div class="flex items-center">
+                <!-- Left: Back to Home link -->
+                <a href="../../home.html" class="flex items-center text-gray-500 hover:text-accent transition-colors group mr-8">
+                    <i data-lucide="arrow-left" class="w-5 h-5 mr-2 group-hover:-translate-x-1 transition-transform"></i>
+                    Back to Home
+                </a>
+                
+                <!-- Vertical Divider -->
+                <div class="h-6 w-px bg-gray-300 mr-8 hidden md:block"></div>
+                
+                <!-- Current Page Title (Breadcrumb style) -->
+                <span class="font-bold tracking-widest uppercase text-sm text-ink hidden md:inline">
+                    Portfolio Archive
+                </span>
+            </div>
+            
+            <div class="hidden md:flex space-x-8 text-sm font-medium tracking-wide text-gray-600 items-center">
+                <a href="../../home.html" class="hover:text-black transition-colors">Home</a>
+                <a href="#" class="text-black font-bold border-b-2 border-accent pb-1">Portfolio</a> <!-- Active State -->
+                <a href="../deconstruction/deconstruction_home.html" class="hover:text-black transition-colors">Deconstruction</a>                <!-- Modified Ratings Link with Dropdown -->
+                <div class="relative group h-20 flex items-center">
+                    <a href="#" class="hover:text-black transition-colors flex items-center cursor-pointer">
+                        Ratings <i data-lucide="chevron-down" class="w-3 h-3 ml-1 text-gray-400 group-hover:text-black transition-colors"></i>
+                    </a>
+                    
+                    <!-- Dropdown Menu -->
+                    <div class="dropdown-menu absolute left-1/2 -translate-x-1/2 top-full w-40 bg-white border border-gray-100 shadow-lg rounded-sm hidden group-hover:block pt-1">
+                        <a href="../rating/boardgame/rating_boardgame_home.html" class="block px-5 py-3 text-gray-500 hover:bg-gray-50 hover:text-accent transition-colors border-b border-gray-50">Board Game</a>
+                        <a href="../rating/pcgame/rating_pc_home.html" class="block px-5 py-3 text-gray-500 hover:bg-gray-50 hover:text-accent transition-colors border-b border-gray-50">PC Game</a>
+                        <a href="../rating/travel/rating_travel_home.html" class="block px-5 py-3 text-gray-500 hover:bg-gray-50 hover:text-accent transition-colors">Sightseeing</a>
+                    </div>
+                </div>
+                <a href="../thoughts/thoughts_home.html" class="hover:text-black transition-colors">Thoughts</a>
+            </div>
+
+            <button class="md:hidden" onclick="toggleMenu()"><i data-lucide="menu" class="w-6 h-6"></i></button>
+        </div>
+        
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden md:hidden bg-white border-t absolute w-full px-6 py-4 space-y-4 shadow-lg">
+            <a href="../../home.html" class="block text-gray-600">Home</a>
+            <a href="#" class="block text-black font-bold">Portfolio</a>
+            <a href="../deconstruction/deconstruction_home.html" class="block text-gray-600">Deconstruction</a>                <!-- Modified Ratings Link with Dropdown -->
+            <div class="relative group h-20 flex items-center">
+                <a href="#" class="block text-gray-600 flex items-center cursor-pointer">
+                    Ratings <i data-lucide="chevron-down" class="w-3 h-3 ml-1 text-gray-400 group-hover:text-black transition-colors"></i>
+                </a>
+                
+                <!-- Dropdown Menu -->
+                <div class="dropdown-menu absolute left-1/2 -translate-x-1/2 top-full w-40 bg-white border border-gray-100 shadow-lg rounded-sm hidden group-hover:block pt-1">
+                    <a href="../rating/boardgame/rating_boardgame_home.html" class="block px-5 py-3 text-gray-500 hover:bg-gray-50 hover:text-accent transition-colors border-b border-gray-50">Board Game</a>
+                    <a href="../rating/pcgame/rating_pc_home.html" class="block px-5 py-3 text-gray-500 hover:bg-gray-50 hover:text-accent transition-colors border-b border-gray-50">PC Game</a>
+                    <a href="../rating/travel/rating_travel_home.html" class="block px-5 py-3 text-gray-500 hover:bg-gray-50 hover:text-accent transition-colors">Sightseeing</a>
+                </div>
+            </div>
+            <a href="thoughts_list.html" class="block text-gray-600">Thoughts</a>
+        </div>
+    </nav>
+
+    <main class="pt-32 pb-24 px-6 max-w-7xl mx-auto">
+        
+        <header class="mb-10">
+            <h1 class="text-4xl md:text-6xl font-bold text-ink mb-6 tracking-tight">All Works</h1>
+            <p class="text-xl text-gray-500 leading-relaxed font-light max-w-2xl mb-8">
+                A comprehensive collection of my game design projects, ranging from published titles to experimental prototypes.
+            </p>
+
+            <!-- Filters -->
+            <div class="flex flex-wrap gap-3" id="portfolio-filters">
+                <button onclick="filterWorks('all', this)" class="filter-btn active px-6 py-2 rounded-full border border-gray-200 text-sm font-medium transition-all hover:border-black">All Projects</button>
+                <button onclick="filterWorks('digital', this)" class="filter-btn px-6 py-2 rounded-full border border-gray-200 text-sm font-medium text-gray-500 transition-all hover:border-black hover:text-black">Digital Games</button>
+                <button onclick="filterWorks('board', this)" class="filter-btn px-6 py-2 rounded-full border border-gray-200 text-sm font-medium text-gray-500 transition-all hover:border-black hover:text-black">Board Games</button>
+            </div>
+        </header>
+
+        <!-- Works Grid (2 Columns) -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-x-10 gap-y-16 min-h-[400px]" id="worksGrid">
+            <!-- Content injected by JS -->
+        </div>
+
+        <!-- Pagination Controls -->
+        <div class="flex justify-center items-center mt-16 space-x-6 pt-8 border-t border-gray-100">
+            <button onclick="prevPage()" id="btnPrev" class="flex items-center px-4 py-2 text-sm font-medium text-gray-500 bg-white border border-gray-200 rounded-sm hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors">
+                <i data-lucide="chevron-left" class="w-4 h-4 mr-2"></i> Previous
+            </button>
+            
+            <span class="text-sm text-gray-600 font-mono">
+                Page <span id="pageSpan" class="font-bold text-ink">1</span> of <span id="totalPageSpan" class="font-bold text-ink">--</span>
+            </span>
+
+            <button onclick="nextPage()" id="btnNext" class="flex items-center px-4 py-2 text-sm font-medium text-gray-500 bg-white border border-gray-200 rounded-sm hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors">
+                Next <i data-lucide="chevron-right" class="w-4 h-4 ml-2"></i>
+            </button>
+        </div>
+
+    </main>
+
+    <!-- Back to Top Button -->
+    <button id="backToTopBtn" onclick="scrollToTop()" title="Go to top">
+        <i data-lucide="arrow-up" class="w-6 h-6"></i>
+    </button>
+
+    <script>
+        lucide.createIcons();
+
+        // Works Data (Simulated Database)
+        const worksData = [
+            // Digital Games
+            { type: "digital",
+            title: "Crazy Ludo", 
+            desc: "Grand strategy focusing on court politics.", 
+            img: "../../picture/portfilio/crazyludo/crazyludo_overview.png",
+            url: "projects/ludo/ludo.html"},
+            
+            { type: "digital", title: "Neon Tactics", desc: "Turn-based cyberpunk squad combat.", img: "https://placehold.co/800x500/2563eb/ffffff?text=Neon+Tactics" },
+            { type: "digital", title: "Iron Front", desc: "WW1 trench warfare simulation.", img: "https://placehold.co/800x500/4b5563/ffffff?text=Iron+Front" },
+            { type: "digital", title: "Void Merchant", desc: "Space trading economy sim.", img: "https://placehold.co/800x500/7c3aed/ffffff?text=Void+Merchant" },
+            { type: "digital", title: "Cyber Net", desc: "Hacking puzzle game.", img: "https://placehold.co/800x500/10b981/ffffff?text=Cyber+Net" },
+            { type: "digital", title: "Pixel Kingdom", desc: "Retro RPG adventure.", img: "https://placehold.co/800x500/f59e0b/ffffff?text=Pixel+Kingdom" },
+            
+            // Board Games
+            { type: "board",
+            title: "Joust", 
+            desc: "Grand strategy focusing on court politics.", 
+            img: "#",
+            url: "projects/joust/joust.html"},
+
+            { type: "board", title: "Star Pioneers", desc: "Streamlined 4X experience for tabletop.", img: "https://placehold.co/800x500/e5e5e5/a3a3a3?text=Star+Pioneers" },
+            { type: "board", title: "The Iron Century", desc: "Logistics and supply lines wargame.", img: "https://placehold.co/800x500/c4a484/ffffff?text=The+Iron+Century" },
+            { type: "board", title: "Silk Road", desc: "Educational economic card game.", img: "https://placehold.co/800x500/e0e7ff/333?text=Silk+Road" },
+            { type: "board", title: "Harvest Moon", desc: "Cooperative farming and resource management.", img: "https://placehold.co/800x500/d97706/ffffff?text=Harvest+Moon" },
+            { type: "board", title: "Dungeon Dive", desc: "Fast-paced dungeon crawler.", img: "https://placehold.co/800x500/ef4444/ffffff?text=Dungeon+Dive" },
+            { type: "board", title: "Market Crash", desc: "Stock market party game.", img: "https://placehold.co/800x500/6366f1/ffffff?text=Market+Crash" },
+            
+            // Extra items to demonstrate pagination
+            { type: "digital", title: "Project Alpha", desc: "Experimental AI prototype.", img: "https://placehold.co/800x500/333/fff?text=Project+Alpha" },
+            { type: "board", title: "Castle Builder", desc: "Tile placement drafting game.", img: "https://placehold.co/800x500/888/fff?text=Castle+Builder" }
+        ];
+
+        let currentCategory = 'all';
+        let currentPage = 1;
+        const itemsPerPage = 8; // 2 cols * 4 rows
+        let filteredData = [];
+
+        function initPortfolio() {
+            filterWorks('all', document.querySelector('.filter-btn.active'));
+        }
+
+        function filterWorks(category, btn) {
+            // Update buttons
+            document.querySelectorAll('.filter-btn').forEach(b => {
+                b.classList.remove('active', 'text-white', 'border-black');
+                b.classList.add('text-gray-500', 'border-gray-200');
+            });
+            btn.classList.remove('text-gray-500', 'border-gray-200');
+            btn.classList.add('active', 'text-white', 'border-black');
+
+            currentCategory = category;
+            currentPage = 1;
+
+            // Filter data
+            if (category === 'all') {
+                filteredData = worksData;
+            } else {
+                filteredData = worksData.filter(item => item.type === category);
+            }
+
+            renderGrid();
+        }
+
+        function renderGrid() {
+            const grid = document.getElementById('worksGrid');
+            grid.innerHTML = '';
+
+            const totalItems = filteredData.length;
+            const totalPages = Math.ceil(totalItems / itemsPerPage) || 1;
+            const startIndex = (currentPage - 1) * itemsPerPage;
+            const endIndex = Math.min(startIndex + itemsPerPage, totalItems);
+
+            // Render items
+            for (let i = startIndex; i < endIndex; i++) {
+                const item = filteredData[i];
+                const tagLabel = item.type === 'digital' ? 'Digital Game' : 'Board Game';
+                
+                const card = document.createElement('a');
+                card.href = item.url || "#"; // Points to detail page template
+                card.className = "block group game-card fade-in-up";
+                card.style.animationDelay = `${(i - startIndex) * 0.05}s`; // Staggered animation
+                
+                card.innerHTML = `
+                    <div class="relative overflow-hidden bg-gray-100 mb-5 shadow-sm group-hover:shadow-xl transition-all duration-500 aspect-[16/10]">
+                        <img src="${item.img}" alt="${item.title}" class="card-image w-full h-full object-cover transition-transform duration-700 ease-out">
+                        <div class="absolute top-4 left-4 bg-white/90 backdrop-blur px-3 py-1 text-xs font-bold uppercase tracking-widest opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                            ${tagLabel}
+                        </div>
+                    </div>
+                    <div class="flex justify-between items-start">
+                        <div>
+                            <h3 class="text-2xl font-bold group-hover:text-accent transition-colors mb-2">${item.title}</h3>
+                            <p class="text-gray-600 text-sm">${item.desc}</p>
+                        </div>
+                    </div>
+                `;
+                grid.appendChild(card);
+            }
+
+            // Update pagination controls
+            document.getElementById('pageSpan').innerText = currentPage;
+            document.getElementById('totalPageSpan').innerText = totalPages;
+            document.getElementById('btnPrev').disabled = currentPage === 1;
+            document.getElementById('btnNext').disabled = currentPage >= totalPages;
+            
+            lucide.createIcons();
+        }
+
+        function prevPage() {
+            if (currentPage > 1) {
+                currentPage--;
+                renderGrid();
+                window.scrollTo({top: 0, behavior: 'smooth'});
+            }
+        }
+
+        function nextPage() {
+            const totalPages = Math.ceil(filteredData.length / itemsPerPage);
+            if (currentPage < totalPages) {
+                currentPage++;
+                renderGrid();
+                window.scrollTo({top: 0, behavior: 'smooth'});
+            }
+        }
+
+        // Back to Top Logic
+        const backToTopBtn = document.getElementById("backToTopBtn");
+        window.addEventListener('scroll', function() {
+            const nav = document.getElementById('navbar');
+            if (window.scrollY > 50) {
+                nav.classList.add('shadow-sm');
+                nav.classList.replace('bg-paper/90', 'bg-white/95');
+            } else {
+                nav.classList.remove('shadow-sm');
+                nav.classList.replace('bg-white/95', 'bg-paper/90');
+            }
+
+            if (window.scrollY > 300) {
+                backToTopBtn.style.display = "block";
+            } else {
+                backToTopBtn.style.display = "none";
+            }
+        });
+
+        function scrollToTop() {
+            window.scrollTo({top: 0, behavior: 'smooth'});
+        }
+        
+        function toggleMenu() {
+            const menu = document.getElementById('mobile-menu');
+            menu.classList.toggle('hidden');
+        }
+    </script>
+</body>
+</html>

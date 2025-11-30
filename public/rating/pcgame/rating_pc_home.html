@@ -1,0 +1,595 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PC Games | Rating Reviews</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Sans+SC:wght@300;400;500;700&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: { 
+                        sans: ['Inter', 'Noto Sans SC', 'sans-serif'],
+                        serif: ['Playfair Display', 'serif'],
+                    },
+                    colors: { 
+                        'paper': '#fdfbf7', 
+                        'ink': '#1a1a1a', 
+                        'accent': '#2563eb',
+                        'secondary': '#f3f4f6'
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            background-color: #fdfbf7;
+            color: #1a1a1a;
+        }
+
+        .rating-card {
+            position: relative;
+            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+            border: 1px solid #e5e7eb;
+            background-color: #ffffff;
+            overflow: hidden;
+        }
+        .rating-card::before {
+            content: "";
+            position: absolute;
+            left: 0;
+            top: 0;
+            height: 100%;
+            width: 4px;
+            background: linear-gradient(to bottom, #2563eb, #60a5fa);
+        }
+        .rating-card:hover {
+            border-color: #2563eb;
+            transform: translateY(-4px);
+            box-shadow: 0 16px 30px -18px rgba(15, 23, 42, 0.5);
+        }
+
+        /* 悬浮图片覆盖层：默认透明，hover 时淡入 */
+        .card-image-overlay {
+            position: absolute;
+            inset: 0;
+            opacity: 0;
+            transition: opacity 0.25s ease-out;
+            pointer-events: none;
+            z-index: 0;
+        }
+        .rating-card:hover .card-image-overlay {
+            opacity: 1;
+        }
+
+        .score-circle {
+            width: 80px;
+            height: 80px;
+            border-radius: 999px;
+            border: 3px solid rgba(37, 99, 235, 0.25);
+            background: radial-gradient(circle at 30% 20%, #ffffff, #dbeafe);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .score-badge {
+            font-weight: 700;
+            color: #2563eb;
+            background: rgba(37, 99, 235, 0.08);
+            padding: 2px 10px;
+            border-radius: 999px;
+            font-size: 0.8rem;
+        }
+
+        .genre-pill {
+            padding: 4px 12px;
+            border-radius: 999px;
+            font-size: 0.7rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            background-color: #002d8e;
+            color: #f9fafb;
+        }
+
+        /* 筛选 pill */
+        .filter-pill {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 9999px;
+            border: 1px solid #e5e7eb;
+            padding: 0.4rem 1.4rem;
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: #6b7280;
+            background-color: #ffffff;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            white-space: nowrap;
+        }
+        .filter-pill:hover {
+            border-color: #d1d5db;
+            background-color: #f9fafb;
+        }
+        .filter-pill.active {
+            border-color: #002d8e;
+            background-color: #002d8e;
+            color: #f9fafb;
+            box-shadow: 0 10px 20px -18px rgba(15, 23, 42, 0.8);
+        }
+
+    </style>
+</head>
+<body class="font-sans antialiased" onload="initPage()">
+
+    <!-- Navigation -->
+    <nav class="fixed w-full z-50 top-0 bg-paper/90 backdrop-blur-sm border-b border-gray-200/50 transition-all duration-300" id="navbar">
+        <div class="max-w-7xl mx-auto px-6 h-20 flex justify-between items-center">
+            <!-- Logo links back to Home -->
+            <div class="flex items-center">
+                <!-- Left: Back to Home link -->
+                <a href="../../../home.html" class="flex items-center text-gray-500 hover:text-accent transition-colors group mr-8">
+                    <i data-lucide="arrow-left" class="w-5 h-5 mr-2 group-hover:-translate-x-1 transition-transform"></i>
+                    <span class="lang-en">Back to Home</span>
+                    <!-- 给所有中文元素加上 hidden 类 -->
+                    <span class="lang-cn hidden">返回首页</span>
+                </a>
+                
+                <!-- Vertical Divider -->
+                <div class="h-6 w-px bg-gray-300 mr-8 hidden md:block"></div>
+                
+                <!-- Current Page Title (Breadcrumb style) -->
+                <span class="font-bold tracking-widest uppercase text-sm text-ink hidden md:inline">
+                  <span class="lang-en">Global Footprints</span>
+                  <span class="lang-cn hidden">全球行旅足迹</span>
+                </span>
+            </div>
+            
+            <div class="hidden md:flex space-x-8 text-sm font-medium tracking-wide text-gray-600 items-center">
+                <a href="../../../home.html" class="hover:text-black transition-colors"><span class="lang-en">Home</span><span class="lang-cn hidden">首页</span></a>
+                <a href="../../portfolio/portfolio_home.html" class="hover:text-black transition-colors"><span class="lang-en">Portfolio</span><span class="lang-cn hidden">作品集</span></a> <!-- Active State -->
+                <a href="../../deconstruction/deconstruction_home.html" class="hover:text-black transition-colors"><span class="lang-en">Deconstruction</span><span class="lang-cn hidden">解构设计</span></a>                <!-- Modified Ratings Link with Dropdown -->
+                <div class="relative group h-20 flex items-center">
+                    <a href="#" class="hover:text-black transition-colors flex items-center cursor-pointer">
+                      <span class="lang-en">Ratings</span><span class="lang-cn hidden">评分</span> <i data-lucide="chevron-down" class="w-3 h-3 ml-1 text-gray-400 group-hover:text-black transition-colors"></i>
+                    </a>
+                    
+                    <!-- Dropdown Menu -->
+                    <div class="dropdown-menu absolute left-1/2 -translate-x-1/2 top-full w-40 bg-white border border-gray-100 shadow-lg rounded-sm hidden group-hover:block pt-1">
+                        <a href="../boardgame/rating_boardgame_home.html" class="block px-5 py-3 text-gray-500 hover:bg-gray-50 hover:text-accent transition-colors border-b border-gray-50"><span class="lang-en">Board Game</span><span class="lang-cn hidden">桌游</span></a>
+                        <a href="#" class="block px-5 py-3 text-amber-700 font-bold hover:bg-gray-50 hover:text-accent transition-colors border-b border-gray-50"><span class="lang-en">PC Game</span><span class="lang-cn hidden">电脑游戏</span></a>
+                        <a href="../travel/rating_travel_home.html" class="block px-5 py-3 text-gray-500 hover:bg-gray-50 hover:text-accent transition-colors border-b border-gray-50"><span class="lang-en">Sightseeing</span><span class="lang-cn hidden">观光旅游</span></a>
+                    </div>
+                </div>
+                <a href="../../thoughts/thoughts_home.html" class="hover:text-black transition-colors"><span class="lang-en">Thoughts</span><span class="lang-cn hidden">思考</span></a>
+            </div>
+  
+            <button class="md:hidden" onclick="toggleMenu()"><i data-lucide="menu" class="w-6 h-6"></i></button>
+            
+            <button onclick="toggleLanguage()" class="flex items-center space-x-2 border border-gray-300 px-4 py-2 rounded-full hover:border-accent hover:text-accent transition-all text-xs font-bold tracking-widest uppercase bg-white">
+              <i data-lucide="globe" class="w-4 h-4"></i>
+              <span id="lang-label">EN / 中文</span>
+            </button>
+        </div>
+        
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden md:hidden bg-white border-t absolute w-full px-6 py-4 space-y-4 shadow-lg">
+            <a href="../../home.html" class="block text-gray-600">Home</a>
+            <a href="../../portfolio/portfolio_home.html" class="block text-gray-600">Portfolio</a>
+            <a href="../deconstruction/deconstruction_home.html" class="block text-gray-600">Deconstruction</a>                <!-- Modified Ratings Link with Dropdown -->
+            <div class="relative group h-20 flex items-center">
+                <a href="#" class="block text-gray-600 flex items-center cursor-pointer">
+                    Ratings <i data-lucide="chevron-down" class="w-3 h-3 ml-1 text-gray-400 group-hover:text-black transition-colors"></i>
+                </a>
+                
+                <!-- Dropdown Menu -->
+                <div class="dropdown-menu absolute left-1/2 -translate-x-1/2 top-full w-40 bg-white border border-gray-100 shadow-lg rounded-sm hidden group-hover:block pt-1">
+                    <a href="../boardgame/rating_boardgame_home.html" class="block px-5 py-3 text-gray-500 hover:bg-gray-50 hover:text-accent transition-colors border-b border-gray-50">Board Game</a>
+                    <a href="#" class="block px-5 py-3 text-gray-500 hover:bg-gray-50 hover:text-accent transition-colors border-b border-gray-50">PC Game</a>
+                    <a href="../travel/rating_travel_home.html" class="block px-5 py-3 text-gray-500 hover:bg-gray-50 hover:text-accent transition-colors">Sightseeing</a>
+                </div>
+            </div>
+            <a href="thoughts_list.html" class="block text-gray-600">Thoughts</a>
+        </div>
+    </nav>
+
+    <main class="pt-32 pb-24 px-6 max-w-6xl mx-auto">
+        
+        <!-- Header -->
+        <header class="mb-10 max-w-6xl">
+            <div class="flex flex-col gap-6 mb-6 md:flex-row md:items-center md:justify-between">
+                <!-- 左边标题 -->
+                <div class="flex items-center gap-4">
+                    <div class="p-3 bg-blue-100 rounded-2xl shadow-sm">
+                        <i data-lucide="monitor" class="w-7 h-7 text-blue-600"></i>
+                    </div>
+                    <div>
+                        <h1 class="text-3xl md:text-4xl font-bold text-ink tracking-tight">
+                            <span class="lang-en">PC Game Deep Dive Ratings</span>
+                            <span class="lang-cn hidden">PC 游戏深度评分矩阵</span>
+                        </h1>
+                        <p class="mt-2 text-xs font-mono text-gray-400 uppercase tracking-widest">
+                            <span class="lang-en">IMMERSION · PERFORMANCE · SYSTEMS COMPLEXITY</span>
+                            <span class="lang-cn hidden">沉浸感 · 性能 · 系统复杂度</span>
+                        </p>
+                    </div>
+                </div>
+
+                <!-- 右侧总数 -->
+                <div class="flex flex-col items-start md:items-end gap-2">
+                    <div class="text-xs text-gray-400 mt-1">
+                        <span class="lang-en">Total titles:</span>
+                        <span class="lang-cn hidden">总游戏数：</span>
+                        <span id="totalCount" class="font-mono font-bold text-ink ml-1">0</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="h-px bg-gray-200 mb-4"></div>
+
+            <p class="text-sm md:text-base text-gray-500 leading-relaxed font-light max-w-4xl">
+                <span class="lang-en">
+                    A curated list of PC titles evaluated on technical execution, gameplay depth, and overall experience.
+                    Each card highlights a bold overall score, plus key sub-ratings for quick comparison.
+                </span>
+                <span class="lang-cn hidden">
+                    一份精选的 PC 游戏清单，从技术表现、玩法深度和整体体验三个维度进行评估。
+                    每个卡片都会突出综合评分，并展示关键子项，方便快速横向对比。
+                </span>
+            </p>
+
+            <!-- 筛选条：放在介绍下面 -->
+            <div class="mt-6 flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
+                <div class="text-[11px] text-gray-400 uppercase tracking-widest">
+                    <span class="lang-en">FILTER BY GENRE</span>
+                    <span class="lang-cn hidden">按类别筛选</span>
+                </div>
+                <div id="genreFilterGroup" class="flex flex-wrap gap-2">
+                    <!-- JS 动态插入 pill 按钮（无 All） -->
+                </div>
+            </div>
+        </header>
+
+        <!-- List Container (Cards) → 两列 -->
+        <section aria-label="PC Game Rating List">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8" id="gamesList">
+                <!-- JS will inject content here -->
+            </div>
+        </section>
+
+        <!-- Pagination -->
+        <div class="flex justify-center items-center mt-16 space-x-6 pt-8 border-t border-gray-100">
+            <button onclick="prevPage()" id="btnPrev" class="flex items-center px-4 py-2 text-sm font-medium text-gray-500 bg-white border border-gray-200 rounded-sm hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors">
+                <i data-lucide="chevron-left" class="w-4 h-4 mr-2"></i> 
+                <span class="lang-en">Previous</span>
+                <span class="lang-cn hidden">上一页</span>
+            </button>
+            
+            <span class="text-sm text-gray-600 font-mono">
+                <span class="lang-en">Page</span><span class="lang-cn hidden">第</span> 
+                <span id="pageSpan" class="font-bold text-ink">1</span> 
+                <span class="lang-en">of</span><span class="lang-cn hidden">/</span> 
+                <span id="totalPageSpan" class="font-bold text-ink">--</span>
+                <span class="lang-cn hidden">页</span>
+            </span>
+
+            <button onclick="nextPage()" id="btnNext" class="flex items-center px-4 py-2 text-sm font-medium text-gray-500 bg-white border border-gray-200 rounded-sm hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors">
+                <span class="lang-en">Next</span>
+                <span class="lang-cn hidden">下一页</span>
+                <i data-lucide="chevron-right" class="w-4 h-4 ml-2"></i>
+            </button>
+        </div>
+
+    </main>
+
+    <!-- 数据文件：确保里边有 title_en/title_cn、genreKey/genre_en/genre_cn、image 等字段 -->
+    <script src="pc_games_data.js"></script>
+
+    <!-- 页面逻辑 -->
+    <script>
+        let allData = [];
+        let filteredData = [];
+        let currentPage = 1;
+        const itemsPerPage = 6;   // 两列，每页 6 个
+        let isEnglish = true;
+        let currentGenreKey = ""; // 会在 initGenreFilterPills 里设成第一个类别
+
+        let genreMap = new Map(); // key -> {en, cn}
+
+        function initPage() {
+            if (!Array.isArray(pcGamesDatabase)) {
+                console.error("pcGamesDatabase not found");
+                return;
+            }
+
+            allData = [...pcGamesDatabase];
+            // 默认按总分由高到低
+            allData.sort((a, b) => b.total - a.total);
+
+            buildGenreMap();
+            initGenreFilterPills();  // 里面会设 currentGenreKey 并调用 applyFilter
+            lucide.createIcons();
+            refreshLanguageState();
+        }
+
+        function buildGenreMap() {
+            genreMap = new Map();
+            allData.forEach(g => {
+                if (!g.genreKey) return;
+                if (!genreMap.has(g.genreKey)) {
+                    genreMap.set(g.genreKey, {
+                        en: g.genre_en || g.genre_cn || g.genreKey,
+                        cn: g.genre_cn || g.genre_en || g.genreKey
+                    });
+                }
+            });
+        }
+
+        // 不再有 All，只生成实际类别；默认选第一个
+        function initGenreFilterPills() {
+            const group = document.getElementById("genreFilterGroup");
+            if (!group) return;
+            group.innerHTML = "";
+
+            const keys = Array.from(genreMap.keys()).sort();
+            if (keys.length === 0) {
+                currentGenreKey = "";
+                applyFilter();
+                return;
+            }
+
+            currentGenreKey = keys[0]; // 默认第一个
+
+            keys.forEach((key, index) => {
+                const names = genreMap.get(key);
+                const btn = document.createElement("button");
+                btn.className = "filter-pill" + (index === 0 ? " active" : "");
+                btn.dataset.genreKey = key;
+                btn.innerHTML = `
+                    <span class="lang-en">${names.en}</span>
+                    <span class="lang-cn hidden">${names.cn}</span>
+                `;
+                btn.addEventListener("click", () => onGenrePillClick(key));
+                group.appendChild(btn);
+            });
+
+            applyFilter();
+        }
+
+        function onGenrePillClick(key) {
+            currentGenreKey = key;
+
+            const group = document.getElementById("genreFilterGroup");
+            if (group) {
+                const buttons = group.querySelectorAll(".filter-pill");
+                buttons.forEach(btn => {
+                    if (btn.dataset.genreKey === key) {
+                        btn.classList.add("active");
+                    } else {
+                        btn.classList.remove("active");
+                    }
+                });
+            }
+
+            currentPage = 1;
+            applyFilter();
+        }
+
+        function applyFilter() {
+            if (!currentGenreKey) {
+                filteredData = [...allData];
+            } else {
+                filteredData = allData.filter(item => item.genreKey === currentGenreKey);
+            }
+
+            const totalCountEl = document.getElementById("totalCount");
+            if (totalCountEl) {
+                totalCountEl.textContent = filteredData.length;
+            }
+
+            currentPage = Math.min(currentPage, Math.max(1, getTotalPages()));
+            renderList();
+        }
+
+        function getTotalPages() {
+            if (!filteredData.length) return 1;
+            return Math.ceil(filteredData.length / itemsPerPage);
+        }
+
+        function renderList() {
+            const container = document.getElementById("gamesList");
+            if (!container) return;
+
+            container.innerHTML = "";
+
+            const totalItems = filteredData.length;
+            const totalPages = getTotalPages();
+
+            const pageSpan = document.getElementById("pageSpan");
+            const totalPageSpan = document.getElementById("totalPageSpan");
+            const btnPrev = document.getElementById("btnPrev");
+            const btnNext = document.getElementById("btnNext");
+
+            if (pageSpan) pageSpan.textContent = totalPages === 0 ? "0" : String(currentPage);
+            if (totalPageSpan) totalPageSpan.textContent = String(totalPages);
+
+            if (btnPrev) btnPrev.disabled = currentPage <= 1;
+            if (btnNext) btnNext.disabled = currentPage >= totalPages;
+
+            if (!totalItems) {
+                const emptyDiv = document.createElement("div");
+                emptyDiv.className = "col-span-1 md:col-span-2 text-center text-gray-400 py-8";
+                emptyDiv.textContent = isEnglish ? "No games found." : "没有符合条件的游戏。";
+                container.appendChild(emptyDiv);
+                return;
+            }
+
+            const startIndex = (currentPage - 1) * itemsPerPage;
+            const endIndex = Math.min(startIndex + itemsPerPage, totalItems);
+
+            for (let i = startIndex; i < endIndex; i++) {
+                const g = filteredData[i];
+                const url = g.url || "#";
+                const imageSrc = g.image || "";
+
+                const title = isEnglish
+                    ? (g.title_en || g.title_cn || "")
+                    : (g.title_cn || g.title_en || "");
+
+                const genreNames = genreMap.get(g.genreKey) || { en: g.genre_en || g.genre_cn || "", cn: g.genre_cn || g.genre_en || "" };
+                const genreDisplay = isEnglish ? genreNames.en : genreNames.cn;
+
+                const card = document.createElement("a");
+                card.href = url;
+                card.className = "rating-card block rounded-xl group h-full flex flex-col";
+
+                // 图片 overlay（hover 淡入）
+                const imgOverlay = document.createElement("div");
+                imgOverlay.className = "card-image-overlay";
+                if (imageSrc) {
+                    imgOverlay.innerHTML = `
+                        <img src="${imageSrc}" alt="" class="w-full h-full object-cover">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-black/35 to-transparent"></div>
+                    `;
+                } else {
+                    imgOverlay.innerHTML = `
+                        <div class="w-full h-full bg-slate-900/60"></div>
+                    `;
+                }
+                card.appendChild(imgOverlay);
+
+                // 文字内容（半透明白底，放在图片上方）
+                const inner = document.createElement("div");
+                inner.className = "relative z-10 p-5 md:p-6 flex flex-col justify-between h-full space-y-4 bg-white/70 backdrop-blur-[1px]";
+                inner.innerHTML = `
+                    <!-- 顶部：PC GAME + 年份 -->
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center gap-2 text-[10px] font-bold uppercase tracking-widest">
+                            <span class="px-2 py-0.5 rounded-sm bg-blue-50 text-blue-600 border border-blue-500/60">
+                                <span class="lang-en">PC GAME</span>
+                                <span class="lang-cn hidden">PC 游戏</span>
+                            </span>
+                            <span class="text-gray-400 font-mono">${g.year || ""}</span>
+                        </div>
+                        <span class="genre-pill">
+                            ${genreDisplay}
+                        </span>
+                    </div>
+
+                    <!-- 标题 + 综合评分（圈） -->
+                    <div class="flex items-start justify-between gap-4">
+                        <div class="flex-1">
+                            <h2 class="text-lg md:text-xl font-bold text-ink mb-1 group-hover:text-accent transition-colors leading-snug line-clamp-2">
+                                ${title}
+                            </h2>
+                        </div>
+                        <div class="hidden sm:flex flex-col items-center gap-1">
+                            <div class="score-circle">
+                                <div class="text-2xl font-bold text-accent leading-none">${g.total}</div>
+                                <div class="text-[9px] text-gray-500 mt-1 uppercase tracking-widest">
+                                    /100
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 评分维度 -->
+                    <div class="grid grid-cols-2 gap-y-2 gap-x-4 text-xs md:text-sm text-gray-700">
+                        <div class="flex justify-between">
+                            <span>
+                                <span class="lang-en">Gameplay</span>
+                                <span class="lang-cn hidden">玩法</span>
+                            </span>
+                            <span class="font-bold">${g.gameplay}</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span>
+                                <span class="lang-en">Graphics</span>
+                                <span class="lang-cn hidden">画面</span>
+                            </span>
+                            <span class="font-bold">${g.graphics}</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span>
+                                <span class="lang-en">Narrative</span>
+                                <span class="lang-cn hidden">叙事</span>
+                            </span>
+                            <span class="font-bold">${g.story}</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span>
+                                <span class="lang-en">Performance</span>
+                                <span class="lang-cn hidden">性能</span>
+                            </span>
+                            <span class="font-bold">${g.performance}</span>
+                        </div>
+                    </div>
+
+                    <!-- 底部：Total + 箭头 -->
+                    <div class="flex items-center justify-between text-xs text-gray-500">
+                        <span class="score-badge bg-white/90">
+                            <span class="lang-en">Total</span>
+                            <span class="lang-cn hidden">总分</span>
+                            &nbsp;${g.total}
+                        </span>
+                        <span class="text-lg leading-none translate-x-0 group-hover:translate-x-1 transition-transform">
+                            →
+                        </span>
+                    </div>
+                `;
+
+                card.appendChild(inner);
+                container.appendChild(card);
+            }
+
+            // 重新应用中英文显示状态
+            refreshLanguageState();
+        }
+
+        function prevPage() {
+            if (currentPage > 1) {
+                currentPage--;
+                renderList();
+                window.scrollTo({ top: 0, behavior: "smooth" });
+            }
+        }
+
+        function nextPage() {
+            const totalPages = getTotalPages();
+            if (currentPage < totalPages) {
+                currentPage++;
+                renderList();
+                window.scrollTo({ top: 0, behavior: "smooth" });
+            }
+        }
+
+        function toggleLanguage() {
+            isEnglish = !isEnglish;
+            renderList();
+            refreshLanguageState();
+        }
+
+        function refreshLanguageState() {
+            const enEls = document.querySelectorAll(".lang-en");
+            const cnEls = document.querySelectorAll(".lang-cn");
+
+            if (isEnglish) {
+                enEls.forEach(el => el.classList.remove("hidden"));
+                cnEls.forEach(el => el.classList.add("hidden"));
+            } else {
+                enEls.forEach(el => el.classList.add("hidden"));
+                cnEls.forEach(el => el.classList.remove("hidden"));
+            }
+        }
+    </script>
+</body>
+</html>

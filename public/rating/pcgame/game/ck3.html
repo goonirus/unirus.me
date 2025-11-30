@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Review: Crusader Kings III</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: { sans: ['Inter', 'Noto Sans SC', 'sans-serif'] },
+                    colors: { 
+                        'paper': '#fdfbf7', 
+                        'ink': '#1a1a1a', 
+                        'accent': '#2563eb',   /* PC 蓝色 */
+                        'secondary': '#f3f4f6' 
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body { background-color: #fdfbf7; color: #1a1a1a; }
+        
+        /* 左侧文章样式 */
+        .prose p { 
+            margin-bottom: 1.5em; 
+            line-height: 1.8; 
+            color: #4b5563; 
+        }
+        .prose h3 { 
+            font-weight: 700; 
+            font-size: 1.5rem; 
+            margin-top: 2.5rem; 
+            margin-bottom: 1rem; 
+            color: #1a1a1a; 
+            border-left: 4px solid #2563eb; 
+            padding-left: 1rem; 
+        }
+        
+        /* 右侧表格样式 */
+        .score-table th { 
+            text-align: left; 
+            padding: 0.75rem 1rem; 
+            border-bottom: 1px solid #e5e7eb; 
+            color: #9ca3af; 
+            font-size: 0.75rem; 
+            text-transform: uppercase; 
+            letter-spacing: 0.05em; 
+        }
+        .score-table td { 
+            padding: 0.75rem 1rem; 
+            border-bottom: 1px solid #f3f4f6; 
+            font-size: 0.875rem; 
+        }
+        .score-table tr:last-child td { border-bottom: none; }
+        
+        /* 分数颜色 */
+        .score-high { color: #16a34a; font-weight: 700; }
+        .score-mid { color: #4b5563; }
+        .score-low { color: #b91c1c; }
+    </style>
+</head>
+<body class="font-sans antialiased">
+
+    <!-- 顶部导航 -->
+    <nav class="fixed w-full z-50 top-0 bg-paper/90 backdrop-blur-sm border-b border-gray-200/50 h-20 flex items-center px-6 justify-between">
+        <div class="flex items-center">
+            <!-- 返回按钮：改成你的 PC 列表路径 -->
+            <a href="../rating_pc_home.html" class="flex items-center text-gray-500 hover:text-accent transition-colors group mr-8">
+                <i data-lucide="arrow-left" class="w-5 h-5 mr-2 group-hover:-translate-x-1 transition-transform"></i>
+                <span class="lang-en">Back to List</span>
+                <span class="lang-cn hidden">返回列表</span>
+            </a>
+        </div>
+
+        <!-- 中英文切换按钮 -->
+        <button onclick="toggleLanguage()" class="flex items-center space-x-2 border border-gray-300 px-4 py-2 rounded-full hover:border-accent hover:text-accent transition-all text-xs font-bold tracking-widest uppercase bg-white">
+            <i data-lucide="globe" class="w-4 h-4"></i>
+            <span id="lang-label">EN / 中文</span>
+        </button>
+    </nav>
+
+    <main class="pt-32 pb-24 px-6">
+        <article class="max-w-7xl mx-auto">
+            
+            <!-- Review Header -->
+            <header class="flex flex-col md:flex-row justify-between items-start md:items-end mb-12 border-b border-gray-200 pb-12">
+                <div>
+                    <!-- 上方标签：平台 / 类型 -->
+                    <span class="text-accent font-bold tracking-widest uppercase text-xs mb-2 block">
+                        <span class="lang-en">PC · Grand Strategy / Simulation</span>
+                        <span class="lang-cn hidden">PC · 大战略 / 模拟</span>
+                    </span>
+                    <h1 class="text-5xl font-bold text-ink mb-2">
+                        <span class="lang-en">Crusader Kings III</span>
+                        <span class="lang-cn hidden">王国风云 3</span>
+                    </h1>
+                    <p class="text-gray-500 text-lg">
+                        <span class="lang-en">Paradox Development Studio · 2020</span>
+                        <span class="lang-cn hidden">Paradox 开发工作室 · 2020</span>
+                    </p>
+
+                    <!-- 一点小参数：可随便改 -->
+                    <div class="mt-4 flex flex-wrap gap-3 text-xs text-gray-500">
+                        <span class="px-3 py-1 rounded-full bg-white border border-gray-200">
+                            <span class="lang-en">Playtime: 150+ hrs</span>
+                            <span class="lang-cn hidden">游玩时长：150+ 小时</span>
+                        </span>
+                        <span class="px-3 py-1 rounded-full bg-white border border-gray-200">
+                            <span class="lang-en">Version: 1.12 (with DLC)</span>
+                            <span class="lang-cn hidden">版本：1.12（含 DLC）</span>
+                        </span>
+                    </div>
+                </div>
+
+                <!-- 总分 -->
+                <div class="mt-6 md:mt-0 flex flex-col items-end">
+                    <div class="text-xs font-mono tracking-widest uppercase text-gray-400 mb-1">
+                        <span class="lang-en">Overall</span>
+                        <span class="lang-cn hidden">综合评分</span>
+                    </div>
+                    <div class="text-6xl font-bold text-accent leading-none">91</div>
+                    <div class="text-xs text-gray-400 mt-1 tracking-widest uppercase">/100</div>
+                </div>
+            </header>
+
+            <!-- 左右布局 -->
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-16">
+                
+                <!-- 左侧：正文 2/3 -->
+                <div class="lg:col-span-2 prose max-w-none">
+                    
+                    <!-- Introduction -->
+                    <h3>
+                        <span class="lang-en">Introduction</span>
+                        <span class="lang-cn hidden">简介</span>
+                    </h3>
+                    <div class="lang-en">
+                        <p>
+                            Crusader Kings III is less a strategy game and more a medieval family drama simulator
+                            where the map is simply the stage. You are not a nation but a dynasty; your real victory
+                            condition is surviving long enough to see your bloodline thrive.
+                        </p>
+                        <p>
+                            This review focuses on how CK3 feels to actually play in long campaigns: how well its
+                            systems support role-playing, how messy the simulation becomes, and whether all that
+                            complexity still translates into clear and meaningful decisions.
+                        </p>
+                    </div>
+                    <div class="lang-cn hidden">
+                        <p>
+                            《王国风云 3》与其说是一款传统策略游戏，不如说是一部中世纪家庭伦理大剧，
+                            世界地图只是背景布景。你扮演的并不是“国家”，而是一整个王朝——真正的胜利
+                            条件，是在漫长的时间里让你的血脉延续并不断壮大。
+                        </p>
+                        <p>
+                            这篇评测主要关注长线战役中的实际游玩体验：系统在多大程度上支持角色扮演、
+                            模拟在变得多么混乱的同时能否保持可读性，以及如此复杂的系统是否仍然能
+                            产生清晰而有意义的决策。
+                        </p>
+                    </div>
+                    
+                    <!-- Gameplay & Systems -->
+                    <h3>
+                        <span class="lang-en">Gameplay & Systems Depth</span>
+                        <span class="lang-cn hidden">玩法与系统深度</span>
+                    </h3>
+                    <div class="lang-en">
+                        <p>
+                            The core loop is deceptively simple: secure your succession, expand when safe, and survive
+                            internal drama. Underneath, however, is a dense web of character stats, relationship
+                            modifiers, claims, hooks, lifestyles, and cultural mechanics.
+                        </p>
+                        <p>
+                            CK3 succeeds when you lean into the role-playing. The best moments aren’t about min-maxing
+                            your levy size, but about asking yourself “What would <em>this</em> character do?” and then
+                            committing to that answer even when it is strategically suboptimal.
+                        </p>
+                    </div>
+                    <div class="lang-cn hidden">
+                        <p>
+                            游戏的核心循环看上去很简单：保证继承、在安全的情况下扩张、并活过一轮又一轮
+                            的宫廷狗血剧。但在底层，其实是角色属性、好感修正、宣称、把柄、人生志向、
+                            文化制度等一整张极其复杂的网络。
+                        </p>
+                        <p>
+                            CK3 最成功的地方在于，当你愿意完全代入角色去玩时，系统会不断喂给你合理
+                            又荒诞的故事。游戏里最精彩的片段，往往不是你把兵力数字压到极致，而是你
+                            问自己一句“如果我是这个人，我现在会怎么做？”，然后真的照做——哪怕那并不是
+                            最优策略。
+                        </p>
+                    </div>
+
+                    <!-- Narrative & Roleplay -->
+                    <h3>
+                        <span class="lang-en">Narrative & Role-Playing</span>
+                        <span class="lang-cn hidden">叙事与角色扮演</span>
+                    </h3>
+                    <div class="lang-en">
+                        <p>
+                            Event writing leans heavily into dark humour and petty cruelty, which fits the tone of
+                            medieval politics surprisingly well. The lifestyle and stress systems nudge you toward
+                            consistent characterization: ignoring your ruler’s personality literally hurts.
+                        </p>
+                    </div>
+                    <div class="lang-cn hidden">
+                        <p>
+                            事件文案大量使用黑色幽默和小人物的恶意，意外地非常贴合中世纪政治那种
+                            荒诞又残酷的气质。人生志向与压力系统会不断推你扮演一个“前后一致”的角色：
+                            违背性格去行事，不仅违和，还会在机制上惩罚你。
+                        </p>
+                    </div>
+
+                    <!-- Technical & UI -->
+                    <h3>
+                        <span class="lang-en">Technical Performance & UI</span>
+                        <span class="lang-cn hidden">技术表现与界面</span>
+                    </h3>
+                    <div class="lang-en">
+                        <p>
+                            Performance is acceptable on long campaigns, but late-game pathfinding and large wars
+                            still generate noticeable slowdown on mid-range machines. The UI does a decent job of
+                            surfacing tooltips, but information density is intimidating for new players.
+                        </p>
+                    </div>
+                    <div class="lang-cn hidden">
+                        <p>
+                            在长局战役里，性能总体还算可以，不过后期大规模战争和寻路仍然会让中端配置
+                            出现明显卡顿。界面通过工具提示暴露了大量信息，但对新玩家来说信息密度仍然偏高，
+                            第一次上手很容易被吓退。
+                        </p>
+                    </div>
+
+                    <!-- Conclusion -->
+                    <h3>
+                        <span class="lang-en">Conclusion</span>
+                        <span class="lang-cn hidden">总结</span>
+                    </h3>
+                    <div class="lang-en">
+                        <p>
+                            CK3 is still one of the best “story engines” in strategy gaming. If you enjoy emergent
+                            narratives, political scheming, and watching numbers slowly turn into family sagas,
+                            this is an easy recommendation—provided you are willing to accept some late-game bloat
+                            and occasional imbalance from DLC.
+                        </p>
+                    </div>
+                    <div class="lang-cn hidden">
+                        <p>
+                            作为一台“讲故事的机器”，CK3 依然几乎没有对手。如果你喜欢涌现式叙事、
+                            政治阴谋，以及看着一串数字逐渐长成一部家族史诗，那么这款游戏非常值得推荐——
+                            前提是你能接受后期略微臃肿的系统，和 DLC 带来的偶尔失衡。
+                        </p>
+                    </div>
+                </div>
+
+                <!-- 右侧：评分表 1/3 -->
+                <div class="lg:col-span-1">
+                    <div class="bg-white border border-gray-200 rounded-sm shadow-sm overflow-hidden sticky top-32">
+                        <div class="bg-secondary/30 px-6 py-4 border-b border-gray-200">
+                            <h3 class="text-sm font-bold text-ink uppercase tracking-widest">
+                                <span class="lang-en">Rating Breakdown</span>
+                                <span class="lang-cn hidden">评分细则</span>
+                            </h3>
+                        </div>
+                        
+                        <table class="w-full score-table">
+                            <thead>
+                                <tr>
+                                    <th>
+                                        <span class="lang-en">Criterion</span>
+                                        <span class="lang-cn hidden">维度</span>
+                                    </th>
+                                    <th class="text-right">
+                                        <span class="lang-en">Score</span>
+                                        <span class="lang-cn hidden">分数</span>
+                                    </th>
+                                    <th class="text-right">
+                                        <span class="lang-en">Weight</span>
+                                        <span class="lang-cn hidden">权重</span>
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td class="font-medium text-gray-700">
+                                        <span class="lang-en">Gameplay</span>
+                                        <span class="lang-cn hidden">玩法手感</span>
+                                    </td>
+                                    <td class="text-right score-high">9.0</td>
+                                    <td class="text-right text-gray-400">20%</td>
+                                </tr>
+                                <tr>
+                                    <td class="font-medium text-gray-700">
+                                        <span class="lang-en">Systems Depth</span>
+                                        <span class="lang-cn hidden">系统深度</span>
+                                    </td>
+                                    <td class="text-right score-high">9.5</td>
+                                    <td class="text-right text-gray-400">20%</td>
+                                </tr>
+                                <tr>
+                                    <td class="font-medium text-gray-700">
+                                        <span class="lang-en">Narrative / RP</span>
+                                        <span class="lang-cn hidden">叙事与代入</span>
+                                    </td>
+                                    <td class="text-right score-high">9.5</td>
+                                    <td class="text-right text-gray-400">15%</td>
+                                </tr>
+                                <tr>
+                                    <td class="font-medium text-gray-700">
+                                        <span class="lang-en">Graphics & Audio</span>
+                                        <span class="lang-cn hidden">画面与音效</span>
+                                    </td>
+                                    <td class="text-right score-mid">8.0</td>
+                                    <td class="text-right text-gray-400">10%</td>
+                                </tr>
+                                <tr>
+                                    <td class="font-medium text-gray-700">
+                                        <span class="lang-en">UI / UX</span>
+                                        <span class="lang-cn hidden">界面与体验</span>
+                                    </td>
+                                    <td class="text-right score-mid">7.5</td>
+                                    <td class="text-right text-gray-400">10%</td>
+                                </tr>
+                                <tr>
+                                    <td class="font-medium text-gray-700">
+                                        <span class="lang-en">Performance</span>
+                                        <span class="lang-cn hidden">性能表现</span>
+                                    </td>
+                                    <td class="text-right score-mid">7.5</td>
+                                    <td class="text-right text-gray-400">10%</td>
+                                </tr>
+                                <tr>
+                                    <td class="font-medium text-gray-700">
+                                        <span class="lang-en">Immersion</span>
+                                        <span class="lang-cn hidden">沉浸感</span>
+                                    </td>
+                                    <td class="text-right score-high">9.5</td>
+                                    <td class="text-right text-gray-400">10%</td>
+                                </tr>
+                                <tr>
+                                    <td class="font-medium text-gray-700">
+                                        <span class="lang-en">Modding Potential</span>
+                                        <span class="lang-cn hidden">模组潜力</span>
+                                    </td>
+                                    <td class="text-right score-high">9.0</td>
+                                    <td class="text-right text-gray-400">5%</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        
+                        <div class="bg-gray-50 px-6 py-4 border-t border-gray-200 flex justify-between items-center">
+                            <span class="font-bold text-xs uppercase tracking-widest text-gray-400">
+                                <span class="lang-en">Weighted Total</span>
+                                <span class="lang-cn hidden">加权总分</span>
+                            </span>
+                            <span class="font-bold text-2xl text-accent">9.1</span>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </article>
+    </main>
+
+    <script>
+        lucide.createIcons();
+
+        // 简单语言切换：切换所有 .lang-en / .lang-cn 的 hidden
+        function toggleLanguage() {
+            const enEls = document.querySelectorAll('.lang-en');
+            const cnEls = document.querySelectorAll('.lang-cn');
+
+            enEls.forEach(el => el.classList.toggle('hidden'));
+            cnEls.forEach(el => el.classList.toggle('hidden'));
+        }
+    </script>
+</body>
+</html>
