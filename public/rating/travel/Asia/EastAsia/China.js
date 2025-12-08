@@ -35,7 +35,7 @@ const travelTree = [
           {
             id: 'changchun-city',
             type: 'city',
-            score: 8.2,
+            score: 4.0,
             titleEn: 'Changchun City',
             titleCn: '长春市',
             descriptionEn: 'Former capital of Manchukuo, industrial city with layered history and wide avenues.',
@@ -52,7 +52,7 @@ const travelTree = [
               {
                 id: 'puppet-palace',
                 type: 'spot',
-                score: 9.1,
+                score: 3.5,
                 titleEn: 'Puppet Manchukuo Palace Museum',
                 titleCn: '伪满皇宫博物院',
                 visitTimeEn: 'Visited in February 2023 (winter)',
@@ -68,7 +68,12 @@ const travelTree = [
                   '如果习惯认真看展板，建议至少预留半天时间。',
                   '可以考虑租语音讲解或跟随讲解员，会更有脉络感。',
                   '部分展区内容比较沉重，心理上可以稍微有个预期。'
-                ]
+                ],
+
+                // 🆕 忆照
+                memoryPhotoEn: 'The dim hall with rows of golden Kannon stretching into the distance, a slightly tilted perspective because you are walking slowly along the railing, trying to look each statue in the eye.',
+                memoryPhotoCn: '昏暗大殿里，一整排金色的观音像向远处延伸，镜头有一点点倾斜，是沿着栏杆缓慢走动时的视角——总觉得每一尊的眼睛都在盯着你看。',
+                memoryPhotoUrl: '../../../../../picture/rating_sightseeing/Asia/Japan/Kyoto/33.jpg'
               },
               {
                 id: 'bada-bu-complex',
@@ -156,7 +161,7 @@ const travelTree = [
           {
             id: 'shanghai-city',
             type: 'city',
-            score: 8.0,
+            score: 4.0,
             titleEn: 'Shanghai City',
             titleCn: '上海市区',
             descriptionEn: 'The main urban area where luxury malls, historical concessions, and religious sites all sit within a dense modern city grid.',
@@ -183,7 +188,7 @@ const travelTree = [
                   '一座金碧辉煌却又被高楼大厦包围在市中心的寺庙。最早是在出租车上远眺的，我非常惊讶上海这么繁华的地方怎么会有一所这样的寺庙，金碧辉煌，前寺后塔，与汉传佛教的古刹大相径庭，竟是一座金刚乘佛教的寺庙。在地图上一看，原来这便是静安寺，大名鼎鼎的静安寺居然是一座密教古刹。讶异之余，对象还跟我说她自己一个人来这里的时候已经进去过了，还求过签。',
                   '自那以后，我便想找个机会来拜访一下这座在市中心的密教寺庙，正好在十一跟来访上海的cet见识过跟我们处于两个世界的静安大悦城后，提出一同来此参观的请求。',
                   '然而进寺参观后却是大失所望，里面的寺庙格局以及拜的神佛经历了严重的汉化，失去了密宗的特色，色调柔和而肃穆，敬的佛像也是四大天王，米勒韦驮，观音如来。',
-                  '由此，虽说几尊木雕，玉制，铜制佛像尚且可圈可点，然扣去特色性只剩三分，而商业化与盲目求签的游客更是降低了其评分，再回想起50元的香火钱，只能打至2分。',
+                  '由此，虽说几尊木雕，玉制，铜制佛像尚且可圈可点，然扣去特色性只剩四分，而商业化与盲目求签的游客更是降低了其评分，再回想起50元的香火钱，只能打至2分。',
                 ],
                 tipsEn: [
                   'If you are short on time or budget, simply appreciating the exterior from nearby crossings or malls gives you most of the value for free.',

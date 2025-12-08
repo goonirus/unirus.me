@@ -1,0 +1,559 @@
+<!DOCTYPE html> 
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Travel Detail | Japan</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Tailwind & Lucide -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <!-- Fonts -->
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Sans+SC:wght@300;400;500;700&display=swap"
+    rel="stylesheet"
+  >
+
+  <!-- Tailwind config -->
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'Noto Sans SC', 'sans-serif']
+          },
+          colors: {
+            'paper': '#fdfbf7',
+            'ink': '#1a1a1a',
+            'accent': '#c2410c',
+            'secondary': '#f3f4f6'
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    body { background-color: #fdfbf7; color: #1a1a1a; }
+    .sidebar-item-active {
+      background-color: rgba(194, 65, 12, 0.06);
+      border-left-color: #c2410c;
+      font-weight: 600;
+      color: #1f2933;
+    }
+  </style>
+</head>
+<body class="font-sans antialiased" onload="initPage()">
+
+  <!-- Navigation -->
+  <nav class="fixed w-full z-50 top-0 bg-paper/90 backdrop-blur-sm border-b border-gray-200/60 h-20 flex items-center px-6 justify-between">
+    <div class="flex items-center">
+      <!-- 回到上一页：国家总表（travel_rating那一页） -->
+      <a href="../../rating_travel_home.html" class="flex items-center text-gray-500 hover:text-accent transition-colors group mr-8">
+        <i data-lucide="arrow-left" class="w-5 h-5 mr-2 group-hover:-translate-x-1 transition-transform"></i>
+        <span class="lang-en">Back to Travel Ratings</span>
+        <span class="lang-cn hidden">返回旅行评分主页</span>
+      </a>
+
+      <div class="h-6 w-px bg-gray-300 mr-8 hidden md:block"></div>
+
+      <!-- 当前页面名称 -->
+      <span class="font-bold tracking-widest uppercase text-sm text-ink hidden md:inline">
+        <span class="lang-en">Japan · Region Detail</span>
+        <span class="lang-cn hidden">日本 · 地区详情</span>
+      </span>
+    </div>
+
+    <!-- 右上角中英切换 -->
+    <button onclick="toggleLanguage()" class="flex items-center space-x-2 border border-gray-300 px-4 py-2 rounded-full hover:border-accent hover:text-accent transition-all text-xs font-bold tracking-widest uppercase bg-white">
+      <i data-lucide="globe" class="w-4 h-4"></i>
+      <span id="lang-label">EN / 中文</span>
+    </button>
+  </nav>
+
+  <main class="pt-28 pb-24 px-6 max-w-7xl mx-auto">
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-10">
+
+      <!-- 左侧：四级目录（国家概览 + 地区-城市-线路-景点） -->
+      <aside class="lg:col-span-4 xl:col-span-3">
+        <div class="sticky top-28 bg-white border border-gray-100 rounded-sm shadow-sm p-5">
+          <h2 class="text-xs font-bold uppercase tracking-widest text-gray-400 mb-4 flex items-center">
+            <i data-lucide="map" class="w-4 h-4 mr-2"></i>
+            <span class="lang-en">Destination Index</span>
+            <span class="lang-cn hidden">目的地目录</span>
+          </h2>
+
+          <div id="sidebarTree" class="space-y-3 text-sm">
+            <!-- JS 动态生成 -->
+          </div>
+        </div>
+      </aside>
+
+      <!-- 右侧：正文区域 -->
+      <section class="lg:col-span-8 xl:col-span-9">
+        <div id="detailContainer" class="bg-white border border-gray-100 rounded-sm shadow-sm p-8">
+          <!-- JS 根据点击目录填充 -->
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+  <!-- 先引入“内容数据”：日本的分级结构（关东/近畿 → 城市 → 线路 → 景点） -->
+  <script src="Japan.js"></script>
+
+  <!-- 页面逻辑：依赖上面的 travelTree -->
+  <script>
+    lucide.createIcons();
+
+    let currentLang = 'en';
+    const nodeById = {};
+
+    function initPage() {
+      buildIndex();
+      buildSidebar();
+      const defaultId = 'country-overview';
+      showDetail(defaultId);
+      setActiveSidebarItem(defaultId);
+      updateLanguageDisplay();
+    }
+
+    // 1. 扁平化索引
+    function buildIndex() {
+      const walk = (node, extra = {}) => {
+        const fullNode = { ...node, ...extra };
+        nodeById[node.id] = fullNode;
+        if (node.children) {
+          node.children.forEach(child => {
+            let childExtra = { ...extra };
+            if (node.type === 'region') { childExtra.regionTitleEn = node.titleEn; childExtra.regionTitleCn = node.titleCn; }
+            if (node.type === 'city') { childExtra.cityTitleEn = node.titleEn; childExtra.cityTitleCn = node.titleCn; }
+            if (node.type === 'route') { childExtra.routeTitleEn = node.titleEn; childExtra.routeTitleCn = node.titleCn; }
+            walk(child, childExtra);
+          });
+        }
+      };
+      travelTree.forEach(region => walk(region));
+    }
+
+    // 2. 兜底查找
+    function getNodeWithContext(id) {
+      if (nodeById[id]) return nodeById[id];
+      let result = null;
+      const walk = (node, extra = {}) => {
+        if (!node || result) return;
+        let fullNode = { ...node, ...extra };
+        if (node.id === id) { result = fullNode; return; }
+        if (node.children) {
+          node.children.forEach(child => {
+            let childExtra = { ...extra };
+            if (node.type === 'region') { childExtra.regionTitleEn = node.titleEn; childExtra.regionTitleCn = node.titleCn; }
+            if (node.type === 'city') { childExtra.cityTitleEn = node.titleEn; childExtra.cityTitleCn = node.titleCn; }
+            if (node.type === 'route') { childExtra.routeTitleEn = node.titleEn; childExtra.routeTitleCn = node.titleCn; }
+            walk(child, childExtra);
+          });
+        }
+      };
+      travelTree.forEach(region => walk(region));
+      if (result) nodeById[id] = result;
+      return result;
+    }
+
+    // ========== 核心修复：防止星星缩放 + 去除留白 ==========
+    function renderStars(score, sizeClass = 'w-4 h-4') {
+      const safeScore = Math.min(5, Math.max(0, score || 0));
+      let starsHtml = '';
+      
+      const path = 'M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z';
+      
+      // 使用紧凑的 viewBox 去除 SVG 自带的内边距，让星星看起来更大、比例更准
+      const tightViewBox = "2 2 20 20";
+
+      for (let i = 1; i <= 5; i++) {
+        // 计算每一颗星的填充比例 (0% - 100%)
+        let fill = Math.max(0, Math.min(1, safeScore - (i - 1))) * 100;
+
+        starsHtml += `
+          <div class="relative ${sizeClass} flex-shrink-0">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="${tightViewBox}" class="w-full h-full text-gray-200" fill="currentColor" stroke="none">
+              <path d="${path}"/>
+            </svg>
+            
+            <div class="absolute top-0 left-0 h-full overflow-hidden text-accent" style="width: ${fill}%">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="${tightViewBox}" class="${sizeClass}" fill="currentColor" stroke="none">
+                <path d="${path}"/>
+              </svg>
+            </div>
+          </div>
+        `;
+      }
+
+      return `
+        <div class="flex items-center space-x-0.5 mr-2 select-none" title="${safeScore.toFixed(1)} / 5">
+          ${starsHtml}
+        </div>
+      `;
+    }
+
+    // ========== 左侧目录 (纯数字) ==========
+    function buildSidebar() {
+      const container = document.getElementById('sidebarTree');
+      container.innerHTML = '';
+      
+      // 示例分数 4.4
+      container.innerHTML += `
+        <button
+          class="sidebar-item w-full flex items-center justify-between px-3 py-2 text-xs text-gray-700 hover:bg-secondary/60 transition-colors text-left border border-gray-100 rounded-sm mb-2"
+          data-id="country-overview"
+        >
+          <div class="flex items-center space-x-2">
+            <i data-lucide="flag" class="w-3 h-3 text-gray-400"></i>
+            <span><span class="lang-en">Country overview</span><span class="lang-cn hidden">国家整体印象</span></span>
+          </div>
+          <span class="text-[11px] font-semibold text-accent">4.4</span>
+        </button>
+      `;
+
+      travelTree.forEach(region => {
+        const wrapper = document.createElement('div');
+        wrapper.className = 'border border-gray-100 rounded-sm';
+        wrapper.innerHTML = `
+          <button class="w-full flex items-center justify-between px-3 py-2 text-xs font-semibold uppercase tracking-wide text-gray-600 hover:bg-secondary/60 transition-colors region-toggle" data-region="${region.id}">
+            <div class="flex items-center space-x-2">
+              <i data-lucide="chevron-right" class="w-3 h-3 text-gray-400 region-icon transition-transform"></i>
+              <span><span class="lang-en">${region.titleEn}</span><span class="lang-cn hidden">${region.titleCn}</span></span>
+            </div>
+          </button>
+          <div id="region-${region.id}" class="border-t border-gray-100 bg-white hidden">
+            <button class="sidebar-item w-full flex items-center justify-between px-3 py-1.5 text-xs text-gray-600 hover:bg-secondary/60 transition-colors text-left" data-id="${region.id}">
+              <span class="italic"><span class="lang-en">Region overview</span><span class="lang-cn hidden">地区整体印象</span></span>
+            </button>
+            ${buildCityList(region)}
+          </div>
+        `;
+        container.appendChild(wrapper);
+      });
+      bindToggleEvents(container);
+      container.querySelectorAll('.sidebar-item').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const id = btn.getAttribute('data-id');
+          showDetail(id);
+          setActiveSidebarItem(id);
+        });
+      });
+      updateLanguageDisplay();
+      lucide.createIcons();
+    }
+
+    function bindToggleEvents(container) {
+      container.querySelectorAll('.region-toggle').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const regionId = btn.getAttribute('data-region');
+          const panel = document.getElementById(`region-${regionId}`);
+          const isHidden = panel.classList.toggle('hidden');
+          const icon = btn.querySelector('.region-icon');
+          if (icon) isHidden ? icon.classList.remove('rotate-90') : icon.classList.add('rotate-90');
+          if (isHidden) {
+            panel.querySelectorAll('.city-panel, .route-panel').forEach(p => p.classList.add('hidden'));
+            panel.querySelectorAll('.city-icon, .route-icon').forEach(ic => ic.classList.remove('rotate-90'));
+          }
+        });
+      });
+      container.querySelectorAll('.city-toggle').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const cid = btn.getAttribute('data-city');
+          const panel = document.getElementById(`city-${cid}`);
+          const isHidden = panel.classList.toggle('hidden');
+          const icon = btn.querySelector('.city-icon');
+          if (icon) isHidden ? icon.classList.remove('rotate-90') : icon.classList.add('rotate-90');
+          if (isHidden) {
+            panel.querySelectorAll('.route-panel').forEach(p => p.classList.add('hidden'));
+            panel.querySelectorAll('.route-icon').forEach(ic => ic.classList.remove('rotate-90'));
+          }
+        });
+      });
+      container.querySelectorAll('.route-toggle').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const rid = btn.getAttribute('data-route');
+          const panel = document.getElementById(`route-${rid}`);
+          const isHidden = panel.classList.toggle('hidden');
+          const icon = btn.querySelector('.route-icon');
+          if (icon) isHidden ? icon.classList.remove('rotate-90') : icon.classList.add('rotate-90');
+        });
+      });
+    }
+
+    function buildCityList(region) {
+      if (!region.children) return '';
+      return region.children.map(city => `
+        <div class="border-t border-gray-100">
+          <button class="city-toggle w-full flex items-center justify-between px-3 py-2 text-xs text-gray-700 hover:bg-secondary/60 transition-colors" data-city="${city.id}">
+            <div class="flex items-center space-x-2">
+              <i data-lucide="chevron-right" class="w-3 h-3 text-gray-400 city-icon transition-transform"></i>
+              <span><span class="lang-en">${city.titleEn}</span><span class="lang-cn hidden">${city.titleCn}</span></span>
+            </div>
+            <span class="text-[11px] font-semibold text-accent">${city.score.toFixed(1)}</span>
+          </button>
+          <div id="city-${city.id}" class="pl-3 pb-2 space-y-1 border-t border-gray-100 hidden city-panel">
+            <button class="sidebar-item w-full flex items-center px-3 py-1.5 text-xs text-gray-600 hover:bg-secondary/60 transition-colors text-left" data-id="${city.id}">
+              <span class="italic"><span class="lang-en">City overview</span><span class="lang-cn hidden">城市整体印象</span></span>
+            </button>
+            ${buildRouteList(city)}
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function buildRouteList(city) {
+      if (!city.children) return '';
+      return city.children.map(route => `
+        <div class="border-t border-gray-100">
+          <button class="route-toggle w-full flex items-center justify-between px-3 py-2 text-xs text-gray-700 hover:bg-secondary/60 transition-colors" data-route="${route.id}">
+          <div class="flex items-start space-x-2">
+            <i data-lucide="chevron-right" class="w-3 h-3 text-gray-400 route-icon transition-transform"></i>
+            <div class="flex flex-col leading-snug text-left">
+              <span class="lang-en font-semibold block">${route.routeNameEn}</span>
+              <span class="lang-en text-gray-500 text-[11px] block">${route.routeAreaEn}</span>
+              <span class="lang-cn hidden font-semibold block">${route.routeNameCn}</span>
+              <span class="lang-cn hidden text-gray-500 text-[11px] block">${route.routeAreaCn}</span>
+            </div>
+          </div>
+            <span class="text-[11px] font-semibold text-accent">${route.score.toFixed(1)}</span>
+          </button>
+          <div id="route-${route.id}" class="pl-4 pb-2 space-y-1 border-t border-gray-100 hidden route-panel">
+            <button class="sidebar-item w-full flex items-center px-3 py-1.5 text-xs text-gray-600 hover:bg-secondary/60 transition-colors text-left" data-id="${route.id}">
+              <span class="italic"><span class="lang-en">Route overview</span><span class="lang-cn hidden">线路整体印象</span></span>
+            </button>
+            ${buildSpotList(route)}
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function buildSpotList(route) {
+      if (!route.children) return '';
+      return route.children.map(spot => `
+        <button class="sidebar-item w-full flex items-center justify-between px-3 py-1.5 text-xs text-gray-600 hover:bg-secondary/60 transition-colors text-left" data-id="${spot.id}">
+          <span><span class="lang-en">${spot.titleEn}</span><span class="lang-cn hidden">${spot.titleCn}</span></span>
+          <span class="text-[11px] font-semibold text-accent">${spot.score.toFixed(1)}</span>
+        </button>
+      `).join('');
+    }
+
+    // ========== 正文渲染 ==========
+    function showDetail(id) {
+      const container = document.getElementById('detailContainer');
+      if (id === 'country-overview') {
+        container.innerHTML = buildCountryOverview();
+        updateLanguageDisplay();
+        lucide.createIcons();
+        return;
+      }
+      const node = getNodeWithContext(id);
+      if (!node) return;
+      let html = '';
+      if (node.type === 'region') html = buildRegionDetail(node);
+      else if (node.type === 'city') html = buildCityDetail(node);
+      else if (node.type === 'route') html = buildRouteDetail(node);
+      else if (node.type === 'spot') html = buildSpotDetail(node);
+      container.innerHTML = html;
+      updateLanguageDisplay();
+      lucide.createIcons();
+    }
+
+    function buildCountryOverview() {
+      // 示例分数 4.4
+      return `
+        <header class="mb-6 border-b border-gray-100 pb-4">
+          <div class="flex items-center justify-between mb-3">
+            <div>
+              <p class="text-xs uppercase tracking-widest text-gray-400 mb-1"><span class="lang-en">Japan · Country</span><span class="lang-cn hidden">日本 · 国家</span></p>
+              <h1 class="text-2xl md:text-3xl font-bold text-ink"><span class="lang-en">Japan – Overall Impressions</span><span class="lang-cn hidden">日本整体印象</span></h1>
+            </div>
+            <div class="text-right flex flex-col items-end">
+              <p class="text-xs uppercase tracking-widest text-gray-400 mb-1"><span class="lang-en">Country Score</span><span class="lang-cn hidden">国家评分</span></p>
+              <div class="flex items-center">${renderStars(4.4, 'w-5 h-5')}<p class="text-3xl font-bold text-accent">4.4</p></div>
+            </div>
+          </div>
+        </header>
+        <section class="space-y-2 text-sm leading-relaxed text-gray-700">
+          <p class="whitespace-pre-line">
+            <span class="lang-en">A country where ultra-dense cities, quiet temples, local shopping streets and well-organized transport all stack on top of each other. First-time visits often feel incredibly smooth on the logistics side, while the emotional impact builds slowly through small, everyday details.</span>
+            <span class="lang-cn hidden">一个把超高密度城市、安静寺社、本地商店街与高度发达的交通网络层层叠在一起的国家。初次造访时，在出行与动线安排上往往会觉得“异常顺滑”，真正的情绪冲击则更多来自一路上不断累积的生活细节。</span>
+          </p>
+          <div>
+            <h2 class="text-xs font-bold uppercase tracking-widest text-gray-400 mb-1"><span class="lang-en">What this score roughly means</span><span class="lang-cn hidden">这个分数大概代表什么</span></h2>
+            <ul class="list-disc pl-5 space-y-1">
+              <li><span class="lang-en">Extremely convenient for independent travel: trains, IC cards, clear signage.</span><span class="lang-cn hidden">对于自由行极其友好：电车网络、IC 卡与清晰的指示系统让动线规划成本很低。</span></li>
+              <li><span class="lang-en">Strong contrast between big-city gloss and more worn everyday corners.</span><span class="lang-cn hidden">大城市的光鲜与生活化街区的陈旧感并存，反差本身就是旅行体验的一部分。</span></li>
+              <li><span class="lang-en">Not every “famous spot” is emotionally overwhelming, but the best ones are unforgettable.</span><span class="lang-cn hidden">并非所有“名景点”都足够震撼，但那些真正好的地方会在记忆里停留很久。</span></li>
+            </ul>
+          </div>
+          <div class="pt-4 border-t border-gray-100 text-xs text-gray-400">
+            <span class="lang-en">Use the index on the left to drill down into specific regions, cities, routes and sights.</span>
+            <span class="lang-cn hidden">可以从左侧目录依次深入到具体的地区、城市、线路与景点，把这份国家印象拆解成更细的旅行体验。</span>
+          </div>
+        </section>
+      `;
+    }
+
+    function buildRegionDetail(region) {
+      const notesEn = (region.notesEn || []).map(t => `<li>${t}</li>`).join('');
+      const notesCn = (region.notesCn || []).map(t => `<li>${t}</li>`).join('');
+      return `
+        <header class="mb-6 border-b border-gray-100 pb-4">
+          <div class="flex items-center justify-between mb-3">
+            <div>
+              <p class="text-xs uppercase tracking-widest text-gray-400 mb-1"><span class="lang-en">Japan · Region</span><span class="lang-cn hidden">日本 · 地区</span></p>
+              <h1 class="text-2xl md:text-3xl font-bold text-ink"><span class="lang-en">${region.titleEn}</span><span class="lang-cn hidden">${region.titleCn}</span></h1>
+            </div>
+          </div>
+        </header>
+        <section class="space-y-6 text-sm leading-relaxed text-gray-700">
+          <p class="whitespace-pre-line"><span class="lang-en">${region.descriptionEn || ''}</span><span class="lang-cn hidden">${region.descriptionCn || ''}</span><p class="whitespace-pre-line">
+          ${(notesEn || notesCn) ? `<div><h2 class="text-xs font-bold uppercase tracking-widest text-gray-400 mb-1"><span class="lang-en">Impressions & route ideas</span><span class="lang-cn hidden">整体印象 & 路线想法</span></h2><ul class="list-disc pl-5 space-y-1"><span class="lang-en">${notesEn}</span><span class="lang-cn hidden">${notesCn}</span></ul></div>` : ''}
+          <div class="pt-4 border-t border-gray-100 text-xs text-gray-400">
+            <span class="lang-en">Pick a city, route or sight from the index on the left for more detailed notes.</span>
+            <span class="lang-cn hidden">可以从左侧继续选择城市、线路或具体景点，查看更细致的游记和评分理由。</span>
+          </div>
+        </section>
+      `;
+    }
+
+    function buildCityDetail(city) {
+      const highlightsEn = (city.highlightsEn || []).map(t => `<li>${t}</li>`).join('');
+      const highlightsCn = (city.highlightsCn || []).map(t => `<li>${t}</li>`).join('');
+      return `
+        <header class="mb-6 border-b border-gray-100 pb-4">
+          <div class="flex items-center justify-between mb-3">
+            <div>
+              <p class="text-xs uppercase tracking-widest text-gray-400 mb-1"><span class="lang-en">Japan · ${city.regionTitleEn || ''} · City</span><span class="lang-cn hidden">日本 · ${city.regionTitleCn || ''} · 城市</span></p>
+              <h1 class="text-2xl md:text-3xl font-bold text-ink"><span class="lang-en">${city.titleEn}</span><span class="lang-cn hidden">${city.titleCn}</span></h1>
+            </div>
+            <div class="text-right flex flex-col items-end">
+              <p class="text-xs uppercase tracking-widest text-gray-400 mb-1"><span class="lang-en">City Score</span><span class="lang-cn hidden">城市评分</span></p>
+              <div class="flex items-center">${renderStars(city.score, 'w-5 h-5')}<p class="text-3xl font-bold text-accent">${city.score.toFixed(1)}</p></div>
+            </div>
+          </div>
+        </header>
+        <section class="space-y-6 text-sm leading-relaxed text-gray-700">
+          <p class="whitespace-pre-line"><span class="lang-en">${city.descriptionEn || ''}</span><span class="lang-cn hidden">${city.descriptionCn || ''}</span><p class="whitespace-pre-line">
+          ${(highlightsEn || highlightsCn) ? `<div><h2 class="text-xs font-bold uppercase tracking-widest text-gray-400 mb-1"><span class="lang-en">Impressions & route suggestions</span><span class="lang-cn hidden">城市印象 & 路线建议</span></h2><ul class="list-disc pl-5 space-y-1"><span class="lang-en">${highlightsEn}</span><span class="lang-cn hidden">${highlightsCn}</span></ul></div>` : ''}
+          <div class="pt-4 border-t border-gray-100 text-xs text-gray-400">
+            <span class="lang-en">Choose a route or sight under this city on the left to drill down further.</span>
+            <span class="lang-cn hidden">可以从左侧该城市下面选择线路或具体景点，继续深入到更细的行程体验。</span>
+          </div>
+        </section>
+      `;
+    }
+
+    function buildRouteDetail(route) {
+      const highlightsEn = (route.highlightsEn || []).map(t => `<li>${t}</li>`).join('');
+      const highlightsCn = (route.highlightsCn || []).map(t => `<li>${t}</li>`).join('');
+
+      const descEnRaw = route.descriptionEn || '';
+      const descEnJoined = Array.isArray(descEnRaw) ? descEnRaw.join('\n\n') : descEnRaw;
+      const descEn = (typeof descEnJoined === 'string' ? descEnJoined : String(descEnJoined))
+        .replace(/^\s*\n+/, '')
+        .trim();
+
+      const descCnRaw = route.descriptionCn || '';
+      const descCnJoined = Array.isArray(descCnRaw) ? descCnRaw.join('\n\n') : descCnRaw;
+      const descCn = (typeof descCnJoined === 'string' ? descCnJoined : String(descCnJoined))
+        .replace(/^\s*\n+/, '')
+        .trim();
+
+      return `
+      <header class="mb-6 border-b border-gray-100 pb-4">
+        <div class="flex items-center justify-between mb-3">
+          <div>
+            <p class="text-xs uppercase tracking-widest text-gray-400 mb-1"><span class="lang-en">Japan · ${route.regionTitleEn || ''} · ${route.cityTitleEn || ''} · Route</span><span class="lang-cn hidden">日本 · ${route.regionTitleCn || ''} · ${route.cityTitleCn || ''} · 路线</span></p>
+            <h1 class="text-2xl md:text-3xl font-bold text-ink"><span class="lang-en">${route.titleEn}</span><span class="lang-cn hidden">${route.titleCn}</span></h1>
+          </div>
+          <div class="text-right flex flex-col items-end">
+            <p class="text-xs uppercase tracking-widest text-gray-400 mb-1"><span class="lang-en">Route Score</span><span class="lang-cn hidden">路线评分</span></p>
+            <div class="flex items-center">${renderStars(route.score || 0, 'w-5 h-5')}<p class="text-3xl font-bold text-accent">${route.score != null ? route.score.toFixed(1) : ''}</p></div>
+          </div>
+        </div>
+      </header>
+        <section class="space-y-6 text-sm leading-relaxed text-gray-700">
+          <p class="whitespace-pre-line"><span class="lang-en">${route.descriptionEn || ''}</span><span class="lang-cn hidden">${route.descriptionCn || ''}</span><p class="whitespace-pre-line">
+          ${(highlightsEn || highlightsCn) ? `<div><h2 class="text-xs font-bold uppercase tracking-widest text-gray-400 mb-1"><span class="lang-en">Impressions & practical notes</span><span class="lang-cn hidden">路线印象 & 实用提示</span></h2><ul class="list-disc pl-5 space-y-1"><span class="lang-en">${highlightsEn}</span><span class="lang-cn hidden">${highlightsCn}</span></ul></div>` : ''}
+          <div class="pt-4 border-t border-gray-100 text-xs text-gray-400">
+            <span class="lang-en">Pick a specific sight under this route on the left to see more detailed notes.</span>
+            <span class="lang-cn hidden">可以从左侧该路线下选择具体景点，查看更详细的游记和打分理由。</span>
+          </div>
+        </section>
+      `;
+    }
+
+    function buildSpotDetail(spot) {
+      const tipsEn = (spot.tipsEn || []).map(t => `<li>${t}</li>`).join('');
+      const tipsCn = (spot.tipsCn || []).map(t => `<li>${t}</li>`).join('');
+      const descEn = (spot.descriptionEn || '').replace(/^\s*\n+/, '').trim();
+      const descCn = (spot.descriptionCn || '').replace(/^\s*\n+/, '').trim();
+      const memEn = (spot.memoryPhotoEn || '').replace(/^\s*\n+/, '').trim();
+      const memCn = (spot.memoryPhotoCn || '').replace(/^\s*\n+/, '').trim();
+      const memUrl = (spot.memoryPhotoUrl || '').trim();
+
+      return `
+        <header class="mb-3 border-b border-gray-100 pb-2">
+          <div class="flex items-center justify-between mb-2">
+            <div>
+              <p class="text-xs uppercase tracking-widest text-gray-400 mb-1"><span class="lang-en">Japan · ${spot.regionTitleEn || ''} · ${spot.cityTitleEn || ''} · ${spot.routeTitleEn || ''}</span><span class="lang-cn hidden">日本 · ${spot.regionTitleCn || ''} · ${spot.cityTitleCn || ''} · ${spot.routeTitleCn || ''}</span></p>
+              <h1 class="text-2xl md:text-3xl font-bold text-ink"><span class="lang-en">${spot.titleEn}</span><span class="lang-cn hidden">${spot.titleCn}</span>
+              ${(spot.visitTimeEn || spot.visitTimeCn) ? `<p class="mt-1 text-xs text-gray-400 font-normal"><span class="lang-en">${spot.visitTimeEn || ''}</span><span class="lang-cn hidden">${spot.visitTimeCn || ''}</span></p>` : ''}
+              </h1>
+            </div>
+            <div class="text-right flex flex-col items-end">
+              <p class="text-xs uppercase tracking-widest text-gray-400 mb-1"><span class="lang-en">Sight Score</span><span class="lang-cn hidden">景点评分</span></p>
+              <div class="flex items-center">${renderStars(spot.score, 'w-5 h-5')}<p class="text-3xl font-bold text-accent">${spot.score.toFixed(1)}</p></div>
+            </div>
+          </div>
+        </header>
+        <section class="space-y-6 text-sm leading-relaxed text-gray-700">
+          <p class="whitespace-pre-line"><span class="lang-en">${descEn}</span><span class="lang-cn hidden">${descCn}</span></p>
+          ${ (memEn || memCn) ? `
+          <div class="border border-gray-100 rounded-sm bg-secondary/40 p-4 flex flex-col md:flex-row gap-4 items-start">
+            <div class="w-full md:w-4/5">
+              ${memUrl ? `<div class="w-full bg-white border border-gray-200 rounded-sm flex items-center justify-center"><img src="${memUrl}" alt="Memory photo of ${spot.titleEn}" class="max-h-72 w-auto object-contain"/></div>` : `<div class="w-full h-40 bg-white border-2 border-dashed border-gray-300 rounded-sm flex items-center justify-center text-xs text-gray-400 text-center px-2"><span class="lang-en">No photo added yet. You can put your “first memory image” of this place here.</span><span class="lang-cn hidden">暂时还没有添加照片，可以在这里放上提到这个景点时脑海中浮现的第一张画面。</span></div>`}
+            </div>
+            <div class="w-full md:w-1/5 whitespace-pre-line text-gray-700">
+              <h2 class="text-[11px] font-bold uppercase tracking-[0.18em] text-gray-400 mb-2"><span class="lang-en">Memory Photo</span><span class="lang-cn hidden">忆照</span></h2>
+              <p class="text-xs leading-relaxed"><span class="lang-en">${memEn}</span><span class="lang-cn hidden">${memCn}</span></p>
+            </div>
+          </div>` : ''}
+          ${(tipsEn || tipsCn) ? `<div><h2 class="text-xs font-bold uppercase tracking-widest text-gray-400 mb-1"><span class="lang-en">Practical tips</span><span class="lang-cn hidden">实用建议</span></h2><ul class="list-disc pl-5 space-y-1"><span class="lang-en">${tipsEn}</span><span class="lang-cn hidden">${tipsCn}</span></ul></div>` : ''}
+          <div class="pt-4 border-t border-gray-100 text-xs text-gray-400">
+            <span class="lang-en">Use the index on the left to jump to another sight, route, city or region.</span>
+            <span class="lang-cn hidden">可以通过左侧目录快速切换到其他景点、线路、城市或地区。</span>
+          </div>
+        </section>
+      `;
+    }
+
+    // ========== 工具函数 ==========
+    function setActiveSidebarItem(id) {
+      document.querySelectorAll('.sidebar-item').forEach(btn => {
+        btn.classList.remove('sidebar-item-active', 'border-l-2');
+        btn.classList.add('border-l', 'border-transparent');
+      });
+      const active = document.querySelector(`.sidebar-item[data-id="${id}"]`);
+      if (active) {
+        active.classList.add('sidebar-item-active', 'border-l-2');
+        active.classList.remove('border-transparent');
+      }
+    }
+    function updateLanguageDisplay() {
+      const showEn = currentLang === 'en';
+      document.querySelectorAll('.lang-en').forEach(el => el.classList.toggle('hidden', !showEn));
+      document.querySelectorAll('.lang-cn').forEach(el => el.classList.toggle('hidden', showEn));
+    }
+    function toggleLanguage() {
+      currentLang = (currentLang === 'en') ? 'cn' : 'en';
+      updateLanguageDisplay();
+    }
+  </script>
+</body>
+</html>

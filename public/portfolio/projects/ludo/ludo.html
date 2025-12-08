@@ -107,11 +107,20 @@
         <div class="flex items-center">
             <a href="../../portfolio_home.html" class="flex items-center text-gray-500 hover:text-accent transition-colors group mr-8">
                 <i data-lucide="arrow-left" class="w-5 h-5 mr-2 group-hover:-translate-x-1 transition-transform"></i>
-                Back to All Works
+                <span class="lang-en">Back to All Works</span>
+                <span class="lang-cn hidden">返回作品集</span>
             </a>
         </div>
-        <div class="hidden md:block text-xs font-bold text-gray-300 uppercase tracking-widest">
-            Digital Board Game
+        <div class="flex items-center space-x-4">
+            <div class="hidden md:block text-xs font-bold text-gray-300 uppercase tracking-widest">
+                <span class="lang-en">Digital Board Game</span>
+                <span class="lang-cn hidden">数字桌游</span>
+            </div>
+            <!-- 语言切换按钮 -->
+            <button onclick="toggleLanguage()" class="flex items-center space-x-2 border border-gray-300 px-4 py-2 rounded-full hover:border-accent hover:text-accent transition-all text-xs font-bold tracking-widest uppercase bg-white">
+                <i data-lucide="globe" class="w-4 h-4"></i>
+                <span id="lang-label">EN / 中文</span>
+            </button>
         </div>
     </nav>
 
@@ -121,29 +130,62 @@
         <!-- Left Sidebar: Project Metadata -->
         <aside class="lg:w-1/4">
             <div class="lg:sidebar-sticky">
-                <h1 class="text-4xl font-bold text-ink mb-2 leading-tight">Crazy Ludo</h1>
-                <p class="text-lg text-accent font-medium mb-8">Digital Board Game / Web</p>
+                <h1 class="text-4xl font-bold text-ink mb-2 leading-tight">
+                    <span class="lang-en">Crazy Ludo</span>
+                    <span class="lang-cn hidden">Crazy Ludo（疯狂飞行棋）</span>
+                </h1>
+                <p class="text-lg text-accent font-medium mb-8">
+                    <span class="lang-en">Digital Board Game / Web</span>
+                    <span class="lang-cn hidden">数字桌游 / 网页版</span>
+                </p>
 
                 <div class="space-y-8 text-sm">
                     <div>
-                        <h4 class="font-bold text-ink uppercase tracking-widest mb-2 text-xs">Role</h4>
-                        <p class="text-gray-600">Full Stack Developer</p>
-                        <p class="text-gray-600">Game Logic Design</p>
+                        <h4 class="font-bold text-ink uppercase tracking-widest mb-2 text-xs">
+                            <span class="lang-en">Role</span>
+                            <span class="lang-cn hidden">个人职责</span>
+                        </h4>
+                        <p class="text-gray-600">
+                            <span class="lang-en">Full Stack Developer</span>
+                            <span class="lang-cn hidden">全栈开发</span>
+                        </p>
+                        <p class="text-gray-600">
+                            <span class="lang-en">Game Logic Design</span>
+                            <span class="lang-cn hidden">游戏逻辑设计</span>
+                        </p>
                     </div>
                     
                     <div>
-                        <h4 class="font-bold text-ink uppercase tracking-widest mb-2 text-xs">Platform</h4>
-                        <p class="text-gray-600">Web Browser (Canvas)</p>
+                        <h4 class="font-bold text-ink uppercase tracking-widest mb-2 text-xs">
+                            <span class="lang-en">Platform</span>
+                            <span class="lang-cn hidden">平台</span>
+                        </h4>
+                        <p class="text-gray-600">
+                            <span class="lang-en">Web Browser (Canvas)</span>
+                            <span class="lang-cn hidden">网页浏览器（Canvas）</span>
+                        </p>
                     </div>
 
                     <div>
-                        <h4 class="font-bold text-ink uppercase tracking-widest mb-2 text-xs">Tech Stack</h4>
-                        <p class="text-gray-600">Vanilla JavaScript</p>
-                        <p class="text-gray-600">HTML5 Canvas</p>
+                        <h4 class="font-bold text-ink uppercase tracking-widest mb-2 text-xs">
+                            <span class="lang-en">Tech Stack</span>
+                            <span class="lang-cn hidden">技术栈</span>
+                        </h4>
+                        <p class="text-gray-600">
+                            <span class="lang-en">Vanilla JavaScript</span>
+                            <span class="lang-cn hidden">原生 JavaScript</span>
+                        </p>
+                        <p class="text-gray-600">
+                            <span class="lang-en">HTML5 Canvas</span>
+                            <span class="lang-cn hidden">HTML5 Canvas</span>
+                        </p>
                     </div>
 
                     <div>
-                        <h4 class="font-bold text-ink uppercase tracking-widest mb-2 text-xs">Year</h4>
+                        <h4 class="font-bold text-ink uppercase tracking-widest mb-2 text-xs">
+                            <span class="lang-en">Year</span>
+                            <span class="lang-cn hidden">年份</span>
+                        </h4>
                         <p class="text-gray-600">2025</p>
                     </div>
                     
@@ -151,10 +193,14 @@
                     <div class="pt-4 border-t border-gray-200">
                         <!-- 左侧 Play Demo：新标签打开 ludo_play.html -->
                         <a href="ludo_play.html" target="_blank" class="flex items-center text-ink hover:text-accent font-bold transition-colors">
-                            <i data-lucide="play-circle" class="w-4 h-4 mr-2"></i> Play Demo
+                            <i data-lucide="play-circle" class="w-4 h-4 mr-2"></i>
+                            <span class="lang-en">Play Demo</span>
+                            <span class="lang-cn hidden">开始试玩</span>
                         </a>
                         <a href="#" class="flex items-center text-ink hover:text-accent font-bold transition-colors mt-2">
-                            <i data-lucide="github" class="w-4 h-4 mr-2"></i> View Code
+                            <i data-lucide="github" class="w-4 h-4 mr-2"></i>
+                            <span class="lang-en">View Code</span>
+                            <span class="lang-cn hidden">查看代码</span>
                         </a>
                     </div>
                 </div>
@@ -164,11 +210,11 @@
         <!-- Right Column: Detailed Case Study -->
         <main class="lg:w-3/4">
 
-            <!-- Hero Cover: 中间 “Crazy Ludo” 改成按钮，点击也跳转到 ludo_play.html -->
+            <!-- Hero Cover -->
             <div class="project-img aspect-[4/3] mb-12 relative overflow-hidden">
                 <div class="absolute inset-0 flex items-center justify-center">
                     <img
-                      src="../../../../picture/portfilio/crazyludo/crazyludo_overview.png"
+                      src="../../../../picture/portfolio/crazyludo/crazyludo_overview.png"
                       alt="Crazy Ludo Gameplay"
                       class="max-w-none max-h-none scale-75 opacity-30 hover:opacity-45 transition-all duration-300"
                     />
@@ -177,11 +223,12 @@
                 <!-- 前景内容 -->
                 <div class="relative z-10 text-center px-6">
                     <i data-lucide="dice-5" class="w-16 h-16 mx-auto mb-4 text-accent"></i>
-                    
-                    <!-- 这里从文本改成按钮 -->
                     <a href="ludo_play.html" target="_blank"
                        class="inline-flex items-center px-6 py-3 rounded-full bg-accent text-white font-semibold tracking-wide text-base md:text-lg shadow-md hover:bg-ink hover:shadow-lg transition">
-                        <span class="mr-2">Crazy Ludo (飞行棋)</span>
+                        <span class="mr-2">
+                            <span class="lang-en">Crazy Ludo (Fei Xing Qi)</span>
+                            <span class="lang-cn hidden">Crazy Ludo（飞行棋）</span>
+                        </span>
                         <i data-lucide="play" class="w-4 h-4"></i>
                     </a>
                 </div>
@@ -189,51 +236,143 @@
 
             <!-- Project Overview -->
             <section>
-                <h2 class="section-title">The Overview</h2>
-                <p>
-                    <em>Crazy Ludo</em> is a modern, web-based implementation of the classic board game (known as 飞行棋 in China). Unlike traditional board games, this digital version focuses on a streamlined, offline-first experience with a custom-designed 52-grid track.
-                </p>
-                <p>
-                    The project was built entirely from scratch using <strong>Vanilla JavaScript</strong> and the <strong>HTML5 Canvas API</strong>, demonstrating efficient rendering and game state management without the overhead of heavy game engines.
-                </p>
+                <h2 class="section-title">
+                    <span class="lang-en">The Overview</span>
+                    <span class="lang-cn hidden">项目概览</span>
+                </h2>
+
+                <!-- EN -->
+                <div class="lang-en">
+                    <p>
+                        <em>Crazy Ludo</em> is a modern, web-based implementation of the classic Chinese family game
+                        “Fei Xing Qi” (flying chess). Instead of trying to simulate the physical board 1:1, this version
+                        focuses on a clean layout and offline-first experience, built around a custom 52-grid track.
+                    </p>
+                    <p>
+                        The entire project is written from scratch using <strong>Vanilla JavaScript</strong> and the
+                        <strong>HTML5 Canvas API</strong>, handling everything from board rendering to token movement
+                        and AI turns without relying on external engines or frameworks.
+                    </p>
+                </div>
+
+                <!-- CN -->
+                <div class="lang-cn hidden">
+                    <p>
+                        <em>Crazy Ludo</em> 是一款基于网页的现代版“飞行棋”实现。
+                        相比一比一还原实体棋盘，本项目更关注清晰的布局与离线友好的体验，
+                        围绕一条自定义的 52 格主环路来展开设计。
+                    </p>
+                    <p>
+                        整个项目完全使用 <strong>原生 JavaScript</strong> 与 <strong>HTML5 Canvas API</strong> 搭建，
+                        从棋盘绘制、棋子移动到 AI 回合逻辑全部自行实现，
+                        不依赖任何外部游戏引擎或前端框架。
+                    </p>
+                </div>
             </section>
 
             <!-- Key Features -->
             <section>
-                <h2 class="section-title">Key Features & Mechanics</h2>
+                <h2 class="section-title">
+                    <span class="lang-en">Key Features &amp; Mechanics</span>
+                    <span class="lang-cn hidden">核心特色与机制</span>
+                </h2>
                 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-8 my-8">
                     <div class="bg-white p-6 border border-gray-200 rounded-sm">
-                        <div class="p-2 bg-accent/10 inline-block rounded-full mb-4"><i data-lucide="cpu" class="w-6 h-6 text-accent"></i></div>
-                        <h3 class="text-lg font-bold mb-2">Hybrid AI System</h3>
-                        <p class="text-sm text-gray-500">
-                            Supports mixed gameplay with both Human and AI players. The AI automatically handles dice rolling and move selection, allowing for single-player practice or filling empty slots.
+                        <div class="p-2 bg-accent/10 inline-block rounded-full mb-4">
+                            <i data-lucide="cpu" class="w-6 h-6 text-accent"></i>
+                        </div>
+                        <h3 class="text-lg font-bold mb-2">
+                            <span class="lang-en">Hybrid AI System</span>
+                            <span class="lang-cn hidden">人机混合对战</span>
+                        </h3>
+                        <p class="text-sm text-gray-500 lang-en">
+                            Supports mixed gameplay with both Human and AI players. The AI automatically handles dice
+                            rolling and move selection, allowing for single-player practice or filling empty seats.
+                        </p>
+                        <p class="text-sm text-gray-500 lang-cn hidden">
+                            支持人类玩家与 AI 混合对局。AI 会自动完成掷骰与行动选择，
+                            既可以用于单人练习，也可以在人数不足时补齐座位。
                         </p>
                     </div>
+
                     <div class="bg-white p-6 border border-gray-200 rounded-sm">
-                        <div class="p-2 bg-accent/10 inline-block rounded-full mb-4"><i data-lucide="move" class="w-6 h-6 text-accent"></i></div>
-                        <h3 class="text-lg font-bold mb-2">Custom Track Logic</h3>
-                        <p class="text-sm text-gray-500">
-                            Features a 52-grid outer loop with corner bases. Implements classic "Jump" (same color +4) and "Eat" (capture opponent) mechanics for high-stakes interaction.
+                        <div class="p-2 bg-accent/10 inline-block rounded-full mb-4">
+                            <i data-lucide="move" class="w-6 h-6 text-accent"></i>
+                        </div>
+                        <h3 class="text-lg font-bold mb-2">
+                            <span class="lang-en">Custom Track Logic</span>
+                            <span class="lang-cn hidden">自定义路线逻辑</span>
+                        </h3>
+                        <p class="text-sm text-gray-500 lang-en">
+                            Features a 52-grid outer loop with corner bases, including classic “Jump” (same color +4)
+                            and “Eat” (capture opponent) rules to keep interaction sharp and punishing.
+                        </p>
+                        <p class="text-sm text-gray-500 lang-cn hidden">
+                            使用 52 格外环与四角基地的自定义棋盘结构，完整实现
+                            “同色前进 +4 格” 与 “吃子回家” 等经典飞行棋规则，
+                            保证对抗性与双方互动的火花。
                         </p>
                     </div>
                 </div>
 
-                <p>
-                    The game includes a <strong>6-grid Victory Runway</strong> that requires precise dice rolls to finish, adding tension to the end-game phase. The starting mechanism aligns the launch pad with the track entrance, ensuring a smooth visual flow from base to board.
+                <p class="lang-en">
+                    The game also includes a <strong>6-grid Victory Runway</strong> that requires an exact roll to finish,
+                    creating natural tension in the late game. The launch pads are carefully aligned with the track
+                    entrance so that the visual flow from base to main ring feels smooth and readable.
+                </p>
+                <p class="lang-cn hidden">
+                    游戏为每位玩家设计了 <strong>6 格终点冲刺跑道</strong>，必须掷出刚好的点数才能抵达终点，
+                    使得后期节奏自然紧绷。起飞点与主环路入口在视觉和逻辑上保持对齐，
+                    让棋子从基地飞入主路的过程更加顺畅、易于理解。
                 </p>
             </section>
 
             <!-- Technical Implementation -->
             <section>
-                <h2 class="section-title">Technical Implementation</h2>
-                <p>
-                    The core challenge was creating a responsive, procedurally drawn board that scales across devices.
+                <h2 class="section-title">
+                    <span class="lang-en">Technical Implementation</span>
+                    <span class="lang-cn hidden">技术实现</span>
+                </h2>
+
+                <p class="lang-en">
+                    A key challenge was drawing a responsive board that stays crisp at different resolutions while
+                    still matching the feel of a physical Ludo track. All geometry is generated procedurally based on
+                    canvas size, so the layout can be scaled without redrawing assets.
                 </p>
+                <p class="lang-cn hidden">
+                    本项目的一大难点，是在不同分辨率下依然保持清晰的棋盘与格子布局，
+                    同时保留类似实体飞行棋的观感。棋盘几何完全通过 Canvas 按尺寸动态计算生成，
+                    因此可以在缩放画布时无损放大，不需要重新导出美术资源。
+                </p>
+
                 <ul class="list-disc pl-5 space-y-2 mb-6 text-gray-600">
-                    <li><strong>Canvas Rendering:</strong> The board, including the complex "Hollow Plus" shape and individual grid cells, is drawn via JS functions like <code>buildRing()</code> and <code>drawBoard()</code>. This allows for infinite resolution scaling.</li>
-                    <li><strong>State Machine:</strong> A central <code>S</code> object manages the game state (Current Player, Dice Result, Tokens Position), enabling features like "Auto-skip" when no moves are available.</li>
-                    <li><strong>Dynamic UI:</strong> The "Roll Dice" button dynamically positions itself relative to the canvas to ensure accessibility on both mobile and desktop screens.</li>
+                    <li class="lang-en">
+                        <strong>Canvas Rendering:</strong> Functions like <code>buildRing()</code> and
+                        <code>drawBoard()</code> construct the entire “hollow plus” shape and individual cells on the fly.
+                    </li>
+                    <li class="lang-cn hidden">
+                        <strong>棋盘绘制：</strong> 通过 <code>buildRing()</code>、<code>drawBoard()</code> 等函数，
+                        动态绘制“中空十字”棋盘结构以及所有格子。
+                    </li>
+
+                    <li class="lang-en">
+                        <strong>State Machine:</strong> A central <code>S</code> object tracks current player, dice result,
+                        token positions and phase flags, enabling features like auto-skipping when no piece can move.
+                    </li>
+                    <li class="lang-cn hidden">
+                        <strong>状态机设计：</strong> 使用中心状态对象 <code>S</code> 记录当前玩家、骰子结果、
+                        棋子位置与阶段标记，实现“无子可走自动跳过”等质量提升功能。
+                    </li>
+
+                    <li class="lang-en">
+                        <strong>Dynamic UI:</strong> The “Roll Dice” button is positioned relative to the canvas, so it
+                        stays accessible on both desktop and smaller laptop screens without covering important areas.
+                    </li>
+                    <li class="lang-cn hidden">
+                        <strong>动态 UI：</strong> “掷骰”按钮根据 Canvas 尺寸与位置动态布局，
+                        在大屏与小屏上都能保持就手，又不会遮挡关键信息区域。
+                    </li>
                 </ul>
             </section>
 
@@ -245,16 +384,26 @@
     <footer class="bg-ink text-white py-20 px-6 mt-12">
         <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
             <div>
-                <h2 class="text-4xl font-bold mb-6">Let's talk Strategy.</h2>
+                <h2 class="text-4xl font-bold mb-6">
+                    <span class="lang-en">Let's talk Strategy.</span>
+                    <span class="lang-cn hidden">欢迎聊聊游戏设计。</span>
+                </h2>
                 <a href="mailto:donglinyan2000@outlook.com" class="inline-flex items-center text-accent hover:text-white transition-colors text-lg font-medium">
                     donglinyan2000@outlook.com <i data-lucide="arrow-right" class="ml-2 w-5 h-5"></i>
                 </a>
             </div>
             
             <div class="flex flex-col md:items-end space-y-4">
-                <p class="text-sm text-gray-500 uppercase tracking-widest mb-4">Social Media</p>
-                <a href="#" class="text-gray-300 hover:text-accent transition-colors flex items-center"><i data-lucide="twitter" class="w-5 h-5 mr-3"></i> Twitter / X</a>
-                <a href="#" class="text-gray-300 hover:text-accent transition-colors flex items-center"><i data-lucide="linkedin" class="w-5 h-5 mr-3"></i> LinkedIn</a>
+                <p class="text-sm text-gray-500 uppercase tracking-widest mb-4">
+                    <span class="lang-en">Social Media</span>
+                    <span class="lang-cn hidden">社交媒体</span>
+                </p>
+                <a href="#" class="text-gray-300 hover:text-accent transition-colors flex items-center">
+                    <i data-lucide="twitter" class="w-5 h-5 mr-3"></i> Twitter / X
+                </a>
+                <a href="#" class="text-gray-300 hover:text-accent transition-colors flex items-center">
+                    <i data-lucide="linkedin" class="w-5 h-5 mr-3"></i> LinkedIn
+                </a>
             </div>
         </div>
         <div class="max-w-7xl mx-auto mt-20 pt-8 border-t border-gray-800 text-center md:text-left text-xs text-gray-600">
@@ -291,6 +440,14 @@
 
         function scrollToTop() {
             window.scrollTo({top: 0, behavior: 'smooth'});
+        }
+
+        // 语言切换
+        function toggleLanguage() {
+            const enEls = document.querySelectorAll('.lang-en');
+            const cnEls = document.querySelectorAll('.lang-cn');
+            enEls.forEach(el => el.classList.toggle('hidden'));
+            cnEls.forEach(el => el.classList.toggle('hidden'));
         }
     </script>
 </body>

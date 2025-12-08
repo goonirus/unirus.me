@@ -1,0 +1,708 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project: Ionized</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: { 
+                        sans: ['Inter', 'Noto Sans SC', 'sans-serif'],
+                    },
+                    colors: { 
+                        'paper': '#fdfbf7', 
+                        'ink': '#1a1a1a', 
+                        'accent': '#c2410c',
+                        'secondary': '#f3f4f6'
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body { background-color: #fdfbf7; color: #1a1a1a; scroll-behavior: smooth; }
+        
+        .sidebar-sticky {
+            position: sticky;
+            top: 8rem;
+            height: calc(100vh - 8rem);
+            overflow-y: auto;
+        }
+
+        h1, h2, h3 { color: #1a1a1a; }
+        .section-title {
+            font-family: 'Inter', 'Noto Sans SC', sans-serif;
+            font-weight: 700;
+            font-size: 1.5rem;
+            margin-top: 3rem;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        p { margin-bottom: 1.5em; line-height: 1.8; color: #4b5563; font-size: 1.05rem; }
+        
+        .project-img {
+            width: 100%;
+            background-color: #020617;
+            border: 1px solid #e5e7eb;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #aab1ff;
+            margin: 2rem 0;
+            border-radius: 0.25rem;
+            overflow: hidden;
+            position: relative;
+        }
+        .project-img img {
+            width: 100%;
+            height: auto;
+            display: block;
+            transition: transform 0.5s ease;
+        }
+        .project-img:hover img {
+            transform: scale(1.02);
+        }
+
+        #backToTopBtn {
+            display: none;
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            z-index: 99;
+            border: none;
+            outline: none;
+            background-color: rgba(26, 26, 26, 0.8);
+            color: white;
+            cursor: pointer;
+            padding: 0.75rem;
+            border-radius: 50%;
+            backdrop-filter: blur(4px);
+            transition: all 0.3s ease;
+        }
+        #backToTopBtn:hover {
+            background-color: rgba(194, 65, 12, 0.9);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+        }
+
+        .info-table th { 
+            text-align: left; 
+            padding: 0.5rem 0; 
+            font-size: 0.75rem; 
+            text-transform: uppercase; 
+            letter-spacing: 0.05em; 
+            color: #9ca3af;
+        }
+        .info-table td { 
+            text-align: right; 
+            padding: 0.5rem 0; 
+            font-size: 0.875rem; 
+            color: #4b5563;
+        }
+    </style>
+</head>
+<body class="font-sans antialiased">
+
+    <!-- Navigation + language toggle -->
+    <nav class="fixed w-full z-50 top-0 bg-paper/90 backdrop-blur-sm border-b border-gray-200/50 h-20 flex items-center px-6 justify-between">
+        <div class="flex items-center">
+            <a href="../../portfolio_home.html" class="flex items-center text-gray-500 hover:text-accent transition-colors group mr-8">
+                <i data-lucide="arrow-left" class="w-5 h-5 mr-2 group-hover:-translate-x-1 transition-transform"></i>
+                <span class="lang-en">Back to All Works</span>
+                <span class="lang-cn hidden">返回作品集</span>
+            </a>
+        </div>
+
+        <button onclick="toggleLanguage()" class="flex items-center space-x-2 border border-gray-300 px-4 py-2 rounded-full hover:border-accent hover:text-accent transition-all text-xs font-bold tracking-widest uppercase bg-white">
+            <i data-lucide="globe" class="w-4 h-4"></i>
+            <span id="lang-label">EN / 中文</span>
+        </button>
+    </nav>
+
+    <!-- Main Content Container -->
+    <div class="pt-32 pb-24 max-w-7xl mx-auto px-6 flex flex-col lg:flex-row gap-16">
+
+        <!-- Left Sidebar -->
+        <aside class="lg:w-1/4">
+            <div class="lg:sidebar-sticky">
+
+                <!-- Title -->
+                <h1 class="text-4xl font-bold text-ink mb-2 leading-tight">
+                    <span class="lang-en">Ionized</span>
+                    <span class="lang-cn hidden">Ionized：电荷中和</span>
+                </h1>
+                <p class="text-lg text-accent font-medium mb-4">
+                    <span class="lang-en">Abstract Grid / Charge Balancing</span>
+                    <span class="lang-cn hidden">抽象格子 / 电荷中和</span>
+                </p>
+
+                <!-- Game Summary card -->
+                <div class="bg-white border border-gray-200 rounded-sm shadow-sm mb-8 overflow-hidden">
+                    <div class="bg-secondary/50 px-4 py-3 border-b border-gray-200">
+                        <h2 class="text-xs font-bold text-ink uppercase tracking-widest">
+                            <span class="lang-en">Game Summary</span>
+                            <span class="lang-cn hidden">游戏速览</span>
+                        </h2>
+                    </div>
+                    <div class="px-4 py-3">
+                        <table class="w-full info-table">
+                            <tbody>
+                                <tr>
+                                    <th>
+                                        <span class="lang-en">Players</span>
+                                        <span class="lang-cn hidden">玩家人数</span>
+                                    </th>
+                                    <td>
+                                        <span class="lang-en">3 – 6</span>
+                                        <span class="lang-cn hidden">3 – 6 人</span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
+                                        <span class="lang-en">Play Time</span>
+                                        <span class="lang-cn hidden">游戏时长</span>
+                                    </th>
+                                    <td>
+                                        <span class="lang-en">8 – 15 min</span>
+                                        <span class="lang-cn hidden">8 – 15 分钟</span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
+                                        <span class="lang-en">Genre</span>
+                                        <span class="lang-cn hidden">类型</span>
+                                    </th>
+                                    <td>
+                                        <span class="lang-en">Abstract / Puzzle</span>
+                                        <span class="lang-cn hidden">抽象 / 益智解谜</span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
+                                        <span class="lang-en">Core Systems</span>
+                                        <span class="lang-cn hidden">核心机制</span>
+                                    </th>
+                                    <td>
+                                        <span class="lang-en">Hidden numbers, row/column sums, charge signs</span>
+                                        <span class="lang-cn hidden">隐藏数字、行列求和、电荷正负号</span>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="bg-gray-50 px-4 py-3 border-t border-gray-200 text-xs text-gray-500">
+                        <span class="lang-en">
+                            Starting player: the one “worst at arithmetic”.
+                        </span>
+                        <span class="lang-cn hidden">
+                            起始玩家：算术最差的玩家。
+                        </span>
+                    </div>
+                </div>
+
+                <!-- Meta: role / status / year -->
+                <div class="space-y-6 text-sm">
+                    <div>
+                        <h4 class="font-bold text-ink uppercase tracking-widest mb-2 text-xs">
+                            <span class="lang-en">Role</span>
+                            <span class="lang-cn hidden">个人职责</span>
+                        </h4>
+                        <p class="text-gray-600">
+                            <span class="lang-en">Game Designer</span>
+                            <span class="lang-cn hidden">游戏设计</span>
+                        </p>
+                    </div>
+
+                    <div>
+                        <h4 class="font-bold text-ink uppercase tracking-widest mb-2 text-xs">
+                            <span class="lang-en">Status</span>
+                            <span class="lang-cn hidden">项目状态</span>
+                        </h4>
+                        <p class="text-gray-600">
+                            <span class="lang-en">Prototype</span>
+                            <span class="lang-cn hidden">原型阶段</span>
+                        </p>
+                    </div>
+
+                    <div>
+                        <h4 class="font-bold text-ink uppercase tracking-widest mb-2 text-xs">
+                            <span class="lang-en">Year</span>
+                            <span class="lang-cn hidden">年份</span>
+                        </h4>
+                        <p class="text-gray-600">2025</p>
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Right Column: main content -->
+        <main class="lg:w-3/4">
+            
+            <!-- Hero image card -->
+            <div class="project-img aspect-[16/9] mb-12">
+                <!-- 背景图：改成你自己的路径 -->
+                <img 
+                    src="../../../../picture/portfolio/ionized/ionized.png"
+                    alt="Ionized prototype player board and components"
+                    class="absolute inset-0 w-full h-full object-contain">
+            </div>
+
+            <!-- Introduction -->
+            <section>
+                <h2 class="section-title">
+                    <span class="lang-en">Introduction</span>
+                    <span class="lang-cn hidden">游戏简介</span>
+                </h2>
+                <div class="lang-en">
+                    <p>
+                        <em>Ionized</em> is a 3–6 player abstract game about pushing your personal grid of
+                        charged tiles as close to neutral as possible. Each player manages a 3×3 personal board with
+                        hidden number tiles and three directional sign tokens that determine how their rows and columns
+                        contribute to a final charge.
+                    </p>
+                    <p>
+                        On your turn, you carefully reveal, swap, and manipulate numbered tiles from a shared bag and
+                        a public display. Colour effects let you flip your own tiles, steal or trade with others, or
+                        even rotate the plus/minus directions that define everyone’s equations. When one player has fully
+                        revealed their grid, the table enters a tense final round before everyone calculates their net charge.
+                        The player whose total score is closest to zero wins.
+                    </p>
+                </div>
+                <div class="lang-cn hidden">
+                    <p>
+                        <em>《Ionized》</em> 是一款 3–6 人的抽象桌游。
+                        每位玩家拥有一块 3×3 的个人面板，上面摆放着隐藏数字板块，以及 3 枚带方向的正负号 token。
+                        这些符号会指示某一行或某一列的总和被视为正电荷还是负电荷。
+                    </p>
+                    <p>
+                        在游戏过程中，你会不断与公共区域的数字板块进行交换，或从盲抽袋中抽取新的数字。
+                        不同颜色的板块带来不同效果：绿色让你翻开自己的格子，红色让你与他人交换数字，
+                        蓝色则可以翻转某位玩家的符号 token，让他们的行列方向“反号”。  
+                        当有人率先将自己 3×3 网格中的数字全部翻开时，游戏进入紧张的最终轮：
+                        其他玩家各再行动一次，然后所有人结算电荷。总分最接近 0 的玩家获胜。
+                    </p>
+                </div>
+            </section>
+
+            <!-- Components & Setup -->
+            <section>
+                <h2 class="section-title">
+                    <span class="lang-en">Components &amp; Setup</span>
+                    <span class="lang-cn hidden">组件与游戏配置</span>
+                </h2>
+
+                <div class="lang-en">
+                    <p><strong>Components</strong></p>
+                    <ul class="list-disc pl-5 mb-4 text-gray-700">
+                        <li>6 double-layer personal boards with a <strong>3×3</strong> grid of slots</li>
+                        <li>24 two-sided <strong>sign tokens</strong> (each side shows <code>+</code> or <code>-</code>, with an arrow <code>↔</code> or <code>↕</code> in the lower-right corner)</li>
+                        <li>96 square <strong>number tiles</strong> that fit snugly into the grids:
+                            <ul class="list-disc pl-5 mt-1">
+                                <li>48 yellow tiles</li>
+                                <li>24 red tiles</li>
+                                <li>24 blue tiles</li>
+                                <li>Numbers 1–12 distributed evenly across all colours</li>
+                            </ul>
+                        </li>
+                        <li>1 cloth blind draw bag for number tiles</li>
+                    </ul>
+
+                    <p><strong>Setup</strong></p>
+                    <ul class="list-disc pl-5 text-gray-700">
+                        <li>Give each player one personal board.</li>
+                        <li>
+                            Randomly draw <strong>three sign tokens</strong> and place them on your board in:
+                            <strong>top-left</strong>, <strong>centre</strong>, and <strong>bottom-right</strong>.
+                            Place them with a random side face up (showing <code>+</code> or <code>-</code> and either <code>↔</code> or <code>↕</code>).
+                        </li>
+                        <li>
+                            Once one player has finished placing their three sign tokens,
+                            all other players <strong>copy the same three positions</strong> on their own boards
+                            (but still use their own randomly drawn sign tokens).
+                        </li>
+                        <li>
+                            Each player then randomly draws <strong>six number tiles</strong> from the bag
+                            without looking at them, and places them <strong>face down</strong> in the remaining six slots of their 3×3 grid.
+                        </li>
+                        <li>Put all remaining number tiles into the blind draw bag.</li>
+                        <li>
+                            Draw <strong>one tile</strong> from the bag and place it face up in the centre of the table;
+                            this is the initial <strong>public tile</strong>.
+                        </li>
+                        <li>
+                            The player who is “worst at arithmetic” becomes the starting player
+                            (or choose randomly if no one wants to admit it).
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="lang-cn hidden">
+                    <p><strong>组件</strong></p>
+                    <ul class="list-disc pl-5 mb-4 text-gray-700">
+                        <li>6 个玩家个人面板，每个面板为 <strong>3×3 网格</strong>（可嵌入板块）</li>
+                        <li>24 枚<strong>符号 token</strong>，双面印有 <code>+</code> / <code>-</code>，
+                            右下角刻有方向箭头 <code>↔</code> 或 <code>↕</code></li>
+                        <li>96 个<strong>数字板块</strong>，大小刚好嵌入格子中，平整无立体手感：
+                            <ul class="list-disc pl-5 mt-1">
+                                <li>绿色 48 个</li>
+                                <li>红色 24 个</li>
+                                <li>蓝色 24 个</li>
+                                <li>数字 1–12 均匀分布在所有颜色上</li>
+                            </ul>
+                        </li>
+                        <li>1 个用于数字板块的盲抽袋</li>
+                    </ul>
+
+                    <p><strong>准备阶段</strong></p>
+                    <ul class="list-disc pl-5 text-gray-700">
+                        <li>每位玩家获得 1 个 3×3 的个人面板。</li>
+                        <li>
+                            由一名玩家开始，从符号 token 堆中<strong>随机抽取 3 个</strong>，
+                            随机摆放在自己面板的<strong>左上、正中、右下</strong>三个槽位，
+                            每个 token 随机选择一面朝上（显示 <code>+</code> 或 <code>-</code> 以及 <code>↔</code> / <code>↕</code>）。
+                        </li>
+                        <li>
+                            其他玩家按照该玩家的布局，在自己的面板上也将 3 枚符号 token
+                            摆放在<strong>相同位置</strong>（左上、正中、右下），但使用自己随机抽到的 token。
+                        </li>
+                        <li>
+                            接着，每位玩家从盲抽袋中<strong>随机抽取 6 个数字板块</strong>，
+                            不得偷看数字，将其<strong>背面朝上</strong>放入个人面板剩下的 6 个格子中。
+                        </li>
+                        <li>将其余所有数字板块放回盲抽袋。</li>
+                        <li>
+                            从盲抽袋中再抽取<strong>1 个数字板块</strong>正面朝上放在桌面中央，
+                            作为初始<strong>公共板块</strong>。
+                        </li>
+                        <li>
+                            自认<strong>算术最差</strong>的玩家成为起始玩家；
+                            若无人承认，则随机决定。
+                        </li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- Turn Structure -->
+            <section>
+                <h2 class="section-title">
+                    <span class="lang-en">Turn Structure</span>
+                    <span class="lang-cn hidden">回合流程</span>
+                </h2>
+
+                <div class="lang-en">
+                    <p>
+                        On your turn, you are always manipulating exactly one number tile:
+                        either by swapping with the public tile or drawing a new tile from the bag and deciding what to do with it.
+                    </p>
+                    <ol class="list-decimal pl-5 text-gray-700 space-y-3">
+                        <li>
+                            <strong>Option A – Swap with the public tile</strong><br>
+                            Choose one number tile on your personal board (face up or face down).
+                            Swap it with the current public tile:
+                            <ul class="list-disc pl-5 mt-1">
+                                <li>The tile you take from the public area is placed <strong>face up</strong> into your chosen slot.</li>
+                                <li>The tile you removed from your board becomes the new <strong>public tile</strong>, placed face up.</li>
+                            </ul>
+                        </li>
+                        <li>
+                            <strong>Option B – Draw from the bag</strong><br>
+                            Draw one new number tile from the blind bag and reveal it immediately.
+                            Then choose one of the following:
+                            <ul class="list-disc pl-5 mt-1">
+                                <li>
+                                    <strong>B1: Swap with your grid</strong> – Replace one tile on your personal board
+                                    with the drawn tile (the drawn tile enters your grid face up).
+                                    The tile you removed becomes the new public tile.
+                                </li>
+                                <li>
+                                    <strong>B2: Discard for its colour effect</strong> – Place the drawn tile face up in the public area,
+                                    replacing the previous public tile, and resolve its effect:
+                                    <ul class="list-disc pl-5 mt-1">
+                                        <li><strong>yellow</strong>: Flip one of your own tiles face up.</li>
+                                        <li><strong>Red</strong>: Choose one number tile on your board and swap it with a tile on another player’s board (you may swap face down with face up).</li>
+                                        <li><strong>Blue</strong>: Choose one sign token belonging to any player and flip it to its other side, reversing both its sign (<code>+</code>/<code>-</code>) and direction (<code>↔</code>/<code>↕</code>).</li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
+                    </ol>
+                    <p class="mt-4">
+                        After resolving your action, the next player clockwise takes their turn.
+                    </p>
+                </div>
+
+                <div class="lang-cn hidden">
+                    <p>
+                        在你的回合里，你总是围绕<strong>1 个数字板块</strong>做出决策：
+                        要么与公共板块交换，要么从盲抽袋抽取新板块并决定如何处理。
+                    </p>
+                    <ol class="list-decimal pl-5 text-gray-700 space-y-3">
+                        <li>
+                            <strong>选项 A —— 与公共板块交换</strong><br>
+                            选择你个人面板上的任意 1 个数字板块（可正面也可背面朝上），
+                            将其与当前的公共板块进行交换：
+                            <ul class="list-disc pl-5 mt-1">
+                                <li>你从公共区域拿走的板块以<strong>正面朝上</strong>的形式放入该格子。</li>
+                                <li>你从自己面板上拿走的板块，则以<strong>正面朝上</strong>的形式成为新的公共板块。</li>
+                            </ul>
+                        </li>
+                        <li>
+                            <strong>选项 B —— 从盲抽袋抽牌</strong><br>
+                            从盲抽袋中抽取 1 个新的数字板块并立刻翻开，然后二选一：
+                            <ul class="list-disc pl-5 mt-1">
+                                <li>
+                                    <strong>B1：将其换入自己的格子</strong> ——  
+                                    用抽到的数字板块替换你个人面板上的 1 个格子（新板块以正面朝上放入），  
+                                    被替换出来的板块正面朝上放到公共区域，成为新的公共板块。
+                                </li>
+                                <li>
+                                    <strong>B2：弃置并执行颜色效果</strong> ——  
+                                    将抽到的板块正面朝上丢入公共区域，取代原有的公共板块，  
+                                    然后根据其颜色执行对应效果：
+                                    <ul class="list-disc pl-5 mt-1">
+                                        <li><strong>绿色</strong>：翻开你自己面板上的任意 1 个数字板块。</li>
+                                        <li><strong>红色</strong>：选择你面板上的 1 个数字板块，与另一名玩家面板上的 1 个数字板块进行交换（可以用背面交换正面的）。</li>
+                                        <li><strong>蓝色</strong>：选择任意一名玩家的一枚符号 token，将其翻面——符号 <code>+</code>/<code>-</code> 与方向 <code>↔</code>/<code>↕</code> 一并反转。</li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
+                    </ol>
+                    <p class="mt-4">
+                        当你完成行动后，顺时针的下一位玩家开始他的回合。
+                    </p>
+                </div>
+            </section>
+
+            <!-- Endgame & Ranking -->
+            <section>
+                <h2 class="section-title">
+                    <span class="lang-en">Endgame &amp; Scoring</span>
+                    <span class="lang-cn hidden">结束与计分</span>
+                </h2>
+
+                <div class="lang-en">
+                    <p>
+                        The moment any player has <strong>all nine number tiles face up</strong> on their personal board,
+                        they immediately trigger the <strong>final round</strong>.
+                    </p>
+                    <ul class="list-disc pl-5 text-gray-700 mb-4">
+                        <li>The triggering player does not take any extra turns; their grid is now locked.</li>
+                        <li>Each other player gets exactly <strong>one more turn</strong> following normal rules.</li>
+                        <li>During the final round, no action may target or modify the grid or sign tokens of the player who triggered the endgame.</li>
+                    </ul>
+
+                    <p><strong>Scoring</strong></p>
+                    <p>
+                        Once the final round ends, everyone flips any remaining face-down number tiles face up.
+                        Then, each player computes their final score based on their three sign tokens:
+                    </p>
+                    <ol class="list-decimal pl-5 text-gray-700 space-y-3">
+                        <li>
+                            For each sign token, look at its arrow:
+                            <ul class="list-disc pl-5 mt-1">
+                                <li><code>↔</code> means the sign applies to the <strong>entire row</strong> where the token sits.</li>
+                                <li><code>↕</code> means the sign applies to the <strong>entire column</strong> where the token sits.</li>
+                            </ul>
+                        </li>
+                        <li>
+                            Sum all numbers in the indicated row or column for that token.
+                        </li>
+                        <li>
+                            If the token shows <code>+</code>, add that sum to your score;  
+                            if it shows <code>-</code>, subtract that sum from your score.
+                        </li>
+                        <li>
+                            Do this for all three sign tokens, then add the three results together to obtain your final score.
+                        </li>
+                    </ol>
+                    <p class="mt-4">
+                        The winner is the player whose final score is <strong>closest to 0</strong>
+                        (ties are shared victories).  
+                        A positive score represents surplus positive charge, while a negative score means excess negative charge.
+                        True mastery lies in carefully steering your chaotic grid towards perfect neutrality.
+                    </p>
+                </div>
+
+                <div class="lang-cn hidden">
+                    <p>
+                        当任意一名玩家的个人面板上<strong>9 个数字板块全部被翻开</strong>时，
+                        游戏立刻进入<strong>最终轮</strong>。
+                    </p>
+                    <ul class="list-disc pl-5 text-gray-700 mb-4">
+                        <li>触发结束的玩家不会获得额外回合，他的面板从此视为<strong>锁定</strong>。</li>
+                        <li>其余每位玩家按照顺时针顺序各进行<strong>最后 1 次行动</strong>。</li>
+                        <li>在最终轮中，任何效果都<strong>不得再影响</strong>触发结束玩家的数字板块或符号 token。</li>
+                    </ul>
+
+                    <p><strong>计分方式</strong></p>
+                    <p>
+                        最终轮结束后，所有玩家将自己剩余的背面板块全部翻为正面。
+                        然后根据 3 枚符号 token 来计算最终电荷：
+                    </p>
+                    <ol class="list-decimal pl-5 text-gray-700 space-y-3">
+                        <li>
+                            对每一枚符号 token，先查看其方向箭头：
+                            <ul class="list-disc pl-5 mt-1">
+                                <li><code>↔</code> 表示该 token 作用于其所在<strong>整行</strong>的数字之和。</li>
+                                <li><code>↕</code> 表示该 token 作用于其所在<strong>整列</strong>的数字之和。</li>
+                            </ul>
+                        </li>
+                        <li>将对应行或列上的所有数字相加，得到该行/列的总和。</li>
+                        <li>
+                            若该 token 为 <code>+</code>，则将该总和<strong>加到</strong>你的分数中；  
+                            若为 <code>-</code>，则将该总和从你的分数中<strong>减去</strong>。
+                        </li>
+                        <li>三个符号 token 分别计算后，将三个结果相加，得到你的最终总分。</li>
+                    </ol>
+                    <p class="mt-4">
+                        所有玩家中，最终总分<strong>最接近 0</strong> 的玩家获胜（平局则共享胜利）。  
+                        正分代表正电荷过剩，负分代表负电荷过剩；
+                        真正的高手会在不断的交换与干扰中，把自己的电荷精细地“调零”。
+                    </p>
+                </div>
+            </section>
+            
+            <section>
+                <h2 class="section-title">
+                    <span class="lang-en">Optional Variants</span>
+                    <span class="lang-cn hidden">可选变体</span>
+                </h2>
+                    
+                <div class="space-y-4 mt-4">
+            
+                    <!-- Variant 1 -->
+                    <div class="flex items-start gap-3 p-4 rounded-md border-l-4 border-sky-400 bg-sky-50/70">
+                        <div class="mt-1">
+                            <i data-lucide="sparkles" class="w-5 h-5 text-sky-500"></i>
+                        </div>
+                        <div>
+                            <h3 class="font-semibold text-sm tracking-widest uppercase mb-1">
+                                <span class="lang-en">Variant 1 – Static Shield</span>
+                                <span class="lang-cn hidden">变体一：静电护盾</span>
+                            </h3>
+                            <div class="text-sm text-gray-700 lang-en">
+                                <p class="mb-1">
+                                    Each player starts the game with a one-time <strong>shield token</strong>.
+                                    Before any effect that would flip or move their sign tokens or number tiles
+                                    (such as a red or blue effect) is applied to them, they may discard their shield
+                                    to ignore that effect completely.  
+                                    Once used, the shield is gone for the rest of the game.
+                                </p>
+                            </div>
+                            <div class="text-sm text-gray-700 lang-cn hidden">
+                                <p class="mb-1">
+                                    每位玩家在游戏开始时获得 1 枚一次性的<strong>“护盾标记”</strong>。  
+                                    当有任意效果即将改变自己的数字板块或符号 token（例如红色交换、蓝色翻转）时，
+                                    该玩家可以弃掉护盾标记，令这次对自己的效果<strong>完全无效</strong>。  
+                                    护盾一旦使用就不会再回来，可以选择关键时刻用来保住自己精心调好的电荷格局。
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            
+
+            <!-- Design Notes -->
+            <section>
+                <h2 class="section-title">
+                    <span class="lang-en">Design Notes</span>
+                    <span class="lang-cn hidden">设计思路</span>
+                </h2>
+
+                <div class="lang-en">
+                    <p>
+                        <em>Ionized</em> is built around the tension between <strong>local optimisation</strong>
+                        on your 3×3 grid and <strong>global disruption</strong> through colour effects.
+                        Because all number tiles are physically identical on the back, you cannot rely on tactile cues:
+                        information must be earned through flipping and cleverly timed swaps.
+                    </p>
+                    <p>
+                        The row/column sign tokens turn a simple sum puzzle into a small system of equations:
+                        you are not trying to maximize or minimize, but to land as close to zero as possible.
+                        Effects that tamper with those signs feel dramatic, because they can invert the value
+                        of an entire line of numbers in one move.
+                    </p>
+                    <p>
+                        Finally, the endgame trigger—one player fully revealed—creates asymmetry in tempo.
+                        You can rush to force a final round while your grid looks promising, or slow-play to extract
+                        more information and manipulate opponents’ charges. The design goal is a quick,
+                        thinky experience where the “aha” moment comes from seeing how a small local swap
+                        propagates through your entire charge equation.
+                    </p>
+                </div>
+
+                <div class="lang-cn hidden">
+                    <p>
+                        <em>《Ionized》</em> 的核心是在一个小小的 3×3 网格上，
+                        同时处理<strong>局部优化</strong>与来自颜色效果的<strong>全局干扰</strong>。
+                        所有数字板块的背面在手感上完全一致，玩家无法通过摸牌来作弊，
+                        只能通过翻开与交换一点点获取信息。
+                    </p>
+                    <p>
+                        三枚符号 token 则把简单的“数字求和”变成了一组小型“方程组”：
+                        你既不是单纯做最大化或最小化，而是努力让最终结果尽量靠近 0。
+                        蓝色效果对符号的翻转，往往会一瞬间颠倒整行或整列的正负，
+                        让原本“完美”的布局瞬间变成灾难，也让玩家在交互时更有戏剧张力。
+                    </p>
+                    <p>
+                        触发结束的条件——“有人率先翻开 9 格”——带来了节奏上的不对称：
+                        你可以选择加速游戏，以自己的布局为中心强行进入最终轮，
+                        也可以选择放缓节奏，多翻一些信息、更多干预别人的电荷。  
+                        整体设计希望呈现一种短小精悍、思考密度高的体验，
+                        让玩家在一次次小小的交换中，感受到电荷在网格中被“微调到零”的那种满足感。
+                    </p>
+                </div>
+            </section>
+
+        </main>
+    </div>
+
+    <!-- Back to Top Button -->
+    <button id="backToTopBtn" onclick="scrollToTop()" title="Go to top">
+        <i data-lucide="arrow-up" class="w-6 h-6"></i>
+    </button>
+
+    <script>
+        lucide.createIcons();
+
+        const backToTopBtn = document.getElementById("backToTopBtn");
+
+        window.addEventListener('scroll', function() {
+            const nav = document.querySelector('nav');
+            if (window.scrollY > 50) {
+                nav.classList.add('shadow-sm');
+                nav.classList.replace('bg-paper/90', 'bg-white/95');
+            } else {
+                nav.classList.remove('shadow-sm');
+                nav.classList.replace('bg-white/95', 'bg-paper/90');
+            }
+
+            if (window.scrollY > 300) {
+                backToTopBtn.style.display = "block";
+            } else {
+                backToTopBtn.style.display = "none";
+            }
+        });
+
+        function scrollToTop() {
+            window.scrollTo({top: 0, behavior: 'smooth'});
+        }
+
+        function toggleLanguage() {
+            const enEls = document.querySelectorAll('.lang-en');
+            const cnEls = document.querySelectorAll('.lang-cn');
+            enEls.forEach(el => el.classList.toggle('hidden'));
+            cnEls.forEach(el => el.classList.toggle('hidden'));
+        }
+    </script>
+</body>
+</html>

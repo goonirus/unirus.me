@@ -1,0 +1,586 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Project: Who Are You</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Tailwind & Lucide -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <!-- Fonts -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap"
+      rel="stylesheet"
+    >
+
+    <!-- Tailwind config -->
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              sans: ['Inter', 'sans-serif'],
+              serif: ['Playfair Display', 'serif'],
+            },
+            colors: {
+              'paper': '#fdfbf7',
+              'ink': '#1a1a1a',
+              'accent': '#c2410c',
+              'secondary': '#f3f4f6'
+            }
+          }
+        }
+      }
+    </script>
+
+    <style>
+        body { 
+            background-color: #0b0b10; 
+            color: #e5e7eb; 
+            scroll-behavior: smooth;
+        }
+
+        /* 侧边栏粘性定位 */
+        .sidebar-sticky {
+            position: sticky;
+            top: 8rem;
+            height: calc(100vh - 8rem);
+            overflow-y: auto;
+        }
+
+        /* 标题样式 */
+        h1, h2, h3 { color: #f9fafb; }
+        .section-title {
+            font-family: 'Inter', sans-serif;
+            font-weight: 700;
+            font-size: 1.5rem;
+            margin-top: 3rem;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid #374151;
+        }
+
+        /* 正文排版 */
+        p { 
+            margin-bottom: 1.5em; 
+            line-height: 1.8; 
+            color: #d1d5db; 
+            font-size: 1.05rem; 
+        }
+
+        /* 图片占位符（封面图） */
+        .project-img {
+            width: 100%;
+            background: radial-gradient(circle at top, #111827 0%, #020617 55%, #000000 100%);
+            border: 1px solid #111827;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 2rem 0;
+            border-radius: 0.5rem;
+            overflow: hidden;
+            position: relative;
+        }
+        .project-img img {
+            width: 100%;
+            height: auto;
+            display: block;
+            opacity: 0.25;
+            mix-blend-mode: screen;
+            transition: opacity 0.4s ease, transform 0.5s ease;
+        }
+        .project-img:hover img {
+            opacity: 0.4;
+            transform: scale(1.02);
+        }
+
+        /* Back to Top Button */
+        #backToTopBtn {
+            display: none;
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            z-index: 99;
+            border: none;
+            outline: none;
+            background-color: rgba(15, 23, 42, 0.9);
+            color: white;
+            cursor: pointer;
+            padding: 0.75rem;
+            border-radius: 50%;
+            backdrop-filter: blur(6px);
+            transition: all 0.3s ease;
+        }
+        #backToTopBtn:hover {
+            background-color: rgba(194, 65, 12, 0.95);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.5);
+        }
+    </style>
+</head>
+<body class="font-sans antialiased">
+
+    <!-- Navigation -->
+    <nav class="fixed w-full z-50 top-0 bg-paper/0 backdrop-blur-sm border-b border-slate-800/60 h-20 flex items-center px-6 justify-between transition-all duration-300">
+        <div class="flex items-center">
+            <a href="../../portfolio_home.html" class="flex items-center text-gray-400 hover:text-accent transition-colors group mr-8">
+                <i data-lucide="arrow-left" class="w-5 h-5 mr-2 group-hover:-translate-x-1 transition-transform"></i>
+                <span class="lang-en">Back to All Works</span>
+                <span class="lang-cn hidden">返回作品集</span>
+            </a>
+        </div>
+        <div class="flex items-center space-x-4">
+            <div class="hidden md:block text-xs font-bold text-gray-500 uppercase tracking-widest">
+                <span class="lang-en">Typing Horror Game</span>
+                <span class="lang-cn hidden">打字恐怖游戏</span>
+            </div>
+            <!-- 语言切换按钮 -->
+            <button onclick="toggleLanguage()" class="flex items-center space-x-2 border border-slate-600 px-4 py-2 rounded-full hover:border-accent hover:text-accent transition-all text-xs font-bold tracking-widest uppercase bg-slate-950/60 text-gray-200">
+                <i data-lucide="globe" class="w-4 h-4"></i>
+                <span id="lang-label">EN / 中文</span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Main Content Container -->
+    <div class="pt-32 pb-24 max-w-7xl mx-auto px-6 flex flex-col lg:flex-row gap-16">
+
+        <!-- Left Sidebar: Project Metadata -->
+        <aside class="lg:w-1/4">
+            <div class="lg:sidebar-sticky">
+                <h1 class="text-4xl font-bold mb-2 leading-tight text-white">
+                    <span class="lang-en">Who Are You</span>
+                    <span class="lang-cn hidden">Who Are You</span>
+                </h1>
+                <p class="text-lg text-accent font-medium mb-8">
+                    <span class="lang-en">Cosmic Horror Typing Game</span>
+                    <span class="lang-cn hidden">宇宙恐怖打字体验</span>
+                </p>
+
+                <div class="space-y-8 text-sm">
+                    <div>
+                        <h4 class="font-bold uppercase tracking-widest mb-2 text-xs text-gray-400">
+                            <span class="lang-en">Role</span>
+                            <span class="lang-cn hidden">个人职责</span>
+                        </h4>
+                        <p class="text-gray-300">
+                            <span class="lang-en">Game Design & Programming</span>
+                            <span class="lang-cn hidden">游戏设计与程序开发</span>
+                        </p>
+                        <p class="text-gray-300">
+                            <span class="lang-en">Narrative & Horror Design</span>
+                            <span class="lang-cn hidden">叙事与恐怖氛围设计</span>
+                        </p>
+                    </div>
+
+                    <div>
+                        <h4 class="font-bold uppercase tracking-widest mb-2 text-xs text-gray-400">
+                            <span class="lang-en">Platform</span>
+                            <span class="lang-cn hidden">平台</span>
+                        </h4>
+                        <p class="text-gray-300">
+                            <span class="lang-en">Windows (Standalone EXE)</span>
+                            <span class="lang-cn hidden">Windows 独立可执行程序</span>
+                        </p>
+                    </div>
+
+                    <div>
+                        <h4 class="font-bold uppercase tracking-widest mb-2 text-xs text-gray-400">
+                            <span class="lang-en">Tech Stack</span>
+                            <span class="lang-cn hidden">技术栈</span>
+                        </h4>
+                        <p class="text-gray-300">
+                            <span class="lang-en">Unity (C#)</span>
+                            <span class="lang-cn hidden">Unity（C#）</span>
+                        </p>
+                        <p class="text-gray-300">
+                            <span class="lang-en">Post-processing & UI Animation</span>
+                            <span class="lang-cn hidden">后期特效与界面动画</span>
+                        </p>
+                    </div>
+
+                    <div>
+                        <h4 class="font-bold uppercase tracking-widest mb-2 text-xs text-gray-400">
+                            <span class="lang-en">Year</span>
+                            <span class="lang-cn hidden">年份</span>
+                        </h4>
+                        <p class="text-gray-300">2023</p>
+                    </div>
+
+                    <div>
+                        <h4 class="font-bold uppercase tracking-widest mb-2 text-xs text-gray-400">
+                            <span class="lang-en">Made For</span>
+                            <span class="lang-cn hidden">参赛活动</span>
+                        </h4>
+                        <p class="text-gray-300">
+                            <span class="lang-en">48h Spooky Game Jam</span>
+                            <span class="lang-cn hidden">48 小时 Spooky Game Jam</span>
+                        </p>
+                    </div>
+
+                    <!-- Links -->
+                    <div class="pt-4 border-t border-slate-800">
+                        <!-- 下载按钮（侧边栏） -->
+                        <a href="SpookyGameJam.zip" 
+                           download
+                           class="flex items-center text-accent hover:text-white font-bold transition-colors mb-2">
+                            <i data-lucide="download" class="w-4 h-4 mr-2"></i>
+                            <span class="lang-en">Download (Windows)</span>
+                            <span class="lang-cn hidden">下载 Windows 版本</span>
+                        </a>
+
+                        <!-- 可留空的 Jam 页面链接（以后有 itch.io 时替换） -->
+                        <a href="https://scariett77.itch.io/whoareyou" class="flex items-center text-gray-400 hover:text-accent font-semibold transition-colors">
+                            <i data-lucide="external-link" class="w-4 h-4 mr-2"></i>
+                            <span class="lang-en">Game Jam Page</span>
+                            <span class="lang-cn hidden">Jam 页面</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Right Column: Detailed Case Study -->
+        <main class="lg:w-3/4">
+
+            <!-- Hero Cover -->
+            <div class="project-img aspect-[16/9] mb-12 relative overflow-hidden">
+                <!-- 背景图片（可替换为你自己的图） -->
+                <img
+                  src="../../../../picture/portfolio/whoareyou/whoareyou.png"
+                  alt="Who Are You Typing Horror Game"
+                />
+
+                <!-- 前景内容 -->
+                <div class="absolute inset-0 flex flex-col items-center justify-center text-center px-6">
+                    <div class="mb-6">
+                        <div class="inline-flex items-center px-3 py-1 rounded-full bg-slate-900/80 border border-slate-700 text-xs font-bold uppercase tracking-[0.2em] text-gray-400 mb-4">
+                            <span class="lang-en">Cosmic Horror · Typing · 48h Jam</span>
+                            <span class="lang-cn hidden">宇宙恐怖 · 打字 · 48 小时 Jam</span>
+                        </div>
+                        <h2 class="text-3xl md:text-4xl font-bold text-white mb-2">
+                            <span class="lang-en">Can you still trust your own hands?</span>
+                            <span class="lang-cn hidden">你还能相信自己的双手吗？</span>
+                        </h2>
+                        <p class="max-w-2xl mx-auto text-sm md:text-base text-gray-300">
+                            <span class="lang-en">
+                                A short experimental typing horror game where your answers are rewritten,
+                                your body is not your own, and something behind you is learning how to become you.
+                            </span>
+                            <span class="lang-cn hidden">
+                                一款实验性的打字恐怖游戏。你的答案被篡改，你的身体不再受你控制，
+                                身后有什么东西正通过问题，一点点学会“成为你”。
+                            </span>
+                        </p>
+                    </div>
+
+                    <!-- 下载按钮（封面图上的主按钮） -->
+                    <a href="SpookyGameJam.zip" 
+                       download
+                       class="inline-flex items-center px-6 py-3 rounded-full bg-accent text-white font-semibold tracking-wide text-base shadow-md hover:bg-ink hover:shadow-lg transition">
+                        <span class="mr-2">
+                            <span class="lang-en">Download (Windows)</span>
+                            <span class="lang-cn hidden">下载（Windows）</span>
+                        </span>
+                        <i data-lucide="download" class="w-4 h-4"></i>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Project Overview -->
+            <section>
+                <h2 class="section-title">
+                    <span class="lang-en">The Overview</span>
+                    <span class="lang-cn hidden">项目概览</span>
+                </h2>
+
+                <!-- EN -->
+                <div class="lang-en">
+                    <p>
+                        <em>Who Are You</em> is a short, experimental typing-based horror game created in 
+                        <strong>48 hours</strong> for a <strong>Spooky Game Jam</strong>. It disguises itself as a simple
+                        questionnaire at first, but gradually unfolds into a psychologically invasive cosmic-horror
+                        narrative where you lose control not only of the keyboard, but of your own identity.
+                    </p>
+                    <p>
+                        You sit in front of a monochrome terminal interface, answering increasingly personal and uncanny
+                        questions. At first, you type freely. Then words begin to appear before you finish them. Your
+                        answers are overwritten, corrected, or hijacked. Eventually, even when you try to resist, the
+                        game types on your behalf.
+                    </p>
+                    <p>
+                        The final reveal pulls the camera away from the terminal: the hands on the keyboard were never
+                        yours. You have been tied to a chair the entire time. A faceless figure stands behind you,
+                        typing for you, learning you, preparing to replace you. As its face slowly morphs into your own,
+                        it becomes clear that the questionnaire was never about what you think — it was about extracting
+                        enough of you to become you.
+                    </p>
+                </div>
+
+                <!-- CN -->
+                <div class="lang-cn hidden">
+                    <p>
+                        <em>Who Are You</em> 是一款在 <strong>48 小时</strong> 内完成的实验性打字恐怖游戏，
+                        为一次 <strong>Spooky Game Jam</strong> 而制作。它一开始伪装成一份普通问卷，
+                        但很快就演变成一场精神入侵：你逐渐失去对键盘与自我身份的控制。
+                    </p>
+                    <p>
+                        你坐在终端前回答问题，问题从看似无害，慢慢变得私密、诡异、哲学化。
+                        起初你还能自由输入，但很快地，文字开始在你打完之前就出现在屏幕上；
+                        你的答案被“自动修正”、被篡改，甚至在你试图反抗时，
+                        游戏会直接替你打字。
+                    </p>
+                    <p>
+                        在结尾，镜头从屏幕拉远：键盘前的手从来就不是你的。
+                        你被绑在椅子上，一个无面的人影站在你身后替你敲击键盘，
+                        一边提问，一边剥离你的思想，学习你的反应，
+                        为的只是最终“成为你”。当它的脸缓缓变成你的脸时，
+                        你才意识到——这份问卷从来不是在询问你想什么，而是在复制你是谁。
+                    </p>
+                </div>
+            </section>
+
+            <!-- Core Experience & Mechanics -->
+            <section>
+                <h2 class="section-title">
+                    <span class="lang-en">Core Experience & Mechanics</span>
+                    <span class="lang-cn hidden">核心体验与机制</span>
+                </h2>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 my-8">
+                    <div class="bg-slate-900/60 p-6 border border-slate-800 rounded-md">
+                        <div class="p-2 bg-accent/10 inline-block rounded-full mb-4">
+                            <i data-lucide="type" class="w-6 h-6 text-accent"></i>
+                        </div>
+                        <h3 class="text-lg font-bold mb-2 text-white">
+                            <span class="lang-en">Typing as Vulnerability</span>
+                            <span class="lang-cn hidden">将“打字”变成弱点</span>
+                        </h3>
+                        <p class="text-sm text-gray-300 lang-en">
+                            The game uses a familiar, harmless action—typing—as its main horror device.
+                            By subtly overriding and auto-completing what the player tries to say, it turns
+                            basic interaction into a betrayal of trust.
+                        </p>
+                        <p class="text-sm text-gray-300 lang-cn hidden">
+                            游戏刻意把“打字”这种看似无害的日常行为变成恐怖工具。
+                            当玩家输入的文字被篡改、被强行自动完成时，
+                            最基础的互动也变成了对信任感的背叛。
+                        </p>
+                    </div>
+
+                    <div class="bg-slate-900/60 p-6 border border-slate-800 rounded-md">
+                        <div class="p-2 bg-accent/10 inline-block rounded-full mb-4">
+                            <i data-lucide="brain" class="w-6 h-6 text-accent"></i>
+                        </div>
+                        <h3 class="text-lg font-bold mb-2 text-white">
+                            <span class="lang-en">Escalating Loss of Control</span>
+                            <span class="lang-cn hidden">节奏升级的失控感</span>
+                        </h3>
+                        <p class="text-sm text-gray-300 lang-en">
+                            As the pacing accelerates, the game increasingly ignores the player’s input.
+                            Resistance is possible but pointless: even the act of fighting back is
+                            swallowed by the system and turned into “correct” answers.
+                        </p>
+                        <p class="text-sm text-gray-300 lang-cn hidden">
+                            随着节奏不断加快，游戏愈发无视玩家的意图。
+                            虽然玩家可以尝试挣扎，但所有反抗都会被系统吞没，
+                            被改写成“正确”的答案，强化一种无力的绝望感。
+                        </p>
+                    </div>
+                </div>
+
+                <p class="lang-en">
+                    Under the hood, the input system switches between different modes:
+                    free typing, soft auto-correction, hard overwrite, and full autopilot.
+                    These phases are synchronized with the narrative beats, so the mechanical
+                    loss of control directly mirrors the psychological breakdown.
+                </p>
+                <p class="lang-cn hidden">
+                    在实现上，输入系统会在多种模式之间切换：
+                    自由输入、轻度修正、强制覆盖、全自动代打。
+                    这些阶段与叙事节奏同步，让“操作层面的失控”
+                    与“精神层面的崩溃”互相呼应。
+                </p>
+            </section>
+
+            <!-- Horror & Narrative Design -->
+            <section>
+                <h2 class="section-title">
+                    <span class="lang-en">Cosmic Horror & Narrative Design</span>
+                    <span class="lang-cn hidden">宇宙恐怖与叙事设计</span>
+                </h2>
+
+                <p class="lang-en">
+                    Rather than relying on jump scares, <em>Who Are You</em> focuses on a slow
+                    invasion of the player’s inner space. The questions start abstract and harmless,
+                    then gradually probe values, fears, guilt, and identity. The player is never shown
+                    the monster in full—only their own answers, reflected back at them in distorted form.
+                </p>
+                <p class="lang-cn hidden">
+                    <em>Who Are You</em> 并没有依赖传统的惊吓镜头，而是选择用“慢性入侵”
+                    来瓦解玩家的心理防线。问题从抽象、无害，逐渐深入到价值观、恐惧、
+                    罪恶感与身份认同。玩家从头到尾几乎看不到完整的“怪物”，
+                    他们能看到的只有被折射、被扭曲的“自己”。
+                </p>
+
+                <ul class="list-disc pl-5 space-y-2 mb-6 text-gray-300">
+                    <li class="lang-en">
+                        <strong>Cosmic horror tone:</strong> You are not being chased—you are being overwritten.
+                    </li>
+                    <li class="lang-cn hidden">
+                        <strong>宇宙恐怖基调：</strong> 怪物不是来追你，而是来“覆盖”你。
+                    </li>
+
+                    <li class="lang-en">
+                        <strong>Body horror twist:</strong> The final reveal reframes the entire playthrough as
+                        a possession process, not a simple dialogue.
+                    </li>
+                    <li class="lang-cn hidden">
+                        <strong>身体恐怖转折：</strong> 结局反转将整段体验重新解释为一场“夺壳”仪式，
+                        而不只是一份奇怪的问卷。
+                    </li>
+
+                    <li class="lang-en">
+                        <strong>Meta-interaction:</strong> The game’s abuse of UI conventions (cursor flicker,
+                        fake input, frozen prompts) reinforces the feeling that even the interface is hostile.
+                    </li>
+                    <li class="lang-cn hidden">
+                        <strong>界面层面的恐怖：</strong> 光标闪烁异常、假输入、卡死的提示等界面行为，
+                        强化了“连界面本身都在敌对”的感受。
+                    </li>
+                </ul>
+            </section>
+
+            <!-- Jam Constraints & Reflection -->
+            <section>
+                <h2 class="section-title">
+                    <span class="lang-en">48h Jam Constraints & Reflection</span>
+                    <span class="lang-cn hidden">48 小时 Jam 限制与反思</span>
+                </h2>
+
+                <p class="lang-en">
+                    The 48-hour time limit heavily shaped the project. Instead of building a complex environment
+                    or multiple endings, I focused on a single-room experience with a strong central twist and a
+                    tightly controlled pacing curve. Most of the design effort went into:
+                </p>
+                <p class="lang-cn hidden">
+                    48 小时的时间限制对项目的形态影响非常大。
+                    与其搭建复杂场景或多结局结构，我更倾向于做一个
+                    单场景、强转折、节奏可控的短篇体验。
+                    设计精力主要集中在：
+                </p>
+
+                <ul class="list-disc pl-5 space-y-2 mb-6 text-gray-300">
+                    <li class="lang-en">
+                        Designing input manipulation rules that feel unfair but still readable.
+                    </li>
+                    <li class="lang-cn hidden">
+                        设计一套“让人觉得不公平但依然可理解”的输入操控规则。
+                    </li>
+
+                    <li class="lang-en">
+                        Aligning visual glitches, sound cues and text behavior to the same emotional beats.
+                    </li>
+                    <li class="lang-cn hidden">
+                        让视觉噪点、音效与文本行为在关键情绪节点上对齐。
+                    </li>
+
+                    <li class="lang-en">
+                        Polishing the final reveal so that the camera move, timing, and animation sell
+                        the idea that “you were never the one typing”.
+                    </li>
+                    <li class="lang-cn hidden">
+                        打磨结局的镜头运动与时机，让“你从来不是那个在打字的人”这一点更具冲击力。
+                    </li>
+                </ul>
+
+                <p class="lang-en">
+                    If I extend this prototype in the future, I would like to explore adaptive question
+                    sets that react more directly to player hesitation and typing patterns, turning the
+                    game into a more personalized psychological mirror.
+                </p>
+                <p class="lang-cn hidden">
+                    如果未来有机会将这个原型扩展成更完整的作品，我希望继续深入做
+                    “根据玩家犹豫、删改与节奏动态调整问题内容”的系统，
+                    让它更像一面真正会回应你的心理镜子。
+                </p>
+            </section>
+
+        </main>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-black text-gray-300 py-20 px-6 mt-12 border-t border-slate-800">
+        <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+            <div>
+                <h2 class="text-3xl md:text-4xl font-bold mb-6 text-white">
+                    <span class="lang-en">Let’s talk horror & design.</span>
+                    <span class="lang-cn hidden">欢迎聊聊恐怖游戏与设计。</span>
+                </h2>
+                <a href="mailto:donglinyan2000@outlook.com" class="inline-flex items-center text-accent hover:text-white transition-colors text-lg font-medium">
+                    donglinyan2000@outlook.com
+                    <i data-lucide="arrow-right" class="ml-2 w-5 h-5"></i>
+                </a>
+            </div>
+
+            <div class="flex flex-col md:items-end space-y-4">
+                <p class="text-sm text-gray-500 uppercase tracking-widest mb-4">
+                    <span class="lang-en">Social Media</span>
+                    <span class="lang-cn hidden">社交媒体</span>
+                </p>
+                <a href="#" class="text-gray-400 hover:text-accent transition-colors flex items-center">
+                    <i data-lucide="twitter" class="w-5 h-5 mr-3"></i> Twitter / X
+                </a>
+                <a href="#" class="text-gray-400 hover:text-accent transition-colors flex items-center">
+                    <i data-lucide="linkedin" class="w-5 h-5 mr-3"></i> LinkedIn
+                </a>
+            </div>
+        </div>
+        <div class="max-w-7xl mx-auto mt-20 pt-8 border-t border-slate-800 text-center md:text-left text-xs text-gray-600">
+            &copy; 2023 Game Designer Portfolio. All rights reserved.
+        </div>
+    </footer>
+
+    <!-- Back to Top Button -->
+    <button id="backToTopBtn" onclick="scrollToTop()" title="Go to top">
+        <i data-lucide="arrow-up" class="w-6 h-6"></i>
+    </button>
+
+    <script>
+        lucide.createIcons();
+
+        const backToTopBtn = document.getElementById("backToTopBtn");
+
+        window.addEventListener('scroll', function() {
+            const nav = document.querySelector('nav');
+            if (window.scrollY > 50) {
+                nav.classList.add('shadow-lg');
+                nav.classList.add('bg-slate-950/80');
+            } else {
+                nav.classList.remove('shadow-lg');
+                nav.classList.remove('bg-slate-950/80');
+            }
+
+            if (window.scrollY > 300) {
+                backToTopBtn.style.display = "block";
+            } else {
+                backToTopBtn.style.display = "none";
+            }
+        });
+
+        function scrollToTop() {
+            window.scrollTo({top: 0, behavior: 'smooth'});
+        }
+
+        // 语言切换
+        function toggleLanguage() {
+            const enEls = document.querySelectorAll('.lang-en');
+            const cnEls = document.querySelectorAll('.lang-cn');
+            enEls.forEach(el => el.classList.toggle('hidden'));
+            cnEls.forEach(el => el.classList.toggle('hidden'));
+        }
+    </script>
+</body>
+</html>
