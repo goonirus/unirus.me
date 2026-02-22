@@ -7,17 +7,20 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
-    
+
+    <!-- ✅ Single source of truth data -->
+    <script src="thoughts_article.js"></script>
+
     <script>
         tailwind.config = {
             theme: {
                 extend: {
-                    fontFamily: { 
-                        sans: ['Inter', 'Noto Sans SC', 'sans-serif'] 
+                    fontFamily: {
+                        sans: ['Inter', 'Noto Sans SC', 'sans-serif']
                     },
-                    colors: { 
-                        'paper': '#fdfbf7', 
-                        'ink': '#1a1a1a', 
+                    colors: {
+                        'paper': '#fdfbf7',
+                        'ink': '#1a1a1a',
                         'accent': '#c2410c',
                         'secondary': '#f3f4f6'
                     }
@@ -26,23 +29,34 @@
         }
     </script>
     <style>
-        body { background-color: #fdfbf7; color: #1a1a1a; }
-        
+        body {
+            background-color: #fdfbf7;
+            color: #1a1a1a;
+        }
+
         /* 卡片交互 */
-        .archive-card { 
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); 
+        .archive-card {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             border: 1px solid #e5e7eb;
             background-color: white;
         }
-        .archive-card:hover { 
-            border-color: #c2410c; 
-            transform: translateY(-4px); 
-            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05); 
-        }
-        
+
+            .archive-card:hover {
+                border-color: #c2410c;
+                transform: translateY(-4px);
+                box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05);
+            }
+
         /* 标签样式 */
-        .tag-essay { color: #c2410c; border: 1px solid #c2410c; }
-        .tag-thought { color: #4b5563; border: 1px solid #9ca3af; }
+        .tag-essay {
+            color: #c2410c;
+            border: 1px solid #c2410c;
+        }
+
+        .tag-thought {
+            color: #4b5563;
+            border: 1px solid #9ca3af;
+        }
     </style>
 </head>
 <body class="font-sans antialiased" onload="initArchive()">
@@ -57,25 +71,26 @@
                     <i data-lucide="arrow-left" class="w-5 h-5 mr-2 group-hover:-translate-x-1 transition-transform"></i>
                     Back to Home
                 </a>
-                
+
                 <!-- Vertical Divider -->
                 <div class="h-6 w-px bg-gray-300 mr-8 hidden md:block"></div>
-                
+
                 <!-- Current Page Title (Breadcrumb style) -->
                 <span class="font-bold tracking-widest uppercase text-sm text-ink hidden md:inline">
                     Deconstruction Archive
                 </span>
             </div>
-            
+
             <div class="hidden md:flex space-x-8 text-sm font-medium tracking-wide text-gray-600 items-center">
                 <a href="../../home.html" class="hover:text-black transition-colors">Home</a>
-                <a href="../portfolio/portfolio_home.html" class="hover:text-black transition-colors">Portfolio</a> <!-- Active State -->
-                <a href="../deconstruction/deconstruction_home.html" class="hover:text-black transition-colors">Deconstruction</a>                <!-- Modified Ratings Link with Dropdown -->
+                <a href="../portfolio/portfolio_home.html" class="hover:text-black transition-colors">Portfolio</a>
+                <a href="../deconstruction/deconstruction_home.html" class="hover:text-black transition-colors">Deconstruction</a>
+                <!-- Modified Ratings Link with Dropdown -->
                 <div class="relative group h-20 flex items-center">
                     <a href="#" class="hover:text-black transition-colors flex items-center cursor-pointer">
                         Ratings <i data-lucide="chevron-down" class="w-3 h-3 ml-1 text-gray-400 group-hover:text-black transition-colors"></i>
                     </a>
-                    
+
                     <!-- Dropdown Menu -->
                     <div class="dropdown-menu absolute left-1/2 -translate-x-1/2 top-full w-40 bg-white border border-gray-100 shadow-lg rounded-sm hidden group-hover:block pt-1">
                         <a href="../rating/boardgame/rating_boardgame_home.html" class="block px-5 py-3 text-gray-500 hover:bg-gray-50 hover:text-accent transition-colors border-b border-gray-50">Board Game</a>
@@ -88,18 +103,17 @@
 
             <button class="md:hidden" onclick="toggleMenu()"><i data-lucide="menu" class="w-6 h-6"></i></button>
         </div>
-        
+
         <!-- Mobile Menu -->
         <div id="mobile-menu" class="hidden md:hidden bg-white border-t absolute w-full px-6 py-4 space-y-4 shadow-lg">
             <a href="../../home.html" class="block text-gray-600">Home</a>
             <a href="../portfolio/portfolio_home.html" class="block text-gray-600">Portfolio</a>
-            <a href="../deconstruction/deconstruction_home.html" class="block text-gray-600">Deconstruction</a>                <!-- Modified Ratings Link with Dropdown -->
+            <a href="../deconstruction/deconstruction_home.html" class="block text-gray-600">Deconstruction</a>
             <div class="relative group h-20 flex items-center">
                 <a href="#" class="block text-gray-600 flex items-center cursor-pointer">
                     Ratings <i data-lucide="chevron-down" class="w-3 h-3 ml-1 text-gray-400 group-hover:text-black transition-colors"></i>
                 </a>
-                
-                <!-- Dropdown Menu -->
+
                 <div class="dropdown-menu absolute left-1/2 -translate-x-1/2 top-full w-40 bg-white border border-gray-100 shadow-lg rounded-sm hidden group-hover:block pt-1">
                     <a href="../rating/boardgame/rating_boardgame_home.html" class="block px-5 py-3 text-gray-500 hover:bg-gray-50 hover:text-accent transition-colors border-b border-gray-50">Board Game</a>
                     <a href="../rating/pcgame/rating_pc_home.html" class="block px-5 py-3 text-gray-500 hover:bg-gray-50 hover:text-accent transition-colors border-b border-gray-50">PC Game</a>
@@ -112,7 +126,7 @@
     </nav>
 
     <main class="pt-32 pb-24 px-6 max-w-6xl mx-auto">
-        
+
         <!-- Header -->
         <header class="mb-16 max-w-3xl">
             <h1 class="text-4xl md:text-6xl font-bold text-ink mb-6 tracking-tight">Essays & Thoughts</h1>
@@ -220,41 +234,33 @@
     <script>
         lucide.createIcons();
 
-        // 原始数据源
-        const rawData = [
-            { type: "Essay", date: "Nov 9, 2025", title: "It Is a Waste of Time, but Not a Game", desc: " If a product called “game” by everyone but you feel it nothing more than a waste of time, then under this definition, it isn’t a game for you.", link: "essay/WhatIsGame.html" },
-            { type: "Essay", date: "Oct 24, 2023", title: "The Illusion of Choice in 4X Diplomacy", desc: "Why AI behavior often breaks suspension of disbelief.", link: "thought_detail.html" },
-            { type: "Thought", date: "Oct 12, 2023", title: "Simulating Supply Lines", desc: "Reflections on starvation mechanics.", link: "thoughts/thought_detail.html" },
-            { type: "Essay", date: "Sep 28, 2023", title: "History as a Mechanic", desc: "How games gamify historical events properly.", link: "thought_detail.html" },
-            { type: "Thought", date: "Aug 15, 2023", title: "Why I love \"Bad\" Mechanics", desc: "Defending roll-to-move in party games.", link: "thought_detail.html" },
-            { type: "Essay", date: "Jul 20, 2023", title: "Balancing Asymmetry", desc: "Ensuring fairness in asymmetric design.", link: "thought_detail.html" },
-            { type: "Thought", date: "Jun 10, 2023", title: "The Color of Strategy", desc: "Color theory in area control games.", link: "thought_detail.html" },
-            { type: "Essay", date: "May 05, 2023", title: "Narrative through Systems", desc: "Emergent storytelling vs scripted events.", link: "thought_detail.html" },
-            { type: "Thought", date: "Apr 22, 2023", title: "Dice vs. Cards", desc: "Input randomness analysis.", link: "thought_detail.html" },
-            { type: "Essay", date: "Mar 15, 2023", title: "The Cost of Complexity", desc: "Finding the breaking point of rule weight.", link: "thought_detail.html" },
-            { type: "Thought", date: "Feb 01, 2023", title: "Legacy Mechanics", desc: "Is tearing cards sacrilegious?", link: "thought_detail.html" },
-            // 补充数据以演示翻页
-            { type: "Essay", date: "Jan 10, 2023", title: "Game Theory 101", desc: "Basic concepts for board game designers.", link: "thought_detail.html" },
-            { type: "Thought", date: "Dec 05, 2022", title: "Meeple Shapes", desc: "Does the shape of the wood matter?", link: "thought_detail.html" },
-            { type: "Thought", date: "Nov 20, 2022", title: "Box Inserts", desc: "The unsung heroes of setup time.", link: "thought_detail.html" },
-            { type: "Essay", date: "Oct 01, 2022", title: "The psychology of 'Take That'", desc: "Why we love to hurt our friends in games.", link: "thought_detail.html" }
-        ];
+        // ✅ Use shared dataset from thoughts_article.js
+        // Prefer normalized data if present, else fallback.
+        const rawData = (typeof archiveDataNormalized !== "undefined")
+            ? archiveDataNormalized
+            : ((typeof archiveData !== "undefined") ? archiveData : []);
 
         // 状态管理
         const state = {
             essay: {
                 data: [],
                 currentPage: 1,
-                itemsPerPage: 4 // Essay 每页4个
+                itemsPerPage: 4
             },
             thought: {
                 data: [],
                 currentPage: 1,
-                itemsPerPage: 4 // Thought 每页4个
+                itemsPerPage: 4
             }
         };
 
         function initArchive() {
+            // Guard: if script not loaded, avoid crashing
+            if (!rawData || !Array.isArray(rawData)) {
+                console.error("Error: archiveData is not available.");
+                return;
+            }
+
             // 1. 分离数据
             state.essay.data = rawData.filter(item => item.type === "Essay");
             state.thought.data = rawData.filter(item => item.type === "Thought");
@@ -268,9 +274,9 @@
         function changePage(type, direction) {
             const sectionState = state[type];
             const totalPages = Math.ceil(sectionState.data.length / sectionState.itemsPerPage);
-            
+
             const newPage = sectionState.currentPage + direction;
-            
+
             if (newPage >= 1 && newPage <= totalPages) {
                 sectionState.currentPage = newPage;
                 renderSection(type);
@@ -282,7 +288,7 @@
             const sectionState = state[type];
             const gridId = `${type}Grid`;
             const grid = document.getElementById(gridId);
-            
+
             // 清空容器
             grid.innerHTML = '';
 
@@ -303,27 +309,27 @@
                 card.href = item.link;
                 card.className = "archive-card block p-8 rounded-sm group h-full flex flex-col";
                 card.innerHTML = `
-                    <div class="flex justify-between items-start mb-4">
-                        <span class="${tagClass} text-[10px] font-bold px-2 py-0.5 rounded-sm uppercase tracking-wider">${item.type}</span>
-                        <span class="text-xs text-gray-400 font-mono">${item.date}</span>
-                    </div>
-                    <h2 class="text-2xl font-bold text-ink mb-3 group-hover:text-accent transition-colors leading-tight">
-                        ${item.title}
-                    </h2>
-                    <p class="text-gray-500 text-sm leading-relaxed flex-grow">
-                        ${item.desc}
-                    </p>
-                    <div class="mt-6 flex items-center text-xs font-bold uppercase tracking-widest text-gray-300 group-hover:text-accent transition-colors">
-                        ${btnText} <i data-lucide="arrow-right" class="w-4 h-4 ml-2"></i>
-                    </div>
-                `;
+                        <div class="flex justify-between items-start mb-4">
+                            <span class="${tagClass} text-[10px] font-bold px-2 py-0.5 rounded-sm uppercase tracking-wider">${item.type}</span>
+                            <span class="text-xs text-gray-400 font-mono">${item.date}</span>
+                        </div>
+                        <h2 class="text-2xl font-bold text-ink mb-3 group-hover:text-accent transition-colors leading-tight">
+                            ${item.title}
+                        </h2>
+                        <p class="text-gray-500 text-sm leading-relaxed flex-grow">
+                            ${item.desc}
+                        </p>
+                        <div class="mt-6 flex items-center text-xs font-bold uppercase tracking-widest text-gray-300 group-hover:text-accent transition-colors">
+                            ${btnText} <i data-lucide="arrow-right" class="w-4 h-4 ml-2"></i>
+                        </div>
+                    `;
                 grid.appendChild(card);
             }
 
             // 更新所有控件状态 (Top & Bottom)
             updateControls(type, 'Top', totalPages, totalItems);
             updateControls(type, 'Bottom', totalPages, totalItems);
-            
+
             // 更新总数显示
             document.getElementById(`${type}TotalCount`).innerText = `${totalItems} items`;
 
@@ -335,7 +341,7 @@
             // 更新页码显示
             const pageSpan = document.getElementById(`${type}PageSpan${position}`);
             const totalPageSpan = document.getElementById(`${type}TotalPageSpan${position}`);
-            
+
             if (pageSpan) pageSpan.innerText = state[type].currentPage;
             if (totalPageSpan) totalPageSpan.innerText = totalPages;
 

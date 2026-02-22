@@ -368,34 +368,54 @@
 
     <!-- Script for Dynamic Article Loading -->
     <script>
+        function resolveRecentLink(link) {
+            if (!link) return "#";
+            // 绝对链接 / 锚点 / 外链不处理
+            if (link.startsWith("http") || link.startsWith("#") || link.startsWith("/")) return link;
+
+            const parts = window.location.pathname.split("/").filter(Boolean);
+            const currentDir = parts.length ? parts[parts.length - 2] : "";
+            // 例如：
+            // /xxx/thoughts/MakingtheBallBounce.html -> currentDir = "thoughts"
+            // /xxx/essay/WhatIsGame.html            -> currentDir = "essay"
+
+            // 同目录：去掉前缀
+            if (currentDir === "thoughts" && link.startsWith("thoughts/")) return link.replace(/^thoughts\//, "");
+            if (currentDir === "essay" && link.startsWith("essay/")) return link.replace(/^essay\//, "");
+
+            // 不同目录：回到上一级再跳
+            return "../" + link;
+        }
+
         function renderRecentArticles() {
-            const container = document.getElementById('recent-articles-list');
+            const container = document.getElementById("recent-articles-list");
             if (!container) return;
 
-            // 检查外部数据是否加载
-            if (typeof recentArticlesData === 'undefined') {
+            if (typeof recentArticlesData === "undefined") {
                 console.error("Error: recentArticlesData is not defined.");
                 container.innerHTML = "<p class='text-xs text-red-500'>Failed to load recent thoughts.</p>";
                 return;
             }
 
-            // Limit to max 10 items
             const displayData = recentArticlesData.slice(0, 10);
 
-            const html = displayData.map(article => `
-                <a href="${article.link}" class="recent-link block group">
-                    <div class="h-24 bg-gray-100 rounded-sm mb-3 overflow-hidden relative">
-                        <img src="${article.image}" alt="${article.title}" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105 opacity-80 group-hover:opacity-100">
-                    </div>
-                    <span class="text-[10px] font-bold ${article.categoryColor} uppercase tracking-wider mb-1 block">${article.category}</span>
-                    <h4 class="text-sm font-bold text-ink leading-snug transition-colors">${article.title}</h4>
-                </a>
-            `).join('');
+            const html = displayData.map(article => {
+                const href = resolveRecentLink(article.link);
+                return `
+            <a href="${href}" class="recent-link block group">
+              <div class="h-24 bg-gray-100 rounded-sm mb-3 overflow-hidden relative">
+                <img src="${article.image}" alt="${article.title}" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105 opacity-80 group-hover:opacity-100">
+              </div>
+              <span class="text-[10px] font-bold ${article.categoryColor} uppercase tracking-wider mb-1 block">${article.category}</span>
+              <h4 class="text-sm font-bold text-ink leading-snug transition-colors">${article.title}</h4>
+            </a>
+          `;
+            }).join("");
 
             container.innerHTML = html;
         }
 
-        document.addEventListener('DOMContentLoaded', () => {
+        document.addEventListener("DOMContentLoaded", () => {
             renderRecentArticles();
             lucide.createIcons();
         });

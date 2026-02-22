@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Making the Ball Bounce the Way It Should | Thought</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Sans+SC:wght@300;400;500;700&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+
+    <!-- 引入数据文件 -->
+    <script src="../thoughts_article.js"></script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'Noto Sans SC', 'sans-serif'],
+                        serif: ['Playfair Display', 'serif'],
+                    },
+                    colors: { 'paper': '#fdfbf7', 'ink': '#1a1a1a', 'accent': '#c2410c', 'secondary': '#f3f4f6' }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            background-color: #fdfbf7;
+            color: #1a1a1a;
+            overflow-x: hidden;
+        }
+
+        /* 侧边栏样式 */
+        .sidebar-sticky {
+            position: sticky;
+            top: 6rem;
+        }
+
+        /* 文章排版优化 */
+        .prose p {
+            margin-bottom: 1.8em;
+            line-height: 1.9;
+            color: #374151;
+            font-family: 'Inter', sans-serif;
+            font-size: 1.125rem;
+        }
+
+        .prose h2 {
+            font-family: 'Inter', sans-serif;
+            font-weight: 700;
+            font-size: 1.75rem;
+            margin-top: 3.5rem;
+            margin-bottom: 1.5rem;
+            color: #1a1a1a;
+            border-bottom: 1px solid #e5e7eb;
+            padding-bottom: 0.5rem;
+            scroll-margin-top: 100px;
+        }
+
+        .prose h3 {
+            font-family: 'Inter', sans-serif;
+            font-weight: 600;
+            font-size: 1.35rem;
+            margin-top: 2.5rem;
+            margin-bottom: 1rem;
+            color: #1a1a1a;
+            scroll-margin-top: 100px;
+        }
+
+        .prose blockquote {
+            border-left: 4px solid #c2410c;
+            padding-left: 1.5rem;
+            font-style: italic;
+            color: #6b7280;
+            margin: 2.5rem 0;
+            font-family: 'Playfair Display', serif;
+            font-size: 1.25rem;
+            background-color: rgba(194, 65, 12, 0.05);
+            padding: 1.5rem;
+            border-radius: 0 0.5rem 0.5rem 0;
+        }
+
+        /* 目录链接样式 */
+        .toc-link {
+            display: block;
+            padding: 0.3rem 0;
+            color: #6b7280;
+            text-decoration: none;
+            transition: all 0.2s;
+            font-size: 0.9rem;
+            border-left: 2px solid transparent;
+            padding-left: 1rem;
+        }
+
+            .toc-link:hover {
+                color: #c2410c;
+                border-left-color: #c2410c;
+                background-color: rgba(194, 65, 12, 0.05);
+            }
+
+        .toc-sub-link {
+            padding-left: 2rem;
+            font-size: 0.85rem;
+            color: #9ca3af;
+        }
+
+        /* Thought 标签样式（由 Essay 改为 Thought） */
+        .tag-thought {
+            color: #4b5563;
+            border: 1px solid #9ca3af;
+        }
+
+        /* 右侧栏链接 */
+        .recent-link:hover h4 {
+            color: #c2410c;
+        }
+
+        /* Video blocks (for iteration demos) */
+        .video-block {
+            margin: 2.5rem 0;
+            padding: 1rem;
+            background: rgba(243, 244, 246, 0.7); /* secondary */
+            border: 1px solid #e5e7eb;
+            border-radius: 0.5rem;
+        }
+
+        .video-caption {
+            margin-top: 0.75rem;
+            font-size: 0.95rem;
+            color: #6b7280;
+            line-height: 1.6;
+        }
+
+        .video-meta {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            font-size: 0.75rem;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: #6b7280;
+            margin-bottom: 0.6rem;
+        }
+
+            .video-meta .dot {
+                width: 0.4rem;
+                height: 0.4rem;
+                border-radius: 9999px;
+                background: #9ca3af;
+            }
+
+        .video-frame {
+            width: 100%;
+            aspect-ratio: 16 / 9;
+            background: #111827; /* gray-900 placeholder behind video */
+            border-radius: 0.5rem;
+            overflow: hidden;
+        }
+
+            .video-frame video {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+            }
+    </style>
+</head>
+<body class="font-sans antialiased">
+
+    <!-- Navigation -->
+    <nav class="fixed w-full z-50 top-0 bg-paper/90 backdrop-blur-sm border-b border-gray-200/50 h-20 flex items-center px-6 justify-between">
+        <div class="flex items-center">
+            <a href="../thoughts_home.html" class="flex items-center text-gray-500 hover:text-accent transition-colors group mr-8">
+                <i data-lucide="arrow-left" class="w-5 h-5 mr-2 group-hover:-translate-x-1 transition-transform"></i>
+                Back to Archive
+            </a>
+        </div>
+        <div class="hidden md:block text-xs font-bold text-gray-300 uppercase tracking-widest">
+            Design Note
+        </div>
+    </nav>
+
+    <!-- Main Layout Container (3:11:2 Ratio) -->
+    <div class="pt-20 w-full max-w-[95%] mx-auto px-6 py-12">
+
+        <div class="grid grid-cols-1 lg:grid-cols-[3fr_11fr_2fr] gap-12">
+
+            <!-- 1. Left Sidebar (Table of Contents) -->
+            <aside class="hidden lg:block">
+                <div class="sidebar-sticky pt-4 border-r border-gray-200 pr-6">
+                    <h3 class="text-xs font-bold uppercase tracking-widest text-gray-400 mb-6 flex items-center">
+                        <i data-lucide="list" class="w-4 h-4 mr-2"></i> Contents
+                    </h3>
+                    <nav class="space-y-1 max-h-[calc(100vh-10rem)] overflow-y-auto pr-2 custom-scrollbar">
+                        <a href="#overview" class="toc-link font-medium">1. What I Worked On</a>
+
+                        <a href="#tapper" class="toc-link font-medium mt-2">2. Tapper (No Engine)</a>
+                        <a href="#tapper-friction" class="toc-link toc-sub-link">2.1 The Friction</a>
+                        <a href="#tapper-takeaway" class="toc-link toc-sub-link">2.2 What Stuck With Me</a>
+
+                        <a href="#sdl" class="toc-link font-medium mt-2">3. SDL2 → SDL3</a>
+                        <a href="#sdl-reality" class="toc-link toc-sub-link">3.1 Small Changes Aren’t Small</a>
+                        <a href="#sdl-habit" class="toc-link toc-sub-link">3.2 A Slower Workflow</a>
+
+                        <a href="#collision" class="toc-link font-medium mt-2">4. Collision Response</a>
+                        <a href="#collision-steps" class="toc-link toc-sub-link">4.1 Three Iterations</a>
+                        <a href="#collision-why" class="toc-link toc-sub-link">4.2 Why “Almost Correct” Is Loud</a>
+
+                        <a href="#wrap" class="toc-link font-medium mt-2">5. Closing Notes</a>
+                    </nav>
+                </div>
+            </aside>
+
+            <!-- 2. Main Content -->
+            <main>
+                <article>
+
+                    <!-- Article Header -->
+                    <header class="mb-16 border-b border-gray-200 pb-12 text-center">
+                        <div class="flex justify-center items-center gap-3 mb-6">
+                            <span class="tag-thought text-[10px] font-bold px-2 py-0.5 rounded-sm uppercase tracking-wider">Thought</span>
+                            <time class="text-sm text-gray-400 font-mono">Feb 22, 2026</time>
+                        </div>
+                        <h1 class="text-4xl md:text-6xl font-bold text-ink leading-tight mb-6 tracking-tight">
+                            Making the Ball Bounce,<br>
+                            <span class="font-serif italic font-normal text-4xl md:text-5xl text-gray-600">the Way It Should</span>
+                        </h1>
+                        <div class="text-gray-500 text-sm flex justify-center items-center gap-2 mt-4">
+                            <i data-lucide="user" class="w-4 h-4"></i> <span class="font-medium text-ink">Donglin Yan</span>
+                            <span class="mx-2">•</span>
+                            <span class="italic">University of Gothenburg</span>
+                        </div>
+                    </header>
+
+                    <!-- Content -->
+                    <div class="prose prose-lg max-w-none">
+
+                        <h2 id="overview">1. What I Worked On</h2>
+                        <p>
+                            Halfway through the course feels like a good moment to pause and look at what I’ve actually been doing.
+                            So far, most of my time has gone into three things: a Tapper prototype in pure C# (no engine), updating parts
+                            of the engine from SDL2 to SDL3, and fixing collision response that looked “almost right” but wasn’t.
+                        </p>
+                        <p>
+                            These weren’t part of some grand connected plan — just different exercises and tasks across the course —
+                            but they each forced me to pay attention to different layers of “stuff engines normally hide.”
+                        </p>
+
+                        <h2 id="tapper">2. Tapper (No Engine)</h2>
+                        <p>
+                            The Tapper exercise was basically a controlled way to experience what game development feels like without an engine:
+                            only standard .NET, no external libraries, no Unity, and “ASCII is fine.”
+                            I made a very simple console version, and it did what it needed to do.
+                        </p>
+
+                        <h3 id="tapper-friction">2.1 The Friction</h3>
+                        <p>
+                            The gameplay logic wasn’t the hard part. The hard part was that everything around it became my responsibility.
+                            Collision checks became nested loops. Object removal became “iterate backwards or crash.”
+                            Rendering was clearing the console and redrawing, which is functional but not exactly pleasant.
+                        </p>
+                        <p>
+                            The experience felt less like “designing a game” and more like “keeping the loop alive.”
+                            Not because C# is bad — it’s because without engine-level structure, the boring bookkeeping grows fast.
+                        </p>
+
+                        <h3 id="tapper-takeaway">2.2 What Stuck With Me</h3>
+                        <p>
+                            I wouldn’t say Tapper taught me C#. I already knew enough C# to finish it.
+                            What it gave me was a very concrete sense of why engines exist at all.
+                            They’re not only about fancy graphics — they’re about removing a huge amount of repetitive, error-prone maintenance
+                            so you can think at the level you actually care about.
+                        </p>
+
+                        <blockquote>
+                            The biggest lesson from Tapper wasn’t “this is impossible without an engine.”
+                            It was: “this is possible, but you will spend your limited time fighting infrastructure instead of making choices.”
+                        </blockquote>
+
+                        <h2 id="sdl">3. SDL2 → SDL3</h2>
+                        <p>
+                            Later, I worked on updating parts of the course engine from SDL2 to SDL3.
+                            I originally assumed it would mostly be “replace old API calls with new ones.”
+                            It was not that simple.
+                        </p>
+
+                        <h3 id="sdl-reality">3.1 Small Changes Aren’t Small</h3>
+                        <p>
+                            Some changes compiled immediately but behaved differently at runtime — especially around initialization and audio device handling.
+                            That was the annoying part: there wasn’t always a clean “error message” telling me what I did wrong.
+                            The only way forward was testing, isolating changes, and being careful not to touch too many things at once.
+                        </p>
+
+                        <h3 id="sdl-habit">3.2 A Slower Workflow</h3>
+                        <p>
+                            This task changed my working habit more than I expected.
+                            In a small standalone prototype, breaking something is cheap — you just fix it and move on.
+                            Inside an engine, even “small” edits feel heavier, because you can accidentally destabilize other subsystems.
+                            I started moving slower, testing more often, and treating changes as something that needs to be reversible.
+                        </p>
+
+                        <h2 id="collision">4. Collision Response</h2>
+                        <p>
+                            The most time-consuming (and honestly the most interesting) work I did was collision response.
+                            Detection was already working — objects didn’t pass through each other — but the bounce behavior wasn’t convincing.
+                            The ball would reflect in ways that were hard to predict, and sometimes it just looked random.
+                        </p>
+
+                        <div class="video-block">
+                            <div class="video-meta">
+                                <span class="dot"></span><span>Iteration 1</span>
+                                <span class="mx-2">•</span>
+                                <span>Before Fix</span>
+                            </div>
+                            <div class="video-frame">
+                                <video controls preload="metadata">
+                                    <source src="../../../video/1_original_collision.mp4" type="video/mp4">
+                                    Your browser does not support the video tag.
+                                </video>
+                            </div>
+                            <p class="video-caption">
+                                The original behavior: collision detection worked (no tunneling), but the outgoing direction felt inconsistent and hard to predict.
+                            </p>
+                        </div>
+
+                        <h3 id="collision-steps">4.1 Three Iterations</h3>
+                        <p>
+                            The first step was simply trying to remove the “chaos” and make behavior consistent.
+                            That helped, but the result was still weird: reflections became deterministic, yet often snapped into pure horizontal or vertical movement.
+                            It was cleaner, but it still didn’t match how your brain expects a bounce to work.
+                        </p>
+                        <p>
+                            Eventually I moved to proper vector reflection using surface normals.
+                            Once that was in place, the difference was immediate: the ball reflected according to its angle of incidence,
+                            instead of snapping to axis-aligned shortcuts.
+                            I have videos for each stage (random-ish → structured but wrong → physically reasonable), and the progression is very clear.
+                        </p>
+
+                        <div class="video-block">
+                            <div class="video-meta">
+                                <span class="dot"></span><span>Iteration 2</span>
+                                <span class="mx-2">•</span>
+                                <span>Deterministic, Still Wrong</span>
+                            </div>
+                            <div class="video-frame">
+                                <video controls preload="metadata">
+                                    <source src="../../../video/2_regular_but_unreasonable_collision.mp4" type="video/mp4">
+                                    Your browser does not support the video tag.
+                                </video>
+                            </div>
+                            <p class="video-caption">
+                                After the first improvement: bounce directions became consistent, but the reflection was still simplified (often snapping into pure horizontal/vertical motion).
+                            </p>
+                        </div>
+
+                        <h3 id="collision-why">4.2 Why “Almost Correct” Is Loud</h3>
+                        <p>
+                            What surprised me is how noticeable “almost correct” physics can be.
+                            A system can be deterministic and still feel wrong.
+                            And when it feels wrong, it also becomes harder to reason about and harder to debug,
+                            because you’re never sure whether the next weird bounce is a one-off or a symptom of the underlying rule.
+                        </p>
+                        <p>
+                            Once reflection was based on a consistent mathematical rule, the whole system became easier to think about.
+                            It didn’t just look better — it became more predictable in a good way, the kind that helps you actually build on top of it.
+                        </p>
+
+                        <div class="video-block">
+                            <div class="video-meta">
+                                <span class="dot"></span><span>Iteration 3</span>
+                                <span class="mx-2">•</span>
+                                <span>Physically Reasonable</span>
+                            </div>
+                            <div class="video-frame">
+                                <video controls preload="metadata">
+                                    <source src="../../../video/3_basically_complete_the_reflection.mp4" type="video/mp4">
+                                    Your browser does not support the video tag.
+                                </video>
+                            </div>
+                            <p class="video-caption">
+                                Final behavior: reflection follows the angle of incidence (vector reflection with surface normals), so trajectories feel coherent and predictable in the “right” way.
+                            </p>
+                        </div>
+
+                        <h2 id="challenging">5.What Actually Felt Challenging</h2>
+
+                        <p>
+                            The hardest part wasn’t writing code. It was deciding where logic belongs.
+                            In a small prototype, it’s easy to mix everything together. In an engine, that becomes messy quickly.
+                        </p>
+
+                        <p>
+                            With collision response, I kept asking myself: Is this engine logic? Is this game logic?
+                            Am I fixing the symptom or the structure?
+                        </p>
+
+                        <p>
+                            I didn’t always get it right the first time. But I started noticing when something
+                            “felt wrong” architecturally, even if it worked. That’s probably the biggest shift for me so far.
+                        </p>
+
+                        <h2 id="looking-back">6.Looking Back</h2>
+
+                        <p>
+                            None of these tasks were spectacular. They were small, technical, sometimes tedious.
+                            But they made me slower in a good way.
+                        </p>
+
+                        <p>
+                            I now pay more attention to mathematical correctness, structural responsibility,
+                            and whether a quick fix is hiding a deeper issue.
+                        </p>
+
+                        <p>
+                            If I restarted this work, I would test systems in isolation earlier and define boundaries more clearly.
+                            But overall, I’m glad I had to deal with things that were “almost correct.”
+                            Because those are harder to notice than things that completely fail.
+                            And fixing “almost correct” systems is where most of the learning happened.
+                        </p>
+
+                    </div>
+
+                    <!-- Footer References (Thought 不需要 References，替换为简洁 Footer) -->
+                    <div class="mt-24 pt-12 border-t border-gray-200 text-sm text-gray-500 flex flex-col sm:flex-row sm:justify-between gap-3">
+                        <span>Status: <span class="font-bold text-ink">Mid-Course Reflection</span></span>
+                        <span>Tags: #GameEngine #Collision #SDL #CourseLog</span>
+                    </div>
+
+                </article>
+            </main>
+
+            <!-- 3. Right Sidebar (Recent Thoughts) -->
+            <aside class="hidden lg:block">
+                <div class="pt-4 border-l border-gray-200 pl-6">
+                    <h3 class="text-xs font-bold uppercase tracking-widest text-gray-400 mb-6 flex items-center">
+                        <i data-lucide="message-square" class="w-4 h-4 mr-2"></i> Recent Thoughts
+                    </h3>
+
+                    <!-- Container for dynamic articles -->
+                    <div id="recent-articles-list" class="space-y-6"></div>
+
+                    <!-- Tags -->
+                    <div class="mt-10 pt-8 border-t border-gray-100">
+                        <h3 class="text-xs font-bold uppercase tracking-widest text-gray-400 mb-4">Focus Areas</h3>
+                        <div class="flex flex-wrap gap-2">
+                            <a href="#" class="text-xs text-gray-500 bg-gray-100 px-2 py-1 rounded-sm hover:bg-accent hover:text-white transition-colors">#GameEngine</a>
+                            <a href="#" class="text-xs text-gray-500 bg-gray-100 px-2 py-1 rounded-sm hover:bg-accent hover:text-white transition-colors">#Systems</a>
+                            <a href="#" class="text-xs text-gray-500 bg-gray-100 px-2 py-1 rounded-sm hover:bg-accent hover:text-white transition-colors">#Debugging</a>
+                        </div>
+                    </div>
+
+                </div>
+            </aside>
+
+        </div>
+    </div>
+
+    <!-- Script for Dynamic Article Loading -->
+    <script>
+        function resolveRecentLink(link) {
+          if (!link) return "#";
+          // 绝对链接 / 锚点 / 外链不处理
+          if (link.startsWith("http") || link.startsWith("#") || link.startsWith("/")) return link;
+
+          const parts = window.location.pathname.split("/").filter(Boolean);
+          const currentDir = parts.length ? parts[parts.length - 2] : "";
+          // 例如：
+          // /xxx/thoughts/MakingtheBallBounce.html -> currentDir = "thoughts"
+          // /xxx/essay/WhatIsGame.html            -> currentDir = "essay"
+
+          // 同目录：去掉前缀
+          if (currentDir === "thoughts" && link.startsWith("thoughts/")) return link.replace(/^thoughts\//, "");
+          if (currentDir === "essay" && link.startsWith("essay/")) return link.replace(/^essay\//, "");
+
+          // 不同目录：回到上一级再跳
+          return "../" + link;
+        }
+
+        function renderRecentArticles() {
+            const container = document.getElementById("recent-articles-list");
+            if (!container) return;
+
+            if (typeof recentArticlesData === "undefined") {
+                console.error("Error: recentArticlesData is not defined.");
+                container.innerHTML = "<p class='text-xs text-red-500'>Failed to load recent thoughts.</p>";
+                return;
+            }
+
+            const displayData = recentArticlesData.slice(0, 10);
+
+            const html = displayData.map(article => {
+                const href = resolveRecentLink(article.link);
+                return `
+            <a href="${href}" class="recent-link block group">
+              <div class="h-24 bg-gray-100 rounded-sm mb-3 overflow-hidden relative">
+                <img src="${article.image}" alt="${article.title}" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105 opacity-80 group-hover:opacity-100">
+              </div>
+              <span class="text-[10px] font-bold ${article.categoryColor} uppercase tracking-wider mb-1 block">${article.category}</span>
+              <h4 class="text-sm font-bold text-ink leading-snug transition-colors">${article.title}</h4>
+            </a>
+          `;
+            }).join("");
+
+            container.innerHTML = html;
+        }
+
+        document.addEventListener("DOMContentLoaded", () => {
+            renderRecentArticles();
+            lucide.createIcons();
+        });
+    </script>
+</body>
+</html>
