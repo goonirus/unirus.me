@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Project: Peng-Win!</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap"
+      rel="stylesheet"
+    >
+
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              sans: ['Inter', 'sans-serif'],
+              serif: ['Playfair Display', 'serif'],
+            },
+            colors: {
+              paper: '#eef7ff',
+              ink: '#0f172a',
+              accent: '#0ea5e9',
+              secondary: '#dbeafe',
+              glacier: '#e0f2fe',
+              navy: '#082f49'
+            }
+          }
+        }
+      }
+    </script>
+
+    <style>
+        body {
+            background:
+                radial-gradient(circle at top, rgba(186, 230, 253, 0.55), transparent 30%),
+                linear-gradient(180deg, #f0f9ff 0%, #e0f2fe 45%, #f8fafc 100%);
+            color: #0f172a;
+            scroll-behavior: smooth;
+        }
+
+        .sidebar-sticky {
+            position: sticky;
+            top: 8rem;
+            height: calc(100vh - 8rem);
+            overflow-y: auto;
+        }
+
+        h1, h2, h3 {
+            color: #082f49;
+        }
+
+        .section-title {
+            font-family: 'Inter', sans-serif;
+            font-weight: 700;
+            font-size: 1.5rem;
+            margin-top: 3rem;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid rgba(14, 165, 233, 0.18);
+        }
+
+        p {
+            margin-bottom: 1.5em;
+            line-height: 1.8;
+            color: #334155;
+            font-size: 1.05rem;
+        }
+
+        .project-img {
+            width: 100%;
+            background:
+                radial-gradient(circle at top, rgba(255, 255, 255, 0.95), rgba(224, 242, 254, 0.96) 55%, rgba(186, 230, 253, 0.9) 100%);
+            border: 1px solid rgba(14, 165, 233, 0.16);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 2rem 0;
+            border-radius: 1rem;
+            overflow: hidden;
+            position: relative;
+            box-shadow: 0 25px 60px -35px rgba(8, 47, 73, 0.35);
+        }
+
+        .project-img img {
+            width: 100%;
+            height: auto;
+            display: block;
+            transition: transform 0.5s ease;
+        }
+
+        .project-img:hover img {
+            transform: scale(1.02);
+        }
+
+        .rule-card {
+            padding: 0.75rem;
+        }
+
+        .rule-card img {
+            width: 100%;
+            height: auto;
+            object-fit: contain;
+            display: block;
+        }
+
+        #backToTopBtn {
+            display: none;
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            z-index: 99;
+            border: none;
+            outline: none;
+            background-color: rgba(8, 47, 73, 0.82);
+            color: white;
+            cursor: pointer;
+            padding: 0.75rem;
+            border-radius: 9999px;
+            backdrop-filter: blur(8px);
+            transition: all 0.3s ease;
+        }
+
+        #backToTopBtn:hover {
+            background-color: rgba(14, 165, 233, 0.92);
+            transform: translateY(-3px);
+            box-shadow: 0 18px 32px -18px rgba(8, 47, 73, 0.45);
+        }
+    </style>
+</head>
+<body class="font-sans antialiased">
+
+    <nav class="fixed w-full z-50 top-0 bg-white/70 backdrop-blur-md border-b border-sky-100 h-20 flex items-center px-6 justify-between transition-all duration-300">
+        <div class="flex items-center">
+            <a href="../../portfolio_home.html" class="flex items-center text-slate-500 hover:text-accent transition-colors group mr-8">
+                <i data-lucide="arrow-left" class="w-5 h-5 mr-2 group-hover:-translate-x-1 transition-transform"></i>
+                <span class="lang-en">Back to All Works</span>
+                <span class="lang-cn hidden">返回作品集</span>
+            </a>
+        </div>
+        <div class="flex items-center space-x-4">
+            <div class="hidden md:block text-xs font-bold text-sky-700 uppercase tracking-widest">
+                <span class="lang-en">Puzzle Game</span>
+                <span class="lang-cn hidden">解谜游戏</span>
+            </div>
+            <button onclick="toggleLanguage()" class="flex items-center space-x-2 border border-sky-200 px-4 py-2 rounded-full hover:border-accent hover:text-accent transition-all text-xs font-bold tracking-widest uppercase bg-white/90 text-slate-700">
+                <i data-lucide="globe" class="w-4 h-4"></i>
+                <span id="lang-label">EN / 中文</span>
+            </button>
+        </div>
+    </nav>
+
+    <div class="pt-32 pb-24 max-w-7xl mx-auto px-6 flex flex-col lg:flex-row gap-16">
+
+        <aside class="lg:w-1/4">
+            <div class="lg:sidebar-sticky">
+                <h1 class="text-4xl font-bold mb-2 leading-tight">
+                    <span class="lang-en">Peng-Win!</span>
+                    <span class="lang-cn hidden">Peng-Win!</span>
+                </h1>
+                <p class="text-lg text-accent font-medium mb-8">
+                    <span class="lang-en">Winter Sokoban Puzzle Adventure</span>
+                    <span class="lang-cn hidden">冬日推箱子解谜冒险</span>
+                </p>
+
+                <div class="space-y-8 text-sm">
+                    <div>
+                        <h4 class="font-bold uppercase tracking-widest mb-2 text-xs text-slate-500">
+                            <span class="lang-en">Role</span>
+                            <span class="lang-cn hidden">个人职责</span>
+                        </h4>
+                        <p class="text-slate-700">
+                            <span class="lang-en">Game Design & Programming</span>
+                            <span class="lang-cn hidden">游戏设计与程序开发</span>
+                        </p>
+                        <p class="text-slate-700">
+                            <span class="lang-en">Level Design & UX Iteration</span>
+                            <span class="lang-cn hidden">关卡设计与体验迭代</span>
+                        </p>
+                    </div>
+
+                    <div>
+                        <h4 class="font-bold uppercase tracking-widest mb-2 text-xs text-slate-500">
+                            <span class="lang-en">Platform</span>
+                            <span class="lang-cn hidden">平台</span>
+                        </h4>
+                        <p class="text-slate-700">
+                            <span class="lang-en">PC Prototype</span>
+                            <span class="lang-cn hidden">PC 原型版本</span>
+                        </p>
+                    </div>
+
+                    <div>
+                        <h4 class="font-bold uppercase tracking-widest mb-2 text-xs text-slate-500">
+                            <span class="lang-en">Tech Stack</span>
+                            <span class="lang-cn hidden">技术栈</span>
+                        </h4>
+                        <p class="text-slate-700">
+                            <span class="lang-en">Unity (C#)</span>
+                            <span class="lang-cn hidden">Unity（C#）</span>
+                        </p>
+                        <p class="text-slate-700">
+                            <span class="lang-en">Grid Logic, Level Select UI</span>
+                            <span class="lang-cn hidden">网格逻辑、选关界面</span>
+                        </p>
+                    </div>
+
+                    <div>
+                        <h4 class="font-bold uppercase tracking-widest mb-2 text-xs text-slate-500">
+                            <span class="lang-en">Year</span>
+                            <span class="lang-cn hidden">年份</span>
+                        </h4>
+                        <p class="text-slate-700">2025</p>
+                    </div>
+
+                    <div>
+                        <h4 class="font-bold uppercase tracking-widest mb-2 text-xs text-slate-500">
+                            <span class="lang-en">Started In</span>
+                            <span class="lang-cn hidden">起点</span>
+                        </h4>
+                        <p class="text-slate-700">
+                            <span class="lang-en">Xmas Game Jam 2025</span>
+                            <span class="lang-cn hidden">Xmas Game Jam 2025</span>
+                        </p>
+                    </div>
+
+                    <div class="pt-4 border-t border-sky-100">
+                        <a href="../../../../file/portfolio/digitalgame/Peng-Win.zip" download class="flex items-center text-accent hover:text-navy font-bold transition-colors mb-3">
+                            <i data-lucide="download" class="w-4 h-4 mr-2"></i>
+                            <span class="lang-en">Download Project Zip</span>
+                            <span class="lang-cn hidden">下载项目压缩包</span>
+                        </a>
+
+                        <a href="https://scariett77.itch.io/peng-win" class="flex items-center text-slate-500 hover:text-accent font-semibold transition-colors">
+                            <i data-lucide="external-link" class="w-4 h-4 mr-2"></i>
+                            <span class="lang-en">View on itch.io</span>
+                            <span class="lang-cn hidden">前往 itch.io 页面</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+        <main class="lg:w-3/4">
+
+            <div class="project-img aspect-[16/9] mb-12 relative overflow-hidden">
+                <img
+                  src="../../../../picture/portfolio/pengwin/peng_review.png"
+                  alt="Peng-Win gameplay screenshot"
+                />
+
+                <div class="absolute inset-0 bg-gradient-to-t from-sky-950/45 via-sky-900/20 to-white/10"></div>
+
+                <div class="absolute inset-0 flex flex-col items-center justify-center text-center px-6">
+                    <div class="mb-6">
+                        <div class="inline-flex items-center px-3 py-1 rounded-full bg-white/85 border border-sky-200 text-xs font-bold uppercase tracking-[0.2em] text-sky-800 mb-4">
+                            <span class="lang-en">Puzzle · Sokoban · Post-Jam Expansion</span>
+                            <span class="lang-cn hidden">解谜 · 推箱子 · Jam 后扩展</span>
+                        </div>
+                        <h2 class="text-3xl md:text-4xl font-bold text-white mb-2 drop-shadow-[0_2px_12px_rgba(8,47,73,0.55)]">
+                            <span class="lang-en">Push, slide, and plan your way across the ice.</span>
+                            <span class="lang-cn hidden">在冰面上推动、滑行、规划每一步。</span>
+                        </h2>
+                        <p class="max-w-2xl mx-auto text-sm md:text-base text-sky-50">
+                            <span class="lang-en">
+                                A 2.5D winter puzzle game that began as a game jam prototype and later grew into a more complete experience with refined systems, more levels, and a proper level select flow.
+                            </span>
+                            <span class="lang-cn hidden">
+                                一款 2.5D 冬日主题解谜游戏。它最初诞生于 game jam，之后又继续扩展成更完整的版本，补强了机制、增加了关卡，也加入了正式的选关流程。
+                            </span>
+                        </p>
+                    </div>
+
+                    <div class="flex flex-wrap items-center justify-center gap-4">
+                        <a href="../../../../file/portfolio/digitalgame/Peng-Win.zip" download class="inline-flex items-center px-6 py-3 rounded-full bg-accent text-white font-semibold tracking-wide text-base shadow-md hover:bg-navy hover:shadow-lg transition">
+                            <span class="mr-2">
+                                <span class="lang-en">Download Project Zip</span>
+                                <span class="lang-cn hidden">下载项目压缩包</span>
+                            </span>
+                            <i data-lucide="download" class="w-4 h-4"></i>
+                        </a>
+
+                        <a href="https://scariett77.itch.io/peng-win" class="inline-flex items-center px-6 py-3 rounded-full bg-white/90 text-sky-900 font-semibold tracking-wide text-base shadow-md hover:bg-white transition">
+                            <span class="mr-2">
+                                <span class="lang-en">Open itch.io Page</span>
+                                <span class="lang-cn hidden">打开 itch.io 页面</span>
+                            </span>
+                            <i data-lucide="external-link" class="w-4 h-4"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <section>
+                <h2 class="section-title">
+                    <span class="lang-en">The Overview</span>
+                    <span class="lang-cn hidden">项目概览</span>
+                </h2>
+
+                <div class="lang-en">
+                    <p>
+                        <em>Peng-Win!</em> began as a holiday game jam project: a compact Sokoban-style puzzle game built around
+                        clear movement rules, playful winter theming, and the satisfaction of solving spatial problems one push at a time.
+                    </p>
+                    <p>
+                        The core loop is immediately readable. You move across a grid, reposition interactive objects,
+                        and search for the exact order of actions that unlocks the route forward. The appeal comes from
+                        the familiar logic of box-pushing, but the game layers on slippery surfaces and terrain-specific
+                        interactions to make the space feel more dynamic than a basic Sokoban clone.
+                    </p>
+                    <p>
+                        After the jam version, we kept developing the project further. That second phase was not just polish:
+                        we reworked and clarified mechanics, expanded the level set, and added a level select interface so the
+                        experience felt structured, replayable, and easier to navigate as a full prototype.
+                    </p>
+                </div>
+
+                <div class="lang-cn hidden">
+                    <p>
+                        <em>Peng-Win!</em> 最初是一个节日 game jam 项目：它以推箱子式解谜为基础，配合明确的移动规则、
+                        轻松的冬日氛围，以及一步步推导解法的乐趣，构成了一个紧凑但完整的原型。
+                    </p>
+                    <p>
+                        它的核心循环很直观。玩家在网格中移动、推动可交互物件，并寻找正确的操作顺序来打开前进路线。
+                        乐趣来自推箱子的经典空间逻辑，但游戏又通过冰面滑行和地形互动，让整体体验比传统基础 Sokoban 更灵动。
+                    </p>
+                    <p>
+                        在 jam 版本完成后，我们继续做了后续开发。这一阶段不只是“润色”，而是进一步梳理并完善机制、
+                        扩充关卡内容，并补上选关界面，让整个作品从短时原型变成一个更完整、更易游玩和回顾的项目。
+                    </p>
+                </div>
+            </section>
+
+            <section>
+                <h2 class="section-title">
+                    <span class="lang-en">Core Experience & Mechanics</span>
+                    <span class="lang-cn hidden">核心体验与机制</span>
+                </h2>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 my-8">
+                    <div class="bg-white/80 p-6 border border-sky-100 rounded-2xl shadow-sm">
+                        <div class="p-2 bg-accent/10 inline-block rounded-full mb-4">
+                            <i data-lucide="move" class="w-6 h-6 text-accent"></i>
+                        </div>
+                        <h3 class="text-lg font-bold mb-2 text-navy">
+                            <span class="lang-en">Sokoban Foundation</span>
+                            <span class="lang-cn hidden">推箱子基础结构</span>
+                        </h3>
+                        <p class="text-sm text-slate-600 lang-en">
+                            The game starts from the clean, readable grammar of Sokoban: each move matters, pushing changes the whole puzzle state, and solutions depend on sequencing rather than speed.
+                        </p>
+                        <p class="text-sm text-slate-600 lang-cn hidden">
+                            游戏以推箱子的清晰规则作为基础：每一步都重要，推动会改变整个谜题状态，解法依赖顺序与规划，而不是手速。
+                        </p>
+                    </div>
+
+                    <div class="bg-white/80 p-6 border border-sky-100 rounded-2xl shadow-sm">
+                        <div class="p-2 bg-accent/10 inline-block rounded-full mb-4">
+                            <i data-lucide="snowflake" class="w-6 h-6 text-accent"></i>
+                        </div>
+                        <h3 class="text-lg font-bold mb-2 text-navy">
+                            <span class="lang-en">Ice-Surface Variation</span>
+                            <span class="lang-cn hidden">冰面带来的变化</span>
+                        </h3>
+                        <p class="text-sm text-slate-600 lang-en">
+                            Ice changes how movement is read and predicted. Instead of solving only for position, the player also solves for momentum, stopping points, and how the environment transforms a simple push into a chain reaction.
+                        </p>
+                        <p class="text-sm text-slate-600 lang-cn hidden">
+                            冰面让玩家不只是在计算“位置”，还要考虑滑行后的停点、惯性和地形反馈，让简单推动变成更有层次的连锁推演。
+                        </p>
+                    </div>
+                </div>
+
+                <p class="lang-en">
+                    What made the post-jam version meaningful was that the mechanic set became more deliberate. Instead of leaving the idea at a single clever hook, we used iteration to tune readability, level pacing, and the relationship between obstacles so later puzzles could teach, remix, and escalate the rules more cleanly.
+                </p>
+                <p class="lang-cn hidden">
+                    jam 后续版本真正有价值的地方，在于机制不再只是一个“有趣点子”，而是被更认真地整理和组织。
+                    我们通过迭代去调顺可读性、关卡节奏和障碍之间的关系，让后续谜题可以更自然地完成教学、变化和升级。
+                </p>
+            </section>
+
+            <section>
+                <h2 class="section-title">
+                    <span class="lang-en">From Jam Prototype to Expanded Build</span>
+                    <span class="lang-cn hidden">从 Jam 原型到扩展版本</span>
+                </h2>
+
+                <p class="lang-en">
+                    The original jam version proved the core idea worked: pushing objects across ice was expressive and immediately playable. The follow-up development focused on making that idea sustainable across a longer play session.
+                </p>
+                <p class="lang-cn hidden">
+                    最初的 jam 版本证明了核心想法成立：在冰面上推动物体进行解谜，既直观又有趣。之后的开发，则是把这个想法延展成能支撑更长体验的完整作品。
+                </p>
+
+                <ul class="list-disc pl-5 space-y-2 mb-6 text-slate-700">
+                    <li class="lang-en">
+                        <strong>Mechanic refinement:</strong> rule interactions were clarified so puzzles felt fairer and easier to read.
+                    </li>
+                    <li class="lang-cn hidden">
+                        <strong>机制完善：</strong> 我们把规则关系梳理得更清楚，让谜题既更公平，也更容易被理解。
+                    </li>
+                    <li class="lang-en">
+                        <strong>More levels:</strong> the game moved beyond a jam-sized slice and started supporting a fuller difficulty curve.
+                    </li>
+                    <li class="lang-cn hidden">
+                        <strong>关卡扩充：</strong> 内容不再停留在 jam 体量，而是开始形成更完整的难度曲线。
+                    </li>
+                    <li class="lang-en">
+                        <strong>Level select UI:</strong> a dedicated selection screen made progression clearer and made replaying individual puzzles much easier.
+                    </li>
+                    <li class="lang-cn hidden">
+                        <strong>选关界面：</strong> 新增的选关页让整体流程更清晰，也更方便回头重玩单个谜题。
+                    </li>
+                </ul>
+
+                <p class="lang-en">
+                    That expansion step matters because it turns a jam concept into a portfolio-ready design case: not only “we had an idea,” but “we understood how to deepen the idea, organize it, and improve the player experience after the first playable.”
+                </p>
+                <p class="lang-cn hidden">
+                    这一步扩展很重要，因为它让项目从“我们做了一个 jam 点子”变成了真正适合作为作品集展示的设计案例：
+                    不只是证明想法成立，而是展示了我们如何在第一次可玩之后继续深化它、组织它，并改善玩家体验。
+                </p>
+            </section>
+
+            <section>
+                <h2 class="section-title">
+                    <span class="lang-en">Rule Presentation & Visual Communication</span>
+                    <span class="lang-cn hidden">规则呈现与视觉传达</span>
+                </h2>
+
+                <p class="lang-en">
+                    Because puzzle games live or die on readability, the project also needed clear rule communication.
+                    These screens show how the game introduces movement logic and situational interactions to the player.
+                </p>
+                <p class="lang-cn hidden">
+                    解谜游戏是否顺手，很大程度取决于规则是否清楚。因此这个项目也很重视机制说明与信息传达。
+                    下面这些画面展示了游戏如何把移动逻辑和情境规则交给玩家理解。
+                </p>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 my-8">
+                    <div class="rule-card overflow-hidden rounded-2xl border border-sky-100 bg-white shadow-sm">
+                        <img src="../../../../picture/portfolio/pengwin/rule1.png" alt="Peng-Win rule screen 1">
+                    </div>
+                    <div class="rule-card overflow-hidden rounded-2xl border border-sky-100 bg-white shadow-sm">
+                        <img src="../../../../picture/portfolio/pengwin/rule2.png" alt="Peng-Win rule screen 2">
+                    </div>
+                    <div class="rule-card overflow-hidden rounded-2xl border border-sky-100 bg-white shadow-sm">
+                        <img src="../../../../picture/portfolio/pengwin/rule3.png" alt="Peng-Win rule screen 3">
+                    </div>
+                    <div class="rule-card overflow-hidden rounded-2xl border border-sky-100 bg-white shadow-sm">
+                        <img src="../../../../picture/portfolio/pengwin/rule4.png" alt="Peng-Win rule screen 4">
+                    </div>
+                </div>
+
+                <p class="lang-en">
+                    Using lightweight visual onboarding like this helps a systems-driven puzzle game stay inviting.
+                    It supports the tone of the project too: playful, wintry, and approachable, even as the puzzles become more demanding.
+                </p>
+                <p class="lang-cn hidden">
+                    这种轻量的视觉化教学，让一个以机制为核心的解谜游戏依然保持亲和力。
+                    它也和项目本身的气质一致：轻松、冬日、可亲近，但又能逐渐带出更有挑战性的谜题。
+                </p>
+            </section>
+
+        </main>
+    </div>
+
+    <footer class="bg-sky-950 text-sky-50 py-20 px-6 mt-12 border-t border-sky-900">
+        <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+            <div>
+                <h2 class="text-3xl md:text-4xl font-bold mb-6 text-white">
+                    <span class="lang-en">Let’s talk puzzle design.</span>
+                    <span class="lang-cn hidden">欢迎聊聊解谜游戏设计。</span>
+                </h2>
+                <a href="mailto:donglinyan2000@outlook.com" class="inline-flex items-center text-accent hover:text-white transition-colors text-lg font-medium">
+                    donglinyan2000@outlook.com
+                    <i data-lucide="arrow-right" class="ml-2 w-5 h-5"></i>
+                </a>
+            </div>
+
+            <div class="flex flex-col md:items-end space-y-4">
+                <p class="text-sm text-sky-200 uppercase tracking-widest mb-4">
+                    <span class="lang-en">Social Media</span>
+                    <span class="lang-cn hidden">社交媒体</span>
+                </p>
+                <a href="#" class="text-sky-100 hover:text-accent transition-colors flex items-center">
+                    <i data-lucide="twitter" class="w-5 h-5 mr-3"></i> Twitter / X
+                </a>
+                <a href="#" class="text-sky-100 hover:text-accent transition-colors flex items-center">
+                    <i data-lucide="linkedin" class="w-5 h-5 mr-3"></i> LinkedIn
+                </a>
+            </div>
+        </div>
+        <div class="max-w-7xl mx-auto mt-20 pt-8 border-t border-sky-900 text-center md:text-left text-xs text-sky-300">
+            &copy; 2025 Game Designer Portfolio. All rights reserved.
+        </div>
+    </footer>
+
+    <button id="backToTopBtn" onclick="scrollToTop()" title="Go to top">
+        <i data-lucide="arrow-up" class="w-6 h-6"></i>
+    </button>
+
+    <script>
+        lucide.createIcons();
+
+        const backToTopBtn = document.getElementById("backToTopBtn");
+
+        window.addEventListener('scroll', function() {
+            const nav = document.querySelector('nav');
+            if (window.scrollY > 50) {
+                nav.classList.add('shadow-lg');
+                nav.classList.add('bg-white/90');
+            } else {
+                nav.classList.remove('shadow-lg');
+                nav.classList.remove('bg-white/90');
+            }
+
+            if (window.scrollY > 300) {
+                backToTopBtn.style.display = "block";
+            } else {
+                backToTopBtn.style.display = "none";
+            }
+        });
+
+        function scrollToTop() {
+            window.scrollTo({top: 0, behavior: 'smooth'});
+        }
+
+        function toggleLanguage() {
+            const enEls = document.querySelectorAll('.lang-en');
+            const cnEls = document.querySelectorAll('.lang-cn');
+            enEls.forEach(el => el.classList.toggle('hidden'));
+            cnEls.forEach(el => el.classList.toggle('hidden'));
+        }
+    </script>
+</body>
+</html>
