@@ -193,6 +193,11 @@
             desc: "A winter Sokoban puzzle game expanded after the jam with new mechanics, more levels, and level select.",
             img: "../../picture/portfolio/pengwin/pengwin_menu.png",
             url: "projects/pengwin/pengwin.html"},
+            { type: "digital",
+            title: "1000, Action!",
+            desc: "A Global Game Jam puzzle platformer built around editing reality with a mask and timeline.",
+            img: "../../picture/portfolio/action1000/covery.png",
+            url: "projects/action1000/action1000.html"},
             { type: "digital", title: "Iron Front", desc: "WW1 trench warfare simulation.", img: "https://placehold.co/800x500/4b5563/ffffff?text=Iron+Front" },
             { type: "digital", title: "Void Merchant", desc: "Space trading economy sim.", img: "https://placehold.co/800x500/7c3aed/ffffff?text=Void+Merchant" },
             { type: "digital", title: "Cyber Net", desc: "Hacking puzzle game.", img: "https://placehold.co/800x500/10b981/ffffff?text=Cyber+Net" },
@@ -274,8 +279,8 @@
                 card.style.animationDelay = `${(i - startIndex) * 0.05}s`; // Staggered animation
                 
                 card.innerHTML = `
-                    <div class="relative overflow-hidden bg-gray-100 mb-5 shadow-sm group-hover:shadow-xl transition-all duration-500 aspect-[16/10]">
-                        <img src="${item.img}" alt="${item.title}" class="card-image w-full h-full object-cover transition-transform duration-700 ease-out">
+                    <div class="relative overflow-hidden ${item.fit === 'contain' ? 'bg-white flex items-center justify-center' : 'bg-gray-100'} mb-5 shadow-sm group-hover:shadow-xl transition-all duration-500 aspect-[16/10]">
+                        <img src="${item.img}" alt="${item.title}" class="card-image w-full h-full ${item.fit === 'contain' ? 'object-contain' : 'object-cover'} transition-transform duration-700 ease-out">
                         <div class="absolute top-4 left-4 bg-white/90 backdrop-blur px-3 py-1 text-xs font-bold uppercase tracking-widest opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                             ${tagLabel}
                         </div>

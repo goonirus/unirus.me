@@ -1,0 +1,153 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Project: 1000, Action!</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap"
+      rel="stylesheet"
+    >
+
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              sans: ['Inter', 'sans-serif'],
+              serif: ['Playfair Display', 'serif'],
+            },
+            colors: {
+              paper: '#f8f8f2',
+              ink: '#17301f',
+              accent: '#4f8f3a',
+              gold: '#d6a23d',
+              moss: '#7cb342',
+              river: '#3aaed8',
+              bark: '#6f4c2c'
+            }
+          }
+        }
+      }
+    </script>
+
+    <style>
+        body {
+            background:
+                radial-gradient(circle at top, rgba(214, 162, 61, 0.18), transparent 28%),
+                linear-gradient(180deg, #fdfcf6 0%, #f4f6ea 46%, #eef4f0 100%);
+            color: #17301f;
+            scroll-behavior: smooth;
+        }
+        .sidebar-sticky { position: sticky; top: 8rem; height: calc(100vh - 8rem); overflow-y: auto; }
+        h1, h2, h3 { color: #17301f; }
+        .section-title { font-family: 'Inter', sans-serif; font-weight: 700; font-size: 1.5rem; margin-top: 3rem; margin-bottom: 1rem; padding-bottom: 0.5rem; border-bottom: 1px solid rgba(79, 143, 58, 0.18); }
+        p { margin-bottom: 1.5em; line-height: 1.8; color: #365045; font-size: 1.05rem; }
+        .project-img { width: 100%; background: linear-gradient(180deg, rgba(255,255,255,0.88), rgba(239,245,236,0.96)), linear-gradient(135deg, rgba(214,162,61,0.18), rgba(58,174,216,0.16)); border: 1px solid rgba(79,143,58,0.18); display: flex; align-items: center; justify-content: center; margin: 2rem 0; border-radius: 1rem; overflow: hidden; position: relative; box-shadow: 0 25px 60px -35px rgba(23,48,31,0.28); }
+        .hero-cover { width: 100%; height: 100%; object-fit: cover; display: block; }
+        .rule-card { padding: 1rem; }
+        .rule-card img { width: 100%; height: auto; object-fit: contain; display: block; }
+        .showcase-card { padding: 1rem; }
+        .showcase-card img { width: 100%; height: auto; object-fit: contain; display: block; }
+        #backToTopBtn { display: none; position: fixed; bottom: 2rem; right: 2rem; z-index: 99; border: none; outline: none; background-color: rgba(23,48,31,0.84); color: white; cursor: pointer; padding: 0.75rem; border-radius: 9999px; backdrop-filter: blur(8px); transition: all 0.3s ease; }
+        #backToTopBtn:hover { background-color: rgba(79,143,58,0.94); transform: translateY(-3px); box-shadow: 0 18px 32px -18px rgba(23,48,31,0.45); }
+    </style>
+</head>
+<body class="font-sans antialiased">
+
+<nav class="fixed w-full z-50 top-0 bg-white/70 backdrop-blur-md border-b border-lime-100 h-20 flex items-center px-6 justify-between transition-all duration-300">
+    <div class="flex items-center">
+        <a href="../../portfolio_home.html" class="flex items-center text-slate-500 hover:text-accent transition-colors group mr-8">
+            <i data-lucide="arrow-left" class="w-5 h-5 mr-2 group-hover:-translate-x-1 transition-transform"></i>
+            <span class="lang-en">Back to All Works</span>
+            <span class="lang-cn hidden">返回作品集</span>
+        </a>
+    </div>
+    <div class="flex items-center space-x-4">
+        <div class="hidden md:block text-xs font-bold text-lime-700 uppercase tracking-widest">
+            <span class="lang-en">Time Puzzle Platformer</span>
+            <span class="lang-cn hidden">时间解谜平台游戏</span>
+        </div>
+        <button onclick="toggleLanguage()" class="flex items-center space-x-2 border border-lime-200 px-4 py-2 rounded-full hover:border-accent hover:text-accent transition-all text-xs font-bold tracking-widest uppercase bg-white/90 text-slate-700">
+            <i data-lucide="globe" class="w-4 h-4"></i>
+            <span id="lang-label">EN / 中文</span>
+        </button>
+    </div>
+</nav>
+
+<div class="pt-32 pb-24 max-w-7xl mx-auto px-6 flex flex-col lg:flex-row gap-16">
+    <aside class="lg:w-1/4">
+        <div class="lg:sidebar-sticky">
+            <h1 class="text-4xl font-bold mb-2 leading-tight"><span class="lang-en">1000, Action!</span><span class="lang-cn hidden">1000, Action!</span></h1>
+            <p class="text-lg text-accent font-medium mb-8"><span class="lang-en">Reality-Editing Puzzle Platformer</span><span class="lang-cn hidden">像剪视频一样编辑现实的解谜平台游戏</span></p>
+            <div class="space-y-8 text-sm">
+                <div><h4 class="font-bold uppercase tracking-widest mb-2 text-xs text-slate-500"><span class="lang-en">Role</span><span class="lang-cn hidden">个人职责</span></h4><p class="text-slate-700"><span class="lang-en">Game Design & Programming</span><span class="lang-cn hidden">游戏设计与程序开发</span></p><p class="text-slate-700"><span class="lang-en">Mechanic Prototyping & Level Design</span><span class="lang-cn hidden">机制原型与关卡设计</span></p></div>
+                <div><h4 class="font-bold uppercase tracking-widest mb-2 text-xs text-slate-500"><span class="lang-en">Platform</span><span class="lang-cn hidden">平台</span></h4><p class="text-slate-700"><span class="lang-en">Windows Build</span><span class="lang-cn hidden">Windows 可执行版本</span></p></div>
+                <div><h4 class="font-bold uppercase tracking-widest mb-2 text-xs text-slate-500"><span class="lang-en">Tech Stack</span><span class="lang-cn hidden">技术栈</span></h4><p class="text-slate-700"><span class="lang-en">Unity (C#)</span><span class="lang-cn hidden">Unity（C#）</span></p><p class="text-slate-700"><span class="lang-en">Timeline System, Mask Interaction</span><span class="lang-cn hidden">时间轴系统、遮罩交互</span></p></div>
+                <div><h4 class="font-bold uppercase tracking-widest mb-2 text-xs text-slate-500"><span class="lang-en">Year</span><span class="lang-cn hidden">年份</span></h4><p class="text-slate-700">2026</p></div>
+                <div><h4 class="font-bold uppercase tracking-widest mb-2 text-xs text-slate-500"><span class="lang-en">Made For</span><span class="lang-cn hidden">参赛活动</span></h4><p class="text-slate-700"><span class="lang-en">Global Game Jam 2026</span><span class="lang-cn hidden">Global Game Jam 2026</span></p></div>
+                <div><h4 class="font-bold uppercase tracking-widest mb-2 text-xs text-slate-500"><span class="lang-en">Recognition</span><span class="lang-cn hidden">获奖与认可</span></h4><p class="text-slate-700"><span class="lang-en">Best Game Design</span><span class="lang-cn hidden">最佳游戏设计</span></p><p class="text-slate-700"><span class="lang-en">Best Innovation</span><span class="lang-cn hidden">最佳创新</span></p></div>
+                <div class="pt-4 border-t border-lime-100">
+                    <a href="https://globalgamejam.org/games/2026/action1000-1" class="flex items-center text-accent hover:text-ink font-bold transition-colors"><i data-lucide="external-link" class="w-4 h-4 mr-2"></i><span class="lang-en">View Global Game Jam Page</span><span class="lang-cn hidden">前往 Global Game Jam 页面</span></a>
+                </div>
+            </div>
+        </div>
+    </aside>
+
+    <main class="lg:w-3/4">
+        <div class="project-img aspect-[16/9] mb-12 relative overflow-hidden">
+            <img class="hero-cover" src="../../../../picture/portfolio/action1000/covery.png" alt="1000, Action! cover image">
+            <div class="absolute inset-0 bg-gradient-to-t from-ink/40 via-transparent to-white/10"></div>
+            <div class="absolute inset-0 flex flex-col items-center justify-center text-center px-6 z-10">
+                <div class="mb-6">
+                    <div class="inline-flex items-center px-3 py-1 rounded-full bg-white/85 border border-lime-200 text-xs font-bold uppercase tracking-[0.2em] text-lime-800 mb-4"><span class="lang-en">Global Game Jam / Timeline / Spatial Editing</span><span class="lang-cn hidden">Global Game Jam / 时间轴 / 空间编辑</span></div>
+                    <h2 class="text-3xl md:text-4xl font-bold text-white mb-2 drop-shadow-[0_2px_12px_rgba(23,48,31,0.45)]"><span class="lang-en">What if reality behaved like a video editor?</span><span class="lang-cn hidden">如果现实像视频一样可以被剪辑呢？</span></h2>
+                    <p class="max-w-2xl mx-auto text-sm md:text-base text-lime-50"><span class="lang-en">A Global Game Jam prototype built around a mask-and-timeline system: isolate part of the scene, scrub time, and solve each level by editing movement instead of only reacting to it.</span><span class="lang-cn hidden">这是一个围绕遮罩与时间轴系统展开的 Global Game Jam 原型：玩家可以圈定场景的一部分，拖动时间，并通过编辑动作而不只是即时操作来解开关卡。</span></p>
+                </div>
+                <div class="flex flex-wrap items-center justify-center gap-4">
+                    <a href="https://globalgamejam.org/games/2026/action1000-1" class="inline-flex items-center px-6 py-3 rounded-full bg-accent text-white font-semibold tracking-wide text-base shadow-md hover:bg-ink hover:shadow-lg transition"><span class="mr-2"><span class="lang-en">Open Global Game Jam Page</span><span class="lang-cn hidden">打开 Global Game Jam 页面</span></span><i data-lucide="external-link" class="w-4 h-4"></i></a>
+                </div>
+            </div>
+        </div>
+
+        <section><h2 class="section-title"><span class="lang-en">The Overview</span><span class="lang-cn hidden">项目概览</span></h2><div class="lang-en"><p><em>1000, Action!</em> is a puzzle platformer prototype created for <strong>Global Game Jam 2026</strong>. The project started from a simple underlying thought: what if a mask could hide objects in the scene and change the current state of the puzzle?</p><p>The real innovation came when that masking logic was extended to the <strong>timeline</strong> itself. Instead of only covering objects spatially, the mask could cover the timeline layer almost like a video-editing tool. In practice, that means the player is not only blocking what is visible, but also blocking the objects and events that exist on that layer of time.</p><p>That shift turns the game from a neat masking prototype into a much stronger design statement. The mask can still change the present state and demonstrate technical implementation, but more importantly, it becomes a way to edit causality. That framing also makes the project stand out as a jam piece. Global Game Jam describes itself as the <strong>world's largest game creation event</strong>, so presenting a mechanic this unusual inside that format gave the project extra weight: it was not only a fast prototype, but a concise statement about experimentation through design.</p></div><div class="lang-cn hidden"><p><em>1000, Action!</em> 是一个为 <strong>Global Game Jam 2026</strong> 制作的解谜平台游戏原型。这个项目最初的底层想法其实很简单：如果用一个蒙版去挡住场景里的物品，会不会让谜题状态发生变化？</p><p>真正的创新点在于，我们后来把这套逻辑延伸到了<strong>时间轴</strong>上。它不再只是挡住空间中的物体，而是像剪视频一样去挡住时间轴，相当于挡住了那个图层上的物品和事件。玩家操作的也不只是“看见或看不见”，而是在编辑这一层时间中的存在方式。</p><p>蒙版本身仍然可以改变现状，这一层展示了它在功能实现上的成立；但在这个基础上，我们又继续做了设计上的推进，让它不只是一个技术点，而是变成了真正能推动关卡表达的核心机制。Global Game Jam 官方将自己描述为 <strong>全球规模最大的游戏创作活动</strong>，所以在这样的背景下做出一个机制如此鲜明的原型，也让这个作品更能体现设计表达与实验性。</p></div></section>
+        <section><h2 class="section-title"><span class="lang-en">Core Mechanic</span><span class="lang-cn hidden">核心机制</span></h2><div class="grid grid-cols-1 md:grid-cols-2 gap-8 my-8"><div class="bg-white/80 p-6 border border-lime-100 rounded-2xl shadow-sm"><div class="p-2 bg-accent/10 inline-block rounded-full mb-4"><i data-lucide="circle-dashed" class="w-6 h-6 text-accent"></i></div><h3 class="text-lg font-bold mb-2 text-ink"><span class="lang-en">Masking Space</span><span class="lang-cn hidden">遮罩空间</span></h3><p class="text-sm text-slate-600 lang-en">The first layer of the mechanic is spatial. The mask can hide objects and directly change the current state of the level, proving that the core interaction works in a readable and functional way.</p><p class="text-sm text-slate-600 lang-cn hidden">机制的第一层是空间性的。蒙版可以挡住物品，直接改变关卡当前状态，这一层证明了它在功能实现上是成立而且可读的。</p></div><div class="bg-white/80 p-6 border border-lime-100 rounded-2xl shadow-sm"><div class="p-2 bg-accent/10 inline-block rounded-full mb-4"><i data-lucide="clapperboard" class="w-6 h-6 text-accent"></i></div><h3 class="text-lg font-bold mb-2 text-ink"><span class="lang-en">Masking Time</span><span class="lang-cn hidden">遮罩时间</span></h3><p class="text-sm text-slate-600 lang-en">The second layer is where the design becomes unique: the mask can cover the timeline itself. That makes it feel like video editing, because the player is effectively hiding what exists on that time layer rather than only hiding a visible prop.</p><p class="text-sm text-slate-600 lang-cn hidden">第二层才是这个设计真正独特的地方：蒙版可以挡住时间轴本身。这会让它像是在剪视频，因为玩家实际上是在遮蔽那个时间图层上的存在，而不只是遮住一个看得见的道具。</p></div></div><p class="lang-en">From the source structure and playable build, the game supports a proper menu flow and a short sequence of levels, which helps the idea read as more than a one-screen gimmick. The value here is not just novelty; it is that the novelty is organized into a teachable interaction loop.</p><p class="lang-cn hidden">从源码结构和可玩 build 来看，这个项目已经具备完整的菜单流程和一小套关卡推进，所以它不只是一个单屏点子。真正有价值的是，它把新奇机制整理成了可以被学习和推进的互动循环。</p></section>
+
+        <section><h2 class="section-title"><span class="lang-en">Level-Driven Innovation</span><span class="lang-cn hidden">关卡里的机制创新</span></h2><p class="lang-en">What makes the project stronger is that the mask is not left as a single trick. Later levels push the idea into more specific design situations and prove that the interaction can support real puzzle invention.</p><p class="lang-cn hidden">这个项目更强的地方，在于蒙版并没有停留在一个单点技巧上。后面的关卡把这套机制推进到了更具体的设计情境里，证明它足以支撑真正的谜题创新。</p><ul class="list-disc pl-5 space-y-2 mb-6 text-slate-700"><li class="lang-en"><strong>Level 4:</strong> masking objects is not enough to solve the puzzle. The only way through is to mask the player and keep them suspended in mid-air.</li><li class="lang-cn hidden"><strong>第四关：</strong>单纯挡住物品已经无法过关，只有挡住玩家本身，让玩家滞空，才能完成通关。</li><li class="lang-en"><strong>Level 6:</strong> a sound cue represents lightning. To survive the obstacle and progress, the player has to mask the sound itself.</li><li class="lang-cn hidden"><strong>第六关：</strong>关卡里有一个声音代表闪电，只有挡住这个声音，才能通过障碍并完成通关。</li><li class="lang-en"><strong>Design progression:</strong> the mechanic evolves from hiding things, to hiding time, to hiding the very condition that defines what can happen.</li><li class="lang-cn hidden"><strong>设计递进：</strong>机制从“挡住物品”，发展到“挡住时间”，再发展到“挡住决定事件发生条件的东西”本身。</li></ul></section>
+
+        <section><h2 class="section-title"><span class="lang-en">Recognition</span><span class="lang-cn hidden">获奖与认可</span></h2><p class="lang-en">The project received <strong>Best Game Design</strong> and <strong>Best Innovation</strong>. Those two awards fit the work well: one speaks to how cleanly the mechanic was structured, and the other acknowledges how unusual the core interaction felt for a jam prototype.</p><p class="lang-cn hidden">这个项目获得了 <strong>最佳游戏设计</strong> 和 <strong>最佳创新</strong>。这两项认可和作品本身很贴合：前者说明机制结构清楚成立，后者则说明它作为 jam 原型提出了足够鲜明的新互动方式。</p><div class="grid grid-cols-1 md:grid-cols-2 gap-6 my-8"><div class="rounded-2xl border border-lime-100 bg-white shadow-sm p-6"><div class="inline-flex items-center px-3 py-1 rounded-full bg-gold/15 text-bark text-xs font-bold uppercase tracking-[0.2em] mb-4">Award</div><h3 class="text-xl font-bold mb-2 text-ink"><span class="lang-en">Best Game Design</span><span class="lang-cn hidden">最佳游戏设计</span></h3><p class="text-sm text-slate-600 lang-en">Recognition for the strength, clarity, and teachability of the core puzzle system.</p><p class="text-sm text-slate-600 lang-cn hidden">对这套核心解谜系统在结构清晰度、可读性与教学性上的认可。</p></div><div class="rounded-2xl border border-lime-100 bg-white shadow-sm p-6"><div class="inline-flex items-center px-3 py-1 rounded-full bg-gold/15 text-bark text-xs font-bold uppercase tracking-[0.2em] mb-4">Award</div><h3 class="text-xl font-bold mb-2 text-ink"><span class="lang-en">Best Innovation</span><span class="lang-cn hidden">最佳创新</span></h3><p class="text-sm text-slate-600 lang-en">Recognition for turning a strong metaphor into a mechanic players can immediately feel.</p><p class="text-sm text-slate-600 lang-cn hidden">对把鲜明概念真正转化为玩家能够立刻感受到的机制体验的认可。</p></div></div><div class="grid grid-cols-1 md:grid-cols-2 gap-6 my-8"><div class="rule-card rounded-2xl border border-lime-100 bg-white shadow-sm"><img src="../../../../picture/portfolio/action1000/award_1000_3.jpg" alt="1000, Action! Best Game Design certificate"></div><div class="rule-card rounded-2xl border border-lime-100 bg-white shadow-sm"><img src="../../../../picture/portfolio/action1000/award_1000_4.jpg" alt="1000, Action! Best Innovation certificate"></div></div><div class="rule-card rounded-2xl border border-lime-100 bg-white shadow-sm my-8 md:w-5/6 mx-auto"><img src="../../../../picture/portfolio/action1000/award_1000_2.jpg" alt="1000, Action! award photo"></div></section>
+
+        <section><h2 class="section-title"><span class="lang-en">Visual Notes</span><span class="lang-cn hidden">视觉与展示</span></h2><p class="lang-en">The art direction stays intentionally lightweight and hand-drawn, which helps the time-editing mechanic remain the focus. Instead of covering the concept with spectacle, the project uses simple shapes, bright contrasts, and readable props to keep attention on interaction.</p><p class="lang-cn hidden">这个项目的视觉方向刻意保持轻量和手绘感，让“时间编辑”本身成为主角。它没有用复杂演出来覆盖概念，而是通过简单形状、明快对比和清晰道具，把注意力留在交互逻辑上。</p><div class="showcase-card overflow-hidden rounded-2xl border border-lime-100 bg-white shadow-sm my-8"><img src="../../../../picture/portfolio/action1000/frozen.png" alt="1000, Action! frozen player puzzle screenshot"></div><p class="lang-en">The <em>Frozen</em> moment is a good example of how the idea grows beyond object masking: the player has to suspend the player state itself, not just remove a prop from the route.</p><p class="lang-cn hidden"><em>Frozen</em> 这张图正好说明了这个机制如何超出“挡住物品”本身：玩家需要冻结并悬停玩家状态，而不只是把路径上的某个物体移除。</p></section>
+
+    </main>
+</div>
+
+<footer class="bg-ink text-lime-50 py-20 px-6 mt-12 border-t border-lime-950"><div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-12 items-center"><div><h2 class="text-3xl md:text-4xl font-bold mb-6 text-white"><span class="lang-en">Let's talk playful systems.</span><span class="lang-cn hidden">欢迎聊聊有趣的系统设计。</span></h2><a href="mailto:donglinyan2000@outlook.com" class="inline-flex items-center text-gold hover:text-white transition-colors text-lg font-medium">donglinyan2000@outlook.com<i data-lucide="arrow-right" class="ml-2 w-5 h-5"></i></a></div><div class="flex flex-col md:items-end space-y-4"><p class="text-sm text-lime-200 uppercase tracking-widest mb-4"><span class="lang-en">Social Media</span><span class="lang-cn hidden">社交媒体</span></p><a href="#" class="text-lime-100 hover:text-gold transition-colors flex items-center"><i data-lucide="twitter" class="w-5 h-5 mr-3"></i> Twitter / X</a><a href="#" class="text-lime-100 hover:text-gold transition-colors flex items-center"><i data-lucide="linkedin" class="w-5 h-5 mr-3"></i> LinkedIn</a></div></div><div class="max-w-7xl mx-auto mt-20 pt-8 border-t border-lime-900 text-center md:text-left text-xs text-lime-300">&copy; 2025 Game Designer Portfolio. All rights reserved.</div></footer>
+
+<button id="backToTopBtn" onclick="scrollToTop()" title="Go to top"><i data-lucide="arrow-up" class="w-6 h-6"></i></button>
+
+<script>
+    lucide.createIcons();
+    const backToTopBtn = document.getElementById("backToTopBtn");
+    window.addEventListener('scroll', function() {
+        const nav = document.querySelector('nav');
+        if (window.scrollY > 50) { nav.classList.add('shadow-lg'); nav.classList.add('bg-white/90'); }
+        else { nav.classList.remove('shadow-lg'); nav.classList.remove('bg-white/90'); }
+        backToTopBtn.style.display = window.scrollY > 300 ? "block" : "none";
+    });
+    function scrollToTop() { window.scrollTo({top: 0, behavior: 'smooth'}); }
+    function toggleLanguage() {
+        const enEls = document.querySelectorAll('.lang-en');
+        const cnEls = document.querySelectorAll('.lang-cn');
+        enEls.forEach(el => el.classList.toggle('hidden'));
+        cnEls.forEach(el => el.classList.toggle('hidden'));
+    }
+</script>
+</body>
+</html>
+
+
