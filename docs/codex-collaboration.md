@@ -28,6 +28,8 @@ This file records the working rules and user preferences for maintaining the `un
 - Treat any remote push as a deployment-sensitive action because it may consume Netlify/site update quota.
 - It is fine to prepare local changes, stage files, inspect git state, and explain what is ready.
 - Before any `git push`, explicitly confirm with the user.
+- Permission to push authorizes the remote action, not every file currently present in the working tree. Stage only the agreed project state and current work scope.
+- Never blanket-add untracked or explicitly unconfirmed site directions. Check `docs/project-state.md` and preserve local experiments outside the deployment commit unless the user separately approves them.
 
 ## Content Editing Rules
 

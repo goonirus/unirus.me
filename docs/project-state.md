@@ -15,10 +15,19 @@ This file gives future threads a quick snapshot. Recheck the repository before a
 
 ## Active Website Line
 
-- The root experience now uses Vite, React, TypeScript, and Tailwind through `index.html`, `src/`, and `vite.config.ts`.
-- `npm run build` is the production verification command; Netlify publishes the generated `dist/` directory.
-- Long-form portfolio, writing, and rating pages remain static HTML under `public/` and are copied into the build unchanged.
-- Legacy and shared static assets remain under `picture/` and `file/`; website pages must only reference repo-local relative paths.
+- The deployed website remains the static HTML site led by `home.html`.
+- Portfolio, writing, and rating pages live under `public/`; shared assets live under `picture/` and `file/`.
+- Website pages must only reference repo-local relative paths.
+
+There is a separate Vite/React direction in the local working tree:
+
+- `index.html`
+- `package.json`
+- `src/`
+- `vite.config.ts`
+- TypeScript and Tailwind configuration files
+
+These files are not part of the confirmed deployed version. Keep them local and untracked unless the user explicitly approves replacing the static site's publishing entry.
 
 ## Writing Sections
 
