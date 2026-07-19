@@ -199,7 +199,10 @@
         // 模拟数据源
         const rawData = [
             // Board Game
-            { type: "BoardGame", date: "Nov 2025", title: "Analysis of Design Structures in No Thanks! and Catan", desc: "Analysis of Design Structures in No Thanks! and Catan", link: "BoardGame/Nothanks&Catan.html" },
+            { type: "BoardGame", date: "Jul 2026", title: "Wondrous Creatures: Busy, But Not Deep Enough", desc: "A deconstruction of costly input complexity, unstable card routes, and why a busy engine can still feel strategically shallow.", link: "BoardGame/WondrousCreaturesBusyButNotDeep.html", image: "../../picture/deconstruction/BoardGame/wondrous-creatures-board-closeup-1.jpg" },
+            { type: "BoardGame", date: "Jul 2026", title: "Pandemic: A Public Arithmetic Problem Dressed as Disaster", desc: "How Pandemic's readable cooperative grammar becomes both its historical strength and its ceiling for long-term mastery.", link: "BoardGame/PandemicPublicArithmetic.html", image: "../../picture/deconstruction/BoardGame/pandemic-components-official.webp" },
+            { type: "BoardGame", date: "Jul 2026", title: "When Preparation Becomes a Curse", desc: "A system-level look at BitD's dice, consequences, and why preparation should change the type of cost rather than simply reduce its size.", link: "BoardGame/WhenPreparationBecomesACurse.html", image: "../../picture/deconstruction/BoardGame/blades-dice-official.png" },
+            { type: "BoardGame", date: "Nov 2025", title: "Analysis of Design Structures in No Thanks! and Catan", desc: "Analysis of Design Structures in No Thanks! and Catan", link: "BoardGame/Nothanks&Catan.html", image: "../../picture/deconstruction/BoardGame/No&Catan/catan-board-3d-render.jpg" },
             { type: "BoardGame", date: "Oct 2023", title: "Worker Placement Evolution", desc: "From Caylus to Arnak: How the worker lost its job.", link: "article_detail.html" },
             { type: "BoardGame", date: "Sep 2023", title: "The Math of Deckbuilders", desc: "Probability curves in Dominion vs. Ascension.", link: "article_detail.html" },
             { type: "BoardGame", date: "Aug 2023", title: "Social Deduction Dynamics", desc: "Why 'The Resistance' breaks friendships and why we love it.", link: "article_detail.html" },
@@ -273,6 +276,11 @@
                         <span class="${colors[type].tag} text-[10px] font-bold px-2 py-0.5 rounded-sm uppercase tracking-wider">${type}</span>
                         <span class="text-xs text-gray-400 font-mono">${item.date}</span>
                     </div>
+                    ${item.image ? `
+                    <div class="mb-5 overflow-hidden rounded-sm bg-gray-100 aspect-[16/9]">
+                        <img src="${item.image}" alt="${item.title}" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105">
+                    </div>
+                    ` : ''}
                     <h2 class="text-2xl font-bold text-ink mb-3 group-hover:text-accent transition-colors leading-tight">${item.title}</h2>
                     <p class="text-gray-500 text-sm leading-relaxed flex-grow">${item.desc}</p>
                     <div class="mt-6 flex items-center text-xs font-bold uppercase tracking-widest text-gray-300 group-hover:text-accent transition-colors">

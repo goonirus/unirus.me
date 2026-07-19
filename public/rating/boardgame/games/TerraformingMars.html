@@ -1,0 +1,854 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Review: Terraforming Mars</title>
+    <link rel="icon" href="../../../favicon.svg" type="image/svg+xml">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./rating-game-navigation.css">
+    <script src="./rating-game-navigation.js" defer></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: { sans: ['Inter', 'Noto Sans SC', 'sans-serif'] },
+                    colors: {
+                        paper: '#fdfbf7',
+                        ink: '#1a1a1a',
+                        accent: '#c2410c',
+                        secondary: '#f3f4f6',
+                        impression: '#b91c1c'
+                    }
+                }
+            }
+        };
+    </script>
+    <style>
+        body { background-color: #fdfbf7; color: #1a1a1a; }
+        .prose p { margin-bottom: 1.45em; line-height: 1.85; color: #4b5563; }
+        .prose h3 {
+            font-weight: 700;
+            font-size: 1.5rem;
+            margin-top: 2.75rem;
+            margin-bottom: 1rem;
+            color: #1a1a1a;
+            border-left: 4px solid #c2410c;
+            padding-left: 1rem;
+        }
+        .prose h4 {
+            font-weight: 700;
+            font-size: 1.25rem;
+            margin-top: 2.25rem;
+            margin-bottom: 0.9rem;
+            padding-bottom: 0.55rem;
+            color: #1a1a1a;
+            border-bottom: 1px solid #e5e7eb;
+        }
+        .prose a {
+            color: #9a3412;
+            text-decoration: underline;
+            text-decoration-color: #fdba74;
+            text-underline-offset: 0.18em;
+        }
+        .prose a:hover { color: #c2410c; text-decoration-color: #c2410c; }
+        .scope-note {
+            margin: 2rem 0 2.5rem;
+            padding: 1rem 0 1rem 1.25rem;
+            border-left: 2px solid #d1d5db;
+            color: #6b7280;
+        }
+        .scope-note p { margin-bottom: 0; }
+        .score-table { table-layout: fixed; }
+        .score-table th {
+            text-align: left;
+            padding: 0.75rem 0.85rem;
+            border-bottom: 1px solid #e5e7eb;
+            color: #9ca3af;
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+        .score-table td {
+            padding: 0.75rem 0.85rem;
+            border-bottom: 1px solid #f3f4f6;
+            font-size: 0.825rem;
+            vertical-align: middle;
+        }
+        .score-table th:first-child,
+        .score-table td:first-child { width: 45%; }
+        .score-table th:nth-child(2),
+        .score-table td:nth-child(2) { width: 29%; text-align: right; }
+        .score-table th:nth-child(3),
+        .score-table td:nth-child(3) { width: 26%; text-align: right; }
+        .score-table tr:last-child td { border-bottom: none; }
+        .score-high { color: #15803d; font-weight: 700; }
+        .score-bonus { color: #15803d; font-weight: 700; }
+        .score-mid { color: #4b5563; }
+        .score-label { overflow-wrap: anywhere; }
+        .review-header-media {
+            display: flex;
+            align-items: flex-end;
+            justify-content: space-between;
+            gap: 1.25rem;
+            width: 100%;
+        }
+        .review-cover {
+            flex: 0 0 auto;
+            width: 8.5rem;
+            margin: 0;
+        }
+        .review-cover-frame {
+            width: 100%;
+            aspect-ratio: 1 / 1;
+            overflow: hidden;
+            background: #ffffff;
+            border: 1px solid #e5e7eb;
+            border-radius: 2px;
+            box-shadow: 0 8px 22px rgba(17, 24, 39, 0.12);
+        }
+        .review-cover img {
+            display: block;
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+        .review-cover figcaption {
+            margin-top: 0.45rem;
+            color: #9ca3af;
+            font-size: 0.65rem;
+            line-height: 1.35;
+            text-align: center;
+        }
+        .expansion-review-scroll {
+            width: 100%;
+            min-width: 0;
+            overflow-x: auto;
+            overscroll-behavior-inline: contain;
+            padding-bottom: 0.75rem;
+            scrollbar-width: thin;
+            scrollbar-color: #cbd5e1 transparent;
+        }
+        .expansion-review-scroll::-webkit-scrollbar { height: 8px; }
+        .expansion-review-scroll::-webkit-scrollbar-track { background: transparent; }
+        .expansion-review-scroll::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 4px;
+        }
+        .expansion-review-scroll::-webkit-scrollbar-thumb:hover { background: #9ca3af; }
+        .expansion-review-list {
+            display: grid;
+            grid-auto-flow: column;
+            grid-auto-columns: 15rem;
+            gap: 1rem;
+            width: max-content;
+            min-width: 100%;
+        }
+        .expansion-review-item {
+            min-width: 0;
+            min-height: 4.25rem;
+            padding-right: 0.25rem;
+        }
+        .expansion-review-meta .lang-cn {
+            white-space: nowrap;
+            font-size: 0.6875rem;
+            letter-spacing: 0;
+        }
+        @media (min-width: 1024px) {
+            .review-header-media { width: auto; justify-content: flex-end; }
+            .review-cover { width: 10.5rem; }
+            .expansion-review-list {
+                grid-template-columns: repeat(4, minmax(0, 1fr));
+                grid-auto-flow: row;
+                grid-auto-columns: auto;
+                width: 100%;
+            }
+        }
+        @media (max-width: 420px) {
+            .score-table th,
+            .score-table td { padding-left: 0.65rem; padding-right: 0.65rem; }
+            .score-table th { font-size: 0.65rem; }
+        }
+        @media (max-width: 360px) {
+            .review-header-media { gap: 1rem; }
+            .review-cover { width: 7.5rem; }
+        }
+    </style>
+</head>
+<body class="font-sans antialiased">
+    <nav class="fixed w-full z-50 top-0 bg-paper/90 backdrop-blur-sm border-b border-gray-200/50 h-20 flex items-center px-4 sm:px-6 justify-between">
+        <div class="flex flex-1 items-center gap-4 sm:gap-6 min-w-0">
+            <a href="../ratinglist_bg/all_games/all_games.html" class="flex items-center text-gray-500 hover:text-accent transition-colors group shrink-0">
+                <i data-lucide="arrow-left" class="w-5 h-5 mr-2 group-hover:-translate-x-1 transition-transform"></i>
+                <span class="hidden sm:inline">
+                    <span class="lang-en">Back to List</span>
+                    <span class="lang-cn hidden">返回总表</span>
+                </span>
+            </a>
+            <a href="../rating_boardgame_home.html" class="hidden md:flex items-center text-gray-500 hover:text-accent transition-colors">
+                <i data-lucide="layout-list" class="w-4 h-4 mr-2"></i>
+                <span class="lang-en">Rating Overview</span>
+                <span class="lang-cn hidden">评分说明</span>
+            </a>
+            <div class="sticky-game-title" data-sticky-game-title aria-hidden="true">
+                <span class="lang-en">Terraforming Mars</span>
+                <span class="lang-cn hidden">殖民火星</span>
+            </div>
+        </div>
+
+        <button type="button" onclick="toggleLanguage()" aria-label="Switch language" class="flex items-center space-x-2 border border-gray-300 px-3 sm:px-4 py-2 rounded-full hover:border-accent hover:text-accent transition-all text-xs font-bold tracking-widest uppercase bg-white shrink-0">
+            <i data-lucide="globe" class="w-4 h-4"></i>
+            <span id="lang-label">EN / 中文</span>
+        </button>
+    </nav>
+
+    <main class="pt-32 pb-24 px-5 sm:px-6">
+        <article class="max-w-7xl mx-auto">
+            <header class="flex flex-col lg:flex-row justify-between items-start lg:items-end gap-8 mb-12 border-b border-gray-200 pb-12">
+                <div class="min-w-0">
+                    <span class="text-accent font-bold tracking-widest uppercase text-xs mb-2 block">
+                        <span class="lang-en">Engine Building In Its Purest Form</span>
+                        <span class="lang-cn hidden">纯粹而极致的引擎构筑</span>
+                    </span>
+                    <h1 class="text-4xl sm:text-5xl font-bold text-ink mb-3 break-words" data-review-title>
+                        <span class="lang-en">Terraforming Mars</span>
+                        <span class="lang-cn hidden">殖民火星</span>
+                    </h1>
+                    <p class="text-gray-500 text-base sm:text-lg">
+                        <span class="lang-en">Jacob Fryxelius · 2016 · 1-5 players · 90-120 minutes</span>
+                        <span class="lang-cn hidden">Jacob Fryxelius · 2016 · 1-5 人 · 90-120 分钟</span>
+                    </p>
+                </div>
+                <div class="review-header-media lg:shrink-0">
+                    <div class="flex flex-col items-start lg:items-end gap-3">
+                        <div class="text-left lg:text-right">
+                            <div class="text-xs font-mono tracking-widest uppercase text-gray-400 mb-1">
+                                <span class="lang-en">Weighted Score</span>
+                                <span class="lang-cn hidden">加权评分</span>
+                            </div>
+                            <div class="text-6xl font-bold text-accent leading-none" data-weighted-score>93.9</div>
+                            <div class="text-xs text-gray-400 mt-1 tracking-widest uppercase">/100</div>
+                        </div>
+                        <div class="text-left lg:text-right">
+                            <span class="text-xs font-mono tracking-widest uppercase text-gray-400">
+                                <span class="lang-en">Impression</span>
+                                <span class="lang-cn hidden">印象分</span>
+                            </span>
+                            <span class="ml-2 text-2xl font-bold text-impression align-middle">99</span>
+                            <span class="text-gray-400">/100</span>
+                        </div>
+                    </div>
+                    <figure class="review-cover">
+                        <div class="review-cover-frame">
+                            <img src="../../../picture/rating_boardgame/terraforming-mars/terraforming-mars-cover.png" alt="Terraforming Mars / 殖民火星 official product image" width="600" height="600" decoding="async" fetchpriority="high">
+                        </div>
+                        <figcaption>
+                            <span class="lang-en">Official product image · FryxGames</span>
+                            <span class="lang-cn hidden">官方商品图 · FryxGames</span>
+                        </figcaption>
+                    </figure>
+                </div>
+            </header>
+
+            <section id="expansion-reviews" aria-labelledby="expansion-reviews-title" class="mb-10 border-y border-gray-200 py-4 sm:py-5">
+                <div class="flex flex-col xl:flex-row xl:items-center gap-4 xl:gap-6">
+                    <div class="flex items-center gap-3 shrink-0">
+                        <i data-lucide="layers-3" class="w-5 h-5 text-accent"></i>
+                        <h2 id="expansion-reviews-title" class="text-xs font-bold uppercase tracking-widest text-gray-500">
+                            <span class="lang-en">Expansion Reviews</span>
+                            <span class="lang-cn hidden">扩展评测</span>
+                        </h2>
+                    </div>
+                    <div class="expansion-review-scroll flex-1 xl:ml-auto">
+                        <div class="expansion-review-list">
+                        <a href="../expansions/terraforming-mars/prelude.html" class="expansion-review-item group flex items-center gap-3 text-gray-600 hover:text-accent transition-colors">
+                            <span class="w-14 h-14 shrink-0 overflow-hidden border border-gray-200 bg-white rounded-sm">
+                                <img src="../../../picture/rating_boardgame/terraforming-mars/expansions/prelude/prelude-cover.png" alt="" width="1310" height="1310" loading="lazy" decoding="async" class="w-full h-full object-contain">
+                            </span>
+                            <span class="min-w-0">
+                                <span class="block font-semibold text-ink group-hover:text-accent transition-colors">
+                                    <span class="lang-en">Prelude</span>
+                                    <span class="lang-cn hidden">《前序》</span>
+                                </span>
+                                <span class="expansion-review-meta block mt-1 text-xs text-gray-400">
+                                    <span class="lang-en">S+ tier · Always include</span>
+                                    <span class="lang-cn hidden">S+ 档 · 从第一局开始常驻</span>
+                                </span>
+                            </span>
+                            <i data-lucide="arrow-right" class="w-4 h-4 ml-auto shrink-0 group-hover:translate-x-1 transition-transform"></i>
+                        </a>
+                        <a href="../expansions/terraforming-mars/venus-next.html" class="expansion-review-item group flex items-center gap-3 text-gray-600 hover:text-accent transition-colors">
+                            <span class="w-14 h-14 shrink-0 overflow-hidden border border-gray-200 bg-white rounded-sm">
+                                <img src="../../../picture/rating_boardgame/terraforming-mars/expansions/venus-next/venus-next-cover.png" alt="" width="753" height="753" loading="lazy" decoding="async" class="w-full h-full object-contain">
+                            </span>
+                            <span class="min-w-0">
+                                <span class="block font-semibold text-ink group-hover:text-accent transition-colors">
+                                    <span class="lang-en">Venus Next</span>
+                                    <span class="lang-cn hidden">《金星扩展》</span>
+                                </span>
+                                <span class="expansion-review-meta block mt-1 text-xs text-gray-400">
+                                    <span class="lang-en">B+ tier · Usually include</span>
+                                    <span class="lang-cn hidden">B+ 档 · 通常加入</span>
+                                </span>
+                            </span>
+                            <i data-lucide="arrow-right" class="w-4 h-4 ml-auto shrink-0 group-hover:translate-x-1 transition-transform"></i>
+                        </a>
+                        <a href="../expansions/terraforming-mars/colonies.html" class="expansion-review-item group flex items-center gap-3 text-gray-600 hover:text-accent transition-colors">
+                            <span class="w-14 h-14 shrink-0 overflow-hidden border border-gray-200 bg-white rounded-sm">
+                                <img src="../../../picture/rating_boardgame/terraforming-mars/expansions/colonies/colonies-cover.png" alt="" width="755" height="754" loading="lazy" decoding="async" class="w-full h-full object-contain">
+                            </span>
+                            <span class="min-w-0">
+                                <span class="block font-semibold text-ink group-hover:text-accent transition-colors">
+                                    <span class="lang-en">Colonies</span>
+                                    <span class="lang-cn hidden">《殖民地》</span>
+                                </span>
+                                <span class="expansion-review-meta block mt-1 text-xs text-gray-400">
+                                    <span class="lang-en">S tier · Usually include</span>
+                                    <span class="lang-cn hidden">S 档 · 通常加入</span>
+                                </span>
+                            </span>
+                            <i data-lucide="arrow-right" class="w-4 h-4 ml-auto shrink-0 group-hover:translate-x-1 transition-transform"></i>
+                        </a>
+                        <a href="../expansions/terraforming-mars/turmoil.html" class="expansion-review-item group flex items-center gap-3 text-gray-600 hover:text-accent transition-colors">
+                            <span class="w-14 h-14 shrink-0 overflow-hidden border border-gray-200 bg-white rounded-sm">
+                                <img src="../../../picture/rating_boardgame/terraforming-mars/expansions/turmoil/turmoil-cover.png" alt="" width="762" height="762" loading="lazy" decoding="async" class="w-full h-full object-contain">
+                            </span>
+                            <span class="min-w-0">
+                                <span class="block font-semibold text-ink group-hover:text-accent transition-colors">
+                                    <span class="lang-en">Turmoil</span>
+                                    <span class="lang-cn hidden">《动荡》</span>
+                                </span>
+                                <span class="expansion-review-meta block mt-1 text-xs leading-snug text-gray-400">
+                                    <span class="lang-en">B tier · Include as needed</span>
+                                    <span class="lang-cn hidden">B 档 · 按需加入</span>
+                                </span>
+                            </span>
+                            <i data-lucide="arrow-right" class="w-4 h-4 ml-auto shrink-0 group-hover:translate-x-1 transition-transform"></i>
+                        </a>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-12 lg:gap-16">
+                <div class="lg:col-span-2 prose max-w-none">
+                    <h3>
+                        <span class="lang-en">Review Scope And Play Context</span>
+                        <span class="lang-cn hidden">评价范围与游玩背景</span>
+                    </h3>
+                    <div class="lang-en">
+                        <p>
+                            This review evaluates Terraforming Mars with all official expansions and all official promotional material. The base game alone is not the same evaluated object. For online play, I recommend <a href="http://tm.jaing.me/" target="_blank" rel="noopener noreferrer">tm.jaing.me</a>, where most of my online games have taken place. In my experience, it provides all official expansions for free, along with complete opening drafts, optional Breakthrough corporation balance, double-corporation play, and some low-priced fan-balance content. Those fan variants are recommendations rather than scored official content. Access from outside China has recently been unreliable; BGA is convenient, but its available modules do not represent the complete version evaluated here.
+                        </p>
+                        <p>
+                            I have played roughly 500 games on that site, which gives me a substantial practical basis for discussing the game's systems, values, and long-term behavior. My friends and I often leave a game running in the background. At this level of familiarity, Terraforming Mars no longer requires us to set aside deliberate thinking time: whenever someone has time and notices that it is their turn, they take two actions and return to whatever else they were doing. This says more about accumulated fluency than an absence of depth; many calculations that once required conscious effort have become recognition and habit.
+                        </p>
+                        <p>
+                            Replayability matters greatly to me, and Terraforming Mars's exceptional replayability is one of the main reasons I love it. That preference legitimately shapes the impression score. In the dimension breakdown, however, it does not erase the game's visible weaknesses in balance, aesthetics, interaction, or flow.
+                        </p>
+                    </div>
+                    <div class="lang-cn hidden">
+                        <p>
+                            本文评价的是包含全部官方扩展与全部官方 Promo 的《殖民火星》，只玩本体并不等于本文评价的完整版本。线上游玩方面，我推荐 <a href="http://tm.jaing.me/" target="_blank" rel="noopener noreferrer">tm.jaing.me</a>，我的线上对局也主要来自这里。按我的使用经验，它可以免费游玩全部官方扩展，也支持完整开局轮抽、可选的 Breakthrough 企业平衡和双企业模式；部分民间平衡内容需要低价付费。民间变体属于额外推荐，不计入官方内容的正式评分。最近从中国以外地区访问可能不稳定；BGA 使用方便，但目前能玩的模块不能代表本文评价的完整版本。
+                        </p>
+                        <p>
+                            我大约已经在这个网站上玩过 500 局《殖民火星》，对它的系统、数值和长期变化有了相当深入的理解，也有相对充分的实际经验作为评价基础。我和朋友们平时常会在网站上挂着一局。对我们而言，这款游戏已经不需要专门腾出思考量：什么时候有空，发现轮到自己，就做完两个行动，再去忙别的事情。这并不是说游戏没有深度，而是大量原本需要明确计算的判断，已经随着熟练度变成了直觉和习惯。
+                        </p>
+                        <p>
+                            我非常在乎重玩性，《殖民火星》极高的重玩性也是我如此喜欢它的重要原因。这种个人偏好会合理地影响印象分；但落到维度明细里，它不会替平衡、美术、交互或流畅度中真实存在的问题开脱。
+                        </p>
+                    </div>
+
+                    <h3>
+                        <span class="lang-en">Verdict</span>
+                        <span class="lang-cn hidden">总评</span>
+                    </h3>
+                    <div class="lang-en">
+                        <p>
+                            Terraforming Mars is engine building in an unusually pure and extreme form. Its cards are not forced into a short cycle or a fixed number of turns. Players can retain projects, accumulate production, and keep extending an economy until they decide that development should become points or that the shared terraforming should finally end the game.
+                        </p>
+                        <p>
+                            It is not a design without faults. Weak resources, uneven corporations, and scattered card outliers are easy to find. Its best systems, however, reach beyond the ordinary ceiling: the numerical model, the conflict over game length, and the architecture's ability to absorb years of new content are exceptional enough that those flaws reduce an extraordinary design rather than turn it into an ordinary one.
+                        </p>
+                        <p>
+                            My impression score is therefore 99, while the dimension-weighted result is 93.9. That gap reflects this game's particular combination of strengths and weaknesses: extraordinary engine architecture and replayability coexist with visible costs in balance, aesthetics, interaction, and novice flow.
+                        </p>
+                    </div>
+                    <div class="lang-cn hidden">
+                        <p>
+                            《殖民火星》在我看来是纯粹而极致的引擎构筑。它不会用短循环或固定回合数不断催促玩家立刻变现；玩家可以藏牌、积累产能、不断延长自己的经济链条，再决定什么时候把发育转化成分数，或者推动全局改造，让游戏真正结束。
+                        </p>
+                        <p>
+                            它当然不是一款没有问题的游戏。弱势资源、不平衡的企业，以及星星点点的超模或亏模卡牌都不难找到。但它优秀的部分本来具有突破普通满分的高度：数值模型、围绕终局时间产生的流派矛盾，以及多年扩展仍能接入本体的系统架构，都足够出类拔萃。这些缺点消耗了它原本更高的优势，却没有把它降成一款只剩“综合水平不错”的作品。
+                        </p>
+                        <p>
+                            因此，我给出的印象分是 99，而维度加权评分是 93.9。两者的差距来自这款游戏非常鲜明的优缺点：引擎架构与重玩性足够出类拔萃，平衡、美术、交互和新手局流畅度上的代价也同样真实。
+                        </p>
+                    </div>
+
+                    <h3 id="section-mechanics" class="rating-section-anchor">
+                        <span class="lang-en">Mechanics: A Long-Horizon Engine</span>
+                        <span class="lang-cn hidden">机制：长周期引擎</span>
+                    </h3>
+
+                    <h4>
+                        <span class="lang-en">Card Language And Time Structure</span>
+                        <span class="lang-cn hidden">卡牌语言与时间结构</span>
+                    </h4>
+                    <div class="lang-en">
+                        <p>
+                            The card system begins with a clear grammar. Green Automated projects resolve their immediate effects and remain as tags; blue Active projects create persistent effects or repeatable actions; red Events happen once and are then turned face down. Cost, tags, global prerequisites, tag prerequisites, and rewards place every card inside the same readable economic language.
+                        </p>
+                        <p>
+                            What gives that language its force is time. A generation does not impose a small fixed action allowance, and the game has no strict hand limit that repeatedly forces players to discard long-term possibilities. A player may retain a project for many generations, wait for a discount, build the production needed to support it, and then convert the entire chain late in the game. This is why Terraforming Mars tests long-term planning more directly than short-cycle conversion efficiency.
+                        </p>
+                        <p>
+                            In theory, a project with no long-term return can be delayed until the final generation because a discount may still appear later. That is not an absolute answer. Playing earlier may cycle into another draw, create a needed tag, or secure a Milestone. Milestones are therefore not an isolated scoring ornament; they are one of the mechanisms that prevent long-term planners from postponing every conversion without further thought.
+                        </p>
+                        <p>
+                            Anti-Gravity Technology is a precise example. Buying it early costs three money, and if it is eventually played its strength can repay the investment. If it never becomes playable, selling the patent returns one money, so the nominal loss is only two. Even that calculation needs a time-value caveat: three money near the opening and one money near the ending cannot be treated as a context-free subtraction. A simple decision to keep one card therefore contains probability, timing, liquidity, and future engine value at once.
+                        </p>
+                    </div>
+                    <div class="lang-cn hidden">
+                        <p>
+                            火星的卡牌系统首先拥有一套非常清楚的语法。绿色自动牌结算即时效果，并把标记留在玩家面前；蓝色行动牌提供持续效果或可重复行动；红色事件牌只结算一次，之后翻面。费用、标记、全局前置、标记前置和收益共同组成了统一而易读的经济语言。
+                        </p>
+                        <p>
+                            真正让这套语言发挥力量的，是游戏的时间结构。一个时代没有很小的固定行动额度，手牌也不会通过严格上限不断逼迫玩家放弃长期可能性。玩家可以把一张牌保留几个时代，等待减费、搭建足够的产能，最后再把整条链条集中变现。因此，《殖民火星》更直接考验资源积累与长期规划，而不是短循环中每回合的转化效率。
+                        </p>
+                        <p>
+                            理论上，一张没有提供长期收益的牌完全可以放到最后一个时代再打，因为未来仍然可能抽到减费牌。但这也不是绝对答案：提前打出可能帮助过牌、补出需要的标记，或者抢下里程碑。里程碑因此并不是孤立的得分装饰，它正是对“不加思考就把所有变现拖到后期”的一层制衡。
+                        </p>
+                        <p>
+                            “反重力引擎”是一个很准确的例子。开局买下它需要三块钱；如果后来能够打出，它本身的强度足以弥补这笔投入；就算始终没有打出，卖专利还能拿回一块，名义损失似乎只有两块。但前期的三块钱和后期的一块钱并不能简单相减。仅仅保留一张卡，就同时涉及概率、时机、流动资金和未来引擎价值。
+                        </p>
+                    </div>
+
+                    <h4>
+                        <span class="lang-en">Resources And Numerical Models</span>
+                        <span class="lang-cn hidden">资源与数值模型</span>
+                    </h4>
+                    <div class="lang-en">
+                        <p>
+                            Money, steel, and titanium divide their work clearly and intuitively. Steel and titanium are more valuable per unit, but their tag restrictions make them less flexible than money. The production model is not a flat conversion of the printed spending rates: card analysis produces approximate values of 4.5 money for one money production, 7 for one steel production, and 10 for one titanium production. Those expectations also match the experience at the table. Restricted payment and careful valuation reinforce each other.
+                        </p>
+                        <p>
+                            Plants, energy, and heat are less even, but more revealing. Plants are powerful because greeneries are powerful, yet eight plants are required before the resource changes state. Players can assemble those eight resources through production, cards, and other gains, so this is primarily a phase change in stored resources. The threshold creates timing and exposes accumulated plants to interaction.
+                        </p>
+                        <p>
+                            Energy is awkward in the base game: it is priced above heat because it satisfies many city requirements and supports valuable cards such as AI Central, but its default conversion ends in a weak resource. Colonies adds a new three-energy trade threshold. Because energy normally converts into heat during production instead of remaining stored across generations, reaching that threshold depends mainly on raising energy production itself. The phase change therefore moves from accumulated resources into production capacity, while remaining connected to the original energy-to-heat cycle. With a strong colony available, three energy production can approach nine money production; requiring three energy and offering cards that reduce the trade cost keep more than one route into the model. This added layer makes energy more useful and the original relationship more dimensional.
+                        </p>
+                        <p>
+                            Heat remains the clearest weak point. Saving 35 money for Soletta can take three or four generations before the production raises temperature three times. Deimos Down costs 31, raises temperature three times immediately, provides four steel, and removes enough plants to erase an entire greenery. Heat production also asks for future generations to repay itself, which conflicts with a terraforming strategy that wants the game to end quickly. The comparison is severe, but useful: the model is excellent precisely because most values can be discussed this concretely, and its failures are visible rather than vague.
+                        </p>
+                    </div>
+                    <div class="lang-cn hidden">
+                        <p>
+                            钱、铁和钛的分工明确而且符合直觉。铁和钛的单个资源更值钱，却因为标记限制而没有钱那么泛用。产能模型也不是把纸面支付比例简单换算一下：通过卡牌可以估算出，钱产大约值 4.5 钱，铁产约值 7 钱，钛产约值 10 钱；这些预期与实际游玩体验也基本契合。“资源只能支付特定标记”的限制与准确的数值模型相辅相成，是非常扎实的建模。
+                        </p>
+                        <p>
+                            草、电和热没有这么均匀，却更能看出设计的得失。草本身很强，因为树很强，但八草才能发生质变。玩家可以通过产能、卡牌和其他收益逐渐凑到八草，所以八草体现的是储存资源的质变；这个门槛既制造了时机，也让积攒的草暴露在交互之下。
+                        </p>
+                        <p>
+                            电在本体里很尴尬：它既能满足大量城市牌的需求，也能支持“人工智能核心”这样的贵重卡牌，所以模型比热更贵；但默认又只能变成偏弱的热，结果是不泛用也不便宜。《殖民地》为它加入了三电贸易门槛。电通常无法跨时代储存，因为生产阶段会将已有的电转化为热；因此，凑出用于贸易的三电，主要依靠的不是慢慢囤积资源，而是把电产能本身推到门槛。质变由资源层进一步推进到了产能层，又仍然与原有的电转热机制相连。强殖民地存在时，三电产几乎可以接近九钱产；三电门槛与降低贸易消耗的卡牌，则保留了进入这套模型的不同路径。电因此得到了新的用途，原本的电热关系也变得更加立体。
+                        </p>
+                        <p>
+                            热仍然是最明确的弱点。攒 35 钱打昂贵的“索莱塔”，往往要三到四个时代才能升三格温度；“火卫二陨落”只需要 31 钱，就能立刻升三格温度，提供四个铁，还能扣掉一整棵树所需的草。热产还必须等待后续时代才能回本，与改造流快速结束游戏的目标天然不一致。这个比较很残酷，却也很有价值：火星的模型足够清楚，大多数数值才能被这样具体地讨论；它的问题同样会清楚地暴露出来，而不是模糊地让人觉得“哪里不太对”。
+                        </p>
+                    </div>
+
+                    <h4>
+                        <span class="lang-en">The Shared Ending And Global Parameters</span>
+                        <span class="lang-cn hidden">共同终局与公共参数</span>
+                    </h4>
+                    <div class="lang-en">
+                        <p>
+                            TR is both income and points, which allows fast terraforming to finance more terraforming. That creates an invisible conflict with pure development. Engine players buy production more cheaply than early TR and want enough generations to convert the resulting wealth into points. Terraformers prefer a shorter axis: immediate conversion, compounding TR income, and an earlier ending.
+                        </p>
+                        <p>
+                            This conflict comes from a particularly effective end condition. The game does not stop after a fixed number of rounds or when one player reaches a score. It ends when the table completes the apparently cooperative task of raising oxygen and temperature and placing every ocean. The two approaches remain broadly balanced without becoming absolute categories, leaving room to terraform, delay, or change position as the final generations develop. Their contest is usually clearest in the last two generations.
+                        </p>
+                        <p>
+                            The three parameters also share prerequisites and threshold rewards. Strong plant projects may require enough oceans or temperature; strong ocean projects may require temperature. More importantly, an oxygen threshold raises temperature and a temperature threshold places an ocean. These rewards are rich enough that even a development player who wants another generation may use an otherwise inefficient Standard Project to take one first. A track reward can briefly outweigh a player's normal position on the ending itself.
+                        </p>
+                    </div>
+                    <div class="lang-cn hidden">
+                        <p>
+                            改造度同时提供钱产和分数，因此快速改造可以以战养战，用即时收益滚起下一次改造。这与纯发育自然形成了一种无形的矛盾。发育玩家会在前期获取比改造度更便宜的产能，希望游戏持续更多时代，再用后期资源刷出更高的分数；改造党则讲究短轴快速变现，希望通过改造度的收入继续推动改造，并尽早结束游戏。
+                        </p>
+                        <p>
+                            这种矛盾脱胎于一个非常高明的结束机制。游戏不是在固定回合后结束，也不是有人达到某个分数就结束，而是要由全桌完成“改造火星”这个看似共同的目标：氧气、温度与海洋全部达标。两种玩法因此能够基本平衡，却又不会被硬切成两个绝对流派；玩家仍然可以半改半拖，也可以在最后几个时代改变立场。流派之间的博弈通常会在最后两个时代体现得淋漓尽致。
+                        </p>
+                        <p>
+                            三条公共参数还通过前置和轨道奖励互相联系。几张强大的草牌要求一定数量的海洋或温度，部分强力海洋牌也要求温度；更重要的是，氧气轨道会奖励温度，温度轨道又会奖励海洋。这些奖励实在太丰富了，甚至会让原本想延长游戏的发育玩家，通过非常亏的标准行动来抢参数。一次轨道奖励，足以暂时改变玩家对于终局时间的通常立场。
+                        </p>
+                    </div>
+
+                    <h4>
+                        <span class="lang-en">Map Positioning</span>
+                        <span class="lang-cn hidden">版图博弈</span>
+                    </h4>
+                    <div class="lang-en">
+                        <p>
+                            The two-money ocean adjacency payment is mostly an extra. The real map contest comes from cities and greeneries. Cities are expensive and have enormous scoring variance: a bad city receives nothing, while the geometric ceiling is six points, even if that ceiling is effectively impossible in a real session. Because cities cannot be adjacent, a placement also denies positions to other players.
+                        </p>
+                        <p>
+                            Greeneries create a different restriction. When possible, they must be placed beside the player's existing tiles. A poorly planned route can therefore force a greenery beside an opponent's city and give that opponent points. The map rewards planning without becoming a separate spatial game detached from the economy.
+                        </p>
+                        <p>
+                            Highly profitable spaces are often surrounded by areas with few rewards, limiting continued development. A three-card placement reward creates another productive tension: an engine player who takes it with greenery also advances oxygen and the ending, while a terraformer must decide whether the cards and denial are worth constraining a future tile route. Milestones and Awards also give otherwise barren regions a reason to matter. A space's real value comes from the relationship among its reward, the surrounding terrain, future routes, and the shared clock.
+                        </p>
+                    </div>
+                    <div class="lang-cn hidden">
+                        <p>
+                            海洋旁边的两块钱只能算添头，真正的版图博弈来自城市和树。城市非常昂贵，收益方差也极大：放得不好颗粒无收，几何上的上限则是六分，虽然实际对局里基本不可能完全实现。城市不能相邻的规则，又让一次放置可以直接卡住其他玩家的城市位置。
+                        </p>
+                        <p>
+                            树提供了另一种限制。在存在合法位置时，树必须放在自己的相邻板块；如果没有规划好路线，就可能出现自己的树只能放在别人城旁边，反而给对手加分的情况。版图因此考验规划，却没有脱离经济系统变成另一套互不相干的拼图。
+                        </p>
+                        <p>
+                            一般来说，非常赚的地块旁边资源都会比较欠缺，从而限制继续发育。三牌地块又制造了另一层矛盾：发育玩家如果种树拿牌，就会推进氧气和终局；改造玩家也要考虑这些牌和卡位是否值得自己改变放板块路线。地图还会用里程碑和奖项补偿原本“荒芜”的区域。一块地的实际价值，来自奖励、周边资源、后续路线与共同时间线之间的完整关系。
+                        </p>
+                    </div>
+
+                    <h4>
+                        <span class="lang-en">Corporations: Bold And Uneven</span>
+                        <span class="lang-cn hidden">企业：大胆而不均匀</span>
+                    </h4>
+                    <div class="lang-en">
+                        <p>
+                            Corporations have enormous influence and are often strongly tied to an approach. This is a bold double-edged design. It opens an entire new axis of replayability, but powers this defining are almost inevitably difficult to balance. Most strong-versus-weak differences come from the strategic package a corporation creates rather than only its raw starting value. Point Luna is a successful package: the economy already associated with Earth cards reinforces its Earth-tag card draw. Aphrodite's incentives fight each other: Venus development usually belongs to an engine player who wants to delay the ending, while its plant production eventually creates greeneries and advances oxygen.
+                        </p>
+                        <p>
+                            Some problems are numerical rather than conceptual. Vitor is very difficult to make unprofitable; Stormcraft Incorporated is difficult to make profitable under almost any model. Even a visibly weak corporation can still invite one attempt, because an unusual identity makes a player want to prove that a better idea can rescue it. That unevenness hurts balance, while the corporations' distinctive identities simultaneously broaden replayability.
+                        </p>
+                        <p>
+                            The official opening does not draft starting corporations and projects, but I strongly recommend a complete opening draft for experienced groups. On <a href="http://tm.jaing.me/" target="_blank" rel="noopener noreferrer">tm.jaing.me</a>, a common setup reveals four corporations and four Prelude cards, drafts two five-card project batches in opposite directions, and then drafts the Preludes and corporations before anyone buys a starting hand. It sounds long for a beginner; veterans may spend more time expressing shock and disdain at their options than making the decisions. The site also offers Breakthrough versions for weak corporations and a double-corporation mode. Those are useful variants, not part of the scored official game.
+                        </p>
+                    </div>
+                    <div class="lang-cn hidden">
+                        <p>
+                            企业在火星里的影响力非常大，跟套路也基本强绑定。这是一把非常大胆的双刃剑：好处是在一个全新的维度增加了大量可玩路线，坏处则是如此鲜明的能力几乎必然很难平衡。大多数企业的强弱来自它形成的玩法组合，而不只是初始数值。点月是成功的例子，地球牌原本的经济增长与企业提供的地球标抽牌相辅相成；Aphrodite 则有些“左右脑互搏”，改造金星的一般是希望拖延终局的发育玩家，企业给出的草产最终却会变成树，推动氧气和游戏结束。
+                        </p>
+                        <p>
+                            有些问题不是玩法矛盾，而是数值模型本身。Vitor 非常难亏，Stormcraft Incorporated 则怎么算都很难赚。不过，就算是显而易见的弱企业，也可能让人想尝试一次，证明自己的实力或思路能够把它救回来。强弱不均会损害平衡性，这些企业鲜明的玩法身份又会同时拓宽重玩性。
+                        </p>
+                        <p>
+                            官方开局不会轮抽初始企业和项目牌，但我非常推荐老玩家加入完整开局轮抽。在 <a href="http://tm.jaing.me/" target="_blank" rel="noopener noreferrer">tm.jaing.me</a>，常见设置会先展示四张企业和四张前序，再把两组各五张的项目牌朝相反方向轮抽，之后继续轮抽前序与企业，最后才选企业、前序并买牌。这个过程对新手可能很漫长；对老手来说，花在表达震惊和嫌弃上的时间，或许比真正思考还多。网站还提供弱企业的 Breakthrough 强化，以及把爽感拉到极致的双企业模式；这些属于额外变体，不计入官方游戏评分。
+                        </p>
+                    </div>
+
+                    <h4>
+                        <span class="lang-en">Milestones And Awards</span>
+                        <span class="lang-cn hidden">里程碑与奖项</span>
+                    </h4>
+                    <div class="lang-en">
+                        <p>
+                            Milestones offer an unusually favorable return, but reaching one often requires inefficient investment. Players must judge not only their own route, but whether opponents will commit and which Milestone each is pursuing. Investing and then losing the race is the real disaster: the player pays the strategic cost without receiving the reward.
+                        </p>
+                        <p>
+                            Awards take that contest one step deeper by adding timing. Funding early is cheaper but risky; the third Award costs 20 money and is barely attractive on price alone. A Helion player may appear untouchable in heat, only for an opponent to play Optimal Aerobraking in the final generation and pass them. A money-production leader may suddenly lose to Toll Station pulled from an opponent's hand (that card really does have a design problem). Hidden information, escalating prices, delayed conversion, and the possibility of buying points for someone else remain active at the same time.
+                        </p>
+                    </div>
+                    <div class="lang-cn hidden">
+                        <p>
+                            里程碑拥有一个收益非常高的模型，但大多数情况下，玩家需要先做一些本来并不划算的举动来争抢。判断的对象也不只是自己：对手会不会投入、分别打算抢哪个里程碑，都必须纳入计算。真正血本无归的情况，是已经付出了路线和资源成本，最后却没有抢到。
+                        </p>
+                        <p>
+                            奖项则把这层博弈又推进了一步，因为玩家还要决定什么时候申请。申请得早更便宜，风险也更大；第三个奖项需要 20 钱，单看模型已经很难说赚。或许你玩的 Helion，热产和热资源遥遥领先，却被对手在最后一个时代打出“最优空气制动”反超；或许你的钱产稳居第一，却被对手从裤裆里掏出一张“收费站”超过（这张卡设计真的有问题）。隐藏信息、递增费用、延迟变现，以及花钱为他人做嫁衣的可能性，会同时留在桌面上。
+                        </p>
+                    </div>
+
+                    <h4>
+                        <span class="lang-en">How The Expansions Enter The System</span>
+                        <span class="lang-cn hidden">扩展如何进入系统</span>
+                    </h4>
+                    <div class="lang-en">
+                        <p>
+                            <a href="../expansions/terraforming-mars/prelude.html">Prelude</a> accelerates the opening and adds setup variation. <a href="../expansions/terraforming-mars/venus-next.html">Venus Next</a> adds a distinct TR route, new card models, and new synergies, while World Government Terraforming both keeps the game moving and intensifies competition for parameter rewards. <a href="../expansions/terraforming-mars/colonies.html">Colonies</a> integrates more tightly as a new action inside the existing economy. Its three-energy trade threshold places the phase change mainly on energy production and connects trade to the existing energy-to-heat cycle.
+                        </p>
+                        <p>
+                            <a href="../expansions/terraforming-mars/turmoil.html">Turmoil</a> is more controversial because it partly changes the game's audience. Parliament creates a major public contest and increases political interaction, while recurring TR loss lengthens the session. The political system is coherent and well integrated, but its repeated administration, added time, and weak two-player scaling often outweigh the decisions it adds. It remains a positive option for the right three- or four-player group, not a default module for every table. Prelude 2 continues the role of Prelude, while additional maps and similar content primarily add variation. Taken together, these modules show that almost all of them can enter the same engine without replacing its foundation.
+                        </p>
+                        <p>
+                            Mechanics therefore receives 100/100 with a 25% weight. The core engine is complete enough to deserve a full score, and its proven extensibility is an important part of that judgment. This is not a claim that every module integrates equally well: Venus can feel attached above the base system, while Turmoil shifts the center of play more substantially. Those differences are why Mechanics does not receive an additional bonus beyond 100. Mechanics still carries the largest weight because every other experience in Terraforming Mars depends on this engine remaining coherent.
+                        </p>
+                    </div>
+                    <div class="lang-cn hidden">
+                        <p>
+                            <a href="../expansions/terraforming-mars/prelude.html">《前序》</a>加快开局，也增加初始变化；<a href="../expansions/terraforming-mars/venus-next.html">《金星扩展》</a>加入了一条独立的改造度路线，以及新的数值模型、机制和联动，全球政府又能推动游戏进程，并让参数奖励的竞争更加激烈。<a href="../expansions/terraforming-mars/colonies.html">《殖民地》</a>与本体联系得更紧，像是在原有经济里增加了一个重要行动。三电贸易门槛让质变主要落在电产能上，也将贸易与原本的电转热机制连接起来。
+                        </p>
+                        <p>
+                            <a href="../expansions/terraforming-mars/turmoil.html">《动荡》</a>更有争议，因为它一定程度上改变了火星的定位和受众。议会让每局都有明确的公共争夺，政治交互大幅提高；每个时代扣改造度又会延长游戏。政治系统本身完整，融合度也不错，但重复维护、额外时长与二人局适配问题，往往会盖过它增加的决策。它仍然可以为合适的三至四人桌加分，却不应成为所有对局的默认模块。《前序 2》大体延续《前序》的作用，额外地图等内容则主要增加变化。合在一起看，这些模块大多都能进入同一台引擎，而不必推翻原有基础。
+                        </p>
+                        <p>
+                            因此，Mechanics（机制）给到 100/100，权值为 25%。核心引擎已经足够完整，长期验证过的可延展性也是它能够拿到满分的重要原因。但这并不代表每个模块都同样自然：《金星》多少带有外挂在本体之上的感觉，《动荡》对游戏重心的改变也更明显。这些差异让机制没有再获得超过 100 的附加分。机制仍然承担最高权值，因为火星的其他体验都建立在这台引擎能够持续保持一致的前提上。
+                        </p>
+                    </div>
+
+                    <h3 id="section-depth-replayability" class="rating-section-anchor">
+                        <span class="lang-en">Depth, Learning Cost, And Replayability</span>
+                        <span class="lang-cn hidden">深度、上手成本与重玩性</span>
+                    </h3>
+                    <div class="lang-en">
+                        <p>
+                            Terraforming Mars has a clear mastery bottleneck: its numerical model. Before understanding that model, a player may play many sessions and still judge a card mainly by feeling. Once the conversions among production, resources, tags, timing, and generations become legible, even a relatively inexperienced player can begin calculating whether a card is above or below its model. Many decisions become much clearer very quickly.
+                        </p>
+                        <p>
+                            Discovering the model without help is difficult, so the independent path to mastery is substantial. The same model also limits the ultimate ceiling: once it is understood, card evaluation changes from accumulated intuition into a relatively explicit calculation instead of opening endless new layers. Complexity, however, is very low for what the game contains. The basic rules are simple, the card grammar is clear, and players with card-game experience usually learn it well. The large deck adds content to recognize, not an equally large body of rules. Depth/Complex is therefore 91/100 with a 10% weight: strong depth delivered at unusually low structural cost, but not a bottomless mastery ceiling.
+                        </p>
+                        <p>
+                            Replayability comes from content that already exists, not merely from hypothetical future potential. Official expansions, promotional cards, corporations, maps, Milestones, Awards, and the enormous project deck keep changing both setup and available development routes. Even after the numerical model becomes familiar, those elements continue to alter viable engines, timing, and the relationship between development and terraforming. The architecture has not merely promised room for future variety; the released content already puts that variety on the table. Replayability reaches 115/100. I regard the complete official system as a ceiling case for replayability: the bonus reflects variation already present at the table, not future cards counted in advance.
+                        </p>
+                        <p>
+                            Its weight is a more restrained 12%. Many players do return to Terraforming Mars for years, but many others sample this large system only briefly, so replayability still should not dominate every judgment. It nevertheless carries slightly more weight here than in a game built from more parallel mechanisms: much of Terraforming Mars's lasting value is concentrated in how cards, corporations, maps, and expansion content keep recombining the same engine. At 12%, replayability remains important without asking every reader to value repeated exploration as highly as I do.
+                        </p>
+                    </div>
+                    <div class="lang-cn hidden">
+                        <p>
+                            《殖民火星》的精通存在一个非常明确的瓶颈：数值模型。没有掌握模型时，玩家即使玩了很多局，也可能仍然只是凭感觉判断一张牌强不强；一旦理解产能、资源、标记、时机和时代之间的换算，即使玩的局数不多，也可以开始自己计算每张牌究竟超模还是亏模，许多选择会迅速变得清晰。
+                        </p>
+                        <p>
+                            自己摸索出这套模型非常困难，因此从独立探索的角度看，精通门槛并不低；但同一个模型也限制了最终上限。掌握以后，卡牌评价会从长期积累的经验问题变成相对明确的计算问题，不会无止境地继续打开新的理解层次。另一方面，火星的 Complexity 对它承载的内容来说很低：基础规则简单，卡牌语言清楚，有卡牌游戏经验的玩家通常都比较好上手；庞大牌库增加的是需要熟悉的内容，而不是同等规模的规则。Depth/Complex 因此给到 91/100，权值为 10%：它用很低的结构成本承载了扎实深度，但精通上限并非深不见底。
+                        </p>
+                        <p>
+                            重玩性来自已经存在的内容，而不只是未来还能继续扩展的潜力。全部官方扩展、Promo、企业、地图、里程碑、奖项和庞大项目牌库，会同时改变初始组合与可走路线。即使玩家已经熟悉数值模型，这些内容仍会持续改变可行的引擎、行动时机，以及发育和改造之间的关系。这套架构并不只是承诺未来还可以继续增加变化；正式发行的内容已经把这些变化放到了桌面上。重玩性给到 115/100。在我看来，完整官方系统就是重玩性的天花板级案例：破格来自桌上已经存在的变化，而不是提前预支未来。
+                        </p>
+                        <p>
+                            它的权值则更克制，设为 12%。确实有大量玩家会反复玩《殖民火星》很多年，也同样有大量玩家只是浅尝辄止，因此重玩性依然不应该主导所有人的评价。不过，相比拥有更多并行机制的游戏，火星的长期价值更集中在卡牌、企业、地图和扩展内容如何不断重组同一台引擎，所以它的重玩性权值也应该略高一点。12% 让重玩性保持重要，却不会要求每一位读者都像我一样重视反复探索。
+                        </p>
+                    </div>
+
+                    <h3 id="section-interactivity" class="rating-section-anchor">
+                        <span class="lang-en">Interactivity</span>
+                        <span class="lang-cn hidden">交互性</span>
+                    </h3>
+                    <div class="lang-en">
+                        <p>
+                            Most Terraforming Mars interaction is real but fine-grained. Players contest map positions, threshold rewards, cards in a draft, Milestones, Awards, and the timing of the shared ending. Direct attack cards add sharper moments by removing resources or production. Those attacks are a positive source of interaction rather than a flaw, but they do not change the fact that players spend much of the session operating their own engines.
+                        </p>
+                        <p>
+                            Turmoil provides a useful adjustment. Groups that prefer stronger public interaction can add parliamentary control and political timing; groups that prefer private development can leave it out. This does not make every preference agree, but it gives different tables a meaningful option inside the official system. It also cannot turn the whole design into a near-top interaction game: most decisions and most table time still center on each player's own engine, and many shared effects remain fine-grained. Interactivity therefore receives 88/100 with an 8% weight. Its interaction is generally well handled, but neither its quantity nor its usual impact matches interaction-centered designs.
+                        </p>
+                    </div>
+                    <div class="lang-cn hidden">
+                        <p>
+                            《殖民火星》的大多数交互都真实存在，却比较细微。玩家会争夺版图位置、参数奖励、轮抽中的卡牌、里程碑、奖项和共同终局的时机；直接攻击牌则通过扣资源或产能，提供更尖锐的影响。这些攻击牌在我看来是交互性的加分项，而不是缺点；但它们依然不会改变一个事实：玩家在大多数时间里还是各自运行自己的引擎。
+                        </p>
+                        <p>
+                            《动荡》提供了一个很有用的调节选项。偏好更强公共交互的玩家可以加入议会控制与政治时机，喜欢个人发展的玩家也可以不加。它不会让所有偏好变得一致，却让不同需求的桌子拥有了官方系统内的选择窗口。但一个可选的强交互模块，也不能把整套游戏直接抬成接近顶级的交互作品：大多数决策和桌面时间仍然围绕自己的引擎，许多公共影响也比较细微。因此，Interactivity（交互性）给到 88/100，权值为 8%。它的交互通常处理得不错，但数量和通常影响都无法与以交互为核心的游戏相比。
+                        </p>
+                    </div>
+
+                    <h3 id="section-balance-flow" class="rating-section-anchor">
+                        <span class="lang-en">Balance And Flow</span>
+                        <span class="lang-cn hidden">平衡性与流畅度</span>
+                    </h3>
+                    <div class="lang-en">
+                        <p>
+                            The numerical model is one of the game's greatest achievements. Most cards remain inside a stable range, and years of expansions and promotional cards have continued to use the same tags, costs, resources, and prerequisites without collapsing it. That extensibility and maintainability are strong evidence of balance, not just quantity.
+                        </p>
+                        <p>
+                            The uneven corporations described earlier are part of a broader design tradeoff. To create more routes and sustain exceptional replayability, Terraforming Mars repeatedly accepts bold, high-variance cards and powers. Those designs invite experimentation and give weak or unusual packages a reason to be tried, but the added variety comes with a real loss of numerical consistency.
+                        </p>
+                        <p>
+                            Underground Detonations remains a concrete example of a project far below the normal model; corporation balance is poor, and the original roles of energy and heat are uneven. A complete opening draft helps protect experienced games, but it is an added variant rather than an official first-generation safeguard. Balance therefore receives 86/100. Its weight remains substantial at 13% because a pure engine builder asks players to trust its conversions for an entire long session. Route variation is slightly more central to this game's identity than perfect local tuning, but the remaining imbalance still affects the engine throughout that session.
+                        </p>
+                        <p>
+                            Flow changes dramatically with familiarity. New players need time to read, but the cards are unusually legible: icons, costs, tags, and values communicate so much that experienced players often identify a card without reading its text. A veteran encountering a new expansion can usually read a card once and already estimate its level. The extra phases and late engine execution of the complete game have little effect after the table is familiar with them.
+                        </p>
+                        <p>
+                            A session can therefore be long without feeling stalled. Familiar play does not represent the whole audience, however: new players still stop to read, compare, and reconsider cards, and too many expansions make those interruptions more frequent even when the iconography itself is clear. Turmoil is particularly demanding as a first experience. Terraforming Mars is smooth once familiar, but it is not a top-tier Flow design across its whole audience. Flow therefore receives 90/100 with a 9% weight. New players should learn with fewer modules; the full configuration is a fluent destination, not the correct starting point.
+                        </p>
+                    </div>
+                    <div class="lang-cn hidden">
+                        <p>
+                            数值模型是《殖民火星》最重要的成就之一。绝大多数卡牌都处在稳定区间内，多年的扩展和 Promo 仍然可以继续使用同一套标记、费用、资源与前置，而没有让模型整体崩溃。这种可延展性和可维护性，是平衡性很强的证据，而不只是“内容很多”。
+                        </p>
+                        <p>
+                            前面企业部分提到的强弱不均，是一项更广泛设计取舍的表现。为了创造更多路线并支撑天花板级重玩性，《殖民火星》反复采用了设计大胆、方差很高的卡牌与能力。这些设计会鼓励玩家尝试不寻常甚至明显偏弱的组合，但新增变化也确实牺牲了一部分数值一致性。
+                        </p>
+                        <p>
+                            “地下爆破”仍然是远低于正常模型的明确例子；企业平衡很差，电和热在本体中的定位也不均匀。完整开局轮抽可以为老玩家提供保护，却是额外变体，不是官方第一时代自带的平衡机制。因此，Balance（平衡性）给到 86/100。它的权值仍然有 13%，因为纯引擎构筑要求玩家在一整局的长周期里相信资源换算。路线变化确实比局部数值绝对平整更接近火星的核心身份，但剩余的不平衡仍然会在整局引擎运转中持续产生影响。
+                        </p>
+                        <p>
+                            Flow 在新手和老手之间有明显区别。新手读牌时间较长，但火星的卡牌表意性非常强：图标、费用、标记和数值已经传达了大量信息，熟练玩家甚至不用读文字就能认出大多数牌。老手第一次接触新扩，通常看一遍也就能判断卡牌的水平。完整版本增加的阶段维护和后期引擎执行，在熟练以后基本不会影响流程。
+                        </p>
+                        <p>
+                            所以，一局火星可以很长，却不等于拖沓。不过，熟练玩家的顺畅不能代表所有人的体验。新手仍然会停下来读牌、比较并重新规划，加入太多扩展以后，即使图标本身清楚，这些停顿也会更加频繁；《动荡》尤其不适合作为第一次体验。《殖民火星》熟练以后非常顺畅，却不是面对全部受众都达到顶级流畅的设计。因此，Flow（流畅度）给到 90/100，权值为 9%。新玩家应该从较少模块开始；全扩是熟练后的流畅终点，不是正确的起点。
+                        </p>
+                    </div>
+
+                    <h3 id="section-theme-aesthetics" class="rating-section-anchor">
+                        <span class="lang-en">Theme, Aesthetics, And Readability</span>
+                        <span class="lang-cn hidden">主题、美术与可读性</span>
+                    </h3>
+                    <div class="lang-en">
+                        <p>
+                            Terraforming is not a pasted-on premise. Global parameters, environmental prerequisites, corporations, scientific tags, and the shared ending all describe the same transformation of Mars. The space setting is appealing and supports the mechanisms well. It is not especially intimate or immediately friendly, but it also does not create the kind of severity that scares players away before learning. Theme receives 89/100 with an 8% weight: the integration is strong and the setting broadly works, but neither its approachability nor its thematic effect is quite exceptional.
+                        </p>
+                        <p>
+                            The art is more uneven. Card illustrations range widely in style and quality and rarely become a reason to admire the game by themselves. The interface is much better than the illustrations: cost, tags, prerequisites, points, and effect icons are placed consistently enough that experienced players often need to expose only a small part of a card to know what it is. That clarity is a substantial usability achievement. Aesthetics receives 82/100 with a 10% weight. Players spend almost the entire session looking at, reading, and arranging these cards, so the uneven illustrations cannot be treated as a peripheral weakness merely because the interface remains functional. The presentation continuously occupies the main field of play.
+                        </p>
+                    </div>
+                    <div class="lang-cn hidden">
+                        <p>
+                            “改造火星”并不是套在机制外面的题材。公共参数、环境前置、企业、科学标记和共同终局都在描述同一场火星改造。太空题材本身也算有吸引力，与玩法结合得很好；它没有特别亲切，却也不会在玩家学习之前制造明显畏难。Theme（主题）给到 89/100，权值为 8%：契合度很强，题材整体也成立，但亲和力与主题表现力都还没有真正达到出类拔萃的程度。
+                        </p>
+                        <p>
+                            美术则更不均匀。卡牌插图的风格与质量差异很大，很少会单独成为欣赏这款游戏的理由；但 UI 明显好于插图。费用、标记、前置、分数和效果图标的位置足够稳定，老玩家往往只露出卡牌的一小部分，就知道它是什么。这样的清晰度是很实在的可用性成就。Aesthetics（美术）给到 82/100，权值为 10%。玩家几乎整局都要盯着、阅读和摆放这些卡牌，因此，插图不均匀不能因为 UI 仍然好用，就被当成无关紧要的边缘缺点；卡牌呈现始终占据着游戏最主要的视觉范围。
+                        </p>
+                    </div>
+
+                    <h3 id="section-innovation" class="rating-section-anchor">
+                        <span class="lang-en">Innovation And Integration</span>
+                        <span class="lang-cn hidden">创新与整合</span>
+                    </h3>
+                    <div class="lang-en">
+                        <p>
+                            Terraforming Mars is not best described as a highly innovative game. Cards, resources, drafting, variable powers, hex placement, and alternating actions all had clear precedents. Its distinctiveness does not depend on claiming those foundations as original, but on what it builds by connecting them.
+                        </p>
+                        <p>
+                            Its distinctive contribution is the integrated card language and the loop connecting private engines to shared parameters, TR, environmental prerequisites, and a player-controlled ending. The result has a strong identity and supports the whole game, but much of its excellence still comes from modelling, integration, and extensibility rather than a large number of unprecedented ideas. Innovation is therefore 87/100 with a 5% weight: clearly above ordinary, but not one of the game's defining strengths.
+                        </p>
+                    </div>
+                    <div class="lang-cn hidden">
+                        <p>
+                            《殖民火星》并不能算一款高度创新的游戏。卡牌、资源、轮抽、非对称能力、六边形放置和轮流行动都有清楚的前例。它的独特性并不依赖把这些基础工具说成原创，而在于将它们连接以后真正建立了什么。
+                        </p>
+                        <p>
+                            它最鲜明的贡献，是整套卡牌语言，以及私人引擎与公共参数、改造度、环境前置和玩家共同控制的终局形成的循环。这套结构拥有非常明确的身份，也足以支撑完整游戏；但它的大部分优秀仍然来自建模、整合与可延展性，而不是大量前所未有的点子。因此 Innovation（创新）给到 87/100，权值为 5%：明显高于一般水平，却不是最能定义这款游戏的优势。
+                        </p>
+                    </div>
+
+                    <h3>
+                        <span class="lang-en">Recommendation, Entry Point, And Commercial Model</span>
+                        <span class="lang-cn hidden">推荐边界、入门方式与商业模式</span>
+                    </h3>
+                    <div class="lang-en">
+                        <p>
+                            Terraforming Mars is an essential recommendation for players who enjoy card-driven engines, long planning horizons, and the pleasure of watching an economy become dramatically more capable. Card-game experience lowers the learning cost substantially. Players who need short sessions or constant direct confrontation may find the base rhythm too private, although Turmoil offers a stronger-interaction option.
+                        </p>
+                        <p>
+                            New players should not begin with the entire official system. Learn the card language and core economy with fewer modules, then add expansions as the table becomes comfortable; Turmoil in particular should come later. The modules integrate well enough to form a coherent complete version, but that version is a destination for a familiar group, not a first-night setup.
+                        </p>
+                        <p>
+                            Price does not enter the score, but Terraforming Mars's commercial model still deserves criticism. Promo content in particular is priced far too high for the amount included, making it genuinely difficult to keep supporting official releases even for players who would prefer to keep buying official products.
+                        </p>
+                        <p>
+                            Few engine builders combine such a transparent model, such a productive conflict over time, and such a durable capacity for growth. Terraforming Mars has many imperfections worth describing honestly, but its strengths remain larger.
+                        </p>
+                    </div>
+                    <div class="lang-cn hidden">
+                        <p>
+                            《殖民火星》非常适合喜欢卡牌驱动引擎、长期规划，以及看着自己经济能力不断膨胀的玩家。有卡牌游戏经验会显著降低上手成本。需要短局或持续直接对抗的玩家，可能会觉得默认节奏过于各玩各的；不过《动荡》也为偏好强交互的桌子提供了选择。
+                        </p>
+                        <p>
+                            新玩家不应该一开始就加入全部官方内容。先用较少模块熟悉卡牌语言和核心经济，再随着整桌的理解逐步加入扩展；《动荡》尤其适合放到后面。这些模块最终能够整合成一个连贯的完整版本，但完整版本是熟练后的目的地，不是第一局就该摆出的配置。
+                        </p>
+                        <p>
+                            价格不参与评分，但《殖民火星》的商业模式确实值得诟病。尤其是 Promo 内容，售价相对于内容量实在太高；即使玩家愿意坚持购买正版，这样的定价也会让持续支持官方变得很困难。
+                        </p>
+                        <p>
+                            很少有引擎构筑能够同时拥有如此清楚的模型、如此有生产力的终局时间矛盾，以及如此耐久的成长空间。《殖民火星》有很多值得诚实写明的问题，但它的优势依然更大。
+                        </p>
+                    </div>
+                </div>
+
+                <aside class="lg:col-span-1">
+                    <div class="bg-white border border-gray-200 rounded-sm shadow-sm overflow-hidden lg:sticky lg:top-32">
+                        <div class="bg-secondary/30 px-6 py-4 border-b border-gray-200">
+                            <h3 class="text-sm font-bold text-ink uppercase tracking-widest">
+                                <span class="lang-en">Rating Breakdown</span>
+                                <span class="lang-cn hidden">评分细则</span>
+                            </h3>
+                        </div>
+                        <table class="w-full score-table" id="rating-breakdown">
+                            <thead>
+                                <tr>
+                                    <th><span class="lang-en">Criterion</span><span class="lang-cn hidden">维度</span></th>
+                                    <th><span class="lang-en">Score /100</span><span class="lang-cn hidden">百分制分数</span></th>
+                                    <th><span class="lang-en">Weight</span><span class="lang-cn hidden">权值</span></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr data-score="100" data-weight="25"><td class="font-medium text-gray-700 score-label"><a href="#section-mechanics" class="score-dimension-link"><span class="lang-en">Mechanics</span><span class="lang-cn hidden">机制</span></a></td><td class="score-high">100</td><td class="text-gray-400">25%</td></tr>
+                                <tr data-score="89" data-weight="8"><td class="font-medium text-gray-700 score-label"><a href="#section-theme-aesthetics" class="score-dimension-link"><span class="lang-en">Theme</span><span class="lang-cn hidden">主题</span></a></td><td class="score-mid">89</td><td class="text-gray-400">8%</td></tr>
+                                <tr data-score="82" data-weight="10"><td class="font-medium text-gray-700 score-label"><a href="#section-theme-aesthetics" class="score-dimension-link"><span class="lang-en">Aesthetics</span><span class="lang-cn hidden">美术</span></a></td><td class="score-mid">82</td><td class="text-gray-400">10%</td></tr>
+                                <tr data-score="86" data-weight="13"><td class="font-medium text-gray-700 score-label"><a href="#section-balance-flow" class="score-dimension-link"><span class="lang-en">Balance</span><span class="lang-cn hidden">平衡性</span></a></td><td class="score-mid">86</td><td class="text-gray-400">13%</td></tr>
+                                <tr data-score="115" data-weight="12"><td class="font-medium text-gray-700 score-label"><a href="#section-depth-replayability" class="score-dimension-link"><span class="lang-en">Replayability</span><span class="lang-cn hidden">重玩性</span></a></td><td class="score-bonus">115</td><td class="text-gray-400">12%</td></tr>
+                                <tr data-score="88" data-weight="8"><td class="font-medium text-gray-700 score-label"><a href="#section-interactivity" class="score-dimension-link"><span class="lang-en">Interactivity</span><span class="lang-cn hidden">交互性</span></a></td><td class="score-mid">88</td><td class="text-gray-400">8%</td></tr>
+                                <tr data-score="91" data-weight="10"><td class="font-medium text-gray-700 score-label"><a href="#section-depth-replayability" class="score-dimension-link"><span class="lang-en">Depth/Complex</span><span class="lang-cn hidden">深度/成本</span></a></td><td class="score-high">91</td><td class="text-gray-400">10%</td></tr>
+                                <tr data-score="90" data-weight="9"><td class="font-medium text-gray-700 score-label"><a href="#section-balance-flow" class="score-dimension-link"><span class="lang-en">Flow</span><span class="lang-cn hidden">流畅度</span></a></td><td class="score-high">90</td><td class="text-gray-400">9%</td></tr>
+                                <tr data-score="87" data-weight="5"><td class="font-medium text-gray-700 score-label"><a href="#section-innovation" class="score-dimension-link"><span class="lang-en">Innovation</span><span class="lang-cn hidden">创新</span></a></td><td class="score-mid">87</td><td class="text-gray-400">5%</td></tr>
+                            </tbody>
+                        </table>
+                        <div class="bg-gray-50 px-6 py-4 border-t border-gray-200">
+                            <div class="flex justify-between items-center gap-4">
+                                <span class="font-bold text-xs uppercase tracking-widest text-gray-400">
+                                    <span class="lang-en">Weighted Score</span>
+                                    <span class="lang-cn hidden">加权评分</span>
+                                </span>
+                                <span class="font-bold text-2xl text-accent" data-weighted-score>93.9</span>
+                            </div>
+                            <p class="mt-3 text-xs leading-relaxed text-gray-500">
+                                <span class="lang-en">Exceptional engine architecture and released variety outweigh real card, corporation, and resource-model irregularities.</span>
+                                <span class="lang-cn hidden">破格的引擎架构与正式内容变化量，超过了卡牌、企业和资源模型中真实存在的不均匀。</span>
+                            </p>
+                        </div>
+                        <div class="px-6 py-5 border-t border-gray-100 space-y-3 text-sm">
+                            <a href="../ratinglist_bg/all_games/all_games.html" class="flex items-center justify-between gap-4 text-gray-600 hover:text-accent transition-colors">
+                                <span class="lang-en">Open All Games Table</span>
+                                <span class="lang-cn hidden">打开所有桌游总表</span>
+                                <i data-lucide="arrow-right" class="w-4 h-4 shrink-0"></i>
+                            </a>
+                            <a href="../rating_boardgame_home.html" class="flex items-center justify-between gap-4 text-gray-600 hover:text-accent transition-colors">
+                                <span class="lang-en">Read Rating Overview</span>
+                                <span class="lang-cn hidden">查看评分说明</span>
+                                <i data-lucide="arrow-right" class="w-4 h-4 shrink-0"></i>
+                            </a>
+                        </div>
+                    </div>
+                </aside>
+            </div>
+        </article>
+    </main>
+
+    <script>
+        function calculateWeightedScore() {
+            const rows = document.querySelectorAll('#rating-breakdown tbody tr[data-score][data-weight]');
+            let weightedTotal = 0;
+            let weightTotal = 0;
+
+            rows.forEach((row) => {
+                const score = Number(row.dataset.score);
+                const weight = Number(row.dataset.weight);
+                weightedTotal += score * weight;
+                weightTotal += weight;
+            });
+
+            if (weightTotal !== 100) {
+                console.warn(`Rating weights total ${weightTotal}% instead of 100%.`);
+            }
+
+            const displayedScore = (Math.round(weightedTotal / 10) / 10).toFixed(1);
+            document.querySelectorAll('[data-weighted-score]').forEach((element) => {
+                element.textContent = displayedScore;
+            });
+        }
+
+        function toggleLanguage() {
+            const enEls = document.querySelectorAll('.lang-en');
+            const cnEls = document.querySelectorAll('.lang-cn');
+            enEls.forEach((element) => element.classList.toggle('hidden'));
+            cnEls.forEach((element) => element.classList.toggle('hidden'));
+            document.documentElement.lang = document.documentElement.lang === 'en' ? 'zh-CN' : 'en';
+        }
+
+        calculateWeightedScore();
+        lucide.createIcons();
+    </script>
+</body>
+</html>

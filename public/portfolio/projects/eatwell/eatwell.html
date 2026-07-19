@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Project: EatWell</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Sans+SC:wght@300;400;500;700&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap"
+      rel="stylesheet"
+    >
+
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              sans: ['Inter', 'Noto Sans SC', 'sans-serif'],
+              serif: ['Playfair Display', 'serif'],
+            },
+            colors: {
+              paper: '#f4efe5',
+              ink: '#17120d',
+              accent: '#a23b2a',
+              ember: '#d46a3a',
+              bone: '#e8dcc8',
+              moss: '#66724a',
+              well: '#211915'
+            }
+          }
+        }
+      }
+    </script>
+
+    <style>
+        body {
+            background:
+                radial-gradient(circle at 50% -10%, rgba(212, 106, 58, 0.18), transparent 30%),
+                radial-gradient(circle at 0% 35%, rgba(102, 114, 74, 0.18), transparent 34%),
+                linear-gradient(180deg, #f7f0e5 0%, #e6dccb 48%, #d3c4ad 100%);
+            color: #17120d;
+            scroll-behavior: smooth;
+        }
+
+        .sidebar-sticky {
+            position: sticky;
+            top: 8rem;
+            height: calc(100vh - 8rem);
+            overflow-y: auto;
+        }
+
+        h1, h2, h3 {
+            color: #17120d;
+        }
+
+        .section-title {
+            font-family: 'Inter', 'Noto Sans SC', sans-serif;
+            font-weight: 700;
+            font-size: 1.5rem;
+            margin-top: 3rem;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid rgba(162, 59, 42, 0.2);
+        }
+
+        p {
+            margin-bottom: 1.5em;
+            line-height: 1.8;
+            color: #41362e;
+            font-size: 1.05rem;
+        }
+
+        .project-img {
+            width: 100%;
+            background:
+                radial-gradient(circle at center, rgba(255,255,255,0.18), transparent 45%),
+                linear-gradient(135deg, rgba(23,18,13,0.96), rgba(67,45,33,0.92));
+            border: 1px solid rgba(162, 59, 42, 0.22);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 2rem 0;
+            border-radius: 1rem;
+            overflow: hidden;
+            position: relative;
+            box-shadow: 0 28px 72px -34px rgba(23, 18, 13, 0.55);
+        }
+
+        .hero-cover {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            filter: saturate(0.95) contrast(1.02);
+        }
+
+        .showcase-card {
+            padding: 0.75rem;
+        }
+
+        .showcase-card img {
+            width: 100%;
+            height: auto;
+            object-fit: contain;
+            display: block;
+            border-radius: 0.65rem;
+        }
+
+        .system-card {
+            background: rgba(255, 252, 246, 0.72);
+            border: 1px solid rgba(162, 59, 42, 0.14);
+            box-shadow: 0 18px 45px -34px rgba(23, 18, 13, 0.35);
+        }
+
+        #backToTopBtn {
+            display: none;
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            z-index: 99;
+            border: none;
+            outline: none;
+            background-color: rgba(23, 18, 13, 0.84);
+            color: white;
+            cursor: pointer;
+            padding: 0.75rem;
+            border-radius: 9999px;
+            backdrop-filter: blur(8px);
+            transition: all 0.3s ease;
+        }
+
+        #backToTopBtn:hover {
+            background-color: rgba(162, 59, 42, 0.94);
+            transform: translateY(-3px);
+            box-shadow: 0 18px 32px -18px rgba(23, 18, 13, 0.55);
+        }
+    </style>
+</head>
+<body class="font-sans antialiased">
+
+<nav class="fixed w-full z-50 top-0 bg-paper/80 backdrop-blur-md border-b border-stone-200/70 h-20 flex items-center px-6 justify-between transition-all duration-300">
+    <div class="flex items-center">
+        <a href="../../portfolio_home.html" class="flex items-center text-stone-500 hover:text-accent transition-colors group mr-8">
+            <i data-lucide="arrow-left" class="w-5 h-5 mr-2 group-hover:-translate-x-1 transition-transform"></i>
+            <span class="lang-en">Back to All Works</span>
+            <span class="lang-cn hidden">返回作品集</span>
+        </a>
+    </div>
+    <div class="flex items-center space-x-4">
+        <div class="hidden md:block text-xs font-bold text-stone-500 uppercase tracking-widest">
+            <span class="lang-en">Dark Survival Management</span>
+            <span class="lang-cn hidden">黑暗生存经营</span>
+        </div>
+        <button onclick="toggleLanguage()" class="flex items-center space-x-2 border border-stone-300 px-4 py-2 rounded-full hover:border-accent hover:text-accent transition-all text-xs font-bold tracking-widest uppercase bg-white/80 text-stone-700">
+            <i data-lucide="globe" class="w-4 h-4"></i>
+            <span id="lang-label">EN / 中文</span>
+        </button>
+    </div>
+</nav>
+
+<div class="pt-32 pb-24 max-w-7xl mx-auto px-6 flex flex-col lg:flex-row gap-16">
+    <aside class="lg:w-1/4">
+        <div class="lg:sidebar-sticky">
+            <h1 class="text-4xl font-bold mb-2 leading-tight">
+                <span class="lang-en">EatWell</span>
+                <span class="lang-cn hidden">落井下食</span>
+            </h1>
+            <p class="text-lg text-accent font-medium mb-8">
+                <span class="lang-en">Dark Forest Survival Management Sim</span>
+                <span class="lang-cn hidden">黑暗森林生存经营模拟</span>
+            </p>
+
+            <div class="space-y-8 text-sm">
+                <div>
+                    <h4 class="font-bold uppercase tracking-widest mb-2 text-xs text-stone-500">
+                        <span class="lang-en">Role</span>
+                        <span class="lang-cn hidden">个人职责</span>
+                    </h4>
+                    <p class="text-stone-700">
+                        <span class="lang-en">Numerical Design & Systems Design</span>
+                        <span class="lang-cn hidden">数值策划与系统设计</span>
+                    </p>
+                    <p class="text-stone-700">
+                        <span class="lang-en">Major design contributor from the second iteration onward</span>
+                        <span class="lang-cn hidden">第二轮及以后版本的主要策划参与者</span>
+                    </p>
+                </div>
+
+                <div>
+                    <h4 class="font-bold uppercase tracking-widest mb-2 text-xs text-stone-500">
+                        <span class="lang-en">Team</span>
+                        <span class="lang-cn hidden">团队</span>
+                    </h4>
+                    <p class="text-stone-700">
+                        <span class="lang-en">Five-person indie team</span>
+                        <span class="lang-cn hidden">五人独立开发小团队</span>
+                    </p>
+                    <p class="text-stone-700">
+                        <span class="lang-en">Team name: 井上添花</span>
+                        <span class="lang-cn hidden">团队名：井上添花</span>
+                    </p>
+                </div>
+
+                <div>
+                    <h4 class="font-bold uppercase tracking-widest mb-2 text-xs text-stone-500">
+                        <span class="lang-en">Platform</span>
+                        <span class="lang-cn hidden">平台</span>
+                    </h4>
+                    <p class="text-stone-700">Windows</p>
+                    <p class="text-stone-700">
+                        <span class="lang-en">Planned Steam release</span>
+                        <span class="lang-cn hidden">未来计划在 Steam 发售</span>
+                    </p>
+                </div>
+
+                <div>
+                    <h4 class="font-bold uppercase tracking-widest mb-2 text-xs text-stone-500">
+                        <span class="lang-en">Genre</span>
+                        <span class="lang-cn hidden">类型</span>
+                    </h4>
+                    <p class="text-stone-700">
+                        <span class="lang-en">Strategy / Simulation / Survival</span>
+                        <span class="lang-cn hidden">策略 / 模拟 / 生存</span>
+                    </p>
+                </div>
+
+                <div>
+                    <h4 class="font-bold uppercase tracking-widest mb-2 text-xs text-stone-500">
+                        <span class="lang-en">Status</span>
+                        <span class="lang-cn hidden">状态</span>
+                    </h4>
+                    <p class="text-stone-700">
+                        <span class="lang-en">Long-term project, in development</span>
+                        <span class="lang-cn hidden">长期项目，持续开发中</span>
+                    </p>
+                    <p class="text-stone-700">
+                        <span class="lang-en">Gcores page created 2024.8.18, updated 2025.6.30</span>
+                        <span class="lang-cn hidden">机核页面创建于 2024.8.18，更新于 2025.6.30</span>
+                    </p>
+                </div>
+
+                <div class="pt-4 border-t border-stone-300">
+                    <a href="https://www.gcores.com/games/133637?tab=all" class="flex items-center text-accent hover:text-ink font-bold transition-colors">
+                        <i data-lucide="external-link" class="w-4 h-4 mr-2"></i>
+                        <span class="lang-en">View Gcores Page</span>
+                        <span class="lang-cn hidden">前往机核页面</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </aside>
+
+    <main class="lg:w-3/4">
+        <div class="project-img aspect-[16/9] mb-12 relative overflow-hidden">
+            <img class="hero-cover" src="../../../../picture/portfolio/eatwell/eatwell_cover.gif" alt="EatWell title animation">
+            <div class="absolute inset-0 bg-gradient-to-t from-ink/70 via-ink/20 to-transparent"></div>
+            <div class="absolute inset-0 flex flex-col items-center justify-end text-center px-6 pb-10 z-10">
+                <div class="inline-flex items-center px-3 py-1 rounded-full bg-bone/90 border border-stone-300 text-xs font-bold uppercase tracking-[0.2em] text-well mb-4">
+                    <span class="lang-en">Survive the Well / Feed the Guests / Manage the Cost</span>
+                    <span class="lang-cn hidden">井底求生 / 招待来客 / 管理代价</span>
+                </div>
+                <h2 class="text-3xl md:text-5xl font-bold text-white mb-3 drop-shadow-[0_2px_18px_rgba(0,0,0,0.45)]">
+                    <span class="lang-en">A shop in the forest, a menu made of risk.</span>
+                    <span class="lang-cn hidden">在森林井底开店，用风险组成菜单。</span>
+                </h2>
+                <p class="max-w-2xl mx-auto text-sm md:text-base text-stone-100">
+                    <span class="lang-en">
+                        A long-term dark survival management game where the player sends animal companions to gather food, serves dangerous guests at night, and balances profit against sanity, violence, and survival pressure.
+                    </span>
+                    <span class="lang-cn hidden">
+                        一款长期开发中的黑暗生存经营游戏：玩家白天派遣动物伙伴收集食物与资源，夜晚接待危险的客人，并在收益、san 值、暴力与生存压力之间做取舍。
+                    </span>
+                </p>
+            </div>
+        </div>
+
+        <section>
+            <h2 class="section-title">
+                <span class="lang-en">The Overview</span>
+                <span class="lang-cn hidden">项目概览</span>
+            </h2>
+            <div class="lang-en">
+                <p>
+                    <em>EatWell</em> is a long-term indie project by the team <strong>井上添花</strong>.
+                    The public Gcores page presents it as a Windows strategy, simulation, and survival game with a dark forest tone,
+                    and the project is planned for a future Steam release.
+                </p>
+                <p>
+                    The player runs a small shop after falling into a strange forest. During the day, animal companions are sent out to explore the surrounding terrain, gather food and materials, and potentially evolve or mutate. At night, customers arrive one by one. If the player can serve the food they need, the shop earns currency. If not, the player may be forced into violence, taking food and hearts from guests while losing sanity and risking deeper consequences.
+                </p>
+                <p>
+                    My work focused on numerical design and system planning, especially after the first version of the game had already proven its basic direction. From the second iteration onward, I participated in most of the gameplay planning work: clarifying resource values, round structure, customer pressure, companion growth, merchant rewards, and how the game's dark tradeoffs should escalate over a run.
+                </p>
+            </div>
+            <div class="lang-cn hidden">
+                <p>
+                    <em>落井下食</em> 是由 <strong>井上添花</strong> 团队长期开发的独立游戏项目。
+                    根据机核公开页面，它是一款 Windows 平台的策略、模拟、生存游戏，整体气质偏黑暗森林童话，并计划未来在 Steam 发售。
+                </p>
+                <p>
+                    玩家在坠入一片奇异森林后经营一家小店。白天，玩家需要派遣动物伙伴探索周围地形、收集食物和材料，并让伙伴产生进化或变异；夜晚，客人会依次到来。如果能提供它们需要的食物，就可以获得货币。如果无法满足需求，玩家可能被迫选择更暴力的方式，从客人身上获取食物和心脏，同时付出 san 值下降与后续惩罚的代价。
+                </p>
+                <p>
+                    我在项目中主要负责数值策划与系统设计，尤其是在第一版验证方向之后，参与了第二轮及以后版本的大部分游戏策划工作：包括资源价值、回合结构、顾客压力、伙伴成长、商人奖励，以及这套黑暗取舍如何在单局流程中逐步升级。
+                </p>
+            </div>
+        </section>
+
+        <section>
+            <h2 class="section-title">
+                <span class="lang-en">A Three-Part Daily Loop</span>
+                <span class="lang-cn hidden">白天、夜晚与凌晨的循环</span>
+            </h2>
+            <p class="lang-en">
+                The core structure is built around a readable day-night-dawn loop. Each round asks the player to prepare, face the consequence of that preparation, and then adjust through the merchant before the next round begins.
+            </p>
+            <p class="lang-cn hidden">
+                游戏的核心结构建立在清晰的白天、夜晚、凌晨循环上。每一回合，玩家先准备，再承受准备是否充分带来的后果，最后通过商人阶段调整下一轮方向。
+            </p>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 my-8">
+                <div class="system-card rounded-2xl p-6">
+                    <div class="p-2 bg-accent/10 inline-block rounded-full mb-4">
+                        <i data-lucide="sun" class="w-6 h-6 text-accent"></i>
+                    </div>
+                    <h3 class="text-lg font-bold mb-2 text-ink">
+                        <span class="lang-en">Day: Dispatch</span>
+                        <span class="lang-cn hidden">白天：派遣</span>
+                    </h3>
+                    <p class="text-sm text-stone-600 lang-en">Send companions to terrain tiles, collect food and resources, and decide whether to push evolution or gather materials for survival.</p>
+                    <p class="text-sm text-stone-600 lang-cn hidden">派遣动物伙伴前往地形，收集食物和资源，并在进化、变异、材料积累之间做选择。</p>
+                </div>
+
+                <div class="system-card rounded-2xl p-6">
+                    <div class="p-2 bg-accent/10 inline-block rounded-full mb-4">
+                        <i data-lucide="moon" class="w-6 h-6 text-accent"></i>
+                    </div>
+                    <h3 class="text-lg font-bold mb-2 text-ink">
+                        <span class="lang-en">Night: Serve or Kill</span>
+                        <span class="lang-cn hidden">夜晚：招待或击杀</span>
+                    </h3>
+                    <p class="text-sm text-stone-600 lang-en">Customers arrive in sequence. Feeding them earns currency; failing to satisfy them can lead to attacks or the player's choice to kill for food, hearts, and a sanity cost.</p>
+                    <p class="text-sm text-stone-600 lang-cn hidden">客人依次到来。满足需求可以获得货币；无法满足时，玩家可能遭到攻击，也可能选择击杀客人以换取食物、心脏和 san 值代价。</p>
+                </div>
+
+                <div class="system-card rounded-2xl p-6">
+                    <div class="p-2 bg-accent/10 inline-block rounded-full mb-4">
+                        <i data-lucide="shopping-bag" class="w-6 h-6 text-accent"></i>
+                    </div>
+                    <h3 class="text-lg font-bold mb-2 text-ink">
+                        <span class="lang-en">Dawn: Merchant</span>
+                        <span class="lang-cn hidden">凌晨：商人</span>
+                    </h3>
+                    <p class="text-sm text-stone-600 lang-en">Spend currency, buy items or companions, sell hearts, and adjust the build before the next day's pressure arrives.</p>
+                    <p class="text-sm text-stone-600 lang-cn hidden">消耗货币购买道具或伙伴，出售心脏，并在下一轮压力到来前调整构筑方向。</p>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <h2 class="section-title">
+                <span class="lang-en">My Design Focus: Numbers as Moral Pressure</span>
+                <span class="lang-cn hidden">我的设计重点：让数值制造道德压力</span>
+            </h2>
+            <div class="lang-en">
+                <p>
+                    The most interesting design problem in <em>EatWell</em> is that its numbers are not only economy values. They also carry the tone of the game. Food demand, customer health, weapon damage, sanity loss, merchant price, companion cap, and spoilage chance all shape the same question: how far will the player go to survive?
+                </p>
+                <p>
+                    In the second and later iterations, my planning work revolved around making that pressure legible. If the food economy is too loose, the night phase loses threat. If killing is too efficient, the moral and survival tension collapses into an obvious optimal strategy. If sanity punishments are too sharp, the player feels punished for exploring the game's darkest system. The balance target was not simple fairness; it was controlled discomfort.
+                </p>
+                <p>
+                    That also affected how I approached tables and configurations. The project uses a lot of data-driven content: companion outputs, customer requirements, food values, recipes, terrain outputs, item effects, weapon upgrades, round queues, and sanity punishments. My role was to help those values support a run structure that could escalate from resource planning into danger, compromise, and consequence.
+                </p>
+            </div>
+            <div class="lang-cn hidden">
+                <p>
+                    <em>落井下食</em> 最有意思的设计问题，是它的数值不只是经济参数，也承担了游戏气质。食物需求、顾客血量、武器伤害、san 值损失、商人价格、伙伴上限、食物腐败概率，最终都指向同一个问题：为了活下去，玩家愿意走到哪一步？
+                </p>
+                <p>
+                    在第二轮及以后的版本中，我参与策划时最关注的是如何让这种压力变得可读。如果食物经济太宽松，夜晚就失去威胁；如果击杀太高效，道德取舍和生存压力就会塌缩成显而易见的最优解；如果 san 值惩罚太重，玩家又会觉得自己因为尝试黑暗系统而被粗暴惩罚。这里的平衡目标不是简单的“公平”，而是一种可控的不适感。
+                </p>
+                <p>
+                    这也影响了我处理表格和配置的方式。项目大量依赖数据驱动：伙伴产出、顾客需求、食物价值、合成配方、地形产出、道具效果、武器升级、回合队列和 san 值惩罚。我的工作是让这些数值服务于一条逐渐升级的单局结构，从资源规划推进到危险、妥协和后果。
+                </p>
+            </div>
+
+            <div class="showcase-card overflow-hidden rounded-2xl border border-stone-300/70 bg-bone/70 shadow-sm my-8">
+                <img src="../../../../picture/portfolio/eatwell/eatwell_screen_02.webp" alt="EatWell map and companion dispatch screenshot">
+            </div>
+        </section>
+
+        <section>
+            <h2 class="section-title">
+                <span class="lang-en">Systems That Had to Work Together</span>
+                <span class="lang-cn hidden">必须互相咬合的系统</span>
+            </h2>
+            <p class="lang-en">
+                The page is not only about a theme; it is about how several systems support the theme at once. The player needs to read future demand, prepare food types, evaluate terrain, grow companions, buy items, upgrade weapons, and manage sanity loss. Each layer is simple by itself, but the design challenge is making them form one pressure curve.
+            </p>
+            <p class="lang-cn hidden">
+                这个项目不是只有一个黑暗主题，而是需要多个系统同时支撑这个主题。玩家要读取未来需求、准备食物类型、判断地形、培养伙伴、购买道具、升级武器，并管理 san 值损失。每一层单独看都不复杂，真正的设计挑战是让它们组成同一条压力曲线。
+            </p>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 my-8">
+                <div class="system-card rounded-2xl p-6">
+                    <h3 class="text-lg font-bold mb-2 text-ink">
+                        <span class="lang-en">Companions, Terrain, Evolution</span>
+                        <span class="lang-cn hidden">伙伴、地形与进化</span>
+                    </h3>
+                    <p class="text-sm text-stone-600 lang-en">Companions gather different food and materials. Terrain controls available outputs, evolution pools, and mutation chances, so dispatch decisions are also long-term build decisions.</p>
+                    <p class="text-sm text-stone-600 lang-cn hidden">不同伙伴会收集不同食物与材料。地形决定产出、进化池和变异概率，因此派遣不是单纯收菜，也是长期构筑决策。</p>
+                </div>
+
+                <div class="system-card rounded-2xl p-6">
+                    <h3 class="text-lg font-bold mb-2 text-ink">
+                        <span class="lang-en">Customers, Food Demand, Violence</span>
+                        <span class="lang-cn hidden">客人、食物需求与暴力</span>
+                    </h3>
+                    <p class="text-sm text-stone-600 lang-en">Customer queues turn preparation into a test. Serving creates income; killing creates food and hearts but pushes the sanity system closer to debuffs.</p>
+                    <p class="text-sm text-stone-600 lang-cn hidden">顾客队列会检验白天准备。招待带来收入，击杀带来食物和心脏，但会把 san 值系统推向更危险的 debuff。</p>
+                </div>
+
+                <div class="system-card rounded-2xl p-6">
+                    <h3 class="text-lg font-bold mb-2 text-ink">
+                        <span class="lang-en">Merchant Items and Run Direction</span>
+                        <span class="lang-cn hidden">商人道具与单局方向</span>
+                    </h3>
+                    <p class="text-sm text-stone-600 lang-en">Merchant items act like roguelike-style modifiers, changing food production, customer ratios, defense, companion purchase, or resource access.</p>
+                    <p class="text-sm text-stone-600 lang-cn hidden">商人道具类似 roguelike 遗物，会改变食物生产、顾客比例、防御、伙伴购买或资源获取方向。</p>
+                </div>
+
+                <div class="system-card rounded-2xl p-6">
+                    <h3 class="text-lg font-bold mb-2 text-ink">
+                        <span class="lang-en">Sanity as Escalation</span>
+                        <span class="lang-cn hidden">San 值作为升级压力</span>
+                    </h3>
+                    <p class="text-sm text-stone-600 lang-en">Sanity thresholds introduce debuffs such as harder customer demands, stronger enemies, more customers, or food spoilage, making violence useful but never clean.</p>
+                    <p class="text-sm text-stone-600 lang-cn hidden">San 值阈值会引入 debuff，例如顾客需求提高、敌人增强、客人增加或食物腐败，让暴力可以有用，但永远不干净。</p>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <h2 class="section-title">
+                <span class="lang-en">Mood and Player-Facing Readability</span>
+                <span class="lang-cn hidden">氛围与玩家可读性</span>
+            </h2>
+            <p class="lang-en">
+                The game's presentation is important because it softens and sharpens the same system at once. The paper-cut animal art makes the world approachable, while the well, shadows, and eating/killing imagery keep reminding the player that this is not a cozy restaurant game.
+            </p>
+            <p class="lang-cn hidden">
+                这个项目的视觉表达很重要，因为它同时柔化和加重了系统本身。剪纸感动物让世界看起来可亲近，但井底、阴影、进食和击杀的意象又不断提醒玩家：这不是一个温馨餐厅游戏。
+            </p>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 my-8">
+                <div class="showcase-card overflow-hidden rounded-2xl border border-stone-300/70 bg-bone/70 shadow-sm">
+                    <img src="../../../../picture/portfolio/eatwell/eatwell_screen_01.webp" alt="EatWell well opening atmosphere screenshot">
+                </div>
+                <div class="showcase-card overflow-hidden rounded-2xl border border-stone-300/70 bg-bone/70 shadow-sm">
+                    <img src="../../../../picture/portfolio/eatwell/eatwell_screen_03.webp" alt="EatWell feeding scene screenshot">
+                </div>
+            </div>
+
+            <div class="showcase-card overflow-hidden rounded-2xl border border-stone-300/70 bg-bone/70 shadow-sm my-8">
+                <img src="../../../../picture/portfolio/eatwell/eatwell_screen_04.webp" alt="EatWell violent customer resolution screenshot">
+            </div>
+        </section>
+
+        <section>
+            <h2 class="section-title">
+                <span class="lang-en">Why This Project Matters in My Portfolio</span>
+                <span class="lang-cn hidden">它在我作品集中的意义</span>
+            </h2>
+            <div class="lang-en">
+                <p>
+                    Compared with short game-jam prototypes, <em>EatWell</em> is important because it shows a different kind of design work: sustained iteration inside a growing commercial project. My contribution was not only ideation, but also the more fragile work of making systems hold together after the initial concept had become playable.
+                </p>
+                <p>
+                    As a numerical designer, I had to think about whether a value was readable, whether a reward distorted the intended choice, whether a punishment taught the right lesson, and whether the whole run still produced pressure without becoming arbitrary. That is the part of design that often disappears in screenshots, but it is also the part that decides whether a management game can stay alive beyond its first pitch.
+                </p>
+            </div>
+            <div class="lang-cn hidden">
+                <p>
+                    和短期 game jam 原型相比，<em>落井下食</em> 对我的作品集很重要，因为它展示的是另一种设计工作：在一个持续成长、未来计划商业发售的项目里进行长期迭代。我的贡献不只是提出点子，而是参与让一个已经可玩的初始概念继续稳定、扩展和咬合。
+                </p>
+                <p>
+                    作为数值策划，我需要判断一个数值是否可读，一个奖励是否会扭曲预期选择，一个惩罚是否教会了玩家正确的事情，以及整局流程能不能在保持压力的同时不变成随意折磨。这部分设计很难只靠截图展示，但它往往决定了一款经营游戏能不能真正走出最初的概念阶段。
+                </p>
+            </div>
+        </section>
+    </main>
+</div>
+
+<footer class="bg-well text-stone-200 py-20 px-6 mt-12 border-t border-stone-900">
+    <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+        <div>
+            <h2 class="text-3xl md:text-4xl font-bold mb-6 text-white">
+                <span class="lang-en">Let's talk systems and numbers.</span>
+                <span class="lang-cn hidden">欢迎聊聊系统与数值设计。</span>
+            </h2>
+            <a href="mailto:donglinyan2000@outlook.com" class="inline-flex items-center text-ember hover:text-white transition-colors text-lg font-medium">
+                donglinyan2000@outlook.com
+                <i data-lucide="arrow-right" class="ml-2 w-5 h-5"></i>
+            </a>
+        </div>
+        <div class="flex flex-col md:items-end space-y-4">
+            <p class="text-sm text-stone-400 uppercase tracking-widest mb-4">
+                <span class="lang-en">Social Media</span>
+                <span class="lang-cn hidden">社交媒体</span>
+            </p>
+            <a href="#" class="text-stone-300 hover:text-ember transition-colors flex items-center">
+                <i data-lucide="twitter" class="w-5 h-5 mr-3"></i> Twitter / X
+            </a>
+            <a href="#" class="text-stone-300 hover:text-ember transition-colors flex items-center">
+                <i data-lucide="linkedin" class="w-5 h-5 mr-3"></i> LinkedIn
+            </a>
+        </div>
+    </div>
+    <div class="max-w-7xl mx-auto mt-20 pt-8 border-t border-stone-800 text-center md:text-left text-xs text-stone-500">
+        &copy; 2025 Game Designer Portfolio. All rights reserved.
+    </div>
+</footer>
+
+<button id="backToTopBtn" onclick="scrollToTop()" title="Go to top">
+    <i data-lucide="arrow-up" class="w-6 h-6"></i>
+</button>
+
+<script>
+    lucide.createIcons();
+
+    const backToTopBtn = document.getElementById("backToTopBtn");
+
+    window.addEventListener('scroll', function() {
+        const nav = document.querySelector('nav');
+        if (window.scrollY > 50) {
+            nav.classList.add('shadow-lg');
+            nav.classList.add('bg-paper/95');
+        } else {
+            nav.classList.remove('shadow-lg');
+            nav.classList.remove('bg-paper/95');
+        }
+
+        backToTopBtn.style.display = window.scrollY > 300 ? "block" : "none";
+    });
+
+    function scrollToTop() {
+        window.scrollTo({top: 0, behavior: 'smooth'});
+    }
+
+    function toggleLanguage() {
+        const enEls = document.querySelectorAll('.lang-en');
+        const cnEls = document.querySelectorAll('.lang-cn');
+        enEls.forEach(el => el.classList.toggle('hidden'));
+        cnEls.forEach(el => el.classList.toggle('hidden'));
+    }
+</script>
+</body>
+</html>

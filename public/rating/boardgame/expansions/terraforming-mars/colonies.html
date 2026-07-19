@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Expansion Review: Terraforming Mars: Colonies</title>
+    <link rel="icon" href="../../../../favicon.svg" type="image/svg+xml">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../../games/rating-game-navigation.css">
+    <script src="../../games/rating-game-navigation.js" defer></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: { sans: ['Inter', 'Noto Sans SC', 'sans-serif'] },
+                    colors: {
+                        paper: '#fdfbf7',
+                        ink: '#1a1a1a',
+                        accent: '#c2410c',
+                        secondary: '#f3f4f6',
+                        tier: '#15803d'
+                    }
+                }
+            }
+        };
+    </script>
+    <style>
+        body { background-color: #fdfbf7; color: #1a1a1a; }
+        .prose p { margin-bottom: 1.45em; line-height: 1.85; color: #4b5563; }
+        .prose h3 {
+            font-weight: 700;
+            font-size: 1.5rem;
+            margin-top: 2.75rem;
+            margin-bottom: 1rem;
+            color: #1a1a1a;
+            border-left: 4px solid #c2410c;
+            padding-left: 1rem;
+        }
+        .prose a {
+            color: #9a3412;
+            text-decoration: underline;
+            text-decoration-color: #fdba74;
+            text-underline-offset: 0.18em;
+        }
+        .prose a:hover { color: #c2410c; text-decoration-color: #c2410c; }
+        .review-header-media {
+            display: flex;
+            align-items: flex-end;
+            justify-content: space-between;
+            gap: 1.25rem;
+            width: 100%;
+        }
+        .review-cover {
+            flex: 0 0 auto;
+            width: 8.5rem;
+            margin: 0;
+        }
+        .review-cover-frame {
+            width: 100%;
+            aspect-ratio: 1 / 1;
+            overflow: hidden;
+            background: #ffffff;
+            border: 1px solid #e5e7eb;
+            border-radius: 2px;
+            box-shadow: 0 8px 22px rgba(17, 24, 39, 0.12);
+        }
+        .review-cover img {
+            display: block;
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+        .review-cover figcaption {
+            margin-top: 0.45rem;
+            color: #9ca3af;
+            font-size: 0.65rem;
+            line-height: 1.35;
+            text-align: center;
+        }
+        .verdict-row {
+            display: grid;
+            grid-template-columns: minmax(0, 1fr) auto;
+            gap: 1rem;
+            align-items: center;
+            padding: 1rem 1.5rem;
+            border-bottom: 1px solid #f3f4f6;
+        }
+        .verdict-row:last-child { border-bottom: 0; }
+        @media (min-width: 1024px) {
+            .review-header-media { width: auto; justify-content: flex-end; }
+            .review-cover { width: 10.5rem; }
+        }
+        @media (max-width: 360px) {
+            .review-header-media { gap: 1rem; }
+            .review-cover { width: 7.25rem; }
+        }
+    </style>
+</head>
+<body class="font-sans antialiased">
+    <nav class="fixed w-full z-50 top-0 bg-paper/90 backdrop-blur-sm border-b border-gray-200/50 h-20 flex items-center px-4 sm:px-6 justify-between">
+        <div class="flex flex-1 items-center gap-4 sm:gap-6 min-w-0">
+            <a href="../../games/TerraformingMars.html" class="flex items-center text-gray-500 hover:text-accent transition-colors group shrink-0">
+                <i data-lucide="arrow-left" class="w-5 h-5 mr-2 group-hover:-translate-x-1 transition-transform"></i>
+                <span class="hidden sm:inline">
+                    <span class="lang-en">Back to Terraforming Mars</span>
+                    <span class="lang-cn hidden">返回《殖民火星》</span>
+                </span>
+            </a>
+            <a href="../../rating_boardgame_home.html#expansion-ratings-en" class="hidden md:flex items-center text-gray-500 hover:text-accent transition-colors">
+                <i data-lucide="layers-3" class="w-4 h-4 mr-2"></i>
+                <span class="lang-en">Expansion Rules</span>
+                <span class="lang-cn hidden">扩展评分规则</span>
+            </a>
+            <div class="sticky-game-title" data-sticky-game-title aria-hidden="true">
+                <span class="lang-en">Terraforming Mars: Colonies</span>
+                <span class="lang-cn hidden">殖民火星：殖民地</span>
+            </div>
+        </div>
+
+        <button type="button" onclick="toggleLanguage()" aria-label="Switch language" class="flex items-center space-x-2 border border-gray-300 px-3 sm:px-4 py-2 rounded-full hover:border-accent hover:text-accent transition-all text-xs font-bold tracking-widest uppercase bg-white shrink-0">
+            <i data-lucide="globe" class="w-4 h-4"></i>
+            <span id="lang-label">EN / 中文</span>
+        </button>
+    </nav>
+
+    <main class="pt-32 pb-24 px-5 sm:px-6">
+        <article class="max-w-7xl mx-auto">
+            <header class="flex flex-col lg:flex-row justify-between items-start lg:items-end gap-8 mb-12 border-b border-gray-200 pb-12">
+                <div class="min-w-0">
+                    <span class="text-accent font-bold tracking-widest uppercase text-xs mb-2 block">
+                        <span class="lang-en">Shared Trade, Production Thresholds, Deep Integration</span>
+                        <span class="lang-cn hidden">共享贸易、产能质变与深度融合</span>
+                    </span>
+                    <h1 class="text-4xl sm:text-5xl font-bold text-ink mb-3 break-words" data-review-title>
+                        <span class="lang-en">Terraforming Mars: Colonies</span>
+                        <span class="lang-cn hidden">殖民火星：殖民地</span>
+                    </h1>
+                    <p class="text-gray-500 text-base sm:text-lg">
+                        <span class="lang-en">Jacob Fryxelius &amp; Jonathan Fryxelius · 2018 · Expansion for Terraforming Mars</span>
+                        <span class="lang-cn hidden">Jacob Fryxelius、Jonathan Fryxelius · 2018 · 《殖民火星》扩展</span>
+                    </p>
+                </div>
+                <div class="review-header-media lg:shrink-0">
+                    <div class="flex flex-col items-start lg:items-end gap-4">
+                        <div class="text-left lg:text-right">
+                            <div class="text-xs font-mono tracking-widest uppercase text-gray-400 mb-1">
+                                <span class="lang-en">Quality Tier</span>
+                                <span class="lang-cn hidden">质量档位</span>
+                            </div>
+                            <div class="text-6xl font-bold text-tier leading-none">S</div>
+                        </div>
+                        <div class="text-left lg:text-right max-w-44">
+                            <div class="text-xs font-mono tracking-widest uppercase text-gray-400 mb-1">
+                                <span class="lang-en">Enable Recommendation</span>
+                                <span class="lang-cn hidden">启用建议</span>
+                            </div>
+                            <div class="text-lg sm:text-xl font-bold text-accent leading-tight">
+                                <span class="lang-en">Usually Include</span>
+                                <span class="lang-cn hidden">通常加入</span>
+                            </div>
+                        </div>
+                    </div>
+                    <figure class="review-cover">
+                        <div class="review-cover-frame">
+                            <img src="../../../../picture/rating_boardgame/terraforming-mars/expansions/colonies/colonies-cover.png" alt="Terraforming Mars: Colonies / 殖民火星：殖民地 official product image" width="755" height="754" decoding="async" fetchpriority="high">
+                        </div>
+                        <figcaption>
+                            <span class="lang-en">Official product image · FryxGames</span>
+                            <span class="lang-cn hidden">官方商品图 · FryxGames</span>
+                        </figcaption>
+                    </figure>
+                </div>
+            </header>
+
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-12 lg:gap-16">
+                <div class="lg:col-span-2 prose max-w-none min-w-0">
+                    <h3>
+                        <span class="lang-en">Colonies at a Glance</span>
+                        <span class="lang-cn hidden">《殖民地》概览</span>
+                    </h3>
+                    <div class="lang-en">
+                        <p>
+                            At the center of Colonies is a shared colony-and-trade market that enters the base game's existing economy. Each session uses a selection from 11 colony tiles. Players may spend 17 M€ to establish a colony, gaining an immediate placement bonus and a claim on future owner rewards, or send a trade fleet to an unoccupied tile by paying 9 M€, three energy, or three titanium. The trader takes the tile's accumulated income, while every player established there receives a smaller colony bonus.
+                        </p>
+                        <p>
+                            In quality, Colonies earns an S tier. Its central mechanism is outstanding in conception, execution, integration, and the value it returns for its added burden. The box adds recurring administration, limited colony spaces can create some turn-order friction, and a small amount of its card and corporation content bends the system less cleanly. Those limitations are noticeable in play, but remain secondary to the quality of its central mechanism.
+                        </p>
+                        <p>
+                            Its separate enable recommendation is Usually Include. Colonies is not the best default for a first teaching game, because it asks newcomers to value another layer of investment and timing before they know the base economy. Once that baseline is established, however, the additional decisions earn a place in almost every session.
+                        </p>
+                        <p>
+                            This review covers the original 2018 box: its 49 project cards and five corporations are considered alongside the central system, while later promotional cards and cross-expansion material remain outside its scope.
+                        </p>
+                    </div>
+                    <div class="lang-cn hidden">
+                        <p>
+                            《殖民地》的核心，是在本体经济中加入一个由所有玩家共同参与的殖民与贸易市场。每局会从 11 块殖民地板块中选出一组：玩家可以花费 17 M€ 建立殖民地，获得即时的放置奖励和后续的殖民奖励；也可以支付 9 M€、三电或三钛，派出贸易船前往一块尚未被其他贸易船占据的殖民地。贸易者取得轨道上积累的主要收益，已经在当地建立殖民地的玩家则会同时得到一份较小的奖励。
+                        </p>
+                        <p>
+                            从质量上看，《殖民地》达到 S 档。它的核心机制在构思、执行、融合度和额外负担所换来的提升上，都足以成为扩展设计的范例。每时代存在少量维护，有限的殖民位会带来一些座次摩擦，少量卡牌与企业对系统限制的处理也没有核心机制这么干净。这些问题在游玩中确实能感觉到，但仍然只是核心机制之外的次要瑕疵。
+                        </p>
+                        <p>
+                            它的启用建议则是“通常加入”。《殖民地》不适合作为新手教学局的默认配置，因为它要求玩家在尚未理解本体经济时，又处理一层新的投资价值与行动时机；等到这套基准已经建立，新增决策便足以在几乎每一局里证明自己的位置。
+                        </p>
+                        <p>
+                            本文评价的是 2018 年发售时的原始《殖民地》：盒内的 49 张项目牌和 5 张企业牌会与核心系统一并纳入，后续 Promo 牌和跨扩展内容不在本文范围内。
+                        </p>
+                    </div>
+
+                    <h3>
+                        <span class="lang-en">An Action Inside The Existing Economy</span>
+                        <span class="lang-cn hidden">进入原有经济的一项新行动</span>
+                    </h3>
+                    <div class="lang-en">
+                        <p>
+                            Colonies inserts another action directly into the economy that already drives Terraforming Mars. Money, energy, and titanium can all fund trade; cards can alter those costs or expand access; the resulting resources return immediately to the same engines, projects, and timing decisions. The colony market therefore changes the base game's decision network without requiring a separate economy beside it.
+                        </p>
+                        <p>
+                            Building a colony and trading are two independent decisions. A player does not need a colony in order to trade. Spending 17 M€ buys an immediate placement bonus and a claim on future owner bonuses whenever someone visits that tile; declining to build preserves liquidity while leaving the public trade income available. Colony construction is therefore a long-term investment rather than an entry fee for using the trade market.
+                        </p>
+                    </div>
+                    <div class="lang-cn hidden">
+                        <p>
+                            《殖民地》把一项新行动直接放进了《殖民火星》原有的经济。钱、电和钛都可以支付贸易，卡牌能够改变成本或扩展访问方式，获得的资源又会立刻回到原本的引擎、项目与时机判断中。殖民市场因此会改变本体已有的决策网络，又不需要玩家在旁边经营另一套经济。
+                        </p>
+                        <p>
+                            建立殖民地与进行贸易是两项彼此独立的决策。玩家没有殖民地照样可以贸易；花费 17 M€，买到的是即时的放置奖励，以及以后其他玩家前来贸易时持续触发的殖民奖励。放弃建造则可以保留流动资金，同时不失去公共贸易收益。殖民建造因此是一项长期投资，而不是进入贸易市场之前必须缴纳的费用。
+                        </p>
+                    </div>
+
+                    <h3>
+                        <span class="lang-en">Competition And Mutual Benefit In The Same Market</span>
+                        <span class="lang-cn hidden">同一个市场里的竞争与互利</span>
+                    </h3>
+                    <div class="lang-en">
+                        <p>
+                            The shared economy is one of the expansion's best ideas. Colony owners want other players to visit their tile because every trade pays them an owner bonus. The visitor wants the larger accumulated income, but trading consumes that value and blocks the tile from another fleet for the rest of the generation. Players therefore compete for access and timing while also creating income for one another. Cooperation and competition are not separate modes here; they are produced by the same action.
+                        </p>
+                        <p>
+                            Some colony tiles are stronger than others, but those stronger opportunities are visible and available to the whole table. Everyone can plan around the same trade income. The relevant asymmetry appears when colony spaces become scarce: each tile normally holds only three colonies, so later players can lose access to a highly desirable investment. Trade order is less severe. The first player can act first, but committing an early action to trade is not always efficient, and first-player order rotates between generations.
+                        </p>
+                    </div>
+                    <div class="lang-cn hidden">
+                        <p>
+                            共享经济是这个扩展最出色的设计之一。殖民地所有者希望其他玩家前来，因为每次贸易都会给自己一份殖民奖励；贸易者想拿走轨道上积累的主要收益，却也会清空这份价值，并让该板块在本时代余下时间里无法再停靠另一艘贸易船。玩家一边争夺访问权与时机，一边又在替彼此创造收益。合作与竞争并不是两套分开的模式，而是由同一个行动同时产生。
+                        </p>
+                        <p>
+                            殖民地之间确实有强有弱，但这些强机会会向整桌公开，所有玩家都能围绕同样的贸易收益规划。真正的不对称主要出现在殖民位变得稀缺时：每块板块通常只能容纳三个殖民地，后手玩家可能因此失去一项很有吸引力的长期投资。贸易的先后手问题没有这么严重；起始玩家虽然能够抢先行动，但过早花一个行动去贸易未必划算，而且起始顺位会在时代之间轮换。
+                        </p>
+                    </div>
+
+                    <h3>
+                        <span class="lang-en">Three-Energy Trade And The Production Threshold</span>
+                        <span class="lang-cn hidden">三电贸易与产能门槛</span>
+                    </h3>
+                    <div class="lang-en">
+                        <p>
+                            Trade gives energy a new three-unit threshold and develops one of Terraforming Mars's strongest design habits: resources change meaning when they cross a threshold. Eight plants create a resource-level phase change. Players can assemble them gradually through production, cards, and other gains, then convert the stored total into a greenery.
+                        </p>
+                        <p>
+                            Energy behaves differently. Under normal production, stored energy becomes heat before new energy is generated, so it usually cannot accumulate across generations in the same way as plants. Reaching the three-energy trade cost therefore depends mainly on bringing energy production itself across the threshold. This moves the phase change from stored resources into production capacity. It also preserves the original energy-to-heat relationship: energy creates an immediate trading opportunity, then still feeds the delayed heat economy later.
+                        </p>
+                        <p>
+                            With a strong colony available, three energy production can approach nine money production. Requiring all three energy keeps the use from becoming freely available, while trade-cost reductions create alternative routes into or below the threshold. Energy becomes more useful, and production, energy, trade, and heat now form a more dimensional chain.
+                        </p>
+                    </div>
+                    <div class="lang-cn hidden">
+                        <p>
+                            贸易为电建立了一个新的三电门槛，也把《殖民火星》最擅长的设计方式继续向前推进：资源跨过门槛以后会发生质变。八草体现的是资源层面的质变，玩家可以通过产能、卡牌和其他收益逐步凑齐，再把储存的总量转化成一棵树。
+                        </p>
+                        <p>
+                            电则不一样。正常生产时，已有的电会先转化成热，然后才根据产能获得新的电，因此它通常无法像草一样跨时代积存。用于贸易的三电门槛，主要依靠的不是慢慢囤资源，而是让电产能本身跨过门槛。质变由资源层进一步推进到了产能层，同时又没有抛弃原有的电转热关系：电先提供一次即时贸易机会，之后仍然会进入延迟生效的热经济。
+                        </p>
+                        <p>
+                            强殖民地存在时，三电产几乎可以接近九钱产。必须凑齐三电，防止这项用途变成随时可用的免费答案；降低贸易消耗的卡牌，则提供了跨过或降低门槛的其他路径。电因此变得更有用，产能、电、贸易与热也形成了一条更加立体的关系。
+                        </p>
+                    </div>
+
+                    <h3>
+                        <span class="lang-en">A Richer Middle With Minor Added Friction</span>
+                        <span class="lang-cn hidden">更丰富的中段与有限的额外负担</span>
+                    </h3>
+                    <div class="lang-en">
+                        <p>
+                            Colonies speeds up and slows down different parts of the game. Extra resources can bring engines online sooner and make expensive projects easier to fund. At the same time, trade adds another valuable action, another investment route, and more reasons to keep developing instead of advancing the three ending parameters. In practice those forces largely offset each other. The overall ending pace remains similar, while the route taken through the middle of the game becomes richer.
+                        </p>
+                        <p>
+                            The added project cards and corporations generally speak the same economic language as the central system, but they are not equally clean. A few effects grant additional fleets or relax ordinary colony limits, bending scarcity more sharply than a simple discount; corporation strength is also uneven. Returning fleets and advancing colony markers add a small recurring procedure each generation. These are real imperfections, but they remain local. They make the box less clean than its central mechanism without changing how strongly that mechanism enriches most sessions.
+                        </p>
+                    </div>
+                    <div class="lang-cn hidden">
+                        <p>
+                            《殖民地》会同时加快和减慢游戏的不同部分。更多资源能让引擎更早启动，也让昂贵项目更容易落地；与此同时，贸易又增加了一项值得执行的行动、一条新的投资路线，以及更多继续发育而非推进三项终局参数的理由。实际玩下来，这两股力量大体互相抵消：整体终局速度没有明显变化，但抵达终局之前的中段路线变得更加丰富。
+                        </p>
+                        <p>
+                            新增项目牌和企业大体都使用着核心系统的同一种经济语言，但完成度并不完全相同。少数效果会增加贸易船，或者放宽通常的殖民限制，对稀缺性的改变远大于普通减费；企业之间的强度也有差异。每时代收回贸易船、推进殖民地标记，还会增加一道很小的重复流程。这些都是真实的问题，却只停留在局部：它们让整盒没有核心机制本身那么干净，却没有改变核心机制在大多数对局中带来的明显提升。
+                        </p>
+                    </div>
+
+                    <h3>
+                        <span class="lang-en">Final Recommendation</span>
+                        <span class="lang-cn hidden">最终建议</span>
+                    </h3>
+                    <div class="lang-en">
+                        <p>
+                            A newcomer can manage the individual rules, but colony construction, three trade payment options, accumulated income, owner bonuses, fleet occupancy, and colony recovery together create a second layer of valuation before the base economy is established. Colonies is therefore better introduced after the first play.
+                        </p>
+                        <p>
+                            To judge whether a 17 M€ colony is a sound investment, or whether a trade is worth 9 M€, three energy, or three titanium, it helps to understand the normal value, timing, and future uses of those resources first. A newcomer can still use the system without that baseline, but cannot yet compare its opportunity costs as clearly or appreciate what the expansion changes. Once the group knows the base engine, the recurring procedure is quick and the new decisions earn their place in almost every session.
+                        </p>
+                        <p>
+                            The recommendation is therefore Usually Include, and the quality tier is S. Colonies adds a new action without isolating it from the base game, turns a public market into both competition and mutual benefit, and develops the resource model through a production-level threshold. Few expansions add this much strategic structure while remaining so faithful to the system they expand.
+                        </p>
+                    </div>
+                    <div class="lang-cn hidden">
+                        <p>
+                            新手能够处理其中的单条规则，但殖民建造、三种贸易支付、累积收益、所有者奖励、贸易船占位与殖民地恢复合在一起，会在玩家尚未理解本体经济时，又叠上一层新的估值。因此，《殖民地》更适合在第一局以后加入。
+                        </p>
+                        <p>
+                            要判断花 17 M€ 建立殖民地是否值得，或者一次贸易值不值得支付 9 M€、三电或三钛，最好先理解这些资源在本体中的正常价值、兑现时机和后续用途。缺少这套基准，新手依然可以使用这套系统，只是暂时难以清楚比较其中的机会成本，也不容易体会扩展究竟改变了什么。等到一桌玩家已经熟悉本体，每时代的维护会变得很快，而新增决策也足以在几乎每局里证明自己的位置。
+                        </p>
+                        <p>
+                            因此，它的启用建议是通常加入，质量档位是 S。《殖民地》加入了一项新行动，却没有把它与本体隔离；它让公共市场同时产生竞争与互利，也通过产能层面的质变继续发展了原有资源模型。很少有扩展能够加入这么多策略结构，同时又如此忠实地留在自己扩展的系统之中。
+                        </p>
+                    </div>
+                </div>
+
+                <aside class="lg:col-span-1">
+                    <div class="bg-white border border-gray-200 rounded-sm shadow-sm overflow-hidden lg:sticky lg:top-32">
+                        <div class="bg-secondary/30 px-6 py-4 border-b border-gray-200">
+                            <h3 class="text-sm font-bold text-ink uppercase tracking-widest">
+                                <span class="lang-en">Expansion Verdict</span>
+                                <span class="lang-cn hidden">扩展结论</span>
+                            </h3>
+                        </div>
+                        <div>
+                            <div class="verdict-row">
+                                <span class="text-xs font-bold uppercase tracking-widest text-gray-400">
+                                    <span class="lang-en">Quality</span>
+                                    <span class="lang-cn hidden">质量档位</span>
+                                </span>
+                                <span class="font-bold text-tier">S</span>
+                            </div>
+                            <div class="verdict-row">
+                                <span class="text-xs font-bold uppercase tracking-widest text-gray-400">
+                                    <span class="lang-en">Enable</span>
+                                    <span class="lang-cn hidden">启用建议</span>
+                                </span>
+                                <span class="font-bold text-right text-accent">
+                                    <span class="lang-en">Usually include</span>
+                                    <span class="lang-cn hidden">通常加入</span>
+                                </span>
+                            </div>
+                            <div class="verdict-row">
+                                <span class="text-xs font-bold uppercase tracking-widest text-gray-400">
+                                    <span class="lang-en">Integration</span>
+                                    <span class="lang-cn hidden">融合度</span>
+                                </span>
+                                <span class="font-medium text-right text-gray-700">
+                                    <span class="lang-en">Excellent</span>
+                                    <span class="lang-cn hidden">极高</span>
+                                </span>
+                            </div>
+                            <div class="verdict-row">
+                                <span class="text-xs font-bold uppercase tracking-widest text-gray-400">
+                                    <span class="lang-en">Learning Cost</span>
+                                    <span class="lang-cn hidden">学习成本</span>
+                                </span>
+                                <span class="font-medium text-right text-gray-700">
+                                    <span class="lang-en">Moderate</span>
+                                    <span class="lang-cn hidden">中等</span>
+                                </span>
+                            </div>
+                            <div class="verdict-row">
+                                <span class="text-xs font-bold uppercase tracking-widest text-gray-400">
+                                    <span class="lang-en">Overall Pace</span>
+                                    <span class="lang-cn hidden">整体节奏</span>
+                                </span>
+                                <span class="font-medium text-right text-gray-700">
+                                    <span class="lang-en">Roughly neutral</span>
+                                    <span class="lang-cn hidden">大致中性</span>
+                                </span>
+                            </div>
+                            <div class="verdict-row">
+                                <span class="text-xs font-bold uppercase tracking-widest text-gray-400">
+                                    <span class="lang-en">Scope</span>
+                                    <span class="lang-cn hidden">评价范围</span>
+                                </span>
+                                <span class="font-medium text-right text-gray-700">
+                                    <span class="lang-en">Colonies (2018)</span>
+                                    <span class="lang-cn hidden">2018 原始扩展</span>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="px-6 py-5 border-t border-gray-100 space-y-3 text-sm">
+                            <a href="../../games/TerraformingMars.html" class="flex items-center justify-between gap-4 text-gray-600 hover:text-accent transition-colors">
+                                <span class="lang-en">Read Base Game Review</span>
+                                <span class="lang-cn hidden">查看《殖民火星》本体评测</span>
+                                <i data-lucide="arrow-right" class="w-4 h-4 shrink-0"></i>
+                            </a>
+                            <a href="../../rating_boardgame_home.html#expansion-ratings-en" class="flex items-center justify-between gap-4 text-gray-600 hover:text-accent transition-colors">
+                                <span class="lang-en">Read Expansion Rules</span>
+                                <span class="lang-cn hidden">查看扩展评分规则</span>
+                                <i data-lucide="arrow-right" class="w-4 h-4 shrink-0"></i>
+                            </a>
+                        </div>
+                    </div>
+                </aside>
+            </div>
+        </article>
+    </main>
+
+    <script>
+        function toggleLanguage() {
+            const enEls = document.querySelectorAll('.lang-en');
+            const cnEls = document.querySelectorAll('.lang-cn');
+            enEls.forEach((element) => element.classList.toggle('hidden'));
+            cnEls.forEach((element) => element.classList.toggle('hidden'));
+            document.documentElement.lang = document.documentElement.lang === 'en' ? 'zh-CN' : 'en';
+        }
+
+        lucide.createIcons();
+    </script>
+</body>
+</html>

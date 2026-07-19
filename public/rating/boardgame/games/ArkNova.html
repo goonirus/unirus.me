@@ -1,0 +1,888 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Review: Ark Nova</title>
+    <link rel="icon" href="../../../favicon.svg" type="image/svg+xml">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./rating-game-navigation.css">
+    <script src="./rating-game-navigation.js" defer></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: { sans: ['Inter', 'Noto Sans SC', 'sans-serif'] },
+                    colors: {
+                        paper: '#fdfbf7',
+                        ink: '#1a1a1a',
+                        accent: '#c2410c',
+                        secondary: '#f3f4f6',
+                        impression: '#b91c1c'
+                    }
+                }
+            }
+        };
+    </script>
+    <style>
+        body { background-color: #fdfbf7; color: #1a1a1a; }
+        .prose p { margin-bottom: 1.45em; line-height: 1.85; color: #4b5563; }
+        .prose h3 {
+            font-weight: 700;
+            font-size: 1.5rem;
+            margin-top: 2.75rem;
+            margin-bottom: 1rem;
+            color: #1a1a1a;
+            border-left: 4px solid #c2410c;
+            padding-left: 1rem;
+        }
+        .prose h4 {
+            font-weight: 700;
+            font-size: 1.25rem;
+            margin-top: 2.25rem;
+            margin-bottom: 0.9rem;
+            padding-bottom: 0.55rem;
+            color: #1a1a1a;
+            border-bottom: 1px solid #e5e7eb;
+        }
+        .prose figure { margin: 2.25rem 0 2.75rem; }
+        .prose figure img {
+            width: 100%;
+            aspect-ratio: 3 / 2;
+            object-fit: cover;
+            border: 1px solid #e5e7eb;
+        }
+        .prose figcaption {
+            margin-top: 0.65rem;
+            color: #9ca3af;
+            font-size: 0.75rem;
+            line-height: 1.5;
+        }
+        .score-table { table-layout: fixed; }
+        .score-table th {
+            text-align: left;
+            padding: 0.75rem 0.85rem;
+            border-bottom: 1px solid #e5e7eb;
+            color: #9ca3af;
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+        .score-table td {
+            padding: 0.75rem 0.85rem;
+            border-bottom: 1px solid #f3f4f6;
+            font-size: 0.825rem;
+            vertical-align: middle;
+        }
+        .score-table th:first-child,
+        .score-table td:first-child { width: 45%; }
+        .score-table th:nth-child(2),
+        .score-table td:nth-child(2) { width: 29%; text-align: right; }
+        .score-table th:nth-child(3),
+        .score-table td:nth-child(3) { width: 26%; text-align: right; }
+        .score-table tr:last-child td { border-bottom: none; }
+        .score-high { color: #15803d; font-weight: 700; }
+        .score-bonus { color: #15803d; font-weight: 700; }
+        .score-mid { color: #4b5563; }
+        .score-label { overflow-wrap: anywhere; }
+        .review-header-media {
+            display: flex;
+            align-items: flex-end;
+            justify-content: space-between;
+            gap: 1.25rem;
+            width: 100%;
+        }
+        .review-cover {
+            flex: 0 0 auto;
+            width: 8.5rem;
+            margin: 0;
+        }
+        .review-cover-frame {
+            width: 100%;
+            aspect-ratio: 1 / 1;
+            overflow: hidden;
+            background: #ffffff;
+            border: 1px solid #e5e7eb;
+            border-radius: 2px;
+            box-shadow: 0 8px 22px rgba(17, 24, 39, 0.12);
+        }
+        .review-cover img {
+            display: block;
+            max-width: none;
+        }
+        .review-cover .ark-cover-image {
+            width: auto;
+            height: 115%;
+            transform: translateY(-6.5%);
+        }
+        .review-cover figcaption {
+            margin-top: 0.45rem;
+            color: #9ca3af;
+            font-size: 0.65rem;
+            line-height: 1.35;
+            text-align: center;
+        }
+        .expansion-review-scroll {
+            width: 100%;
+            min-width: 0;
+            overflow-x: auto;
+            overscroll-behavior-inline: contain;
+            padding-bottom: 0.5rem;
+            scrollbar-width: thin;
+            scrollbar-color: #cbd5e1 transparent;
+        }
+        .expansion-review-scroll::-webkit-scrollbar { height: 8px; }
+        .expansion-review-scroll::-webkit-scrollbar-track { background: transparent; }
+        .expansion-review-scroll::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 4px;
+        }
+        .expansion-review-scroll::-webkit-scrollbar-thumb:hover { background: #9ca3af; }
+        .expansion-review-list {
+            display: flex;
+            gap: 1rem;
+            width: max-content;
+            min-width: 100%;
+        }
+        .expansion-review-item {
+            flex: 0 0 min(19rem, 100%);
+            min-width: 0;
+            min-height: 4.25rem;
+            padding-right: 0.25rem;
+        }
+        @media (min-width: 1024px) {
+            .review-header-media { width: auto; justify-content: flex-end; }
+            .review-cover { width: 10.5rem; }
+        }
+        @media (max-width: 420px) {
+            .score-table th,
+            .score-table td { padding-left: 0.65rem; padding-right: 0.65rem; }
+            .score-table th { font-size: 0.65rem; }
+        }
+        @media (max-width: 360px) {
+            .review-header-media { gap: 1rem; }
+            .review-cover { width: 7.5rem; }
+        }
+    </style>
+</head>
+<body class="font-sans antialiased">
+    <nav class="fixed w-full z-50 top-0 bg-paper/90 backdrop-blur-sm border-b border-gray-200/50 h-20 flex items-center px-4 sm:px-6 justify-between">
+        <div class="flex flex-1 items-center gap-4 sm:gap-6 min-w-0">
+            <a href="../ratinglist_bg/all_games/all_games.html" class="flex items-center text-gray-500 hover:text-accent transition-colors group shrink-0">
+                <i data-lucide="arrow-left" class="w-5 h-5 mr-2 group-hover:-translate-x-1 transition-transform"></i>
+                <span class="hidden sm:inline">
+                    <span class="lang-en">Back to List</span>
+                    <span class="lang-cn hidden">返回总表</span>
+                </span>
+            </a>
+            <a href="../rating_boardgame_home.html" class="hidden md:flex items-center text-gray-500 hover:text-accent transition-colors">
+                <i data-lucide="layout-list" class="w-4 h-4 mr-2"></i>
+                <span class="lang-en">Rating Overview</span>
+                <span class="lang-cn hidden">评分说明</span>
+            </a>
+            <div class="sticky-game-title" data-sticky-game-title aria-hidden="true">
+                <span class="lang-en">Ark Nova</span>
+                <span class="lang-cn hidden">方舟动物园</span>
+            </div>
+        </div>
+
+        <button type="button" onclick="toggleLanguage()" aria-label="Switch language" class="flex items-center space-x-2 border border-gray-300 px-3 sm:px-4 py-2 rounded-full hover:border-accent hover:text-accent transition-all text-xs font-bold tracking-widest uppercase bg-white shrink-0">
+            <i data-lucide="globe" class="w-4 h-4"></i>
+            <span id="lang-label">EN / 中文</span>
+        </button>
+    </nav>
+
+    <main class="pt-32 pb-24 px-5 sm:px-6">
+        <article class="max-w-7xl mx-auto">
+            <header class="flex flex-col lg:flex-row justify-between items-start lg:items-end gap-8 mb-12 border-b border-gray-200 pb-12">
+                <div class="min-w-0">
+                    <span class="text-accent font-bold tracking-widest uppercase text-xs mb-2 block">
+                        <span class="lang-en">Tempo-Driven Zoo Strategy</span>
+                        <span class="lang-cn hidden">对局节奏驱动的动物园经营</span>
+                    </span>
+                    <h1 class="text-4xl sm:text-5xl font-bold text-ink mb-3 break-words" data-review-title>
+                        <span class="lang-en">Ark Nova</span>
+                        <span class="lang-cn hidden">方舟动物园</span>
+                    </h1>
+                    <p class="text-gray-500 text-base sm:text-lg">
+                        <span class="lang-en">Mathias Wigge · 2021 · 1-4 players · 90-150 minutes</span>
+                        <span class="lang-cn hidden">Mathias Wigge · 2021 · 1-4 人 · 90-150 分钟</span>
+                    </p>
+                </div>
+                <div class="review-header-media lg:shrink-0">
+                    <div class="flex flex-col items-start lg:items-end gap-3">
+                        <div class="text-left lg:text-right">
+                            <div class="text-xs font-mono tracking-widest uppercase text-gray-400 mb-1">
+                                <span class="lang-en">Weighted Score</span>
+                                <span class="lang-cn hidden">加权评分</span>
+                            </div>
+                            <div class="text-6xl font-bold text-accent leading-none" data-weighted-score>94.0</div>
+                            <div class="text-xs text-gray-400 mt-1 tracking-widest uppercase">/100</div>
+                        </div>
+                        <div class="text-left lg:text-right">
+                            <span class="text-xs font-mono tracking-widest uppercase text-gray-400">
+                                <span class="lang-en">Impression</span>
+                                <span class="lang-cn hidden">印象分</span>
+                            </span>
+                            <span class="ml-2 text-2xl font-bold text-impression align-middle">96</span>
+                            <span class="text-gray-400">/100</span>
+                        </div>
+                    </div>
+                    <figure class="review-cover">
+                        <div class="review-cover-frame">
+                            <img class="ark-cover-image" src="../../../picture/rating_boardgame/ark-nova/ark-nova-cover.jpg" alt="Ark Nova / 方舟动物园 official product image" width="1000" height="642" decoding="async" fetchpriority="high">
+                        </div>
+                        <figcaption>
+                            <span class="lang-en">Official product image · Capstone Games</span>
+                            <span class="lang-cn hidden">官方商品图 · Capstone Games</span>
+                        </figcaption>
+                    </figure>
+                </div>
+            </header>
+
+            <section id="expansion-reviews" aria-labelledby="expansion-reviews-title" class="mb-10 border-y border-gray-200 py-4 sm:py-5">
+                <div class="flex flex-col md:flex-row md:items-center gap-4 md:gap-6">
+                    <div class="flex items-center gap-3 shrink-0">
+                        <i data-lucide="layers-3" class="w-5 h-5 text-accent"></i>
+                        <h2 id="expansion-reviews-title" class="text-xs font-bold uppercase tracking-widest text-gray-500">
+                            <span class="lang-en">Expansion Reviews</span>
+                            <span class="lang-cn hidden">扩展评测</span>
+                        </h2>
+                    </div>
+                    <div class="expansion-review-scroll flex-1 md:ml-auto">
+                        <div class="expansion-review-list">
+                            <a href="../expansions/ark-nova/marine-worlds.html" class="expansion-review-item group flex items-center gap-3 text-gray-600 hover:text-accent transition-colors">
+                                <span class="w-14 h-14 shrink-0 overflow-hidden border border-gray-200 bg-white rounded-sm">
+                                    <img src="../../../picture/rating_boardgame/ark-nova/expansions/marine-worlds/marine-worlds-cover.jpg" alt="" width="1000" height="642" loading="lazy" decoding="async" class="w-full h-full object-cover object-left">
+                                </span>
+                                <span class="min-w-0">
+                                    <span class="block font-semibold text-ink group-hover:text-accent transition-colors">
+                                        <span class="lang-en">Marine Worlds</span>
+                                        <span class="lang-cn hidden">《海洋世界》</span>
+                                    </span>
+                                    <span class="block mt-1 text-xs text-gray-400">
+                                        <span class="lang-en">S tier · Usually include</span>
+                                        <span class="lang-cn hidden">S 档 · 通常加入</span>
+                                    </span>
+                                </span>
+                                <i data-lucide="arrow-right" class="w-4 h-4 ml-auto shrink-0 group-hover:translate-x-1 transition-transform"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-12 lg:gap-16">
+                <div class="lg:col-span-2 prose max-w-none">
+                    <h3>
+                        <span class="lang-en">Verdict</span>
+                        <span class="lang-cn hidden">总评</span>
+                    </h3>
+                    <div class="lang-en">
+                        <p>
+                            My first impression of Ark Nova was that it is a stitched-together game, but a very well-stitched one. Its moving Action cards, tag-heavy deck, converging scoring tracks, and spatial puzzle all leave recognizable traces of earlier designs. Unlike Brass: Birmingham, which absorbs familiar mechanisms until their origins are hard to separate, Ark Nova lets the individual references remain visible.
+                        </p>
+                        <p>
+                            That visibility is not a dismissal. The achievement lies in how consistently those parts are redirected toward the same problem: managing a short strategic cycle, judging action windows, and converting limited resources efficiently before the shared clock moves. There is no single mechanism that can summarize all of Ark Nova's pleasure, because its strength comes from the breadth and coordination of the complete system.
+                        </p>
+                        <p>
+                            The mechanical foundation is the reason the game works. Its zoo theme then becomes the key advantage when Ark Nova is compared with games of similar quality. It is approachable, familiar, and less severe in atmosphere, making a large strategy game easier to choose and easier to introduce without making it strategically empty.
+                        </p>
+                        <p>
+                            That combination supports an impression score of 96. The game has real weaknesses in card and map tuning, and its strategic depth is broad rather than bottomless, but very little of the actual play experience feels badly handled.
+                        </p>
+                    </div>
+                    <div class="lang-cn hidden">
+                        <p>
+                            我对《方舟动物园》的第一印象是“缝合怪，但是缝得挺好”。它的行动卡顺位、标记驱动的卡牌系统、双轨计分和版图拼图，都能让人看到其他游戏留下的具体影子。与《工业革命：伯明翰》把多种机制彻底融合到难以分辨来源不同，《方舟动物园》仍然让这些参考轮廓清楚地留在表面。
+                        </p>
+                        <p>
+                            但“看得出来源”并不是一种否定。它真正的成绩，是把这些部分稳定地引向同一个问题：如何管理短循环、判断行动窗口，并在共同时间线继续推进前，把有限资源尽可能高效地转化出去。《方舟动物园》的核心乐趣很难用某一个机制概括，因为它的优势本来就来自系统的广度与彼此配合。
+                        </p>
+                        <p>
+                            扎实的玩法底子才是游戏成立的根本。动物园主题的关键作用，是让它在同档次的优秀游戏中更容易被玩家选择和接受。题材平易近人、贴近生活，氛围也没有那么严肃，因此它能在不牺牲策略内容的前提下，成为一款很适合推新的中重策游戏。
+                        </p>
+                        <p>
+                            这几方面共同支撑了 96 分的印象分。它在卡牌和地图调校上有真实缺点，策略深度也属于广而不属于深不见底，但实际游玩中几乎没有什么部分称得上做得不好。
+                        </p>
+                    </div>
+
+                    <figure>
+                        <img src="../../../picture/rating_boardgame/ark-nova/ark-nova-table.jpg" alt="Ark Nova / 方舟动物园 board game setup">
+                        <figcaption>
+                            <span class="lang-en">Official game scene provided by Feuerland Spiele.</span>
+                            <span class="lang-cn hidden">官方游戏场景图，来源：Feuerland Spiele。</span>
+                        </figcaption>
+                    </figure>
+
+                    <h3 id="section-mechanics" class="rating-section-anchor">
+                        <span class="lang-en">Mechanics: Familiar Parts, Complete Structure</span>
+                        <span class="lang-cn hidden">机制：熟悉部件，完整结构</span>
+                    </h3>
+                    <div class="lang-en">
+                        <p>
+                            On the rules sheet, many of Ark Nova's mechanisms look familiar. What deserves a slower look is how they connect once the game is in motion.
+                        </p>
+                        <p>
+                            Mechanics receives 100/100 with a 24% weight. Good individual mechanisms alone would not be enough for that full score; what takes Ark Nova to 100 is how completely they are integrated. The Action-card row, X tokens, upgrades, Break clock, dual tracks, card system, and zoo map are each easy to understand locally, yet together they form a rich and continuous structure.
+                        </p>
+                        <p>
+                            The numerical problems in the cards and zoo maps are already deducted under Balance and should not reduce Mechanics a second time. A functional failure such as the Emu's extremely narrow role does concern mechanism design, but such cases are too rare to create a substantial deduction. Conversely, the wider system's ability to limit the consequences of those problems does not create another Mechanics bonus; it lowers the weight of Balance instead.
+                        </p>
+                        <p>
+                            The easiest way to understand that full score is to follow the game as it unfolds: first deciding what can be done, then turning cards and space into a plan, and finally confronting scoring and a shared clock.
+                        </p>
+                        <h4>Action Cards, X Tokens, And Upgrades</h4>
+                        <p>
+                            The five shifting Action cards are the clearest starting point, and their order immediately recalls Civilization: A New Dawn. An action becomes stronger as it moves to the right, then returns to the weakest position after use. This is easy to teach, but it turns every action into both an immediate choice and a reordering of future options. The mechanism is familiar, yet Ark Nova uses it exceptionally well.
+                        </p>
+                        <p>
+                            X tokens are essential to that success. They greatly increase the range of workable actions without adding much learning cost, and their value becomes most visible in the final turns, when a single point of action strength can decide whether a plan is completed. Moving a card directly to slot 1 in exchange for an X token looks inefficient, but the option is indispensable: it accepts a small loss now to prevent a much larger loss later.
+                        </p>
+                        <p>
+                            The upgrades are equally well judged. What each upgrade does, how it is obtained, and the cap on the number of upgrades have all been considered precisely, and the system has worked very well in actual play. Together with the X tokens, it is an excellent example of Ark Nova using low local complexity to buy high depth.
+                        </p>
+                    </div>
+                    <div class="lang-cn hidden">
+                        <p>
+                            单看规则表，《方舟动物园》的许多机制都不陌生。真正值得慢慢拆开的，是它们在一局游戏里怎样彼此衔接。
+                        </p>
+                        <p>
+                            《方舟动物园》的机制给到 100/100，权值为 23%。单个机制各自完善，还不足以构成这个满分；真正让它达到 100 分的，是这些机制结合以后形成的完整结构。行动卡顺位、X 标记、升级、休息、双轨、卡牌系统和动物园版图都不难单独理解，放在一起以后却组成了一套丰富而连贯的玩法。
+                        </p>
+                        <p>
+                            卡牌和地图的数值问题已经在 Balance 中扣分，不应该再次拖低机制分。鸸鹋这类就业空间过窄的功能性失败确实涉及机制设计，但这种情况数量很少，不足以形成实质性扣分。反过来，完整系统对这些问题影响的稀释，也不会再给机制额外加一遍分；它降低的是 Balance 的权值。
+                        </p>
+                        <p>
+                            要理解这个满分，最自然的方式是顺着一局游戏实际展开的过程往下看：先决定自己能做什么，再把卡牌与空间组织成计划，最后面对计分和所有人共享的时间线。
+                        </p>
+                        <h4>行动卡、X 标记与升级</h4>
+                        <p>
+                            五张不断移动的行动卡是最清楚的起点，它的顺位机制很容易让人想到《Civilization: A New Dawn》。行动越靠右强度越高，使用后又回到最弱的位置。这套规则很容易讲明白，却让每次行动既是眼前的选择，也会重新排列未来的行动空间。这个机制本身并不陌生，但《方舟动物园》把它运用得非常好。
+                        </p>
+                        <p>
+                            X 标记是这套系统里非常必要的部分。它没有增加多少学习成本，却大大扩大了玩家的可操作范围；到了最后几个回合，一点行动强度往往就能决定整套计划是否成立。把一张行动卡直接移到 1 号位来换取 X，看起来非常亏，却是设计上必不可少的泄压口：用眼前的小亏，避免后面更大的损失。
+                        </p>
+                        <p>
+                            升级也设计得恰到好处。升级的功能、升级的方式和升级次数的上限，都经过了精密考虑，而且实际反响非常好。它和 X 标记一样，都是用较低的上手成本换取高深度的优秀设计。
+                        </p>
+                    </div>
+
+                    <h4>
+                        <span class="lang-en">Cards: Familiar Language, Different Time Structure</span>
+                        <span class="lang-cn hidden">卡牌：相似语言，不同时间结构</span>
+                    </h4>
+                    <div class="lang-en">
+                        <p>
+                            Action cards provide the skeleton of each turn; the cards supply its specific possibilities. This is also where Ark Nova's resemblance to other games becomes most visible.
+                        </p>
+                        <p>
+                            Ark Nova and Terraforming Mars speak a very similar card language. Animals provide immediate returns much like green cards; Sponsors create longer-term value like blue cards; Conservation Project cards resemble awards that a player can introduce personally. Both games rely heavily on tags and prerequisites. Ark Nova's deck is rich, and its individual card concepts are generally good.
+                        </p>
+                        <p>
+                            The fundamental difference is the turn structure, followed by the hand limit. Terraforming Mars does not place a comparable limit on the number of actions in a generation; I can run thirty turns in a single generation, so the competition is more directly about accumulated resources. In Ark Nova, the number of turns is itself decisive. About 30 turns already represents an ordinary game rather than a particularly strong one, and players compete more directly through resource-conversion efficiency.
+                        </p>
+                        <p>
+                            The strict hand limit reinforces that difference. Ark Nova tests short-term planning, while Terraforming Mars places more emphasis on long-term planning. Some strong Terraforming Mars players like to hide cards, complete an engine in the final generation, and produce a hundred-point explosion within that same generation. The same habit can make Ark Nova feel desperately cramped and uncomfortable. I am one of those players.
+                        </p>
+                        <p>
+                            This difference in time structure also changes the consequences of card balance, and that is one of Ark Nova's cleverest design decisions. Terraforming Mars has an intricate tag and value model with strong extensibility. Its expansions and promotional cards have generally developed the system; for example, Colonies adds a three-energy trading threshold that connects energy production to the existing energy-to-heat cycle. Apart from some extreme cards and a few exceptionally poor ones such as Underground Detonations, most of its deck stays within a stable value range.
+                        </p>
+                        <p>
+                            Ark Nova uses simpler tags and more direct effects, which should make its values easier to model, yet its card balance is substantially weaker. Some cards can outperform the expected model by nearly 20 money. Even after setting aside effects that may have been difficult to estimate before release, such as Determination, and cards that are simply hard to play, such as Giant Panda and King Vulture, there are easy-to-play animals such as the two tigers whose printed value can exceed the model by more than 10. Difficulty predicting Determination is a charitable explanation from the developer's perspective, not an excuse for insufficient development.
+                        </p>
+                        <p>
+                            Ark Nova's short cycle mitigates this weakness because tempo matters more than raw card value. In Terraforming Mars, buying Anti-Gravity Technology at the beginning is close to self-correcting: if it is played, it can repay the investment; if it is never played, the loss is only two money. Of course, three money early and one money late are not directly comparable as a simple difference of two. In Ark Nova, keeping Giant Panda for an entire game without finding a bear tag effectively reduces the hand limit by one and damages the player's tempo. A modest, immediately playable common wall lizard may be the better opening choice.
+                        </p>
+                        <p>
+                            The public card display also reduces dependence on blind draws. These protections make uneven values less likely to dominate the complete game, but they do not erase the defect. Some cards are both easy to use and clearly above the model, while a few functional designs are worse than a mere numerical miss. Some animals are disliked simply because their viable role is too narrow. The Emu might reasonably protest: "I am not even that far below value."
+                        </p>
+                        <p>
+                            The card system and initial board information also shape both ends of replayability. The board information and two Final Scoring cards can change a game's tempo, direction, and viable approach before the players have developed their zoos. The enormous deck matters less than it first appears, because genuinely new keyword mechanisms contribute more than raw card count. This is why <a href="../expansions/ark-nova/marine-worlds.html">Marine Worlds</a> expands replayability so effectively: its new keywords add imaginative ways to use the existing system.
+                        </p>
+                    </div>
+                    <div class="lang-cn hidden">
+                        <p>
+                            行动卡给出每个回合的骨架，卡牌则填进具体的可能性。也是从这里开始，《方舟动物园》与其他游戏的相似之处变得最清楚。
+                        </p>
+                        <p>
+                            《方舟动物园》和《殖民火星》使用了非常相近的卡牌语言。动物是即时收益，像《殖民火星》里的绿卡；赞助商提供长期收益，像蓝卡；保护项目卡则像是玩家可以自行打出的奖项。两款游戏都大量依赖标记和前置需求。《方舟动物园》的牌库整体比较丰富，单张卡牌的设计也基本算得上优秀。
+                        </p>
+                        <p>
+                            两者的根本区别是回合制度，其次是手牌上限。《殖民火星》对一个时代内的行动次数没有类似限制，我甚至可以在一个时代里运行三十个回合，因此比的更直接是资源总量。《方舟动物园》里，回合数本身就是决定成败的关键；30 个回合基本已经是表现一般的对局，玩家直接比较的是资源转化效率。
+                        </p>
+                        <p>
+                            严格的手牌上限进一步放大了这种区别。《方舟动物园》考验短期规划，《殖民火星》则更偏向长期规划。有些喜欢“藏牌”的火星高手，会在最后一个时代完成引擎构筑，并在同一个时代一口气爆出一百分；同一种习惯到了《方舟动物园》里，就会玩得捉襟见肘、坐如针毡。比如我。
+                        </p>
+                        <p>
+                            这种时间结构的根本不同，甚至改变了卡牌平衡产生的后果，这也是《方舟动物园》设计高明的地方。《殖民火星》的标记和数值模型搭建得非常精妙，因此可延展性很强；扩展和 promo 卡整体上都在让系统继续发展，例如《殖民地》新增了三电贸易的质变门槛，将电产能与原有的电转热机制连接起来。除了一些特别超模的卡，以及《地下爆破》之类极少数特别差的卡，大多数内容都处在一个平稳区间。
+                        </p>
+                        <p>
+                            反观《方舟动物园》，标记更简单，效果也更直白，在如此容易计算的数值模型下，卡牌平衡却实在不怎么样。有些超模卡能够赚接近 20 块。即使先不考虑发售前可能很难预估的效果牌，例如“果断”，也不考虑大熊猫、王鹫等难以打出的卡牌，仍然存在两只老虎这样很容易打出、白值却能超模十几块的动物。我很难把它称为优秀的数值模型。站在开发者角度，“果断”的实际强度不好预估，可以算是一种勉强解释；但解释不是免责，本质上仍然是开发工作的不足。
+                        </p>
+                        <p>
+                            然而，《方舟动物园》的短循环很大程度上弥补了这一点，因为短循环的核心在于对局节奏，卡牌本身的优劣就没有那么重要。《殖民火星》中，开局买下强大的“反重力引擎”，能打出基本就能回本，打不出也就是亏两块钱。当然，前期的三块钱和后期的一块钱并不能简单算成只差两块。《方舟动物园》中，如果开局拿了大熊猫，一整局都没有拿到熊标，就相当于全局手牌上限减一，而且非常卡对局节奏；它或许还不如一开始老老实实买一只可爱的普通壁蜥。
+                        </p>
+                        <p>
+                            公共牌列也降低了游戏对盲抽的依赖，一定程度上让数值问题没有那么严重。但这只能说是“很大程度弥补”，不能把缺陷抹掉：游戏里仍然有一些完全不卡手又明显赚模的卡牌，也有少数接近碾压的卡牌。功能设计失败甚至比单纯数值失衡更严重，有些动物因为就业空间太窄而人见人嫌（鸸鹋：我也没有很亏模啊）。
+                        </p>
+                        <p>
+                            卡牌系统和初始版图信息也共同影响了重玩性的上下限。初始版图信息和两张终局卡，会在动物园真正发展起来前就改变当局的对局节奏、发展方向和可行玩法。庞大牌库本身带来的变化没有表面上那么高，真正重要的是特殊词条提供的新机制。这也是<a href="../expansions/ark-nova/marine-worlds.html">《海洋世界》</a>能够大幅增加重玩性的原因：它加入的特殊词条很有想象力，确实拓宽了原有系统。
+                        </p>
+                    </div>
+
+                    <h4>
+                        <span class="lang-en">Zoo Maps: Spatial Depth And Map Balance</span>
+                        <span class="lang-cn hidden">动物园版图：空间深度与地图平衡</span>
+                    </h4>
+                    <div class="lang-en">
+                        <p>
+                            Cards define the possibilities in hand; the zoo map asks the player to make those possibilities fit into limited space. Hand management therefore extends naturally into spatial planning.
+                        </p>
+                        <p>
+                            The spatial puzzle adds another kind of play without materially increasing the learning burden, so it is unquestionably a strength. It tests how well a player can understand and plan their own zoo map. Filling the map creates a scoring reward, but doing so requires the upgraded Build action, while enclosure sizes and placement rules heavily constrain what can go where. It is another powerful example of low learning cost producing high depth.
+                        </p>
+                        <p>
+                            Ark Nova contains enough changing inputs that even experienced players cannot reduce this puzzle to one fixed pattern. Cards, projects, action timing, and the selected zoo map all require the player to adjust dynamically. Different maps are indispensable to both the game's depth and its replayability.
+                        </p>
+                        <p>
+                            The zoo maps themselves are only moderately balanced. In my own results, map 10, Rescue Station, sits at the strong end, while map 9, Geographical Zoo, sits at the weak end. External game data broadly supports that direction, particularly among experienced players. The contrast is enough to show that map variety adds depth and replayability while also creating meaningful balance problems.
+                        </p>
+                        <p>
+                            These local imbalances do not, however, govern the entire experience. Ark Nova's dense, interconnected systems dilute their consequences without making the components themselves better balanced. This supports a lower Balance weight, not a higher Balance score.
+                        </p>
+                        <p>
+                            As an aside, I suspect map design will reach a creative ceiling sooner than card design. Expansion maps remain imaginative, but they do not always feel as precisely designed, and a map has no value model as stable as a card system. This is an observation about the future design space of expansions, not a weakness of the base game and not a replayability deduction.
+                        </p>
+                    </div>
+                    <div class="lang-cn hidden">
+                        <p>
+                            卡牌决定玩家手里有哪些可能，动物园版图则要求这些可能真正落进有限的空间。游戏的思考也由手牌管理自然延伸到空间规划。
+                        </p>
+                        <p>
+                            拼图丰富了游戏的玩法，也没有明显增加上手难度，毫无疑问是加分项。它考验的是玩家对自己动物园版图的理解和规划能力。拼满版图可以得分，代价是必须解锁二级建造；饲养区的大小和摆放规则也高度限制了摆放方式。这同样是非常强大的低上手成本换高深度的设计。
+                        </p>
+                        <p>
+                            《方舟动物园》的变量足够多，即使玩家已经非常熟练，也很难把这个拼图变成固定程式。卡牌、保护项目、行动时机和所选地图都要求玩家根据当局变化动态调整。地图差异因此是增加深度和重玩性必不可少的元素。
+                        </p>
+                        <p>
+                            但地图本身的平衡性只能算一般。按照我自己的对局统计，10 号地图“救助站”处在明显偏强的一端，9 号地图“地理动物园”则处在偏弱的一端。外部对局数据也大体支持这个方向，尤其是在熟练玩家中。这一强一弱足以说明，地图差异在增加深度和重玩性的同时，也会带来不可忽视的平衡问题。
+                        </p>
+                        <p>
+                            不过，这些局部失衡并没有主导整局体验。繁杂而彼此连接的系统稀释了单个元件失衡造成的影响，却没有让元件本身变得更平衡。因此，这部分支持的是降低 Balance 的权值，而不是抬高 Balance 分数。
+                        </p>
+                        <p>
+                            顺带一提，我仍然认为地图设计比卡牌设计更容易遇到瓶颈。地图扩展中的新地图虽然很有创意，设计本身似乎已经没有那么高明；地图也不像卡牌系统那样拥有一套稳定的数学模型，平衡性更难把握。但这是我对后续扩展开发空间的感受，不是基础游戏本身的问题，也不参与重玩性扣分。
+                        </p>
+                    </div>
+
+                    <h4>
+                        <span class="lang-en">Dual Tracks: Economy, Ending, And Presentation</span>
+                        <span class="lang-cn hidden">双轨：经济、终局与分数表达</span>
+                    </h4>
+                    <div class="lang-en">
+                        <p>
+                            Cards and enclosures mostly shape the next few decisions. The two tracks begin to pull those short-term choices toward the economy and ending of the whole game.
+                        </p>
+                        <p>
+                            The scoring mechanism is interesting in its own right. Its two opposing tracks immediately recall Rajas of the Ganges, but Ark Nova gives them additional work. Appeal also controls income, while the Conservation track provides rewards, some of which vary from game to game. That simple arrangement changes both the available routes and the way each game develops, making it an effective source of replayability as well as a scoring system.
+                        </p>
+                        <p>
+                            Players are not required to advance both tracks in a fixed proportion. Appeal is usually the economic foundation early, while Conservation creates development opportunities and becomes an efficient way to close the game later. Maps, cards, and projects can justify leaning heavily toward one side, but ignoring either track for too long is dangerous. The real decision is when to stop accumulating and begin converting the zoo into a finish.
+                        </p>
+                        <p>
+                            The tracks meeting also triggers the end, so scoring becomes a timing mechanism. Crossing first does not immediately secure victory because the other players normally receive one final turn. A player must calculate not only how far they can cross, but how much explosive conversion remains in every opponent's tableau and whether waiting just short of the line is safer. That predictable but contested finish reinforces Ark Nova's emphasis on short-term conversion efficiency.
+                        </p>
+                        <p>
+                            The scoring system also contains a revealing production decision. The original rules calculated the difference between the two markers, leaving some players with positive scores and others with negative ones. A later official update effectively added 100 to every result. Nothing about ranking, balance, or strategy changed, but the same performance now feels like progress toward a meaningful finish instead of a result hovering around zero. It is a small presentation decision that deserves respect.
+                        </p>
+                    </div>
+                    <div class="lang-cn hidden">
+                        <p>
+                            卡牌和版图主要影响眼前几步，双轨则开始把这些短期选择拉向整局的经济发展和终局。
+                        </p>
+                        <p>
+                            计分机制本身还是很有意思的。两条相向而行的轨道很容易让人想到《Rajas of the Ganges》，但《方舟动物园》又让它们承担了更多功能：魅力记录条同时掌管钱产，保护记录条则提供奖励，其中一部分奖励还会随机变化。这样既增加了游戏的玩法和每局思路的变化，也是增加重玩性的好手段。
+                        </p>
+                        <p>
+                            双轨并不要求玩家按照固定比例同步推进。魅力通常是前期的经济基础，保护记录条则提供发展机会，并在中后期成为更高效的终局推进方式。地图、手牌和保护项目都可能让玩家明显偏向其中一条，但长期忽略另一条仍然危险。真正的判断在于：这一局应该什么时候停止积累，开始把动物园转化成终局速度。
+                        </p>
+                        <p>
+                            两轨相遇会触发终局，因此计分机制同时也是一套收尾时机机制。主动越线并不意味着立刻锁定胜利，其他玩家通常仍有最后一个回合。玩家不仅要计算自己能一次跨过多远，还要判断对手剩下多少爆发空间，以及是否应该暂时停在终局线前。这种可以预判、蓄力和抢先触发的越线竞速，进一步强化了《方舟动物园》对短期资源转化效率的考验。
+                        </p>
+                        <p>
+                            这套轨道还有一个很有意思的制作插曲。最初的规则直接计算两个标记之间的分差，因此有些玩家得到正分，有些玩家得到负分，成就感实在太弱。后来的官方更新在原有结果上统一加了 100 分；胜负、平衡和策略都没有变化，玩家看到的结果却从零点上下变成了向 100 分推进。只是改变分数表达，体验就随之提升，这种细节上的小巧思不得不让人尊重制作组。
+                        </p>
+                    </div>
+
+                    <h4 id="section-interactivity" class="rating-section-anchor">
+                        <span class="lang-en">Break: Interaction Through A Shared Clock</span>
+                        <span class="lang-cn hidden">休息：通过共同时间线产生交互</span>
+                    </h4>
+                    <div class="lang-en">
+                        <p>
+                            Most of the systems above can be planned within one's own zoo. The Break track is where the choices of the other players enter that plan and connect the personal puzzle to the whole table.
+                        </p>
+                        <p>
+                            The Break mechanism is the core of Ark Nova's interaction. It does not directly steal another player's resources, but it connects every action to a shared clock and can completely change the tempo of the game. This is especially visible with more players: no one controls the Break track alone, and several opponents with reasons to advance it can erase what looked like a safe action window.
+                        </p>
+                        <p>
+                            Consider a typical situation. The Break still looks far away, money is plentiful, Animals is at strength 4, and Sponsors is at strength 5. The player could spend one X to use Animals at strength 5 before income, but greed takes over: they first play one more Sponsor card and plan to use Animals next turn. The other three players then push the Break to its end. The animal window disappears, Appeal does not rise before income, and the planned conversion cycle collapses.
+                        </p>
+                        <p>
+                            This is why Break is more than an income phase. It makes X tokens, Action-card positions, cash, and opponent intentions part of the same risk calculation. Saving one X or fitting in one additional Sponsor can cost an entire economic cycle. Players interact by accelerating or delaying time itself.
+                        </p>
+                        <p>
+                            The game's more direct interaction is also carefully limited. Venom, Constriction, Hypnosis, and Pilfering do not use one identical targeting rule. Constriction, Hypnosis, and Pilfering tie their targets to players who are ahead or leading in Appeal or Conservation, while zoos below 5 Appeal are protected from interactive effects. These restrictions make it difficult to turn an early positional disadvantage into repeated punishment.
+                        </p>
+                        <p>
+                            Public cards, Association spaces, and Conservation Projects create additional competition under shared and visible rules, so the contest is generally fair while still providing enough interaction. Players can take what they need or deliberately block an opponent. That malicious intent is not a design flaw; it is meaningful interaction. It remains limited enough that attacking others never replaces building one's own zoo.
+                        </p>
+                        <p>
+                            Interactivity therefore reaches 85/100 with a 10% weight. Its major forms of interaction add something useful, particularly the indirect pressure created by the shared clock and public resources. The lower ceiling comes from both quantity and the experience of play: Ark Nova still feels fairly self-contained, and most decisions remain centered on the player's own board even when opponents can disrupt timing or take public opportunities.
+                        </p>
+                    </div>
+                    <div class="lang-cn hidden">
+                        <p>
+                            前面的系统大多可以在自己的动物园里完成规划，休息轨道却把其他玩家的选择带进来。它让这套个人经营系统真正与整张桌子连接起来。
+                        </p>
+                        <p>
+                            休息机制是《方舟动物园》交互的核心。它不直接夺取其他玩家的资源，却把所有人的行动连接到同一条时间线上，对整局的对局节奏产生天翻地覆的改变。在多人局中尤其如此：休息轨道不由任何一名玩家单独控制，只要几名对手都有推进休息的动力，看似安全的行动窗口就可能迅速消失。
+                        </p>
+                        <p>
+                            一个典型局面是：休息看起来还很远，手里的钱也很多，“动物”位于强度 4，“赞助商”位于强度 5。玩家本可以花费一个 X，把“动物”提升到强度 5，赶在收入前完成动物行动；但侥幸心理作祟，选择先用强度 5 的“赞助商”多打一张赞助商牌，打算下回合再打动物。结果另外三名玩家直接把休息推到终点。动物行动的窗口消失，魅力没能赶在收入前提高，原本规划好的资源转化节奏也随之崩溃。
+                        </p>
+                        <p>
+                            所以，休息远不只是收入结算阶段。它让 X 标记、行动卡位置、手中资金和对手意图同时进入风险判断。眼前省下一枚 X，或者贪一张赞助商牌，都可能让玩家错过一整个经济周期。玩家不必直接攻击，也能通过加快或延缓共同时间线迫使彼此改变计划。
+                        </p>
+                        <p>
+                            游戏里更直接的交互也受到细致限制。毒液、缠绕、催眠和偷窃并不使用完全相同的目标判定；其中，缠绕、催眠和偷窃会根据魅力或保护点数的领先位置限制攻击对象，而魅力低于 5 的动物园不会受到互动效果。这些限制让玩家很难把开局的位次劣势继续转化成反复围攻。
+                        </p>
+                        <p>
+                            公共牌列、协会板和保护项目还提供了持续的公开竞争。这些争夺大多基于公开信息和相同规则，因此整体较为公平，也有足够的交互。玩家既可以抢走自己需要的资源，也可以为了阻断对手而提前行动。这种带有明确恶意的交互不是缺点，而是玩家确实能够损害对手计划；同时，它出现得足够克制，不会让攻击压倒经营自己的动物园。
+                        </p>
+                        <p>
+                            因此，交互性给到 85/100，权值为 10%。几种主要交互基本都是加分项，尤其是共同时间线和公共资源制造的间接压力；但它的上限不仅来自数量，也来自实际游玩感受。《方舟动物园》玩起来仍然比较自闭，即使对手能够打乱时机或抢走公共机会，大部分决策还是围绕自己的版图展开。
+                        </p>
+                    </div>
+
+                    <h3 id="section-flow" class="rating-section-anchor">
+                        <span class="lang-en">Player Count And Flow</span>
+                        <span class="lang-cn hidden">人数与流畅度</span>
+                    </h3>
+                    <div class="lang-en">
+                        <p>
+                            Because every player shares that clock, player count changes more than waiting time. It also changes how long a plan can remain intact before the table moves on.
+                        </p>
+                        <p>
+                            Different player counts are not inferior and superior versions of the same experience. Ark Nova is driven by tempo, so changing the number of players changes how quickly the Break arrives, how stable public information remains, and how much room exists between action windows. The result is a set of differently paced games that are each interesting in their own way.
+                        </p>
+                        <p>
+                            Table flow depends more on the opponents' experience. With experienced players, most planning happens before a turn begins and downtime is naturally short. With beginners, turns take longer, but the waiting player also has more cards, icons, and next actions to study. Longer downtime is therefore often occupied rather than empty.
+                        </p>
+                        <p>
+                            Flow receives 95/100 and a 9% weight. Ark Nova is a long game, but it is fundamentally smooth to play: experienced groups move quickly, new groups use much of the waiting time productively, and no player count creates an obviously broken or consistently stalled version of the game. The score cannot be based entirely on expert-table performance, however. First-time players still pause repeatedly to read cards, compare options, and connect several systems. Productive waiting softens those interruptions but does not make them disappear, so Flow remains excellent rather than perfect. Its weight remains meaningful, while giving one percentage point back to Mechanics as the foundation of the game.
+                        </p>
+                    </div>
+                    <div class="lang-cn hidden">
+                        <p>
+                            正因为所有人共享这条时间线，人数变化不会只改变等待多久，也会改变一段计划能够保持多久。
+                        </p>
+                        <p>
+                            《方舟动物园》在不同人数下并不是简单的上下位替代关系。它是一款由对局节奏驱动的游戏，人数变化会改变休息到来的速度、公共信息能够保持多久，以及两个行动窗口之间有多少空间。因此，不同人数带来的不是完整版本和阉割版本，而是各有精彩的不同玩法。
+                        </p>
+                        <p>
+                            游玩流畅度更多取决于对手的熟练程度。如果都是老手，大部分规划会在自己的回合开始前完成，downtime 自然很短；如果都是新手，回合虽然更长，但等待的玩家也有更多卡牌、图标和下一步行动需要阅读。等待时间因此往往有内容，而不是纯粹空耗。
+                        </p>
+                        <p>
+                            Flow（流畅度）给到 95/100，权值为 9%。《方舟动物园》的游戏时间很长，实际玩起来却基本流畅：熟练玩家推进很快，新玩家能够利用大量等待时间思考，不同人数下也没有明显破损或持续停滞的下位体验。不过，评分不能完全按照老手桌的标准来看待。新玩家仍会频繁停下来读牌、比较选项，并梳理多个系统之间的联系。等待时有事可想能够缓解这些停顿，却不能把它们视为不存在，因此流畅度依然优秀，但不到满分。其权值仍然不低，只是让出 1% 给作为游戏根基的机制。
+                        </p>
+                    </div>
+
+                    <h3 id="section-depth-replayability" class="rating-section-anchor">
+                        <span class="lang-en">Depth/Complex And Replayability</span>
+                        <span class="lang-cn hidden">Depth/Complex 与重玩性</span>
+                    </h3>
+                    <div class="lang-en">
+                        <p>
+                            After looking at the mechanisms one by one, the natural questions concern the complete game: how difficult and how deep is it, and why does it remain so replayable?
+                        </p>
+                        <p>
+                            Ark Nova contains many individual examples of low learning cost producing useful depth: Action-card order, X tokens, upgrades, spatial planning, and dual-track timing all create room for improvement without requiring difficult local rules. The complete game is not easy to learn, however, because there are many such mechanisms, icons, cards, and relationships to absorb at once.
+                        </p>
+                        <p>
+                            Much of that depth is emergent in the game-design sense. The rules do not specify these compound decisions one by one; they arise when Action-card order, the shared clock, cards, and spatial constraints interact.
+                        </p>
+                        <p>
+                            Put together, however, those mechanisms cannot simply be added up. There are many of them, so the complete game is not easy to learn; at the same time, each small mechanism has some depth but also a clear limit. Ark Nova digs many holes into its strategic ground, but none of them is especially deep. Depth itself matters more than the number of separate places to explore, and the overall thinking load is not exceptionally high. Depth/Complex therefore receives 88/100 with a 10% weight. That is still a high score, recognizing how often the game creates useful depth from low local complexity; it does not reach 95 because the complete learning cost is substantial while the strategic depth does not approach the very deepest games.
+                        </p>
+                        <p>
+                            Ark Nova's replayability is exceptional. Start with its floor: the initial board information and Final Scoring cards fundamentally affect a game's tempo, direction, and viable approach. Two very simple Final Scoring cards can redirect the player's decisions, which is another excellent example of achieving a large effect with very little design. I treat these elements as the floor because they create variation through straightforward combinations; even before considering what players can do with the system, every game already has reliable differences.
+                        </p>
+                        <p>
+                            Its ceiling comes from cards and zoo maps, and I think the maps matter more. Although the deck is enormous, raw card count contributes less replayability than it appears to. What really matters is the new mechanisms created by distinctive keywords. This is why <a href="../expansions/ark-nova/marine-worlds.html">Marine Worlds</a> expands replayability so much: its new keywords are genuinely imaginative.
+                        </p>
+                        <p>
+                            Zoo maps have the more fundamental effect because their diversity helps determine how the game itself is played. Cards and maps do more than rearrange starting conditions; they give players room to exercise agency, and that is what creates the ceiling. The reliable floor and the high ceiling together mean that Ark Nova is not merely a game with a lot of content. Even experienced players still have to adjust their thinking from one game to the next.
+                        </p>
+                        <p>
+                            Replayability therefore receives a bonus score of 110/100. Its weight is 11%, which is deliberately more moderate than the score. Many players repeatedly explore Ark Nova's maps and card combinations, while many others experience only a small part of this large system. Because the game already derives value from action timing, spatial planning, theme, cards, interaction, and several other systems, replayability should not dominate the complete evaluation merely because it is exceptional.
+                        </p>
+                        <p>
+                            Ark Nova's replayability is already exceptionally rich, but animal categories may constrain how far future expansions can take it. Unlike Terraforming Mars, it cannot keep adding cards almost at will; after <a href="../expansions/ark-nova/marine-worlds.html">Marine Worlds</a>, another major expansion may genuinely need to put prehistoric animals to work. The joke concerns future expansion space, not any lack of variety in the existing game, and it does not reduce the Replayability score.
+                        </p>
+                        <p>
+                            I also suspect that expansion-map design may reach its ceiling relatively quickly, but that is another aside about future development, not a weakness of the base game and not a replayability deduction.
+                        </p>
+                    </div>
+                    <div class="lang-cn hidden">
+                        <p>
+                            逐个看完这些机制，再回到完整游戏，最自然的问题是：它到底有多难、多深，又为什么能反复玩这么久？
+                        </p>
+                        <p>
+                            《方舟动物园》有大量用较低局部上手成本换取有效深度的机制：行动卡顺位、X 标记、升级、版图规划和双轨时机，都不需要很难的单条规则，却留出了继续优化的空间。但完整游戏并不容易上手，因为这些机制、图标、卡牌和相互关系的数量本身很多。
+                        </p>
+                        <p>
+                            其中很大一部分属于游戏设计里所说的“涌现”：规则并没有逐条规定这些复合决策，它们是行动卡顺位、共同时间线、卡牌与空间限制相互作用后自然产生的。
+                        </p>
+                        <p>
+                            但把这些机制放在一起以后，结论不能简单相加。游戏里的机制本身很多，整体上手难度并不低；与此同时，每个小机制虽然都有一定深度，却也都有上限。《方舟动物园》像是在深度上挖出了很多个可以向下探索的坑，但每一个都不深。“深度”的深度仍然更加主要，不能按照“各自深度乘以机制数量”来计算。整体来看，它的思考量并不算特别大。因此 Depth/Complex 给到 88/100，权值为 10%。这仍然是一个很高的评价，肯定了它反复用较低的局部上手成本换取有效深度；没有进入 95 分以上，是因为整套游戏的总学习成本并不低，策略纵深也没有达到最顶级深策游戏的程度。
+                        </p>
+                        <p>
+                            《方舟动物园》的重玩性非常优秀。首先是下限：它的下限由初始版图信息和终局卡保障，这两者都会从根本上影响一局的对局节奏、走向和具体玩法。两张简简单单的终局卡，更会直接改变玩家的决策方向，是一个非常优秀的以小见大设计。之所以把这些内容视为下限，是因为它们主要通过简单的排列组合增加变化；即使不考虑玩家还能把系统开发到什么程度，每一局也已经有了可靠的差异。
+                        </p>
+                        <p>
+                            同时，它毫无疑问也有很高的上限。上限由卡牌和地图共同作用，我个人认为地图的影响比卡牌更大。《方舟动物园》的牌库虽然庞大，但真正影响重玩性的并不是卡牌数量本身，而是特殊词条带来的机制，所以基础牌库实际提供的变化没有表面上那么高。这也是<a href="../expansions/ark-nova/marine-worlds.html">《海洋世界》</a>能够大幅增加重玩性的原因：它加入的特殊词条非常有想象力。
+                        </p>
+                        <p>
+                            更大的影响在地图上。地图的多样性很大程度上决定了游戏的玩法，而且卡牌和地图提供的不是简单的排列组合，而是玩家发挥能动性的空间，这正是重玩性上限的体现。下限和上限同时成立，使《方舟动物园》的重玩性不只是“内容很多”，而是熟练以后仍要根据每局变化动态调整思路。
+                        </p>
+                        <p>
+                            因此，Replayability（重玩性）破格给到 110/100，权值则更克制地设为 11%。有很多玩家会反复探索不同地图和卡牌组合，也有很多玩家只体验了这套庞大系统的一小部分。游戏的价值同时来自行动时机、版图规划、主题、卡牌、交互和其他机制，因此，重玩性可以非常优秀，却不应该仅仅因为优秀就主导完整评价。
+                        </p>
+                        <p>
+                            《方舟动物园》的重玩性虽然已经非常丰富了，但如果想通过后续扩展再往前走，动物种类或许会成为限制。它不像《殖民火星》那样可以近乎随意地继续出卡；<a href="../expansions/ark-nova/marine-worlds.html">《海洋世界》</a>以后若还想明显拓宽边界，下一步可能真得请史前动物来上班了。这个玩笑说的是未来扩展还能往哪里走，不是现有内容不够丰富，也不参与重玩性扣分。
+                        </p>
+                        <p>
+                            至于地图设计可能更快遇到瓶颈，也只是我对扩展开发空间的顺带感受，不是基础游戏本身的问题，同样不参与重玩性扣分。
+                        </p>
+                    </div>
+
+                    <h3 id="section-balance" class="rating-section-anchor">
+                        <span class="lang-en">Balance: Real Defects, Limited Consequences</span>
+                        <span class="lang-cn hidden">平衡性：真实缺陷，有限影响</span>
+                    </h3>
+                    <div class="lang-en">
+                        <p>
+                            Exceptional replayability does not mean that every component is tuned equally well. With this many variables, local values and the balance of the complete game need to be considered separately.
+                        </p>
+                        <p>
+                            The card and map analysis above establishes real deductions. Ark Nova contains clear card outliers, a few functionally narrow designs, and meaningful gaps between zoo maps. Those problems should not disappear simply because the complete game remains enjoyable.
+                        </p>
+                        <p>
+                            They also should not obscure the majority of the game. Most cards remain within an acceptable value range, broad play balance still holds, and the rules contain several deliberate balancing measures. Starting Appeal increases from 0 to 3 according to turn order; advanced setup gives each player two random maps and a choice; the opening hand is eight cards reduced to four; each player begins with two Final Scoring cards and later discards one; players usually receive an equalized final opportunity after the end is triggered. Break length, base projects, available project levels, and donation spaces also scale with player count.
+                        </p>
+                        <p>
+                            These corrections are useful but not miraculous. Turn-order compensation is modest, map choice cannot erase the gap between Rescue Station and Geographical Zoo, and opening selection cannot remove every overpowered card. Balance therefore receives 80/100: the majority of content works, the game is broadly fair, and intentional corrections exist, but card and map tuning prevent a higher score.
+                        </p>
+                        <p>
+                            Its weight is only 6%. The short cycle, strict hand limit, public display, and interconnected system make residual imbalance less likely to determine the whole experience. That mitigation does not improve the Balance score itself; it reduces how strongly Balance influences Ark Nova's overall result. Keeping score and weight separate avoids rewarding the same compensation twice.
+                        </p>
+                    </div>
+                    <div class="lang-cn hidden">
+                        <p>
+                            重玩性很高，并不意味着每个元件都调校得同样好。变量越多，越需要把局部数值和完整对局的平衡分开来看。
+                        </p>
+                        <p>
+                            前面的卡牌和地图分析已经给出了真实扣分：游戏存在明确的卡牌离群值、少数就业空间过窄的功能设计，以及地图之间不可忽视的强度差。这些问题不能因为完整游戏仍然好玩就被抹掉。
+                        </p>
+                        <p>
+                            但问题也不能反过来遮住牌库的大部分内容。多数卡牌仍然处在可以接受的数值区间，整体玩法平衡基本成立，规则也设置了多层主动校正：玩家按顺位从 0、1、2、3 点魅力开始；进阶设置让每人从两张随机地图中选择一张；初始八张牌留四张；每人先拿两张终局卡，再在信息展开后弃掉一张；终局触发后，玩家通常仍会得到相对均等的最后行动机会。休息长度、基础保护项目、可用项目等级和协会板上的可用捐赠格也会随人数调整。
+                        </p>
+                        <p>
+                            这些校正有价值，却不能被夸大。先后手补偿只能算聊胜于无，地图选择无法消除救助站和地理动物园之间的差距，初始筛牌也处理不了所有超模卡。因此，Balance（平衡性）给到 80/100：多数内容合模，完整玩法整体公平，也确实存在主动平衡手段；卡牌和地图调校则阻止它进入更高区间。
+                        </p>
+                        <p>
+                            平衡性的权值只有 6%。短循环、严格手牌上限、公共牌列和彼此连接的完整系统，让剩余失衡不容易决定整局体验。这种缓解并没有让平衡性本身变好，而是降低了平衡性对《方舟动物园》整体结果的影响。把分数和权值分开，才能避免把同一种补偿重复奖励两次。
+                        </p>
+                    </div>
+
+                    <h3 id="section-theme-aesthetics" class="rating-section-anchor">
+                        <span class="lang-en">Theme, Aesthetics, And Reach</span>
+                        <span class="lang-cn hidden">主题、美术与受众亲和度</span>
+                    </h3>
+                    <div class="lang-en">
+                        <p>
+                            A system-focused analysis can make Ark Nova's success look purely mechanical. Its reach also depends on the form in which those mechanisms meet the player.
+                        </p>
+                        <p>
+                            Theme is a major strength of Ark Nova, but the causality should not be reversed: the solid game underneath is still the foundation. Compared with other strategy games of similar quality, however, the approachable zoo subject and bright colors are a key part of Ark Nova's success. They make it easier for new players to learn and keep the experience from feeling oppressive for experienced players.
+                        </p>
+                        <p>
+                            It also creates a strong sense of involvement. In my conversations and interviews with players, some have said that playing a concrete role feels more involving than representing an abstract power. Yet who did not, as a child, want a zoo planned entirely by themselves? Theme therefore receives 100/100 and a 15% weight.
+                        </p>
+                        <p>
+                            The aesthetics are positive without being exceptional. The card UI visibly pays homage to Terraforming Mars, and I mean that negatively because Terraforming Mars's card UI is itself a weakness. Ark Nova's version becomes serviceable with familiarity and does not remain a serious obstacle, while animal photography is naturally more immediate and approachable than Terraforming Mars's illustrations. The card presentation is therefore roughly neutral overall. The boards, tokens, bright palette, and clean presentation are all good, and they help the game look less difficult than it is. Aesthetics receives 85/100 with a 10% weight.
+                        </p>
+                    </div>
+                    <div class="lang-cn hidden">
+                        <p>
+                            如果只看前面的系统分析，很容易把《方舟动物园》的成功理解成纯粹的机制胜利。但这些机制以什么面貌来到玩家面前，同样影响了游戏能够走多远。
+                        </p>
+                        <p>
+                            主题是《方舟动物园》的一大加分项，但不能把因果关系倒过来：扎实的玩法底子才是游戏成立的根本。与其他同档次的优秀游戏相比，平易近人的动物园题材和亮丽的色调，才是《方舟动物园》获得成功的关键。它让新玩家更容易上手，老玩家玩起来也不会感觉到太大压力。
+                        </p>
+                        <p>
+                            它也给了玩家很不俗的代入感。根据我对玩家的采访和接触，有些人会认为，扮演一个具体角色比扮演一个抽象势力更有代入感。然而试问，谁小时候不想拥有一座由自己规划的动物园呢？因此，Theme（主题）给到 100/100，权值为 15%。
+                        </p>
+                        <p>
+                            美术整体加分，却没有达到顶尖。卡牌 UI 明显致敬了《殖民火星》，这里是贬义，因为《殖民火星》的卡牌 UI 本来就是扣分项。不过《方舟动物园》的卡牌看久以后确实还行，不会一直妨碍使用，因此也不能说它拖了后腿；动物照片又天然比《殖民火星》的插图更加形象可亲，所以卡牌美术整体接近中性。版图、标记物、亮色调和简洁呈现都做得不错，也会让游戏看起来“没有那么难”。所以 Aesthetics（美术）给到 85/100，权值为 10%。
+                        </p>
+                    </div>
+
+                    <h3 id="section-innovation" class="rating-section-anchor">
+                        <span class="lang-en">Innovation</span>
+                        <span class="lang-cn hidden">创新性</span>
+                    </h3>
+                    <div class="lang-en">
+                        <p>
+                            The outlines of many earlier games remain visible. For Innovation, the question is therefore direct: how much genuinely new design does Ark Nova provide?
+                        </p>
+                        <p>
+                            Ark Nova mostly iterates on existing mechanisms rather than creating a system without precedent. Innovation therefore receives 75/100.
+                        </p>
+                        <p>
+                            Its weight is 5%. Innovation is not the main basis for judging Ark Nova, but it still affects the overall evaluation enough that the dimension should not disappear from the weighted score.
+                        </p>
+                    </div>
+                    <div class="lang-cn hidden">
+                        <p>
+                            前面已经能看到许多其他游戏的影子。到了创新这一项，问题反而很直接：《方舟动物园》究竟提供了多少真正新的设计？
+                        </p>
+                        <p>
+                            我觉得《方舟动物园》更多是在迭代已有机制，而不是创造一套完全没有先例的系统，因此 Innovation（创新）给到 75/100。
+                        </p>
+                        <p>
+                            它的权值设为 5%。创新并不是评价《方舟动物园》最主要的依据，但它仍然会影响对游戏整体好不好的判断，因此这一维度不应该从加权评分中完全消失。
+                        </p>
+                    </div>
+
+                    <h3>
+                        <span class="lang-en">Recommendation</span>
+                        <span class="lang-cn hidden">推荐边界</span>
+                    </h3>
+                    <div class="lang-en">
+                        <p>
+                            Returning these scores to the table, the practical question is whether the game can draw players into a system that initially appears demanding.
+                        </p>
+                        <p>
+                            At least among the players around me, Ark Nova has become one of the most successful introductions to medium-heavy strategy games. It is not genuinely light: there are many mechanisms, icons, cards, and relationships to learn. The approachable zoo theme and clear individual mechanisms nevertheless make that learning process much less intimidating.
+                        </p>
+                    </div>
+                    <div class="lang-cn hidden">
+                        <p>
+                            把这些分数重新放回桌面，最实际的问题仍然是：它能不能把玩家带进一套乍看之下颇有门槛的系统？
+                        </p>
+                        <p>
+                            至少在我身边的玩家中，《方舟动物园》已经成了中重策推新效果最好的游戏之一。它并不是真正的轻策，玩家仍然需要学习数量不少的机制、图标、卡牌和系统关系；但平易近人的动物园主题和各自清楚的单个机制，确实让这个过程没有那么令人畏难。
+                        </p>
+                    </div>
+                </div>
+
+                <aside class="lg:col-span-1">
+                    <div class="bg-white border border-gray-200 rounded-sm shadow-sm overflow-hidden lg:sticky lg:top-32">
+                        <div class="bg-secondary/30 px-6 py-4 border-b border-gray-200">
+                            <h3 class="text-sm font-bold text-ink uppercase tracking-widest">
+                                <span class="lang-en">Rating Breakdown</span>
+                                <span class="lang-cn hidden">评分细则</span>
+                            </h3>
+                        </div>
+                        <table class="w-full score-table" id="rating-breakdown">
+                            <thead>
+                                <tr>
+                                    <th><span class="lang-en">Criterion</span><span class="lang-cn hidden">维度</span></th>
+                                    <th><span class="lang-en">Score /100</span><span class="lang-cn hidden">百分制分数</span></th>
+                                    <th><span class="lang-en">Weight</span><span class="lang-cn hidden">权值</span></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr data-score="100" data-weight="24"><td class="font-medium text-gray-700 score-label"><a href="#section-mechanics" class="score-dimension-link"><span class="lang-en">Mechanics</span><span class="lang-cn hidden">机制</span></a></td><td class="score-high">100</td><td class="text-gray-400">24%</td></tr>
+                                <tr data-score="100" data-weight="15"><td class="font-medium text-gray-700 score-label"><a href="#section-theme-aesthetics" class="score-dimension-link"><span class="lang-en">Theme</span><span class="lang-cn hidden">主题</span></a></td><td class="score-high">100</td><td class="text-gray-400">15%</td></tr>
+                                <tr data-score="85" data-weight="10"><td class="font-medium text-gray-700 score-label"><a href="#section-theme-aesthetics" class="score-dimension-link"><span class="lang-en">Aesthetics</span><span class="lang-cn hidden">美术</span></a></td><td class="score-mid">85</td><td class="text-gray-400">10%</td></tr>
+                                <tr data-score="80" data-weight="6"><td class="font-medium text-gray-700 score-label"><a href="#section-balance" class="score-dimension-link"><span class="lang-en">Balance</span><span class="lang-cn hidden">平衡性</span></a></td><td class="score-mid">80</td><td class="text-gray-400">6%</td></tr>
+                                <tr data-score="110" data-weight="11"><td class="font-medium text-gray-700 score-label"><a href="#section-depth-replayability" class="score-dimension-link"><span class="lang-en">Replayability</span><span class="lang-cn hidden">重玩性</span></a></td><td class="score-bonus">110</td><td class="text-gray-400">11%</td></tr>
+                                <tr data-score="85" data-weight="10"><td class="font-medium text-gray-700 score-label"><a href="#section-interactivity" class="score-dimension-link"><span class="lang-en">Interactivity</span><span class="lang-cn hidden">交互性</span></a></td><td class="score-mid">85</td><td class="text-gray-400">10%</td></tr>
+                                <tr data-score="88" data-weight="10"><td class="font-medium text-gray-700 score-label"><a href="#section-depth-replayability" class="score-dimension-link"><span class="lang-en">Depth/Complex</span><span class="lang-cn hidden">深度/成本</span></a></td><td class="score-mid">88</td><td class="text-gray-400">10%</td></tr>
+                                <tr data-score="95" data-weight="9"><td class="font-medium text-gray-700 score-label"><a href="#section-flow" class="score-dimension-link"><span class="lang-en">Flow</span><span class="lang-cn hidden">流畅度</span></a></td><td class="score-high">95</td><td class="text-gray-400">9%</td></tr>
+                                <tr data-score="75" data-weight="5"><td class="font-medium text-gray-700 score-label"><a href="#section-innovation" class="score-dimension-link"><span class="lang-en">Innovation</span><span class="lang-cn hidden">创新</span></a></td><td class="score-mid">75</td><td class="text-gray-400">5%</td></tr>
+                            </tbody>
+                        </table>
+                        <div class="bg-gray-50 px-6 py-4 border-t border-gray-200">
+                            <div class="flex justify-between items-center gap-4">
+                                <span class="font-bold text-xs uppercase tracking-widest text-gray-400">
+                                    <span class="lang-en">Weighted Score</span>
+                                    <span class="lang-cn hidden">加权评分</span>
+                                </span>
+                                <span class="font-bold text-2xl text-accent" data-weighted-score>94.0</span>
+                            </div>
+                            <p class="mt-3 text-xs leading-relaxed text-gray-500">
+                                <span class="lang-en">A complete mechanism structure, exceptional replayability, and excellent flow outweigh visible card and map tuning weaknesses.</span>
+                                <span class="lang-cn hidden">完整的机制结构、破格的重玩性和优秀流畅度，超过了卡牌与地图调校问题带来的影响。</span>
+                            </p>
+                        </div>
+                        <div class="px-6 py-5 border-t border-gray-100 space-y-3 text-sm">
+                            <a href="../ratinglist_bg/all_games/all_games.html" class="flex items-center justify-between gap-4 text-gray-600 hover:text-accent transition-colors">
+                                <span class="lang-en">Open All Games Table</span>
+                                <span class="lang-cn hidden">打开所有桌游总表</span>
+                                <i data-lucide="arrow-right" class="w-4 h-4 shrink-0"></i>
+                            </a>
+                            <a href="../rating_boardgame_home.html" class="flex items-center justify-between gap-4 text-gray-600 hover:text-accent transition-colors">
+                                <span class="lang-en">Read Rating Overview</span>
+                                <span class="lang-cn hidden">查看评分说明</span>
+                                <i data-lucide="arrow-right" class="w-4 h-4 shrink-0"></i>
+                            </a>
+                        </div>
+                    </div>
+                </aside>
+            </div>
+        </article>
+    </main>
+
+    <script>
+        function calculateWeightedScore() {
+            const rows = document.querySelectorAll('#rating-breakdown tbody tr[data-score][data-weight]');
+            let weightedTotal = 0;
+            let weightTotal = 0;
+
+            rows.forEach((row) => {
+                const score = Number(row.dataset.score);
+                const weight = Number(row.dataset.weight);
+                weightedTotal += score * weight;
+                weightTotal += weight;
+            });
+
+            if (weightTotal !== 100) {
+                console.warn(`Rating weights total ${weightTotal}% instead of 100%.`);
+            }
+
+            const displayedScore = (Math.round(weightedTotal / 10) / 10).toFixed(1);
+            document.querySelectorAll('[data-weighted-score]').forEach((element) => {
+                element.textContent = displayedScore;
+            });
+        }
+
+        function toggleLanguage() {
+            const enEls = document.querySelectorAll('.lang-en');
+            const cnEls = document.querySelectorAll('.lang-cn');
+            enEls.forEach((element) => element.classList.toggle('hidden'));
+            cnEls.forEach((element) => element.classList.toggle('hidden'));
+            document.documentElement.lang = document.documentElement.lang === 'en' ? 'zh-CN' : 'en';
+        }
+
+        calculateWeightedScore();
+        lucide.createIcons();
+    </script>
+</body>
+</html>

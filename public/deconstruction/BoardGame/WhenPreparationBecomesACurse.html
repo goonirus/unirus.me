@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>When Preparation Becomes a Curse: BitD's Cost Problem | Deconstructing Design</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Sans+SC:wght@300;400;500;700&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+
+    <script src="../deconstruction_article.js"></script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'Noto Sans SC', 'sans-serif'],
+                        serif: ['Playfair Display', 'serif'],
+                    },
+                    colors: { 'paper': '#fdfbf7', 'ink': '#1a1a1a', 'accent': '#c2410c', 'secondary': '#f3f4f6' }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            background-color: #fdfbf7;
+            color: #1a1a1a;
+            overflow-x: hidden;
+        }
+
+        .sidebar-sticky {
+            position: sticky;
+            top: 6rem;
+        }
+
+        .prose p {
+            margin-bottom: 1.8em;
+            line-height: 1.9;
+            color: #374151;
+            font-family: 'Inter', sans-serif;
+            font-size: 1.125rem;
+        }
+
+        .prose h2 {
+            font-family: 'Inter', sans-serif;
+            font-weight: 700;
+            font-size: 1.75rem;
+            margin-top: 3.5rem;
+            margin-bottom: 1.5rem;
+            color: #1a1a1a;
+            border-bottom: 1px solid #e5e7eb;
+            padding-bottom: 0.5rem;
+            scroll-margin-top: 100px;
+        }
+
+        .prose h3 {
+            font-family: 'Inter', sans-serif;
+            font-weight: 600;
+            font-size: 1.35rem;
+            margin-top: 2.5rem;
+            margin-bottom: 1rem;
+            color: #1a1a1a;
+            scroll-margin-top: 100px;
+        }
+
+        .prose blockquote {
+            border-left: 4px solid #c2410c;
+            padding-left: 1.5rem;
+            font-style: italic;
+            color: #6b7280;
+            margin: 2.5rem 0;
+            font-family: 'Playfair Display', serif;
+            font-size: 1.25rem;
+            background-color: rgba(194, 65, 12, 0.05);
+            padding: 1.5rem;
+            border-radius: 0 0.5rem 0.5rem 0;
+        }
+
+        .prose .lead-note {
+            margin: 0 0 3rem;
+            padding: 0 0 2rem;
+            border-bottom: 1px solid rgba(194, 65, 12, 0.22);
+            color: #1f2937;
+            font-family: 'Inter', 'Noto Sans SC', sans-serif;
+            font-size: 1.35rem;
+            font-weight: 500;
+            line-height: 1.8;
+            letter-spacing: -0.01em;
+        }
+
+        .analysis-question {
+            margin: 0 0 3rem;
+            padding: 1.25rem 1.5rem;
+            border: 1px solid rgba(194, 65, 12, 0.24);
+            background: rgba(194, 65, 12, 0.05);
+            border-radius: 0.5rem;
+            color: #374151;
+            font-size: 1rem;
+            line-height: 1.75;
+        }
+
+        .analysis-question strong {
+            display: block;
+            margin-bottom: 0.35rem;
+            color: #9a3412;
+            font-size: 0.75rem;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+        }
+
+        .article-visual {
+            overflow: hidden;
+            margin: 3rem 0;
+            border: 1px solid rgba(194, 65, 12, 0.16);
+            border-radius: 0.9rem;
+            background: rgba(255, 255, 255, 0.76);
+            box-shadow: 0 18px 45px rgba(31, 41, 55, 0.08);
+        }
+
+        .article-visual img {
+            width: 100%;
+            height: auto;
+            display: block;
+            background: #f3f4f6;
+        }
+
+        .article-visual.contain {
+            max-width: 760px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .article-visual.contain img {
+            object-fit: contain;
+            padding: 1rem;
+            background: #f8fafc;
+        }
+
+        .article-visual figcaption {
+            padding: 0.85rem 1rem;
+            color: #6b7280;
+            font-size: 0.78rem;
+            line-height: 1.55;
+        }
+
+        .image-credit {
+            display: block;
+            margin-top: 0.35rem;
+            color: #9ca3af;
+            font-size: 0.72rem;
+        }
+
+        .image-credit a {
+            color: #c2410c;
+            text-decoration: none;
+        }
+
+        .image-credit a:hover {
+            text-decoration: underline;
+        }
+
+        .toc-link {
+            display: block;
+            padding: 0.3rem 0;
+            color: #6b7280;
+            text-decoration: none;
+            transition: all 0.2s;
+            font-size: 0.9rem;
+            border-left: 2px solid transparent;
+            padding-left: 1rem;
+        }
+
+        .toc-link:hover {
+            color: #c2410c;
+            border-left-color: #c2410c;
+            background-color: rgba(194, 65, 12, 0.05);
+        }
+
+        .toc-sub-link {
+            padding-left: 2rem;
+            font-size: 0.85rem;
+            color: #9ca3af;
+        }
+
+        .tag-analysis {
+            color: #c2410c;
+            border: 1px solid #c2410c;
+        }
+
+        .recent-link:hover h4 {
+            color: #c2410c;
+        }
+    </style>
+</head>
+<body class="font-sans antialiased">
+
+    <nav class="fixed w-full z-50 top-0 bg-paper/90 backdrop-blur-sm border-b border-gray-200/50 h-20 flex items-center px-6 justify-between">
+        <div class="flex items-center">
+            <a href="../deconstruction_home.html" class="flex items-center text-gray-500 hover:text-accent transition-colors group mr-8">
+                <i data-lucide="arrow-left" class="w-5 h-5 mr-2 group-hover:-translate-x-1 transition-transform"></i>
+                Back to Archive
+            </a>
+        </div>
+        <div class="hidden md:block text-xs font-bold text-gray-300 uppercase tracking-widest">
+            Board Game Deconstruction
+        </div>
+    </nav>
+
+    <div class="pt-20 w-full max-w-[95%] mx-auto px-6 py-12">
+
+        <div class="grid grid-cols-1 lg:grid-cols-[3fr_11fr_2fr] gap-12">
+
+            <aside class="hidden lg:block">
+                <div class="sidebar-sticky pt-4 border-r border-gray-200 pr-6">
+                    <h3 class="text-xs font-bold uppercase tracking-widest text-gray-400 mb-6 flex items-center">
+                        <i data-lucide="list" class="w-4 h-4 mr-2"></i> Contents
+                    </h3>
+                    <nav class="space-y-1 max-h-[calc(100vh-10rem)] overflow-y-auto pr-2 custom-scrollbar">
+                        <a href="#observation" class="toc-link font-medium">1. When Careful Play Starts Creating Trouble</a>
+                        <a href="#symptom" class="toc-link toc-sub-link">1.1 Not Failure, but Accumulated Cost</a>
+                        <a href="#first-pattern" class="toc-link toc-sub-link">1.2 Preparation Passes Through the Cost Machine</a>
+
+                        <a href="#hypotheses" class="toc-link font-medium mt-2">2. The Usual Fixes Miss Something</a>
+                        <a href="#gm-hypothesis" class="toc-link toc-sub-link">2.1 The GM Is Not the Whole Problem</a>
+                        <a href="#roll-hypothesis" class="toc-link toc-sub-link">2.2 Rolling Less Makes the Problem Vanish Too Cleanly</a>
+                        <a href="#system-hypothesis" class="toc-link toc-sub-link">2.3 The Dice Are Doing Two Jobs at Once</a>
+
+                        <a href="#testing" class="toc-link font-medium mt-2">3. Competence and Preparation Pay the Same Toll</a>
+                        <a href="#competence-test" class="toc-link toc-sub-link">3.1 Being Skilled Does Not Always Feel Safer</a>
+                        <a href="#preparation-test" class="toc-link toc-sub-link">3.2 Careful Planning Creates More Cost Windows</a>
+                        <a href="#core-contradiction" class="toc-link toc-sub-link">3.3 The Road to Safety Passes Through Risk</a>
+
+                        <a href="#intervention" class="toc-link font-medium mt-2">4. Keep the Roll, Change What It Can Cost</a>
+                        <a href="#wrong-fixes" class="toc-link toc-sub-link">4.1 Smaller Punishments Are Not Always Better</a>
+                        <a href="#cost-type" class="toc-link toc-sub-link">4.2 Let Preparation Change the Shape of Danger</a>
+                        <a href="#stealth-example" class="toc-link toc-sub-link">4.3 The Guard Should Not Appear from Nowhere</a>
+
+                        <a href="#evaluation" class="toc-link font-medium mt-2">5. What This Repair Protects</a>
+                        <a href="#limits" class="toc-link toc-sub-link">5.1 The Table Still Has to Judge</a>
+                        <a href="#closing" class="toc-link toc-sub-link">5.2 The Dice Need Trust</a>
+                    </nav>
+                </div>
+            </aside>
+
+            <main>
+                <article>
+
+                    <header class="mb-16 border-b border-gray-200 pb-12 text-center">
+                        <div class="flex justify-center items-center gap-3 mb-6">
+                            <span class="tag-analysis text-[10px] font-bold px-2 py-0.5 rounded-sm uppercase tracking-wider">Deconstruction</span>
+                            <time class="text-sm text-gray-400 font-mono">Jul 6, 2026</time>
+                        </div>
+                        <h1 class="text-4xl md:text-6xl font-bold text-ink leading-tight mb-6 tracking-tight">
+                            When Preparation<br>
+                            <span class="font-serif italic font-normal text-4xl md:text-5xl text-gray-600">Becomes a Curse</span>
+                        </h1>
+                        <p class="text-gray-500 text-base md:text-lg max-w-2xl mx-auto leading-relaxed">
+                            The Cost Problem in BitD's Rolls
+                        </p>
+                        <div class="text-gray-500 text-sm flex justify-center items-center gap-2 mt-4">
+                            <i data-lucide="user" class="w-4 h-4"></i> <span class="font-medium text-ink">Donglin Yan</span>
+                            <span class="mx-2">•</span>
+                            <span class="italic">University of Gothenburg</span>
+                        </div>
+                    </header>
+
+                    <div class="prose prose-lg max-w-none">
+
+                        <div class="analysis-question">
+                            <strong>Design question</strong>
+                            How can a roll system keep consequence as the engine of play without making competence and preparation feel as if they only create more chances to pay a cost?
+                        </div>
+
+                        <h2 id="observation">1. When Careful Play Starts Creating Trouble</h2>
+                        <p class="lead-note">
+                            Some tabletop problems do not appear when people play carelessly. They appear when people play carefully.
+                            That is why this problem took a long time to recognize. The table was not ignoring the fiction, skipping preparation,
+                            or trying to avoid consequence. If anything, the problem became clearer when players tried to respect the danger.
+                        </p>
+                        <p>
+                            The game that made this tension visible to me was <em>Blades in the Dark</em>, a tabletop RPG about crews taking dangerous jobs in a haunted industrial city.
+                            Its roll system is built around position, effect, and consequence: characters often succeed, but success frequently arrives with cost.
+                            That makes the game fast, pressured, and good at pushing the fiction forward.
+                        </p>
+                        <p>
+                            The question that interests me is what happens when this structure meets a careful, investigative style of play.
+                            If a player wants to reduce risk by asking questions, preparing routes, and gathering information,
+                            the game still needs those actions to interact with the dice. But the dice are also where cost enters.
+                        </p>
+                        <p>
+                            The problem did not begin as a theory. It began as a repeated table feeling.
+                            A careful character investigated, prepared, checked one more angle, and tried to enter the decisive scene with better control.
+                            Yet after several such steps, the fiction often felt heavier rather than safer. There were more clocks, more attention,
+                            more small debts, more partial costs, more things that had to be managed before the main confrontation even started.
+                        </p>
+                        <p>
+                            At first this seemed like an ordinary problem of difficulty. Perhaps the table was simply too harsh.
+                            Perhaps I was too attached to a detective-player fantasy. Perhaps <em>Blades in the Dark</em> was doing exactly what it was supposed to do,
+                            and I had not yet adjusted my expectations. Those explanations were plausible enough that the question stayed blurry for a long time,
+                            which is why the answer cannot simply be presented as if it were obvious from the start.
+                        </p>
+
+                        <figure class="article-visual">
+                            <img src="../../../picture/deconstruction/BoardGame/blades-background-official.webp" alt="Blades in the Dark industrial fantasy city artwork" loading="lazy">
+                            <figcaption>
+                                The city is not just setting decoration here. It is the pressure field that makes preparation feel necessary before a score even begins.
+                                <span class="image-credit">Image: <a href="https://evilhat.com/product/blades-in-the-dark/">Evil Hat Productions</a>.</span>
+                            </figcaption>
+                        </figure>
+
+                        <h3 id="symptom">1.1 Not Failure, but Accumulated Cost</h3>
+                        <p>
+                            The symptom was not "bad things happen." BitD would be a worse game if crime were clean and painless.
+                            The symptom was more precise: careful play could accumulate cost in a way that made care itself feel suspicious.
+                            A player who asked more questions and made more preparations sometimes seemed to create more opportunities for consequence than a player who acted directly.
+                        </p>
+                        <p>
+                            This feeling was especially visible around investigation. A player might look into the location, speak with a contact,
+                            confirm the target's schedule, and prepare an entry route. Each step made sense in the fiction.
+                            Each step could also become a roll. By the time the decisive action arrived, the careful player had already opened several doors through which cost could enter.
+                        </p>
+
+                        <h3 id="first-pattern">1.2 Preparation Passes Through the Cost Machine</h3>
+                        <p>
+                            The first pattern, then, was not that preparation had no value. Preparation clearly changed position, effect, available options,
+                            and the player's understanding of risk. The pattern was that preparation often had to pass through the same engine that generates cost.
+                            The more the player wanted the system to recognize their preparation, the more often they had to expose that preparation to the roll.
+                        </p>
+                        <blockquote>
+                            The table feeling was not "I failed." It was "I did the careful thing, and the careful thing gave the game more chances to charge me."
+                        </blockquote>
+
+                        <h2 id="hypotheses">2. The Usual Fixes Miss Something</h2>
+                        <p>
+                            For a while I tried to solve the feeling with the usual explanations. Maybe the table was asking for the wrong rolls.
+                            Maybe the consequences were too harsh. Maybe preparation should simply happen outside the mechanics.
+                            Those answers are useful, but none of them fully explained why the same discomfort kept returning.
+                        </p>
+                        <p>
+                            This matters because the contradiction between dice and cost was not the first thing I saw.
+                            It is what remained after the simpler repairs helped, but did not remove the shape of the problem.
+                        </p>
+
+                        <h3 id="gm-hypothesis">2.1 The GM Is Not the Whole Problem</h3>
+                        <p>
+                            The first explanation was GM judgment. Maybe the GM was calling for too many rolls.
+                            Maybe the consequences were too sharp. Maybe actions that should have been controlled were treated as risky.
+                            This explanation is partly useful because BitD absolutely depends on judgment. Position, effect, consequence, and fictional framing are not automatic.
+                        </p>
+                        <p>
+                            But this explanation was not enough. Even with a reasonable GM, investigation can still be dangerous.
+                            Contacting a witness can reveal interest. Following a lead can alert a faction. Preparing a route can cost time.
+                            The game is not wrong to say that these actions have pressure. So the problem cannot be solved simply by declaring all preparation safe.
+                        </p>
+
+                        <h3 id="roll-hypothesis">2.2 Rolling Less Makes the Problem Vanish Too Cleanly</h3>
+                        <p>
+                            The next explanation was that investigation and preparation should roll less. This also helps.
+                            If a character asks an obvious question, has the right access, and there is no meaningful danger, the GM should probably answer directly.
+                            Some information should simply be given. Some preparation should simply stand.
+                        </p>
+                        <p>
+                            Yet this solution has a cost of its own. Dice are not just a resolution machine; they are one of the main ways players touch the system.
+                            If investigation, preparation, and expertise never enter the mechanics, then a whole style of play becomes mechanically invisible.
+                            The player may still describe careful action, but the game itself is waiting elsewhere.
+                        </p>
+
+                        <h3 id="system-hypothesis">2.3 The Dice Are Doing Two Jobs at Once</h3>
+                        <p>
+                            The explanation that finally held was structural. BitD wants rolls because rolls are play.
+                            But BitD rolls are also built around consequence. Even a capable character with a strong dice pool does not cleanly succeed most of the time.
+                            4-5 results appear often, and 1-3 results remain possible.
+                        </p>
+                        <p>
+                            This means the system has two needs that pull against each other. It needs players to roll, because rolling is how the system becomes active.
+                            But every roll creates a real chance of cost. One roll is not the issue. The issue appears when careful play creates a sequence of rolls
+                            before the decisive scene, and therefore creates a sequence of possible costs before the decisive scene.
+                        </p>
+
+                        <figure class="article-visual contain">
+                            <img src="../../../picture/deconstruction/BoardGame/blades-dice-official.png" alt="Blades in the Dark dice accessory" loading="lazy">
+                            <figcaption>
+                                This is the contradiction in object form: the dice are where the game comes alive, and also where cost keeps entering.
+                                <span class="image-credit">Image: <a href="https://evilhat.com/product/blades-in-the-dark/">Evil Hat Productions</a>.</span>
+                            </figcaption>
+                        </figure>
+
+                        <h2 id="testing">3. Competence and Preparation Pay the Same Toll</h2>
+                        <p>
+                            The pattern becomes clearer if the problem is split in two. First, what happens to a character who is supposed to be good at something?
+                            Second, what happens to a crew that spends more time preparing because it wants to reduce risk?
+                            Neither case proves that BitD is broken. Both show why the ordinary roll structure can produce a specific player experience:
+                            competence feels less rewarding than expected, and preparation feels less protective than expected.
+                        </p>
+
+                        <h3 id="competence-test">3.1 Being Skilled Does Not Always Feel Safer</h3>
+                        <p>
+                            Take a capable character. They are good at the relevant action and roll a strong pool.
+                            They will succeed more often than an untrained character, but many successes will still be successes with consequence.
+                            In a system where "success with cost" is common, competence can become less visible than the player expects.
+                        </p>
+                        <p>
+                            The character gets through the door, convinces the witness, traces the clue, or slips past the guard.
+                            But each success may pull another thread loose. The player can start to feel that competence changes probability,
+                            but not the emotional rhythm of play. They are still paying constantly, just with better odds and sometimes better terms.
+                        </p>
+
+                        <h3 id="preparation-test">3.2 Careful Planning Creates More Cost Windows</h3>
+                        <p>
+                            Now take a prepared crew and an unprepared crew. The prepared crew investigates the location, checks the patrol route,
+                            contacts a source, confirms the target's schedule, and prepares an escape route. The unprepared crew begins with only the basic information.
+                            In many RPGs, the prepared crew should feel safer because earlier work has compressed uncertainty.
+                        </p>
+                        <p>
+                            In BitD, the prepared crew may indeed gain more options and better fictional position.
+                            But if those preparations required several rolls, the prepared crew has also passed through several cost windows.
+                            The unprepared crew may be ignorant, but it may also have exposed itself to fewer pre-action consequences.
+                            This does not prove that preparation is bad, but it explains why preparation can feel like a burden.
+                        </p>
+
+                        <h3 id="core-contradiction">3.3 The Road to Safety Passes Through Risk</h3>
+                        <p>
+                            This is the core contradiction I wanted to isolate. BitD needs dice because dice are a major part of play.
+                            But because dice often generate consequence, more engagement with the system can also mean more exposure to cost.
+                            The contradiction becomes painful when the actions that create extra rolls are exactly the actions that should make the player feel careful, capable, or prepared.
+                        </p>
+                        <blockquote>
+                            The problem is not that BitD has cost. The problem is that the route toward earning safety often travels through the machinery that produces new cost.
+                        </blockquote>
+
+                        <h2 id="intervention">4. Keep the Roll, Change What It Can Cost</h2>
+                        <p>
+                            If this is the problem, then the solution should not be crude. It should not simply remove rolls,
+                            and it should not simply make every consequence softer. The goal is to preserve the gameplay of dice while making preparation and competence visible in the type of cost that appears.
+                        </p>
+
+                        <h3 id="wrong-fixes">4.1 Smaller Punishments Are Not Always Better</h3>
+                        <p>
+                            Rolling less is sometimes correct, but it cannot be the whole answer. If careful play never touches the mechanics,
+                            then the player who enjoys planning is left with narration rather than play.
+                            They do not only want permission to say smart things. They want the system to recognize those smart things.
+                        </p>
+                        <p>
+                            Reducing the severity of the same consequence is also incomplete. If the consequence is harm, then "less harm" can still feel wrong.
+                            If the consequence is exposure, then "minor exposure" can still feel like the wrong lesson.
+                            A player who prepared well may not be asking for a smaller punishment. They may be asking why this category of punishment is still appropriate.
+                        </p>
+
+                        <h3 id="cost-type">4.2 Let Preparation Change the Shape of Danger</h3>
+                        <p>
+                            The better intervention is to change the type of cost. Preparation, competence, and fictional advantage should narrow the range of legitimate consequences.
+                            The roll remains. The pressure remains. But the cost should reveal what the players changed by preparing.
+                        </p>
+                        <p>
+                            This also protects character competence. If a character is very good at a routine technique, the roll should not casually decide that the technique itself fails.
+                            The basic action can succeed while the larger goal becomes delayed, incomplete, noisy, expensive in time, or entangled with a new choice.
+                            The dice still matter, but they no longer make the character look incompetent at the thing they are built to do.
+                        </p>
+
+                        <figure class="article-visual contain">
+                            <img src="../../../picture/deconstruction/BoardGame/blades-playerkit-page03.webp" alt="Blades in the Dark player kit reference sheet" loading="lazy">
+                            <figcaption>
+                                The repair is not outside the rules. It lives in the table-facing negotiation around position, effect, and the kind of consequence that makes sense.
+                                <span class="image-credit">Image: <a href="https://evilhat.com/product/blades-in-the-dark/">Evil Hat Productions</a>.</span>
+                            </figcaption>
+                        </figure>
+
+                        <h3 id="stealth-example">4.3 The Guard Should Not Appear from Nowhere</h3>
+                        <p>
+                            Imagine a crew preparing for a simple infiltration. They study the patrol route, choose a quiet hour,
+                            secure a side entrance, and know which corridor is least watched. When they finally sneak in,
+                            a 4-5 result should not casually produce a random guard who appears from nowhere and sees them.
+                        </p>
+                        <p>
+                            For an unprepared infiltration, "someone sees you" may be a fair consequence.
+                            For a well-prepared infiltration, the same 4-5 result should probably move somewhere else:
+                            time pressure, lost opportunity, a resource tradeoff, or a harder next choice.
+                            They are not seen, but they have to wait longer than expected. The route works, but a clock advances elsewhere.
+                            They enter unseen, but the window of opportunity inside is now narrower.
+                        </p>
+                        <p>
+                            The roll still matters. The cost still exists. But the cost now respects the preparation.
+                            It does not pretend that planning made the world safe; it shows that planning changed the form of danger.
+                        </p>
+                        <blockquote>
+                            The point is not "prepared players should pay less." The point is "prepared players should pay differently."
+                        </blockquote>
+
+                        <h2 id="evaluation">5. What This Repair Protects</h2>
+                        <p>
+                            This intervention does not turn BitD into a risk-control game. It still belongs more naturally to crisis management.
+                            Plans will bend, costs will appear, and the fiction will keep moving. But the table can avoid a specific failure mode:
+                            making careful play feel like a curse because every careful step becomes another generic opportunity for punishment.
+                        </p>
+
+                        <h3 id="limits">5.1 The Table Still Has to Judge</h3>
+                        <p>
+                            This approach depends heavily on GM taste. The rules can offer position, effect, resistance, clocks, and consequence,
+                            but they cannot automatically decide which consequence best reflects the fiction.
+                            That judgment has to happen at the table.
+                        </p>
+                        <p>
+                            It also does not mean preparation should make players immune to danger. Sometimes a prepared plan still meets a stronger force.
+                            Sometimes the cost really is harm, exposure, or escalation. The claim is narrower:
+                            when preparation is relevant, the cost should show that relevance.
+                        </p>
+
+                        <h3 id="closing">5.2 The Dice Need Trust</h3>
+                        <p>
+                            This is why I now think the issue is more interesting than "BitD is too punishing" or "the GM should roll less."
+                            The deeper tension is between dice as necessary gameplay and consequence as the normal output of dice.
+                            When those two forces meet careful preparation, the result can be elegant, but it can also become fragile.
+                        </p>
+                        <p>
+                            BitD works best when cost grows from the situation, not from a generic need to punish the roll.
+                            If preparation changes the situation, then consequence should change with it.
+                            Otherwise the game keeps the dice, but loses the trust that makes the dice worth rolling.
+                        </p>
+                    </div>
+
+                    <div class="mt-24 pt-12 border-t border-gray-200 text-sm text-gray-500 flex flex-col sm:flex-row sm:justify-between gap-3">
+                        <span>Status: <span class="font-bold text-ink">RPG System Deconstruction</span></span>
+                        <span>Tags: #BitD #RPGDesign #Dice #Risk</span>
+                    </div>
+
+                </article>
+            </main>
+
+            <aside class="hidden lg:block">
+                <div class="pt-4 border-l border-gray-200 pl-6">
+                    <h3 class="text-xs font-bold uppercase tracking-widest text-gray-400 mb-6 flex items-center">
+                        <i data-lucide="trending-up" class="w-4 h-4 mr-2"></i> Recent Deconstructions
+                    </h3>
+
+                    <div id="recent-articles-list" class="space-y-6"></div>
+
+                    <div class="mt-10 pt-8 border-t border-gray-100">
+                        <h3 class="text-xs font-bold uppercase tracking-widest text-gray-400 mb-4">Focus Areas</h3>
+                        <div class="flex flex-wrap gap-2">
+                            <a href="#" class="text-xs text-gray-500 bg-gray-100 px-2 py-1 rounded-sm hover:bg-accent hover:text-white transition-colors">#RPGDesign</a>
+                            <a href="#" class="text-xs text-gray-500 bg-gray-100 px-2 py-1 rounded-sm hover:bg-accent hover:text-white transition-colors">#Dice</a>
+                            <a href="#" class="text-xs text-gray-500 bg-gray-100 px-2 py-1 rounded-sm hover:bg-accent hover:text-white transition-colors">#Risk</a>
+                        </div>
+                    </div>
+
+                </div>
+            </aside>
+
+        </div>
+    </div>
+
+    <script>
+        function resolveRecentLink(link) {
+          if (!link) return "#";
+          if (link.startsWith("http") || link.startsWith("#") || link.startsWith("/")) return link;
+
+          const parts = window.location.pathname.split("/").filter(Boolean);
+          const currentDir = parts.length ? parts[parts.length - 2] : "";
+
+          if (currentDir === "BoardGame" && link.startsWith("BoardGame/")) return link.replace(/^BoardGame\//, "");
+          return link;
+        }
+
+        function renderRecentArticles() {
+            const container = document.getElementById("recent-articles-list");
+            if (!container) return;
+
+            if (typeof recentArticlesData === "undefined") {
+                console.error("Error: recentArticlesData is not defined.");
+                container.innerHTML = "<p class='text-xs text-red-500'>Failed to load recent deconstructions.</p>";
+                return;
+            }
+
+            const displayData = recentArticlesData.slice(0, 10);
+
+            const html = displayData.map(article => {
+                const href = resolveRecentLink(article.link);
+                return `
+            <a href="${href}" class="recent-link block group">
+              <div class="h-24 bg-gray-100 rounded-sm mb-3 overflow-hidden relative">
+                <img src="${article.image}" alt="${article.title}" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105 opacity-80 group-hover:opacity-100">
+              </div>
+              <span class="text-[10px] font-bold ${article.categoryColor} uppercase tracking-wider mb-1 block">${article.category}</span>
+              <h4 class="text-sm font-bold text-ink leading-snug transition-colors">${article.title}</h4>
+            </a>
+          `;
+            }).join("");
+
+            container.innerHTML = html;
+        }
+
+        document.addEventListener("DOMContentLoaded", () => {
+            renderRecentArticles();
+            lucide.createIcons();
+        });
+    </script>
+</body>
+</html>

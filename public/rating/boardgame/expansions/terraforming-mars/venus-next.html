@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Expansion Review: Terraforming Mars: Venus Next</title>
+    <link rel="icon" href="../../../../favicon.svg" type="image/svg+xml">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../../games/rating-game-navigation.css">
+    <script src="../../games/rating-game-navigation.js" defer></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: { sans: ['Inter', 'Noto Sans SC', 'sans-serif'] },
+                    colors: {
+                        paper: '#fdfbf7',
+                        ink: '#1a1a1a',
+                        accent: '#c2410c',
+                        secondary: '#f3f4f6',
+                        tier: '#15803d'
+                    }
+                }
+            }
+        };
+    </script>
+    <style>
+        body { background-color: #fdfbf7; color: #1a1a1a; }
+        .prose p { margin-bottom: 1.45em; line-height: 1.85; color: #4b5563; }
+        .prose h3 {
+            font-weight: 700;
+            font-size: 1.5rem;
+            margin-top: 2.75rem;
+            margin-bottom: 1rem;
+            color: #1a1a1a;
+            border-left: 4px solid #c2410c;
+            padding-left: 1rem;
+        }
+        .prose a {
+            color: #9a3412;
+            text-decoration: underline;
+            text-decoration-color: #fdba74;
+            text-underline-offset: 0.18em;
+        }
+        .prose a:hover { color: #c2410c; text-decoration-color: #c2410c; }
+        .review-header-media {
+            display: flex;
+            align-items: flex-end;
+            justify-content: space-between;
+            gap: 1.25rem;
+            width: 100%;
+        }
+        .review-cover {
+            flex: 0 0 auto;
+            width: 8.5rem;
+            margin: 0;
+        }
+        .review-cover-frame {
+            width: 100%;
+            aspect-ratio: 1 / 1;
+            overflow: hidden;
+            background: #ffffff;
+            border: 1px solid #e5e7eb;
+            border-radius: 2px;
+            box-shadow: 0 8px 22px rgba(17, 24, 39, 0.12);
+        }
+        .review-cover img {
+            display: block;
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+        .review-cover figcaption {
+            margin-top: 0.45rem;
+            color: #9ca3af;
+            font-size: 0.65rem;
+            line-height: 1.35;
+            text-align: center;
+        }
+        .verdict-row {
+            display: grid;
+            grid-template-columns: minmax(0, 1fr) auto;
+            gap: 1rem;
+            align-items: center;
+            padding: 1rem 1.5rem;
+            border-bottom: 1px solid #f3f4f6;
+        }
+        .verdict-row:last-child { border-bottom: 0; }
+        @media (min-width: 1024px) {
+            .review-header-media { width: auto; justify-content: flex-end; }
+            .review-cover { width: 10.5rem; }
+        }
+        @media (max-width: 360px) {
+            .review-header-media { gap: 1rem; }
+            .review-cover { width: 7.25rem; }
+        }
+    </style>
+</head>
+<body class="font-sans antialiased">
+    <nav class="fixed w-full z-50 top-0 bg-paper/90 backdrop-blur-sm border-b border-gray-200/50 h-20 flex items-center px-4 sm:px-6 justify-between">
+        <div class="flex flex-1 items-center gap-4 sm:gap-6 min-w-0">
+            <a href="../../games/TerraformingMars.html" class="flex items-center text-gray-500 hover:text-accent transition-colors group shrink-0">
+                <i data-lucide="arrow-left" class="w-5 h-5 mr-2 group-hover:-translate-x-1 transition-transform"></i>
+                <span class="hidden sm:inline">
+                    <span class="lang-en">Back to Terraforming Mars</span>
+                    <span class="lang-cn hidden">返回《殖民火星》</span>
+                </span>
+            </a>
+            <a href="../../rating_boardgame_home.html#expansion-ratings-en" class="hidden md:flex items-center text-gray-500 hover:text-accent transition-colors">
+                <i data-lucide="layers-3" class="w-4 h-4 mr-2"></i>
+                <span class="lang-en">Expansion Rules</span>
+                <span class="lang-cn hidden">扩展评分规则</span>
+            </a>
+            <div class="sticky-game-title" data-sticky-game-title aria-hidden="true">
+                <span class="lang-en">Terraforming Mars: Venus Next</span>
+                <span class="lang-cn hidden">殖民火星：金星扩展</span>
+            </div>
+        </div>
+
+        <button type="button" onclick="toggleLanguage()" aria-label="Switch language" class="flex items-center space-x-2 border border-gray-300 px-3 sm:px-4 py-2 rounded-full hover:border-accent hover:text-accent transition-all text-xs font-bold tracking-widest uppercase bg-white shrink-0">
+            <i data-lucide="globe" class="w-4 h-4"></i>
+            <span id="lang-label">EN / 中文</span>
+        </button>
+    </nav>
+
+    <main class="pt-32 pb-24 px-5 sm:px-6">
+        <article class="max-w-7xl mx-auto">
+            <header class="flex flex-col lg:flex-row justify-between items-start lg:items-end gap-8 mb-12 border-b border-gray-200 pb-12">
+                <div class="min-w-0">
+                    <span class="text-accent font-bold tracking-widest uppercase text-xs mb-2 block">
+                        <span class="lang-en">Strong New Routes, A Weak Original Card Model</span>
+                        <span class="lang-cn hidden">新路线出色，原始卡牌模型却拖了后腿</span>
+                    </span>
+                    <h1 class="text-4xl sm:text-5xl font-bold text-ink mb-3 break-words" data-review-title>
+                        <span class="lang-en">Terraforming Mars: Venus Next</span>
+                        <span class="lang-cn hidden">殖民火星：金星扩展</span>
+                    </h1>
+                    <p class="text-gray-500 text-base sm:text-lg">
+                        <span class="lang-en">Jacob Fryxelius · 2017 · Expansion for Terraforming Mars</span>
+                        <span class="lang-cn hidden">Jacob Fryxelius · 2017 · 《殖民火星》扩展</span>
+                    </p>
+                </div>
+                <div class="review-header-media lg:shrink-0">
+                    <div class="flex flex-col items-start lg:items-end gap-4">
+                        <div class="text-left lg:text-right">
+                            <div class="text-xs font-mono tracking-widest uppercase text-gray-400 mb-1">
+                                <span class="lang-en">Quality Tier</span>
+                                <span class="lang-cn hidden">质量档位</span>
+                            </div>
+                            <div class="text-6xl font-bold text-tier leading-none">B+</div>
+                        </div>
+                        <div class="text-left lg:text-right max-w-44">
+                            <div class="text-xs font-mono tracking-widest uppercase text-gray-400 mb-1">
+                                <span class="lang-en">Enable Recommendation</span>
+                                <span class="lang-cn hidden">启用建议</span>
+                            </div>
+                            <div class="text-lg sm:text-xl font-bold text-accent leading-tight">
+                                <span class="lang-en">Usually Include</span>
+                                <span class="lang-cn hidden">通常加入</span>
+                            </div>
+                        </div>
+                    </div>
+                    <figure class="review-cover">
+                        <div class="review-cover-frame">
+                            <img src="../../../../picture/rating_boardgame/terraforming-mars/expansions/venus-next/venus-next-cover.png" alt="Terraforming Mars: Venus Next / 殖民火星：金星扩展 official product image" width="753" height="753" decoding="async" fetchpriority="high">
+                        </div>
+                        <figcaption>
+                            <span class="lang-en">Official product image · FryxGames</span>
+                            <span class="lang-cn hidden">官方商品图 · FryxGames</span>
+                        </figcaption>
+                    </figure>
+                </div>
+            </header>
+
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-12 lg:gap-16">
+                <div class="lg:col-span-2 prose max-w-none min-w-0">
+                    <h3>
+                        <span class="lang-en">Venus Next at a Glance</span>
+                        <span class="lang-cn hidden">《金星扩展》概览</span>
+                    </h3>
+                    <div class="lang-en">
+                        <p>
+                            Venus Next adds a side board and a fourth global parameter, a new Venus tag and floater resource, 49 project cards, five corporations, and the Hoverlord Milestone and Venuphile Award. It also introduces the Solar Phase and World Government Terraforming, allowing the public game clock to keep moving even though the Venus track is not a multiplayer end condition.
+                        </p>
+                        <p>
+                            This review covers the original 2017 Venus Next box. Later promotional cards and cross-expansion material are outside its scope; they are mentioned only where they change how the original Venus and floater families appear in a full-expansion environment.
+                        </p>
+                        <p>
+                            Venus Next receives a B+ quality tier and a Usually Include recommendation. Its new routes and mechanisms produce a clear net gain, and the added richness outweighs the bulk of one extra track. The original card model is nevertheless a major limitation: too many weak cards dilute the shared deck and make the whole module feel more attached than integrated. For experienced groups the result remains worthwhile, but the original box is not clean enough to recommend without reservation.
+                        </p>
+                    </div>
+                    <div class="lang-cn hidden">
+                        <p>
+                            《金星扩展》增加了一块副版图和第四条全球参数轨道，同时加入金星标、漂浮物资源、49 张项目牌、5 张企业牌，以及天空霸主里程碑和金星专家奖项。它还引入了太阳阶段与全球政府改造，使金星轨道不作为多人游戏终局条件的同时，公共的游戏时钟仍然能够继续向前推进。
+                        </p>
+                        <p>
+                            本文评价的是 2017 年的原始《金星扩展》。后续 Promo 牌和跨扩展内容不在本文范围内，只会在它们改变了全扩环境中金星牌与漂浮物体系的观感时加以说明。
+                        </p>
+                        <p>
+                            《金星扩展》的质量档位是 B+，启用建议是通常加入。新的路线和机制带来了明确的净收益，一条额外轨道所增加的丰富度也大于它造成的臃肿。不过，原始卡牌模型仍是不可忽视的主要缺陷：过多弱牌会污染公共牌库，也让整个模块显得更像外挂而非自然融合。对于熟练玩家来说，它整体仍然值得加入，却还没有干净到可以毫无保留地推荐。
+                        </p>
+                    </div>
+
+                    <h3>
+                        <span class="lang-en">The Venus Track And New Strategic Routes</span>
+                        <span class="lang-cn hidden">金星轨道与新的策略路线</span>
+                    </h3>
+                    <div class="lang-en">
+                        <p>
+                            Venus Next adds a family of cards with its own numerical models, mechanisms, tags, and synergies. The track gives engine-focused players a special route to TR, while the more immediately attractive Venus-animal cards offer another payoff for building around the new content.
+                        </p>
+                        <p>
+                            Because the Venus scale is not required to end a multiplayer game, it naturally fits players who want to develop an engine without advancing Mars's three closing parameters. Its 8% and 16% threshold rewards also create timing questions inside that route. Together, the track and its cards form a recognizable strategic family around the fourth global parameter.
+                        </p>
+                    </div>
+                    <div class="lang-cn hidden">
+                        <p>
+                            《金星扩展》加入了一整组拥有新数值模型、机制、标记与联动的金星牌。金星轨道为偏发育的玩家提供了特殊的改造度渠道，而更加直观诱人的“金星动物”，则为围绕新内容构筑提供了另一种回报。
+                        </p>
+                        <p>
+                            金星轨道并不是多人游戏的终局条件，因此天然适合那些希望继续发育、又不愿推动火星三项终局参数的玩家。8% 与 16% 的轨道奖励也让这条路线内部产生了时机判断。轨道与卡牌共同围绕第四条全球参数形成了一套可以清楚识别的策略家族。
+                        </p>
+                    </div>
+
+                    <h3>
+                        <span class="lang-en">Floaters And The Weak Original Card Pool</span>
+                        <span class="lang-cn hidden">漂浮物机制与薄弱的原始牌库</span>
+                    </h3>
+                    <div class="lang-en">
+                        <p>
+                            Floaters are a sensible extension of Terraforming Mars's existing card resources: they are stored on cards like microbes and animals, so the mechanism is easy to understand while still supporting new engines and actions. Over repeated play, the floater system remains interesting, and Hoverlord gives those cards a public objective worth contesting. Together they create a useful new route with very little conceptual overhead.
+                        </p>
+                        <p>
+                            The weakness lies in the original cards that are meant to carry those ideas. With all expansions and promotional material mixed together, Venus-tag and floater cards can look much better supported than they were in 2017. A large part of that improvement comes from stronger later additions. Judged as its own box, Venus Next appears to have overestimated the value of both models. In my play-based assessment, close to half of its cards are effectively junk: not merely situational, but difficult to justify playing in most games.
+                        </p>
+                        <p>
+                            All 49 project cards enter the shared deck, so their weakness affects more than a few isolated matchups. They become unattractive draws, dilute access to the base game's stronger decision network, and reinforce the sense that Venus is attached above the engine rather than fully entering it. The later card pool softens the problem, but it cannot retroactively repair the design work inside the original expansion.
+                        </p>
+                    </div>
+                    <div class="lang-cn hidden">
+                        <p>
+                            漂浮物是对《殖民火星》既有卡牌资源的一次合理延展：它像微生物和动物一样存放在卡牌上，因此机制很容易理解，同时又能支撑新的引擎与行动。长期玩下来，漂浮物体系依然有意思，天空霸主里程碑也为这些牌提供了值得争夺的公共目标。两者共同形成了一条理解成本很低、又确实具有玩法价值的新路线。
+                        </p>
+                        <p>
+                            真正薄弱的是承载这些想法的原始卡牌。全扩和 Promo 混用时，金星牌与漂浮物牌看上去会比 2017 年完整得多，但很大一部分是后来加入的好牌补上了缺口。只看《金星扩展》本身，它似乎高估了这两套模型的价值。按照我的实战判断，接近一半都可以直接归入“垃圾牌”：不是偶尔不合路线，而是在大多数对局里都很难值得打出。
+                        </p>
+                        <p>
+                            49 张项目牌会全部混入公共牌库，因此它们的弱势不只影响少数具体对局。弱牌会变成缺乏吸引力的抽牌结果，稀释玩家接触本体有效决策网络的机会，也进一步强化金星外挂在引擎上方、没有完全进入引擎的感觉。后续牌库可以缓和这个问题，却无法补上原始扩展里缺失的开发工作。
+                        </p>
+                    </div>
+
+                    <h3>
+                        <span class="lang-en">World Government Changes The Shared Clock</span>
+                        <span class="lang-cn hidden">全球政府改变共同计时</span>
+                    </h3>
+                    <div class="lang-en">
+                        <p>
+                            World Government Terraforming is the expansion's most interesting individual mechanism. After production, the first player chooses one non-maxed global parameter for the World Government to advance; the player receives no TR or threshold bonus from that step. The rule prevents an optional Venus track from simply stretching the game and gives every generation a small but consequential public timing decision.
+                        </p>
+                        <p>
+                            It also makes parameter rewards more contested. A government step can move a track through a valuable threshold without awarding that benefit to a player, so anyone who wants the reward may need to reach it first. The mechanism therefore does more than accelerate the session: it changes planning around all four tracks and turns their reward spaces into sharper points of competition.
+                        </p>
+                    </div>
+                    <div class="lang-cn hidden">
+                        <p>
+                            全球政府改造是这个扩展里最有意思的单个机制。生产阶段结束后，起始玩家会替全球政府选择一条尚未封顶的全球参数并推进一步；这一步不会给该玩家带来改造度或轨道奖励。它避免了一条可选的金星轨道单纯把游戏拖长，也让每个时代都多出一个很小、但会真实影响局面的公共时机决策。
+                        </p>
+                        <p>
+                            它还让参数奖励的竞争变得更加激烈。全球政府可能直接跨过一个有价值的奖励格，却不会把奖励交给任何玩家；想要拿到它的人，就必须考虑是否提前抢先推进。因此，这个机制不只是加快游戏，也会改变玩家对四条轨道的整体规划，让轨道奖励成为更加尖锐的争夺点。
+                        </p>
+                    </div>
+
+                    <h3>
+                        <span class="lang-en">What One Extra Track Adds And Costs</span>
+                        <span class="lang-cn hidden">一条额外轨道带来的内容与负担</span>
+                    </h3>
+                    <div class="lang-en">
+                        <p>
+                            The visible module added by Venus Next remains relatively restrained. A useful contrast is the fan-made The Moon, which adds another planet board, three development tracks, and a much larger parallel construction system. Venus asks the table to manage only one additional track; its new card family, parameter, milestone, award, and Solar Phase add more variety than administration.
+                        </p>
+                        <p>
+                            The attached feeling comes primarily from weak integration through the card pool, not from the physical size of the Venus board. The expansion's best ideas still affect the original game: TR, global parameters, threshold races, cards, and public objectives all matter to decisions players were already making. The system is therefore clearly worthwhile, but recurring weak draws prevent its best ideas from feeling fully woven into every session.
+                        </p>
+                    </div>
+                    <div class="lang-cn hidden">
+                        <p>
+                            《金星扩展》加入的显眼模块依然相当克制。一个很合适的对照是民间《月球扩》：它增加了另一颗星球的版图、三条发展轨道，以及规模大得多的平行建设系统。金星只要求整桌额外管理一条轨道；新的卡牌家族、参数、里程碑、奖项与太阳阶段所带来的丰富度，明显高于它增加的管理量。
+                        </p>
+                        <p>
+                            金星的外挂感主要来自牌库融合不佳，而不是金星板块本身占了多少桌面空间。扩展里最好的设计依然会进入本体决策：改造度、全球参数、轨道奖励竞争、卡牌与公共目标，都会影响玩家原本就在进行的规划。因此，这套系统整体上明确值得加入，但反复抽到弱牌，仍会让其中最好的设计无法在每局里都真正融入本体。
+                        </p>
+                    </div>
+
+                    <h3>
+                        <span class="lang-en">Final Recommendation</span>
+                        <span class="lang-cn hidden">最终建议</span>
+                    </h3>
+                    <div class="lang-en">
+                        <p>
+                            Venus Next is not a teaching-game expansion. A new parameter, tag, resource family, milestone, award, and recurring Solar Phase create a meaningful amount of extra material for a first-time player, even though none of those rules is individually difficult. Once a group understands the base game, however, the added routes and variety matter more, and there is usually little reason to remove the expansion.
+                        </p>
+                        <p>
+                            The enable recommendation is Usually Include, and the quality tier is B+. Experienced groups can retain Venus in most sessions for its strategic routes, floaters, Hoverlord, and World Government mechanism, while accepting that the weak original card pool will continue to dilute some draws.
+                        </p>
+                    </div>
+                    <div class="lang-cn hidden">
+                        <p>
+                            《金星扩展》并不适合教学局。新参数、新标记、新资源家族、里程碑、奖项和每时代重复出现的太阳阶段，合在一起会给初次接触《殖民火星》的玩家增加不少内容，哪怕其中每条规则单独看都不困难。不过，当一桌玩家已经理解本体以后，新增路线与丰富度就会变得更重要，通常也没有特意拿掉它的必要。
+                        </p>
+                        <p>
+                            因此，它的启用建议是通常加入，质量档位是 B+。老玩家可以为了新的策略路线、漂浮物、天空霸主与全球政府机制，在大多数对局里保留金星；与此同时，原始牌库里的弱牌仍会让一部分抽牌变得乏味。
+                        </p>
+                    </div>
+                </div>
+
+                <aside class="lg:col-span-1">
+                    <div class="bg-white border border-gray-200 rounded-sm shadow-sm overflow-hidden lg:sticky lg:top-32">
+                        <div class="bg-secondary/30 px-6 py-4 border-b border-gray-200">
+                            <h3 class="text-sm font-bold text-ink uppercase tracking-widest">
+                                <span class="lang-en">Expansion Verdict</span>
+                                <span class="lang-cn hidden">扩展结论</span>
+                            </h3>
+                        </div>
+                        <div>
+                            <div class="verdict-row">
+                                <span class="text-xs font-bold uppercase tracking-widest text-gray-400">
+                                    <span class="lang-en">Quality</span>
+                                    <span class="lang-cn hidden">质量档位</span>
+                                </span>
+                                <span class="font-bold text-tier">B+</span>
+                            </div>
+                            <div class="verdict-row">
+                                <span class="text-xs font-bold uppercase tracking-widest text-gray-400">
+                                    <span class="lang-en">Enable</span>
+                                    <span class="lang-cn hidden">启用建议</span>
+                                </span>
+                                <span class="font-bold text-right text-accent">
+                                    <span class="lang-en">Usually include</span>
+                                    <span class="lang-cn hidden">通常加入</span>
+                                </span>
+                            </div>
+                            <div class="verdict-row">
+                                <span class="text-xs font-bold uppercase tracking-widest text-gray-400">
+                                    <span class="lang-en">Integration</span>
+                                    <span class="lang-cn hidden">融合度</span>
+                                </span>
+                                <span class="font-medium text-right text-gray-700">
+                                    <span class="lang-en">Uneven</span>
+                                    <span class="lang-cn hidden">不够均衡</span>
+                                </span>
+                            </div>
+                            <div class="verdict-row">
+                                <span class="text-xs font-bold uppercase tracking-widest text-gray-400">
+                                    <span class="lang-en">Learning Cost</span>
+                                    <span class="lang-cn hidden">学习成本</span>
+                                </span>
+                                <span class="font-medium text-right text-gray-700">
+                                    <span class="lang-en">Noticeable for newcomers</span>
+                                    <span class="lang-cn hidden">新手明显</span>
+                                </span>
+                            </div>
+                            <div class="verdict-row">
+                                <span class="text-xs font-bold uppercase tracking-widest text-gray-400">
+                                    <span class="lang-en">Scope</span>
+                                    <span class="lang-cn hidden">评价范围</span>
+                                </span>
+                                <span class="font-medium text-right text-gray-700">
+                                    <span class="lang-en">Venus Next (2017)</span>
+                                    <span class="lang-cn hidden">2017 原始扩展</span>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="px-6 py-5 border-t border-gray-100 space-y-3 text-sm">
+                            <a href="../../games/TerraformingMars.html" class="flex items-center justify-between gap-4 text-gray-600 hover:text-accent transition-colors">
+                                <span class="lang-en">Read Base Game Review</span>
+                                <span class="lang-cn hidden">查看《殖民火星》本体评测</span>
+                                <i data-lucide="arrow-right" class="w-4 h-4 shrink-0"></i>
+                            </a>
+                            <a href="../../rating_boardgame_home.html#expansion-ratings-en" class="flex items-center justify-between gap-4 text-gray-600 hover:text-accent transition-colors">
+                                <span class="lang-en">Read Expansion Rules</span>
+                                <span class="lang-cn hidden">查看扩展评分规则</span>
+                                <i data-lucide="arrow-right" class="w-4 h-4 shrink-0"></i>
+                            </a>
+                        </div>
+                    </div>
+                </aside>
+            </div>
+        </article>
+    </main>
+
+    <script>
+        function toggleLanguage() {
+            const enEls = document.querySelectorAll('.lang-en');
+            const cnEls = document.querySelectorAll('.lang-cn');
+            enEls.forEach((element) => element.classList.toggle('hidden'));
+            cnEls.forEach((element) => element.classList.toggle('hidden'));
+            document.documentElement.lang = document.documentElement.lang === 'en' ? 'zh-CN' : 'en';
+        }
+
+        lucide.createIcons();
+    </script>
+</body>
+</html>

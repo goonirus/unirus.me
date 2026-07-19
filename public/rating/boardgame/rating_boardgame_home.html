@@ -113,7 +113,7 @@
         <div class="grid grid-cols-1 lg:grid-cols-12 gap-12">
             
             <!-- LEFT COLUMN: Introduction & Essay (占据 8/12) -->
-            <div class="lg:col-span-8">
+            <div class="lg:col-span-8 min-w-0">
                 
                 <!-- Header -->
                 <header class="mb-12 border-b border-gray-200 pb-8">
@@ -127,8 +127,8 @@
                         </h1>
                     </div>
                     <p class="text-gray-400 text-sm uppercase tracking-widest font-bold">
-                        <span class="lang-en">Last Updated: November 2025</span>
-                        <span class="lang-cn hidden">最后更新：2025年11月</span>
+                        <span class="lang-en">Last Updated: July 2026</span>
+                        <span class="lang-cn hidden">最后更新：2026年7月</span>
                     </p>
                 </header>
 
@@ -145,6 +145,7 @@
                             Previously, I gave rough ratings to all the board games I had played on a Chinese app called Jishi. However, there were many issues. For example, the score ranges were too vague, and I hadn’t played enough games at the time. This led to situations where I gave an early game a very high score, but later ended up giving a better game a lower score. Because of this, I wanted to build a more complete rating system and then migrate the ratings to BGG. But I never managed to finalize a fully refined, completely objective and fair standard (which, realistically, probably doesn’t exist anyway). After asking Professor Michael Heron for advice on rating standards, he suggested that “going by feel” is good enough. Based on that, I designed a “feeling-based” rating scale to roughly calibrate my impressions and avoid big mismatches between games.
                           </p>
                           
+                          <div class="max-w-full overflow-x-auto">
                           <table class="min-w-full border-collapse border text-sm">
                             <thead>
                               <tr>
@@ -228,10 +229,135 @@
                               </tr>
                             </tbody>
                           </table>
+                          </div>
                           
                           
                           <p>
-                            At the same time, I still have the ambitious goal of creating a ranking list that could be useful for all players. So I break the rating down into several detailed dimensions, evaluate each dimension separately, and then assign different weights to each aspect based on its importance. Finally, I calculate the overall score of a board game by summing up Σ(dimension score × weight). The resulting score should also fall within the same “feeling-based” rating range. (If it doesn’t, I will adjust it — this is result-oriented. Unless I have some very strong personal bias on a game, in which case I will clearly state it.)
+                            Beyond this feeling scale, I still have the ambitious goal of creating a ranking list that could be useful for all players. So I break the rating down into several detailed dimensions, evaluate each dimension separately, and then assign different weights to each aspect based on its importance. Finally, I calculate a dimension-weighted score by summing up Σ(dimension score × weight). This weighted score is a diagnostic tool rather than a target that must be forced to match my impression score. The two scores should explain each other, but I will not inflate dimension scores just to make the final numbers look consistent.
+                          </p>
+
+                          <p>
+                            Within this breakdown, a dimension score does not simply mean “the more, the better.” It asks whether the game handles that dimension well. Interaction is the easiest example: too little interaction can make a game feel isolated, but too much interaction can become oppressive or arbitrary. In the same way, my overall score still includes a personal impression, while the dimension scores try to remove as much personal bias as possible so the table can be useful to other players, not only to myself.
+                          </p>
+
+                          <p>
+                            The dimensions also need clear ownership. Mechanics judges the structure of the rules, the decisions they create, and how well the systems connect. Balance covers both numerical tuning and play balance, including card and map values, viable options and strategies, and player positions. Numerical design can still be a major subject in the review when costs and thresholds create pressure or depth, but it is not a separate scored dimension. The same weakness should not be fully deducted twice: a functionally unusable option can affect Mechanics, while an option that simply returns too much or too little value belongs mainly to Balance. The Balance score judges the quality of balance itself, including how much content remains within a reasonable value range and whether explicit rules meaningfully correct turn order, opening variance, map choice, objectives, or player-count differences.
+                          </p>
+
+                          <p>
+                            Dimension scores and weights answer different questions. A score asks how well the game handles that dimension; a weight asks how much that dimension matters to this particular game. For Balance, values that mostly stay within the intended range and deliberate fairness measures can support the score. If a short loop or a wider system merely makes the remaining imbalance less decisive to the whole game, it has not made the underlying balance better; it lowers the Balance weight instead of raising the Balance score.
+                          </p>
+
+                          <p>
+                            Weight does not measure how much space a dimension occupies in the rules, how often it appears during play, or how visible it is on the table. It measures how strongly the quality or absence of that dimension affects the complete player experience. A game may contain almost no interaction while that isolation is one of the main reasons the experience suffers; Interactivity should then receive a low score but a high weight, not a low weight merely because interaction is scarce. Conversely, a frequently occurring feature may deserve only modest weight when its quality has little influence on the final judgment.
+                          </p>
+
+                          <p>
+                            A high dimension score does not imply a high weight, and a weight is not an extra bonus. A game may handle one dimension extremely well even though that dimension has little influence on the overall judgment; another dimension may receive a lower score but still deserve substantial weight because it matters greatly to whether the game works.
+                          </p>
+
+                          <p>
+                            Dimension scores are displayed on a 100-point scale. In practice, 100 is the normal ceiling for a dimension. It means that the game is already complete enough in that dimension that I do not see a fair reason to deduct points; it does not mean no future or different game could ever do something extra. In rare cases, a game may score above 100 in a specific dimension as a bonus for an outstanding special advantage. That bonus should not be used backward to punish another game that is already fully accomplished in the same dimension.
+                          </p>
+
+                          <p>
+                            This is also why I do not directly follow BGG-style weight or complexity rating. In my view, learning difficulty and mastery difficulty should not be merged into one number. A high learning cost is usually a drawback, but a high mastery ceiling is usually a strength. Depth/Complex should be read like a ratio or relationship: how much strategic depth the game creates relative to its entry cost. It is not two separate scores joined by a slash. The exact relationship between depth and complexity will be explained in each review, and may later deserve a separate page or additional scores.
+                          </p>
+
+                          <p>
+                            Emergence is one important way for a game to achieve a strong Depth/Complex relationship. In game-design terms, emergence means that comparatively simple rules interact to produce complex positions, behaviors, and strategies that the rules do not specify one by one. It is not another name for Depth/Complex: depth can also come from calculation, hidden information, content knowledge, or long-term planning, while an emergent system may still carry a high learning cost. The resulting strategic space belongs primarily to Depth/Complex; Mechanics may recognize the economy and coherence of the rules that generate it, but the same result should not be rewarded twice.
+                          </p>
+
+                          <p>
+                            Flow measures how smoothly a session proceeds at the table: downtime, turn continuity, whether waiting time remains useful for planning, and whether the game's duration feels occupied rather than stalled. It should not be confused with tempo, which is an in-game strategic concept covering timing windows, resource conversion, development speed, and control of shared clocks. The rating dimension is therefore named Flow, while mechanism analysis uses tempo.
+                          </p>
+
+                          <p>
+                            Price is deliberately excluded from every base-game and expansion rating. Prices vary across regions, editions, availability, and time, and a publisher's commercial decision is not a property of the game design itself. If pricing or a sales model materially affects whether players can reasonably obtain the game or continue supporting official releases, I may still discuss it separately as a product-level issue, but it does not change the design score.
+                          </p>
+
+                          <h2 id="expansion-ratings-en" class="text-2xl font-bold text-ink pt-4">Expansion Ratings</h2>
+
+                          <p>
+                            Most expansions use a tier rather than the base game's full numerical matrix. Each expansion receives two independent conclusions. The <strong>quality tier</strong> asks how well the expansion is designed and executed once it is enabled: the quality of its mechanisms, integration, balance, depth, clarity, and whether its added rules, upkeep, and play time earn their place. The <strong>enable recommendation</strong> asks who should use it, when it should be introduced, and how often it belongs at the table.
+                          </p>
+
+                          <p>
+                            These judgments must not substitute for one another. A justified increase in complexity may leave quality untouched while keeping an expansion out of teaching games; complexity lowers quality only when the design value does not repay it. Likewise, necessity is not evidence of quality. An ordinary patch for a weak base game can become permanent without being exceptional, while an outstanding expansion for a complete game may remain optional.
+                          </p>
+
+                          <p>
+                            The quality tiers from S through C may carry a <strong>+</strong> or <strong>-</strong> modifier when useful. I first choose a broad tier, then use a sign only to express the overall feeling that an expansion sits toward the upper or lower end of that tier. The modifiers are deliberately not a second grading system with their own rigid checklists, and a rating does not need one. F is reserved for outright design failures and does not need further subdivision. Enable frequency and audience fit remain separate judgments and cannot determine the modifier.
+                          </p>
+
+                          <table class="w-full table-fixed border-collapse border text-sm break-words">
+                            <thead>
+                              <tr>
+                                <th class="w-1/3 border px-4 py-2">Quality tier</th>
+                                <th class="border px-4 py-2">Judgment</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <tr>
+                                <td class="border px-4 py-2">S · Exceptional</td>
+                                <td class="border px-4 py-2">An expansion-design benchmark. Its central additions are outstanding in conception, execution, integration, and the value they return for the burden they add, meaningfully elevating the game's design.</td>
+                              </tr>
+                              <tr>
+                                <td class="border px-4 py-2">A · Excellent</td>
+                                <td class="border px-4 py-2">Its additions deliver substantial and coherent design value with a high level of execution, and their added burden is fully justified. Flaws may remain, but they do not materially limit the expansion's overall achievement.</td>
+                              </tr>
+                              <tr>
+                                <td class="border px-4 py-2">B · Mixed</td>
+                                <td class="border px-4 py-2">The expansion offers real and identifiable design value, but important limitations in execution, integration, balance, depth, or value relative to added burden cannot be ignored. Its strengths and problems both materially shape play, so it does not support the same clear judgment of excellence as an A-tier expansion.</td>
+                              </tr>
+                              <tr>
+                                <td class="border px-4 py-2">C · Detrimental</td>
+                                <td class="border px-4 py-2">Its added value clearly does not outweigh its design flaws or extra burden, and the expansion weakens the game overall. It may still contain worthwhile ideas or local strengths, but they are not enough to rescue the overall judgment.</td>
+                              </tr>
+                              <tr>
+                                <td class="border px-4 py-2">F · Poor</td>
+                                <td class="border px-4 py-2">Its central design does not function. Rather than improve the game, its additions systematically damage the experience. This is a design failure with almost nothing worth salvaging, even when its parts are considered separately.</td>
+                              </tr>
+                            </tbody>
+                          </table>
+
+                          <table class="w-full table-fixed border-collapse border text-sm break-words">
+                            <thead>
+                              <tr>
+                                <th class="w-2/5 border px-4 py-2">Enable recommendation</th>
+                                <th class="border px-4 py-2">Meaning</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <tr>
+                                <td class="border px-4 py-2">Always include</td>
+                                <td class="border px-4 py-2">It can be included from the first play and belongs in nearly every session; once familiar, removing it leaves a noticeable gap in the base experience.</td>
+                              </tr>
+                              <tr>
+                                <td class="border px-4 py-2">Usually include</td>
+                                <td class="border px-4 py-2">It is better introduced after the group understands the base game; after that, it belongs in most sessions and is normally left in.</td>
+                              </tr>
+                              <tr>
+                                <td class="border px-4 py-2">Add as needed</td>
+                                <td class="border px-4 py-2">Use it according to player count, experience, available time, interaction preference, or the session's goal.</td>
+                              </tr>
+                              <tr>
+                                <td class="border px-4 py-2">Usually leave out</td>
+                                <td class="border px-4 py-2">Include it only when the group specifically wants what it changes.</td>
+                              </tr>
+                              <tr>
+                                <td class="border px-4 py-2">Skip</td>
+                                <td class="border px-4 py-2">Its return usually does not justify the burden it adds.</td>
+                              </tr>
+                            </tbody>
+                          </table>
+
+                          <p>
+                            Integration is central to the quality tier. I look for two-way influence: whether the base game's resources, actions, and strategic routes matter to the new system, and whether the new system changes decisions inside the base game. A removable module is not automatically disconnected. The warning sign is a set of cards, resources, or tracks that mostly feed themselves while adding administration without entering the original decision network.
+                          </p>
+
+                          <p>
+                            An expansion is responsible only for the change it introduces. Problems inherited from the base game provide context, but they are not automatic deductions unless the expansion clearly magnifies them. Especially interesting expansions may later receive a full weighted review and a numerical score, with Integration treated as an explicit high-weight dimension. That detailed score supplements rather than replaces the quality tier and enable recommendation.
                           </p>
                           
                           <p>
@@ -257,6 +383,7 @@
                             我之前在中国的一个app集石上对玩过的所有桌游进行了一个粗浅的打分。但是有很多问题，比如说评分太过模糊，而且之前玩的桌游量不够大，会出现初期给一个桌游打了高分，但是后来反而给一个更好的桌游打了低分的情况。因此想过建立一套完整的机制再将评分移植到bgg平台。但是对于完善的，完全客观公正的评分标准，一直没有办法敲定（实际上也不太可能存在完美的评分标准）。在询问和参考了michael heron教授对于评分标准的建议，他认为凭借感觉打分就足够了。于此，我设计了一个感受的区度表，来稍微的衡量一下，避免跨级的情况出现。
                         </p>
 
+                        <div class="max-w-full overflow-x-auto">
                         <table class="min-w-full border-collapse border text-sm">
                             <thead>
                               <tr>
@@ -337,10 +464,132 @@
                               </tr>
                             </tbody>
                           </table>
+                        </div>
                           
 
                         <p>
-                            另外，我还是保有设立一个所有玩家适用的的榜单的雄心壮志的。所以我对评分的内容进行了细分，对不同维度进行评价，再对各个方面进行重要度的评判，最后通过Σ各方面评分*重要度加权得到一个桌游的整体评分。这个得到的得分应该也会符合感受的分数区间。（肯定是的，不然我会调整的，这是结果导向的，除非有些私心太重的我会单独说明）
+                            另外，我还是保有设立一个所有玩家适用的榜单的雄心壮志的。所以我对评分的内容进行了细分，对不同维度进行评价，再对各个方面进行重要度的评判，最后通过 Σ（维度评分 × 重要度）得到一个加权评分。这个分数是用来诊断游戏结构的工具，不是必须反推到印象分的目标值。印象分和加权评分应该能够互相解释，但我不会为了让数字看起来一致，就硬抬某些维度的分数。
+                        </p>
+
+                        <p>
+                            在这个维度拆分里，各维度分数打的是游戏在该维度上“做得好不好”，不是单纯判断这个维度“高不高”。以交互性为例：交互太低当然会让游戏显得孤立，但交互过高也可能过犹不及，变成压迫、混乱或不必要的互相伤害。同理，我会给出一个带有个人印象的总分，但各维度分数会尽量排除我的个人偏好，让评分表不仅是个人日记，也能对其他玩家有参考价值。
+                        </p>
+
+                        <p>
+                            各维度之间也需要明确分工。Mechanics（机制）评价规则结构、这些规则产生的决策，以及不同系统能否连贯地结合；Balance（平衡性）则同时评价数值调校和玩法平衡，包括卡牌与地图的强度、选项与策略的可行性，以及玩家位置是否公平。当成本、阈值和资源模型构成游戏的压力或深度时，数值设计仍然会是正文中的重要分析对象，但目前不单独设为一个评分维度。同一个缺陷不能被完整扣分两次：某个选项在功能上几乎无法成立，可以影响机制分；某个选项只是收益过高或过低，则主要属于平衡性。Balance 的分数评价平衡本身做得怎样，包括大部分内容是否处于合理数值区间，以及游戏是否通过明确规则有效校正先后手、初始随机、地图选择、目标差异和人数变化。
+                        </p>
+
+                        <p>
+                            维度分数与权值回答的是两个不同问题：分数判断游戏在这个维度上做得好不好，权值判断这个维度对这款游戏有多重要。以平衡性为例，大多数数值仍然合模、先后手补偿、受控选择、轮抽或补回合等明确的公平机制，可以支持 Balance 的分数；如果失衡本身仍然存在，只是短循环或完整系统让它不容易主宰整局，那么被缓解的是平衡性对游戏的影响，应当降低 Balance 的权值，而不能继续抬高 Balance 的分数。
+                        </p>
+
+                        <p>
+                            权值不衡量一个维度在规则里占了多少篇幅、在对局中出现了多少次，或者在桌面上有多显眼；它衡量的是这个维度做得好坏或是否缺失，会对完整玩家体验造成多大影响。一个游戏可能几乎没有交互，而这种各玩各的孤立感恰好是体验受损的主要原因；此时交互性应该表现为低分高权重，不能因为交互内容很少就给低权重。反过来，一个频繁出现的要素如果对最终评价影响有限，也只需要较低的权值。
+                        </p>
+
+                        <p>
+                            一个维度分数高，并不意味着它的权值也应该高；权值也不是额外加分。游戏可以在某个维度上做得极好，但这个维度对整体评价影响很小；另一个维度即使得分不高，也可能因为它直接影响游戏能否成立而拥有较高权值。
+                        </p>
+
+                        <p>
+                            各维度分数在页面上统一显示为百分制。一般来说，100 分是一个维度的常规满分，意思是这个游戏在该维度已经足够完善，我找不到合理扣分点；这并不表示未来或其他游戏不可能在同一维度做出额外优势。少数特别出类拔萃的项目可以在某个维度超过 100 分，作为额外特长加分。但这种加分不能反过来克扣其他已经完善的游戏：例如一个游戏可以因为平衡性非常完整拿到 100 分，不会因为另一个游戏拥有更罕见的局外平衡手段，就被迫降到 90 分。
+                        </p>
+
+                        <p>
+                            我也不认可直接使用 BGG 的 weight（重度 / 复杂度）作为评分模型。对我来说，上手难度高是扣分项，但把一个游戏玩好的门槛高往往是加分项；前者是学习成本，后者是精通深度，混成一个综合分会损失判断力。因此这里使用 Depth/Complex（深度 / 上手成本）这个维度：它应该被理解成一种近似“比值”或“关系”，也就是游戏用多少上手成本换来了多少策略深度，而不是用斜杠连接的两个独立分数。具体的深度与复杂度差异会放在每篇评测正文里说明，必要时以后可以单独做页面或额外打分。
+                        </p>
+                        <p>
+                            “涌现”是形成优秀 Depth/Complex 关系的重要途径之一。在游戏设计中，它指的是相对简单的规则彼此作用后，产生规则没有逐条写明的复杂局面、行为和策略。但涌现并不是 Depth/Complex 的另一个名字：深度也可能来自计算、隐藏信息、内容知识或长期规划，而一套涌现性很强的系统仍然可能拥有很高的学习成本。涌现产生的策略空间主要计入 Depth/Complex；Mechanics 可以评价规则以多低的成本、多连贯的结构生成这些结果，但同一份成果不能重复加分。
+                        </p>
+                        <p>
+                            Flow（流畅度）评价的是实际游玩是否顺畅，包括 downtime、回合衔接、等待期间是否仍有内容可供规划，以及游戏时长是否被有效内容填满。它不等于正文中所说的 Tempo（对局节奏）：后者是机制内部的战略时机，包括行动窗口、资源转化、发展速度和共同计时的控制。因此，评分维度统一使用 Flow（流畅度），机制分析则使用 Tempo（对局节奏）。
+                        </p>
+                        <p>
+                            所有本体与扩展的评分都明确不考虑价格。价格会随地区、版本、供货和时间变化，发行商的商业决策也不是游戏设计本身的属性。如果定价或销售方式明显影响玩家能否合理获得内容，或能否继续支持正版，我仍会在正文中把它作为产品层面的问题单独讨论，但它不会改变设计评分。
+                        </p>
+
+                        <h2 id="expansion-ratings-cn" class="text-2xl font-bold text-ink pt-4">扩展评分</h2>
+
+                        <p>
+                            大多数扩展采用分档制，不直接套用本体的完整百分制矩阵。每篇扩展评测会给出两个相互独立的结论。<strong>质量档位</strong>只回答扩展启用以后设计得有多好，考察机制质量、执行、融合、平衡、深度与清晰度，以及新增规则、维护量和时长是否换来了相应价值。<strong>启用建议</strong>则回答谁适合使用、什么时候加入，以及应该以多高频率开。
+                        </p>
+
+                        <p>
+                            两套判断不能互相代替。复杂度增加若获得了充分的设计回报，可以不扣质量，却依然会让扩展不适合教学局；只有复杂度没有换来相应价值时，它才属于质量问题。同样，“必开”也不能证明扩展优秀：一个普通补丁可能因为本体薄弱而成为常驻内容，一款出类拔萃的扩展也可能只服务特定受众。
+                        </p>
+
+                        <p>
+                            S 至 C 的质量档位可以在必要时附带 <strong>+</strong> 或 <strong>-</strong>。我会先选定一个较宽的主档，再用符号表达它在本档内偏上或偏下的整体感觉。符号不是另一套拥有严格细则的评分系统，也不要求每个评级都必须带上。F 只留给设计彻底失败的扩展，不再继续细分。启用频率与受众范围仍是独立判断，不能用于决定符号。
+                        </p>
+
+                        <table class="w-full table-fixed border-collapse border text-sm break-words">
+                          <thead>
+                            <tr>
+                              <th class="w-1/3 border px-4 py-2">质量档位</th>
+                              <th class="border px-4 py-2">判断标准</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr>
+                              <td class="border px-4 py-2">S · 卓越扩展</td>
+                              <td class="border px-4 py-2">扩展设计的标杆。核心新增内容在构思、执行、融合与投入回报上都出类拔萃，能够显著抬高游戏的设计表现。</td>
+                            </tr>
+                            <tr>
+                              <td class="border px-4 py-2">A · 优秀扩展</td>
+                              <td class="border px-4 py-2">新增内容带来了充分、连贯且完成度很高的设计价值，增加的负担也获得了相应回报。它可以存在缺点，但这些问题不会实质限制扩展的整体成就。</td>
+                            </tr>
+                            <tr>
+                              <td class="border px-4 py-2">B · 有得有失</td>
+                              <td class="border px-4 py-2">扩展具有真实且清楚的设计价值，但执行、融合、平衡、深度或投入回报方面的重要限制同样不能忽视。它的优点与问题都会切实影响游戏体验，因此无法像 A 档一样形成明确的优秀判断。</td>
+                            </tr>
+                            <tr>
+                              <td class="border px-4 py-2">C · 减分扩展</td>
+                              <td class="border px-4 py-2">新增价值明确不足以抵消设计缺陷或额外负担，扩展作为整体削弱了游戏。它仍有局部亮点或可取思路，只是这些优点已经无法挽回整体评价。</td>
+                            </tr>
+                            <tr>
+                              <td class="border px-4 py-2">F · 糟糕扩展</td>
+                              <td class="border px-4 py-2">核心设计没有成立，新增内容不仅无法改善游戏，反而系统性地破坏体验。这已经属于设计上的失败，即使拆开来看，也几乎找不到值得回收的部分。</td>
+                            </tr>
+                          </tbody>
+                        </table>
+
+                        <table class="w-full table-fixed border-collapse border text-sm break-words">
+                          <thead>
+                            <tr>
+                              <th class="w-2/5 border px-4 py-2">启用建议</th>
+                              <th class="border px-4 py-2">含义</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr>
+                              <td class="border px-4 py-2">常驻</td>
+                              <td class="border px-4 py-2">从第一局开始就可以加入，并且适合绝大多数对局；熟悉以后再拿掉它，通常会明显感觉本体缺了一块。</td>
+                            </tr>
+                            <tr>
+                              <td class="border px-4 py-2">通常加入</td>
+                              <td class="border px-4 py-2">更适合在玩家理解本体以后加入；熟悉以后，它适合大多数对局，通常没有特意拿掉的必要。</td>
+                            </tr>
+                            <tr>
+                              <td class="border px-4 py-2">按需加入</td>
+                              <td class="border px-4 py-2">根据人数、经验、可用时间、交互偏好或本局目标决定。</td>
+                            </tr>
+                            <tr>
+                              <td class="border px-4 py-2">通常不加</td>
+                              <td class="border px-4 py-2">只有整桌明确想要它带来的变化时才加入。</td>
+                            </tr>
+                            <tr>
+                              <td class="border px-4 py-2">建议跳过</td>
+                              <td class="border px-4 py-2">它带来的回报通常不足以抵消新增负担。</td>
+                            </tr>
+                          </tbody>
+                        </table>
+
+                        <p>
+                            融合度是判断质量档位的核心标准之一。我会检查这种影响是否双向成立：本体的资源、行动与发展路线能否作用于新系统，新系统又是否真正改变了本体中的决策。一个可以拆掉的模块并不等于各玩各的；真正的问题是新卡牌、新资源或新轨道主要只服务自身，同时增加管理量，却没有进入原本的决策网络。
+                        </p>
+
+                        <p>
+                            扩展只为自己带来的增量负责。继承自本体的问题只能作为背景；除非扩展明显放大了问题，否则不能作为扩展扣分。个别特别有分析价值的扩展，以后会进行完整的加权细评并给出具体分数，其中 Integration（融合度）会成为明确的高权重维度。细评分数是额外分析，不会取代质量档位与启用建议。
                         </p>
                         <p>
                             同时值得一提的是，我会为这个区块的内容给出中英两个版本。因为一些原因，中国和西方文化存在差异，并且双方都无法完全接触到彼此的社会情况，游戏界也是如此。在中国家喻户晓的飞行棋其实跟西方的ludo完全不一样。因此，中英版本在有些地方会不完全一样，根据彼此的认知做出一些微调。

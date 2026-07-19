@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Expansion Review: Terraforming Mars: Turmoil</title>
+    <link rel="icon" href="../../../../favicon.svg" type="image/svg+xml">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../../games/rating-game-navigation.css">
+    <script src="../../games/rating-game-navigation.js" defer></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: { sans: ['Inter', 'Noto Sans SC', 'sans-serif'] },
+                    colors: {
+                        paper: '#fdfbf7',
+                        ink: '#1a1a1a',
+                        accent: '#c2410c',
+                        secondary: '#f3f4f6',
+                        tier: '#15803d'
+                    }
+                }
+            }
+        };
+    </script>
+    <style>
+        body { background-color: #fdfbf7; color: #1a1a1a; }
+        .prose p { margin-bottom: 1.45em; line-height: 1.85; color: #4b5563; }
+        .prose h3 {
+            font-weight: 700;
+            font-size: 1.5rem;
+            margin-top: 2.75rem;
+            margin-bottom: 1rem;
+            color: #1a1a1a;
+            border-left: 4px solid #c2410c;
+            padding-left: 1rem;
+        }
+        .prose a {
+            color: #9a3412;
+            text-decoration: underline;
+            text-decoration-color: #fdba74;
+            text-underline-offset: 0.18em;
+        }
+        .prose a:hover { color: #c2410c; text-decoration-color: #c2410c; }
+        .review-header-media {
+            display: flex;
+            align-items: flex-end;
+            justify-content: space-between;
+            gap: 1.25rem;
+            width: 100%;
+        }
+        .review-cover {
+            flex: 0 0 auto;
+            width: 8.5rem;
+            margin: 0;
+        }
+        .review-cover-frame {
+            width: 100%;
+            aspect-ratio: 1 / 1;
+            overflow: hidden;
+            background: #ffffff;
+            border: 1px solid #e5e7eb;
+            border-radius: 2px;
+            box-shadow: 0 8px 22px rgba(17, 24, 39, 0.12);
+        }
+        .review-cover img {
+            display: block;
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+        .review-cover figcaption {
+            margin-top: 0.45rem;
+            color: #9ca3af;
+            font-size: 0.65rem;
+            line-height: 1.35;
+            text-align: center;
+        }
+        .verdict-row {
+            display: grid;
+            grid-template-columns: minmax(0, 1fr) auto;
+            gap: 1rem;
+            align-items: center;
+            padding: 1rem 1.5rem;
+            border-bottom: 1px solid #f3f4f6;
+        }
+        .verdict-row:last-child { border-bottom: 0; }
+        @media (min-width: 1024px) {
+            .review-header-media { width: auto; justify-content: flex-end; }
+            .review-cover { width: 10.5rem; }
+        }
+        @media (max-width: 360px) {
+            .review-header-media { gap: 1rem; }
+            .review-cover { width: 7.25rem; }
+        }
+    </style>
+</head>
+<body class="font-sans antialiased">
+    <nav class="fixed w-full z-50 top-0 bg-paper/90 backdrop-blur-sm border-b border-gray-200/50 h-20 flex items-center px-4 sm:px-6 justify-between">
+        <div class="flex flex-1 items-center gap-4 sm:gap-6 min-w-0">
+            <a href="../../games/TerraformingMars.html" class="flex items-center text-gray-500 hover:text-accent transition-colors group shrink-0">
+                <i data-lucide="arrow-left" class="w-5 h-5 mr-2 group-hover:-translate-x-1 transition-transform"></i>
+                <span class="hidden sm:inline">
+                    <span class="lang-en">Back to Terraforming Mars</span>
+                    <span class="lang-cn hidden">返回《殖民火星》</span>
+                </span>
+            </a>
+            <a href="../../rating_boardgame_home.html#expansion-ratings-en" class="hidden md:flex items-center text-gray-500 hover:text-accent transition-colors">
+                <i data-lucide="layers-3" class="w-4 h-4 mr-2"></i>
+                <span class="lang-en">Expansion Rules</span>
+                <span class="lang-cn hidden">扩展评分规则</span>
+            </a>
+            <div class="sticky-game-title" data-sticky-game-title aria-hidden="true">
+                <span class="lang-en">Terraforming Mars: Turmoil</span>
+                <span class="lang-cn hidden">殖民火星：动荡</span>
+            </div>
+        </div>
+
+        <button type="button" onclick="toggleLanguage()" aria-label="Switch language" class="flex items-center space-x-2 border border-gray-300 px-3 sm:px-4 py-2 rounded-full hover:border-accent hover:text-accent transition-all text-xs font-bold tracking-widest uppercase bg-white shrink-0">
+            <i data-lucide="globe" class="w-4 h-4"></i>
+            <span id="lang-label">EN / 中文</span>
+        </button>
+    </nav>
+
+    <main class="pt-32 pb-24 px-5 sm:px-6">
+        <article class="max-w-7xl mx-auto">
+            <header class="flex flex-col lg:flex-row justify-between items-start lg:items-end gap-8 mb-12 border-b border-gray-200 pb-12">
+                <div class="min-w-0">
+                    <span class="text-accent font-bold tracking-widest uppercase text-xs mb-2 block">
+                        <span class="lang-en">Political Contest, Forecast Events, Heavy Overhead</span>
+                        <span class="lang-cn hidden">政治争夺、事件预判与沉重负担</span>
+                    </span>
+                    <h1 class="text-4xl sm:text-5xl font-bold text-ink mb-3 break-words" data-review-title>
+                        <span class="lang-en">Terraforming Mars: Turmoil</span>
+                        <span class="lang-cn hidden">殖民火星：动荡</span>
+                    </h1>
+                    <p class="text-gray-500 text-base sm:text-lg">
+                        <span class="lang-en">Jacob Fryxelius · 2019 · Expansion for Terraforming Mars</span>
+                        <span class="lang-cn hidden">Jacob Fryxelius · 2019 · 《殖民火星》扩展</span>
+                    </p>
+                </div>
+                <div class="review-header-media lg:shrink-0">
+                    <div class="flex flex-col items-start lg:items-end gap-4">
+                        <div class="text-left lg:text-right">
+                            <div class="text-xs font-mono tracking-widest uppercase text-gray-400 mb-1">
+                                <span class="lang-en">Quality Tier</span>
+                                <span class="lang-cn hidden">质量档位</span>
+                            </div>
+                            <div class="text-6xl font-bold text-tier leading-none">B</div>
+                        </div>
+                        <div class="text-left lg:text-right max-w-44">
+                            <div class="text-xs font-mono tracking-widest uppercase text-gray-400 mb-1">
+                                <span class="lang-en">Enable Recommendation</span>
+                                <span class="lang-cn hidden">启用建议</span>
+                            </div>
+                            <div class="text-lg sm:text-xl font-bold text-accent leading-tight">
+                                <span class="lang-en">Include as Needed</span>
+                                <span class="lang-cn hidden">按需加入</span>
+                            </div>
+                        </div>
+                    </div>
+                    <figure class="review-cover">
+                        <div class="review-cover-frame">
+                            <img src="../../../../picture/rating_boardgame/terraforming-mars/expansions/turmoil/turmoil-cover.png" alt="Terraforming Mars: Turmoil / 殖民火星：动荡 official product image" width="762" height="762" decoding="async" fetchpriority="high">
+                        </div>
+                        <figcaption>
+                            <span class="lang-en">Official product image · FryxGames</span>
+                            <span class="lang-cn hidden">官方商品图 · FryxGames</span>
+                        </figcaption>
+                    </figure>
+                </div>
+            </header>
+
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-12 lg:gap-16">
+                <div class="lg:col-span-2 prose max-w-none min-w-0">
+                    <h3>
+                        <span class="lang-en">Turmoil at a Glance</span>
+                        <span class="lang-cn hidden">《动荡》概览</span>
+                    </h3>
+                    <div class="lang-en">
+                        <p>Turmoil moves Martian politics from the background into a recurring public system. Players send delegates to six parties, compete to determine the next ruling government, and use influence to prepare for Global Events that are revealed three generations before they resolve. Every party brings a one-time ruling bonus and an active policy, while every generation also ends with a revision that costs each player 1 TR.</p>
+                        <p>In quality, Turmoil earns a B tier. Its political layer is thematic and tied closely to the base economy; tags, production, resources, tile placement, card timing, and TR all matter to the committee. It also adds a second public optimization layer and a long recurring procedure. The political decisions can be valuable at the right table, but they do not consistently justify that much extra time and attention as a default part of the game.</p>
+                        <p>The enable recommendation is Include as Needed. Experienced three- or four-player groups that actively want more public interaction may value the module highly. Teaching games, most two-player sessions, time-limited tables, and players who prefer the original engine-building focus are better served without it.</p>
+                        <p>This review covers the original 2019 box, including its 31 Global Events, 16 project cards, and five corporations. The separate Kickstarter Promo Pack and later cross-expansion material are outside its scope.</p>
+                    </div>
+                    <div class="lang-cn hidden">
+                        <p>《动荡》把火星政治从背景设定变成了一套每时代都要参与的公共系统。玩家向六个党派派遣代表，争夺下一届执政党，并通过影响力为提前三个时代公开的全局事件做准备。每个党派都拥有一次性的执政奖励与持续生效的政策，而每个时代结束时，所有玩家还会因为改造度修订失去 1 TR。</p>
+                        <p>从质量上看，《动荡》属于 B 档。政治系统主题明确，也与本体经济联系紧密；标、产能、资源、版图放置、卡牌时机和 TR 都会进入议会判断。与此同时，扩展也加入了一层新的公共优化，以及一套漫长的重复流程。对合适的玩家来说，政治决策确实有价值；但作为默认模块，它增加的体验并不总能抵消额外占用的时间与注意力。</p>
+                        <p>它的启用建议是“按需加入”。主动追求更强公共交互的三至四人熟练桌，可能会很喜欢这套模块；教学局、大多数二人局、时间有限的对局，以及更偏爱原本引擎构筑重心的玩家，则更适合不加。</p>
+                        <p>本文只评价 2019 年的原始《动荡》，包括盒内 31 张全局事件、16 张项目牌和 5 张企业牌；单独发售的 Kickstarter Promo Pack 与后续跨扩展内容不在本文的评价范围内。</p>
+                    </div>
+
+                    <h3>
+                        <span class="lang-en">Politics Inside the Existing Engine</span>
+                        <span class="lang-cn hidden">进入原有引擎的政治系统</span>
+                    </h3>
+                    <div class="lang-en">
+                        <p>The committee reads directly from the engines players have already built. Ruling bonuses count tags and production, while party policies change the value of titanium, energy production, and heat production, as well as the returns from tile placement, TR gains, card draw, and greeneries. The new project cards can also depend on a ruling party or a player's delegates. Base-game engines determine which political outcomes matter, and political outcomes then change what those engines should do next.</p>
+                        <p>This two-way influence is the expansion's strongest achievement. Party dominance can change which card should be played now, whether a parameter should be advanced, and whether an opponent's next generation must be disrupted. Turmoil shifts the center of attention more than the other major expansions, but it does so by entering existing decisions rather than replacing them with an unrelated economy.</p>
+                    </div>
+                    <div class="lang-cn hidden">
+                        <p>议会会直接读取玩家已经建立的引擎。执政奖励会计算标与产能，党派政策则会改变钛、电产与热产的价值，也会影响版图放置、提高 TR、过牌和种树的收益；新增项目牌还可能要求特定党派执政，或者要求玩家在该党拥有足够代表。本体引擎决定哪些政治结果值得争夺，政治结果又会反过来改变引擎下一步应该做什么。</p>
+                        <p>这种双向影响是《动荡》最扎实的成就。一个党派成为优势党，可能改变一张牌是否应该现在打出、终局参数是否应该立刻推进，以及是否值得干扰对手下一时代的计划。《动荡》比其他主要扩展更明显地转移了注意力，但它确实进入了原有决策，而不是用一套无关经济取代本体。</p>
+                    </div>
+
+                    <h3>
+                        <span class="lang-en">Meaningful Decisions, Repeated Administration</span>
+                        <span class="lang-cn hidden">真实决策与重复维护</span>
+                    </h3>
+                    <div class="lang-en">
+                        <p>Each player receives one free lobby delegate per generation, so political participation is not reserved for the richest engine. Additional delegates cost 5 M€, turning control into a real opportunity cost. A delegate can contribute to party dominance, become party leader or chairman, and add influence to an approaching event. The same piece therefore carries several related forms of value.</p>
+                        <p>Open majorities also create a limitation. Players can wait to see where the contest settles and then add a late delegate, so earlier investment may simply raise the price of a result decided by action order or the last player willing to spend. At three or four players, competing interests and temporary alignment give this bidding more texture. It is still not equally deep every generation: supporting the party that matches one's own engine is often obvious, and blocking another player may depend more on table alignment than on a difficult internal choice.</p>
+                        <p>The procedural cost never disappears. Every generation adds TR revision, Global Event resolution, a new ruling party and policy, a ruling bonus, delegate returns, a new chairman, dominance changes, neutral-delegate movement, and lobby refill. Losing 1 TR is a clear way to pay for the committee's generous bonuses, but it is also blunt: the expansion creates income and then charges the whole table through lower score and future money production. Together with extra lobbying actions and constant revaluation, this makes an already long game meaningfully longer.</p>
+                    </div>
+                    <div class="lang-cn hidden">
+                        <p>每名玩家每时代都能免费从大厅派出一名代表，因此政治不会变成只有富裕引擎才能参与的附属系统；额外代表需要花费 5 M€，又让控制权形成真实的机会成本。一名代表既能帮助党派取得优势，也可能成为党魁或主席，还能为即将发生的事件提供影响力。同一个棋子因此承载了几种彼此相关的价值。</p>
+                        <p>公开多数制也带来了一项局限。玩家可以先观察争夺落在哪里，再在后段追加代表；前面的投入有时只是抬高成本，真正决定结果的却是行动顺序，或者谁愿意最后补钱。三至四人局里，不同利益与临时合作会让这场竞价更有层次，但它并非每个时代都同样深刻：支持最符合自己引擎的党派往往很直观，是否能够阻止对手又可能更依赖桌面上的利益关系。</p>
+                        <p>重复流程则始终存在。每个时代都要依次处理 TR 修订、全局事件、新执政党与政策、执政奖励、代表回收、新主席、优势党变化、中立代表移动和大厅补充。每代失去 1 TR，是为议会大量发放奖励结账的一种清楚办法，但也相当生硬：扩展先创造收入，再通过分数和下一时代的钱产向整桌统一收费。额外游说行动与不断变化的估值叠加起来，会让本来已经很长的游戏进一步延长。</p>
+                    </div>
+
+                    <h3>
+                        <span class="lang-en">Global Events: Forecastable, But Limited In Long-Term Variety</span>
+                        <span class="lang-cn hidden">全局事件：提前预判与有限的长期变化</span>
+                    </h3>
+                    <div class="lang-en">
+                        <p>Showing Global Events three generations in advance is a good decision. Players are not surprised by a card that immediately rewards or punishes an established engine; they can adjust card timing, production, tags, tiles, or political influence before it resolves. The neutral delegates placed by the event queue also connect future conditions to the current committee rather than leaving events as isolated modifiers.</p>
+                        <p>The advance warning improves players' ability to respond, but the event order mainly changes short-term values and action timing. It does not create many new long-term strategic families. The six party policies remain fixed, and a familiar group will gradually learn their recurring patterns. Terraforming Mars already has a vast card and corporation space; Turmoil adds tactical variation rather than a comparable new ceiling of replay.</p>
+                        <p>Visibility also limits surprise without removing luck. Many events count tags, production, resources, or tiles that were built over several generations and cannot be efficiently redirected in time. A player can prepare for the event, but may still be rewarded or punished largely because the random queue happened to match an engine that was already committed. The result can create useful adaptation, yet part of the variance remains noise rather than a new decision route.</p>
+                    </div>
+                    <div class="lang-cn hidden">
+                        <p>全局事件提前三个时代公开，是一项很好的设计。玩家不会突然被一张立即结算的事件牌奖励或惩罚，而是能够在事件发生前调整卡牌时机、产能、标、版图与政治影响。事件队列放置的中立代表，也会把未来环境连接到当前议会，而不是让事件停留在孤立的数值修正上。</p>
+                        <p>提前公开改善了玩家的应对空间，但事件顺序主要改变的仍是短期收益与行动时机，没有创造出大量全新的长期路线。六个党派的政策始终固定，熟练以后也会逐渐形成清楚的应对模式。《殖民火星》本来就拥有庞大的牌库与企业空间，《动荡》增加的是战术变化，而不是同等规模的重玩上限。</p>
+                        <p>提前公开能够减少突袭，却不能消除运气。许多事件会计算玩家经过多个时代形成的标、产能、资源或版图，而这些长期投入往往来不及高效转向。玩家可以为事件准备，却仍可能主要因为随机队列恰好吻合或克制了已经成型的引擎而获利或受损。因此，其中一部分变化能够产生适应性，另一部分仍然只是噪声，而不是新的决策路线。</p>
+                    </div>
+
+                    <h3>
+                        <span class="lang-en">Two Players: Less Politics, More Random Influence</span>
+                        <span class="lang-cn hidden">二人局：政治层次减少，随机影响上升</span>
+                    </h3>
+                    <div class="lang-en">
+                        <p>The committee is most convincing when three or four players bring different interests to the same vote. Temporary alignment, shared denial, and uncertainty about who will pay for the final delegate give the political system room to work. With two players, much of that structure collapses into a direct counter-bid: one player supports a party, the other either matches the expense or lets it pass.</p>
+                        <p>Neutral delegates also occupy a much larger share of the political map at two players. Because the random Global Event sequence determines where those delegates enter, chance can preload party dominance before either player makes a political choice. Spending 5 M€ to correct that result technically preserves counterplay, but paying to recover control from a random setup is not the same as gaining meaningful strategic variety.</p>
+                        <p>The full administration remains almost unchanged even though the political return is smaller. Two-player Turmoil therefore combines weaker social politics, more influential random delegates, and nearly the same recurring procedure. The module fits two-player sessions materially worse and is normally best left out.</p>
+                    </div>
+                    <div class="lang-cn hidden">
+                        <p>三至四名玩家带着不同利益进入同一场投票时，议会才最有说服力。临时合作、共同阻止，以及谁愿意为最后一名代表付钱的不确定性，会给政治系统留下足够的运作空间。到了二人局，这些结构大多会收缩成直接的相互加码：一方支持某个党派，另一方要么付出相应成本，要么放任结果通过。</p>
+                        <p>中立代表在二人局的政治版图中也占据了更高比例。由于随机的全局事件顺序决定了这些代表进入哪个党派，运气可能在玩家做出政治选择之前，就预先塑造优势党格局。玩家当然可以花费 5 M€ 纠正，但为了从随机布置中夺回控制权而付钱，并不等于获得了有意义的策略变化。</p>
+                        <p>与此同时，完整的维护流程并不会因为只有两名玩家而明显缩短。二人《动荡》因此同时面对政治层次变少、中立随机影响变大，以及重复流程几乎不变的问题。这个模块与二人局的适配明显更差，通常不建议加入。</p>
+                    </div>
+
+                    <h3>
+                        <span class="lang-en">A Strong Theme And Uneven Secondary Content</span>
+                        <span class="lang-cn hidden">主题表现与参差的附加内容</span>
+                    </h3>
+                    <div class="lang-en">
+                        <p>Political factions, social movements, industrial policy, and natural disasters are a convincing extension of a growing Martian civilization. The party identities make their economic effects easier to understand, while the event horizon gives the world a sense of motion beyond the corporations' private engines. Theme is a clear strength, and it helps the larger system remain legible.</p>
+                        <p>The 16 project cards generally integrate well because party requirements, delegates, and influence connect them to both the committee and the main deck. The five corporations are less consistent as a set: their strength and usefulness depend more heavily on player count, ending pace, and enabled modules. This unevenness matters, but it remains secondary to the time and attention demanded by the complete political system in every session.</p>
+                    </div>
+                    <div class="lang-cn hidden">
+                        <p>政治派系、社会运动、产业政策与自然灾害，是火星文明逐渐成型以后很有说服力的延伸。党派身份让各自的经济效果更容易理解，提前展开的事件队列也让世界不再只围绕企业的私人引擎运转。主题是明确的优点，也帮助这套庞大系统维持了基本的可读性。</p>
+                        <p>16 张项目牌整体融合得不错，党派前置、代表与影响力让它们同时连接议会和主牌库。5 家企业作为一组则完成度不够一致，强度和适用性更依赖人数、终局速度与启用模块。这种参差确实会影响体验，但相比完整政治系统每局持续占用的时间与注意力，仍然只是次要问题。</p>
+                    </div>
+
+                    <h3>
+                        <span class="lang-en">Final Recommendation</span>
+                        <span class="lang-cn hidden">最终建议</span>
+                    </h3>
+                    <div class="lang-en">
+                        <p>Turmoil is a real positive for the right table. In an experienced three- or four-player game, it creates public stakes, political timing, and a forecast horizon that the base game does not otherwise provide. Groups that want stronger interaction can use it to change the character of Terraforming Mars without abandoning the original economy.</p>
+                        <p>It is nevertheless too bulky to become a default recommendation. The added procedure, longer session, constant revaluation, and weaker two-player structure are not occasional flaws; they are the price of using the module every time. New players should learn the base system first, two-player groups should normally omit it, and experienced groups should add it only when the table actively wants a longer and more political game.</p>
+                        <p>The final judgment is B tier and Include as Needed. Turmoil has coherent ideas and strong integration, but its recurring procedures consume more time and attention than the added decisions consistently justify. Its ambitions are clear, yet the full political system remains too heavy for a default module.</p>
+                    </div>
+                    <div class="lang-cn hidden">
+                        <p>对合适的玩家而言，《动荡》确实是加分扩。三至四人的熟练局里，它会加入明确的公共争夺、政治时机与本体原本缺少的事件预判。想要更强交互的桌子，可以通过它改变《殖民火星》的性格，同时不必放弃原有经济。</p>
+                        <p>但它实在太臃肿，不适合作为默认推荐。额外流程、更长的对局、持续变化的估值，以及二人局里更弱的政治结构，都不是偶尔出现的小瑕疵，而是每次启用都要支付的代价。新玩家应该先熟悉本体，二人局通常不建议加入；即使都是老玩家，也应该只在整桌明确想玩一局更长、更政治化的火星时启用。</p>
+                        <p>因此，最终结论是 B 档、按需加入。《动荡》拥有完整的想法和较高的融合度，但重复流程占用的时间与注意力，经常超过新增决策所能证明的价值。它的野心很明确，完整政治系统对于默认模块来说却仍然太重。</p>
+                    </div>
+                </div>
+
+                <aside class="lg:col-span-1">
+                    <div class="bg-white border border-gray-200 rounded-sm shadow-sm overflow-hidden lg:sticky lg:top-32">
+                        <div class="bg-secondary/30 px-6 py-4 border-b border-gray-200">
+                            <h3 class="text-sm font-bold text-ink uppercase tracking-widest">
+                                <span class="lang-en">Expansion Verdict</span>
+                                <span class="lang-cn hidden">扩展结论</span>
+                            </h3>
+                        </div>
+                        <div>
+                            <div class="verdict-row">
+                                <span class="text-xs font-bold uppercase tracking-widest text-gray-400"><span class="lang-en">Quality</span><span class="lang-cn hidden">质量档位</span></span>
+                                <span class="font-bold text-tier">B</span>
+                            </div>
+                            <div class="verdict-row">
+                                <span class="text-xs font-bold uppercase tracking-widest text-gray-400"><span class="lang-en">Enable</span><span class="lang-cn hidden">启用建议</span></span>
+                                <span class="font-bold text-right text-accent"><span class="lang-en">Include as needed</span><span class="lang-cn hidden">按需加入</span></span>
+                            </div>
+                            <div class="verdict-row">
+                                <span class="text-xs font-bold uppercase tracking-widest text-gray-400"><span class="lang-en">Integration</span><span class="lang-cn hidden">融合度</span></span>
+                                <span class="font-medium text-right text-gray-700"><span class="lang-en">Strong</span><span class="lang-cn hidden">较高</span></span>
+                            </div>
+                            <div class="verdict-row">
+                                <span class="text-xs font-bold uppercase tracking-widest text-gray-400"><span class="lang-en">Learning Cost</span><span class="lang-cn hidden">学习成本</span></span>
+                                <span class="font-medium text-right text-gray-700"><span class="lang-en">High</span><span class="lang-cn hidden">高</span></span>
+                            </div>
+                            <div class="verdict-row">
+                                <span class="text-xs font-bold uppercase tracking-widest text-gray-400"><span class="lang-en">Session Length</span><span class="lang-cn hidden">对局时长</span></span>
+                                <span class="font-medium text-right text-gray-700"><span class="lang-en">Longer</span><span class="lang-cn hidden">延长</span></span>
+                            </div>
+                            <div class="verdict-row">
+                                <span class="text-xs font-bold uppercase tracking-widest text-gray-400"><span class="lang-en">Scope</span><span class="lang-cn hidden">评价范围</span></span>
+                                <span class="font-medium text-right text-gray-700"><span class="lang-en">Turmoil (2019)</span><span class="lang-cn hidden">2019 原始扩展</span></span>
+                            </div>
+                        </div>
+                        <div class="px-6 py-5 border-t border-gray-100 space-y-3 text-sm">
+                            <a href="../../games/TerraformingMars.html" class="flex items-center justify-between gap-4 text-gray-600 hover:text-accent transition-colors">
+                                <span class="lang-en">Read Base Game Review</span>
+                                <span class="lang-cn hidden">查看《殖民火星》本体评测</span>
+                                <i data-lucide="arrow-right" class="w-4 h-4 shrink-0"></i>
+                            </a>
+                            <a href="../../rating_boardgame_home.html#expansion-ratings-en" class="flex items-center justify-between gap-4 text-gray-600 hover:text-accent transition-colors">
+                                <span class="lang-en">Read Expansion Rules</span>
+                                <span class="lang-cn hidden">查看扩展评分规则</span>
+                                <i data-lucide="arrow-right" class="w-4 h-4 shrink-0"></i>
+                            </a>
+                        </div>
+                    </div>
+                </aside>
+            </div>
+        </article>
+    </main>
+
+    <script>
+        function toggleLanguage() {
+            const enEls = document.querySelectorAll('.lang-en');
+            const cnEls = document.querySelectorAll('.lang-cn');
+            enEls.forEach((element) => element.classList.toggle('hidden'));
+            cnEls.forEach((element) => element.classList.toggle('hidden'));
+            document.documentElement.lang = document.documentElement.lang === 'en' ? 'zh-CN' : 'en';
+        }
+
+        lucide.createIcons();
+    </script>
+</body>
+</html>

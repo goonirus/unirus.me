@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Expansion Review: Ark Nova: Marine Worlds</title>
+    <link rel="icon" href="../../../../favicon.svg" type="image/svg+xml">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../../games/rating-game-navigation.css">
+    <script src="../../games/rating-game-navigation.js" defer></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: { sans: ['Inter', 'Noto Sans SC', 'sans-serif'] },
+                    colors: {
+                        paper: '#fdfbf7',
+                        ink: '#1a1a1a',
+                        accent: '#c2410c',
+                        secondary: '#f3f4f6',
+                        tier: '#15803d'
+                    }
+                }
+            }
+        };
+    </script>
+    <style>
+        body { background-color: #fdfbf7; color: #1a1a1a; }
+        .prose p { margin-bottom: 1.45em; line-height: 1.85; color: #4b5563; }
+        .prose h3 {
+            font-weight: 700;
+            font-size: 1.5rem;
+            margin-top: 2.75rem;
+            margin-bottom: 1rem;
+            color: #1a1a1a;
+            border-left: 4px solid #c2410c;
+            padding-left: 1rem;
+        }
+        .prose figure { margin: 2.25rem 0 2.75rem; }
+        .prose figure img {
+            display: block;
+            width: 100%;
+            aspect-ratio: 1000 / 642;
+            object-fit: cover;
+            border: 1px solid #e5e7eb;
+            border-radius: 2px;
+        }
+        .prose figcaption {
+            margin-top: 0.6rem;
+            color: #9ca3af;
+            font-size: 0.75rem;
+            line-height: 1.5;
+            text-align: center;
+        }
+        .prose a {
+            color: #9a3412;
+            text-decoration: underline;
+            text-decoration-color: #fdba74;
+            text-underline-offset: 0.18em;
+        }
+        .prose a:hover { color: #c2410c; text-decoration-color: #c2410c; }
+        .review-header-media {
+            display: flex;
+            align-items: flex-end;
+            justify-content: space-between;
+            gap: 1.25rem;
+            width: 100%;
+        }
+        .review-cover {
+            flex: 0 0 auto;
+            width: 8.5rem;
+            margin: 0;
+        }
+        .review-cover-frame {
+            width: 100%;
+            aspect-ratio: 1 / 1;
+            overflow: hidden;
+            background: #ffffff;
+            border: 1px solid #e5e7eb;
+            border-radius: 2px;
+            box-shadow: 0 8px 22px rgba(17, 24, 39, 0.12);
+        }
+        .review-cover img {
+            display: block;
+            max-width: none;
+        }
+        .review-cover .marine-cover-image {
+            width: auto;
+            height: 125%;
+            transform: translateY(-10%);
+        }
+        .review-cover figcaption {
+            margin-top: 0.45rem;
+            color: #9ca3af;
+            font-size: 0.65rem;
+            line-height: 1.35;
+            text-align: center;
+        }
+        .verdict-row {
+            display: grid;
+            grid-template-columns: minmax(0, 1fr) auto;
+            gap: 1rem;
+            align-items: center;
+            padding: 1rem 1.5rem;
+            border-bottom: 1px solid #f3f4f6;
+        }
+        .verdict-row:last-child { border-bottom: 0; }
+        @media (min-width: 1024px) {
+            .review-header-media { width: auto; justify-content: flex-end; }
+            .review-cover { width: 10.5rem; }
+        }
+        @media (max-width: 360px) {
+            .review-header-media { gap: 1rem; }
+            .review-cover { width: 7.25rem; }
+        }
+    </style>
+</head>
+<body class="font-sans antialiased">
+    <nav class="fixed w-full z-50 top-0 bg-paper/90 backdrop-blur-sm border-b border-gray-200/50 h-20 flex items-center px-4 sm:px-6 justify-between">
+        <div class="flex flex-1 items-center gap-4 sm:gap-6 min-w-0">
+            <a href="../../games/ArkNova.html" class="flex items-center text-gray-500 hover:text-accent transition-colors group shrink-0">
+                <i data-lucide="arrow-left" class="w-5 h-5 mr-2 group-hover:-translate-x-1 transition-transform"></i>
+                <span class="hidden sm:inline">
+                    <span class="lang-en">Back to Ark Nova</span>
+                    <span class="lang-cn hidden">返回《方舟动物园》</span>
+                </span>
+            </a>
+            <a href="../../rating_boardgame_home.html#expansion-ratings-en" class="hidden md:flex items-center text-gray-500 hover:text-accent transition-colors">
+                <i data-lucide="layers-3" class="w-4 h-4 mr-2"></i>
+                <span class="lang-en">Expansion Rules</span>
+                <span class="lang-cn hidden">扩展评分规则</span>
+            </a>
+            <div class="sticky-game-title" data-sticky-game-title aria-hidden="true">
+                <span class="lang-en">Ark Nova: Marine Worlds</span>
+                <span class="lang-cn hidden">方舟动物园：海洋世界</span>
+            </div>
+        </div>
+
+        <button type="button" onclick="toggleLanguage()" aria-label="Switch language" class="flex items-center space-x-2 border border-gray-300 px-3 sm:px-4 py-2 rounded-full hover:border-accent hover:text-accent transition-all text-xs font-bold tracking-widest uppercase bg-white shrink-0">
+            <i data-lucide="globe" class="w-4 h-4"></i>
+            <span id="lang-label">EN / 中文</span>
+        </button>
+    </nav>
+
+    <main class="pt-32 pb-24 px-5 sm:px-6">
+        <article class="max-w-7xl mx-auto">
+            <header class="flex flex-col lg:flex-row justify-between items-start lg:items-end gap-8 mb-12 border-b border-gray-200 pb-12">
+                <div class="min-w-0">
+                    <span class="text-accent font-bold tracking-widest uppercase text-xs mb-2 block">
+                        <span class="lang-en">More Routes, Little Extra Burden</span>
+                        <span class="lang-cn hidden">更多路线，有限负担</span>
+                    </span>
+                    <h1 class="text-4xl sm:text-5xl font-bold text-ink mb-3 break-words" data-review-title>
+                        <span class="lang-en">Ark Nova: Marine Worlds</span>
+                        <span class="lang-cn hidden">方舟动物园：海洋世界</span>
+                    </h1>
+                    <p class="text-gray-500 text-base sm:text-lg">
+                        <span class="lang-en">Mathias Wigge · 2023 · Expansion for Ark Nova</span>
+                        <span class="lang-cn hidden">Mathias Wigge · 2023 · 《方舟动物园》扩展</span>
+                    </p>
+                </div>
+                <div class="review-header-media lg:shrink-0">
+                    <div class="flex flex-col items-start lg:items-end gap-4">
+                        <div class="text-left lg:text-right">
+                            <div class="text-xs font-mono tracking-widest uppercase text-gray-400 mb-1">
+                                <span class="lang-en">Quality Tier</span>
+                                <span class="lang-cn hidden">质量档位</span>
+                            </div>
+                            <div class="text-6xl font-bold text-tier leading-none">S</div>
+                        </div>
+                        <div class="text-left lg:text-right max-w-44">
+                            <div class="text-xs font-mono tracking-widest uppercase text-gray-400 mb-1">
+                                <span class="lang-en">Enable Recommendation</span>
+                                <span class="lang-cn hidden">启用建议</span>
+                            </div>
+                            <div class="text-lg sm:text-xl font-bold text-accent leading-tight">
+                                <span class="lang-en">Usually Include</span>
+                                <span class="lang-cn hidden">通常加入</span>
+                            </div>
+                        </div>
+                    </div>
+                    <figure class="review-cover">
+                        <div class="review-cover-frame">
+                            <img class="marine-cover-image" src="../../../../picture/rating_boardgame/ark-nova/expansions/marine-worlds/marine-worlds-cover.jpg" alt="Ark Nova: Marine Worlds / 方舟动物园：海洋世界 official product image" width="1000" height="642" decoding="async" fetchpriority="high">
+                        </div>
+                        <figcaption>
+                            <span class="lang-en">Official product image · Capstone Games</span>
+                            <span class="lang-cn hidden">官方商品图 · Capstone Games</span>
+                        </figcaption>
+                    </figure>
+                </div>
+            </header>
+
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-12 lg:gap-16">
+                <div class="lg:col-span-2 prose max-w-none min-w-0">
+                    <h3>
+                        <span class="lang-en">Marine Worlds at a Glance</span>
+                        <span class="lang-cn hidden">《海洋世界》概览</span>
+                    </h3>
+                    <div class="lang-en">
+                        <p>
+                            Marine Worlds adds sea animals, small and large aquariums, special Action cards, and a new university to Ark Nova. It also expands the Animal, Sponsor, Conservation Project, Final Scoring, and bonus-tile pools. Sea animals are the most visible addition, but action selection, the public display, card access, and personal map planning all change with them.
+                        </p>
+                        <p>
+                            Most of these changes enter systems that the base game already uses instead of establishing a separate module with its own recurring administration. The expansion adds a great deal of content while keeping its added burden comparatively restrained.
+                        </p>
+                        <p>
+                            Marine Worlds therefore receives an <strong>S quality tier</strong> and a <strong>Usually Include</strong> recommendation. A first teaching game can stay with the base game; once players understand its structure, Marine Worlds fits naturally into most later sessions.
+                        </p>
+                    </div>
+                    <div class="lang-cn hidden">
+                        <p>
+                            《海洋世界》为《方舟动物园》加入了海洋动物、小型与大型水族馆、特殊行动牌和一所新的大学，也扩充了动物牌、赞助商牌、保护项目、终局卡与奖励板块。海洋动物是其中最显眼的内容，行动选择、公共牌列、卡牌获取和个人版图规划也会随之发生变化。
+                        </p>
+                        <p>
+                            这些变化大多直接接入本体已经存在的系统，没有另建一套需要反复维护的副游戏。它带来的内容很多，新增负担却相对克制。
+                        </p>
+                        <p>
+                            因此，我将《海洋世界》评为 <strong>S 级扩展</strong>，启用建议则是 <strong>通常加入</strong>。第一次教学时可以只玩本体，等玩家熟悉原有系统以后，《海洋世界》很适合留在之后的大多数对局中。
+                        </p>
+                    </div>
+
+                    <figure>
+                        <img src="../../../../picture/rating_boardgame/ark-nova/expansions/marine-worlds/marine-worlds-cards.jpg" alt="Ark Nova: Marine Worlds box surrounded by sea animals and sponsor cards" width="1000" height="642" loading="lazy" decoding="async">
+                        <figcaption>
+                            <span class="lang-en">Sea animals and Sponsor cards from Marine Worlds · Capstone Games</span>
+                            <span class="lang-cn hidden">《海洋世界》的海洋动物与赞助商牌 · Capstone Games</span>
+                        </figcaption>
+                    </figure>
+
+                    <h3>
+                        <span class="lang-en">Special Action Cards Reopen Five Familiar Actions</span>
+                        <span class="lang-cn hidden">特殊行动牌让熟悉的五个行动重新展开</span>
+                    </h3>
+                    <div class="lang-en">
+                        <p>
+                            Marine Worlds supplies four special versions of each of the base game's five actions. During setup, every player drafts two and replaces the corresponding standard Action cards. They still perform the familiar Build, Animals, Cards, Association, or Sponsors action, but add another benefit or loosen an existing restriction. They are stronger and more individual versions of familiar actions.
+                        </p>
+                        <p>
+                            The design creates different operating ranges from the opening without asking players to learn another action system. A map, an initial direction, and two special Action cards can form natural combinations, while the same base action acquires a different rhythm from one game to the next. With very little local rules cost, the expansion adds asymmetry and turns the five cards used throughout every session into another source of replayability.
+                        </p>
+                        <p>
+                            The cards are not perfectly equal in general usefulness. Some pay off across many routes, while others depend more heavily on a map, a card sequence, or a particular plan. Drafting lets players choose around their conditions and avoids the larger gap that random distribution could create, but it cannot erase every difference in strength and flexibility. This is a real, bounded source of opening variance rather than a reason to dismiss the system's larger gain.
+                        </p>
+                    </div>
+                    <div class="lang-cn hidden">
+                        <p>
+                            《海洋世界》为本体的五种行动各准备了四张特殊行动牌。每位玩家在开局轮抽并选择其中两张，替换自己对应的普通行动牌。这些牌仍然执行熟悉的建造、动物、卡牌、协会或赞助商行动，但会额外提供收益，或者放宽原本的一项限制。它们是更强、也更有个性的行动牌。
+                        </p>
+                        <p>
+                            它们的高明之处在于，玩家几乎不需要学习新的行动系统，却会从开局开始面对不同的操作空间。地图、初始方向和两张特殊行动牌之间会自然形成组合，同一种基础行动也因此出现不同的使用节奏。扩展用很低的规则成本增加了非对称性，也让每局最常使用的五张牌本身成为重玩性的一部分。
+                        </p>
+                        <p>
+                            不同特殊行动牌的泛用性并不完全一致。有些牌在大多数路线里都容易兑现，有些则更依赖地图、卡牌或特定规划。开局轮抽让玩家能够结合自己的条件选择，已经缓解了直接随机分发可能造成的差距，但不能完全消除牌与牌之间的强度和适用面差异。这是扩展真实存在的小幅波动，却没有盖过整套设计带来的提升。
+                        </p>
+                    </div>
+
+                    <h3>
+                        <span class="lang-en">Sea Animals Enter The Existing Zoo Map</span>
+                        <span class="lang-cn hidden">海洋动物自然进入原有版图</span>
+                    </h3>
+                    <div class="lang-en">
+                        <p>
+                            Sea animals live in small or large aquariums. These special enclosures can house multiple matching animals and must be built beside water, bringing water adjacency and long-term capacity into the existing spatial puzzle. Players are still planning one zoo map; the location of water, the room required later, and the number of animals an aquarium can hold now join the build-order calculation.
+                        </p>
+                        <p>
+                            This addition does not create another board or currency. It asks new animals to compete for space inside the planning problem that already exists. The rule is easy to understand, while placement limits and future capacity continue to produce decisions. Aquariums add play without materially raising the local learning cost.
+                        </p>
+                    </div>
+                    <div class="lang-cn hidden">
+                        <p>
+                            海洋动物需要进入小型或大型水族馆。水族馆沿用了特殊围场的基本逻辑，可以容纳多只对应动物，同时加入了水域相邻与容量管理。玩家仍然是在规划自己的动物园版图，只是水域的位置、未来需要的空间和水族馆能够容纳多少动物，也进入了建造顺序的考虑。
+                        </p>
+                        <p>
+                            这一部分没有给游戏另加一套独立版图或资源，而是让新动物继续占用原有的空间规划能力。规则本身容易理解，摆放限制和长期容量却能继续产生决策，因此它能够增加玩法，而不明显抬高局部学习成本。
+                        </p>
+                    </div>
+
+                    <h3>
+                        <span class="lang-en">Reef Dwellers Create A Rare, Distinct Route</span>
+                        <span class="lang-cn hidden">珊瑚礁居民形成一条少见但鲜明的路线</span>
+                    </h3>
+                    <div class="lang-en">
+                        <p>
+                            Playing a Reef Dweller triggers its own Reef effect and reactivates the Reef effects of every earlier Reef Dweller in that player's zoo. Immediate abilities can therefore grow into a linked internal route, and each later Reef Dweller reuses effects established by earlier investments. Sea animals gain a real construction direction instead of differing only in theme and card art.
+                        </p>
+                        <p>
+                            Ark Nova's deck is enormous, so players do not assemble a complete Reef chain frequently. In most games, Reef Dwellers are a set of opportunities that can support one another; in the occasional game where the route fully develops, it becomes a memorable highlight. Strong chains are not consistent enough to dominate the environment, so snowballing remains a minor concern rather than the mechanism's defining problem.
+                        </p>
+                    </div>
+                    <div class="lang-cn hidden">
+                        <p>
+                            打出一位珊瑚礁居民时，新牌自己的效果会立即触发，动物园内此前所有珊瑚礁居民的对应效果也会再次触发。单张牌的即时能力因此可能逐渐连成一条内部路线，后来的珊瑚礁居民也会重新利用此前投入的效果。这让海洋动物不只是牌面主题不同，而是确实提供了一种新的构建方向。
+                        </p>
+                        <p>
+                            不过，《方舟动物园》的牌库非常庞大，玩家并不会频繁凑出一整套珊瑚礁居民链条。多数对局里，它更像是一组可以相互呼应的机会；少数真正成型的对局，则会成为很有记忆点的高光体验。偶尔出现的强力连锁没有稳定到主导环境，因此不构成严重的滚雪球问题。
+                        </p>
+                    </div>
+
+                    <h3>
+                        <span class="lang-en">Wave Makes Display Time Matter</span>
+                        <span class="lang-cn hidden">波浪让公共牌列产生紧迫感</span>
+                    </h3>
+                    <div class="lang-en">
+                        <p>
+                            When a card with a Wave icon enters the public display, the card at the left end is discarded and another card is added. The mechanism first compensates for the larger deck: old cards leave more quickly, and new cards enter public information sooner.
+                        </p>
+                        <p>
+                            Its more interesting effect is that the display no longer feels completely stable. A player who sees a desirable card cannot always assume it will survive until the next Cards action; a Wave revealed by another player may remove it first. Taking a card, racing for it, or leaving it behind therefore gains another timing decision. Wave does add uncontrollable movement, especially as more players turn the display over faster, but that movement creates urgency and meaningful choices rather than only noise.
+                        </p>
+                    </div>
+                    <div class="lang-cn hidden">
+                        <p>
+                            带有波浪图标的牌进入公共牌列时，会弃掉牌列最左端的卡牌，再补入一张新牌。这个机制首先解决了扩展加入更多卡牌以后，庞大牌库更难看见目标内容的问题：旧牌更快离场，新牌也更快进入公开信息区。
+                        </p>
+                        <p>
+                            但波浪更有意思的作用，是让牌列不再显得那么安稳。玩家看到一张想要的牌时，不能总是假定它会一直留到自己的下个行动；其他玩家翻出的波浪牌可能提前把它推走。于是，拿牌、抢牌和暂时放弃都会多出一层时机判断。它确实增加了一些不可控变化，尤其在多人局中会让牌列流动得更快，但这种变化同时制造了紧迫感和真实决策，并非只有噪音。
+                        </p>
+                    </div>
+
+                    <h3>
+                        <span class="lang-en">A New University Gives The Deck Direction</span>
+                        <span class="lang-cn hidden">新大学为庞大牌库提供方向</span>
+                    </h3>
+                    <div class="lang-en">
+                        <p>
+                            The new university supplies a research icon and an animal-category icon chosen by the player, then reveals cards until the first matching animal icon appears. It does not guarantee one exact power card, but it narrows a blind search toward a category the player actually needs. That guidance matters in a deck as large as Ark Nova's.
+                        </p>
+                        <p>
+                            The animal icon can support Conservation Projects, prerequisites, and route planning, while the research icon remains connected to existing requirements. Only one player can claim the new university between two Breaks, so this is not an unconditional source of stability. It becomes a public Association-action window: players must decide both which category matters and whether they need to act before an opponent takes the opportunity.
+                        </p>
+                    </div>
+                    <div class="lang-cn hidden">
+                        <p>
+                            新的大学提供一个科研标志和一个由玩家选择的动物类别标志，并让玩家从牌库中找到第一张带有相应动物标志的卡牌。它不会保证玩家拿到某一张指定强牌，却能把完全盲目的摸索收束到一个自己需要的类别，在牌库已经非常庞大的情况下尤其有价值。
+                        </p>
+                        <p>
+                            动物标志可以服务保护项目、卡牌前置和路线规划，科研标志也继续接入本体已有的需求。与此同时，新的大学在两次休息之间只能被一名玩家取得，因此它也不是无条件赠送的稳定资源，而是协会行动中的一个公开时机。玩家既要判断自己需要哪个类别，也要判断是否必须赶在对手之前行动。
+                        </p>
+                    </div>
+
+                    <h3>
+                        <span class="lang-en">Replayability Through New Mechanisms And Combinations</span>
+                        <span class="lang-cn hidden">新机制与组合带来的重玩性</span>
+                    </h3>
+                    <div class="lang-en">
+                        <p>
+                            Marine Worlds improves replayability through more than raw card count. Reef Dwellers create an internal route, Wave changes the lifetime of public cards, special Action cards alter each player's operating range from setup, and the new university gives a huge deck a more deliberate search direction. These mechanisms cross within the same game, so the expansion is not a set of isolated events waiting to be drawn.
+                        </p>
+                        <p>
+                            New Final Scoring cards, Conservation Projects, and bonus tiles continue to widen each session's direction without needing separate systems of their own. Together they create more combinations across opening goals, middle-game routes, and endgame judgment. With more players, Wave turns the display over faster and makes public opportunities more urgent; with fewer, visible cards remain stable for longer and plans have more time to develop. Marine Worlds remains functional across those different rhythms.
+                        </p>
+                    </div>
+                    <div class="lang-cn hidden">
+                        <p>
+                            《海洋世界》对重玩性的提升，不只来自又加入了多少张牌，更来自这些牌带来的特殊词条。珊瑚礁居民提供新的内部联动，波浪改变公共牌列的寿命，特殊行动牌从开局改变玩家的操作方式，新大学则让庞大牌库出现更明确的搜索方向。它们会在同一局中相互交叉，让扩展内容不只是等待被抽到的零散事件。
+                        </p>
+                        <p>
+                            新增终局卡、保护项目和奖励板块继续扩大了每局的方向差异，但它们不需要各自承担一整节分析。其价值在于配合前面的主要机制，让开局目标、中期路线和终局判断都获得更多组合。多人局中，波浪会更快推动牌列，公共机会也更紧迫；人数较少时，明牌会保持得更久，计划也有更长的成形时间。《海洋世界》在这些不同节奏下都能正常成立。
+                        </p>
+                    </div>
+
+                    <h3>
+                        <span class="lang-en">Usually Include After Learning The Base Game</span>
+                        <span class="lang-cn hidden">适合熟悉本体后通常加入</span>
+                    </h3>
+                    <div class="lang-en">
+                        <p>
+                            Ark Nova already contains many mechanisms, icons, and card relationships. Teaching aquariums, Reef Dwellers, Wave, the special Action-card draft, and the new university at the same time adds a layer of cognitive load that a first game does not need. Letting players first understand the five Action cards, Association board, public display, and zoo map makes the expansion's contributions easier to recognize later.
+                        </p>
+                        <p>
+                            Once the base game is familiar, the new content does not split play into separate systems. Special Action cards still govern the original five actions, aquariums remain part of the zoo map, Wave acts on the public display, and the new university expands the Association board. Each makes a local change; together they substantially improve routes, timing, and replayability.
+                        </p>
+                        <p>
+                            The final judgment is <strong>S / Excellent Expansion</strong>, with a <strong>Usually Include</strong> recommendation. Special Action cards are not identical in flexibility, and the more volatile display will occasionally erase a plan earlier than expected. Even with those costs, the added richness far exceeds the added burden, and every major mechanism finds a natural, durable place inside Ark Nova.
+                        </p>
+                    </div>
+                    <div class="lang-cn hidden">
+                        <p>
+                            《方舟动物园》本体已经包含不少机制、图标和卡牌关系。第一次教学时再同时讲解水族馆、珊瑚礁居民、波浪、特殊行动牌轮抽和新大学，会增加一层没有必要的认知负担。先让玩家理解五张行动牌、协会板、牌列和个人版图，再加入扩展，更容易看清《海洋世界》究竟改善和拓宽了什么。
+                        </p>
+                        <p>
+                            熟悉本体以后，这些新增内容并不会让游戏变成两套系统各玩各的。特殊行动牌仍然围绕原有五个行动，水族馆仍然位于自己的动物园，波浪继续作用于公共牌列，新大学也只是扩展协会板上的选择。它们各自增加一点变化，合在一起却足以明显提升路线、时机和重玩性。
+                        </p>
+                        <p>
+                            因此，《海洋世界》的最终评价是 <strong>S / 卓越扩展</strong>，启用建议为 <strong>通常加入</strong>。特殊行动牌的适用面并不完全一致，公共牌列更高的波动也会让少数计划提前落空；但扩展带来的丰富度远大于新增负担，而且主要机制都找到了本体中自然、长期有效的位置。
+                        </p>
+                    </div>
+                </div>
+
+                <aside class="lg:col-span-1">
+                    <div class="bg-white border border-gray-200 rounded-sm shadow-sm overflow-hidden lg:sticky lg:top-32">
+                        <div class="bg-secondary/30 px-6 py-4 border-b border-gray-200">
+                            <h3 class="text-sm font-bold text-ink uppercase tracking-widest">
+                                <span class="lang-en">Expansion Verdict</span>
+                                <span class="lang-cn hidden">扩展结论</span>
+                            </h3>
+                        </div>
+                        <div>
+                            <div class="verdict-row">
+                                <span class="text-xs font-bold uppercase tracking-widest text-gray-400">
+                                    <span class="lang-en">Quality</span>
+                                    <span class="lang-cn hidden">质量档位</span>
+                                </span>
+                                <span class="font-bold text-tier">S</span>
+                            </div>
+                            <div class="verdict-row">
+                                <span class="text-xs font-bold uppercase tracking-widest text-gray-400">
+                                    <span class="lang-en">Enable</span>
+                                    <span class="lang-cn hidden">启用建议</span>
+                                </span>
+                                <span class="font-bold text-right text-accent">
+                                    <span class="lang-en">Usually include</span>
+                                    <span class="lang-cn hidden">通常加入</span>
+                                </span>
+                            </div>
+                            <div class="verdict-row">
+                                <span class="text-xs font-bold uppercase tracking-widest text-gray-400">
+                                    <span class="lang-en">Integration</span>
+                                    <span class="lang-cn hidden">融合度</span>
+                                </span>
+                                <span class="font-medium text-right text-gray-700">
+                                    <span class="lang-en">Excellent</span>
+                                    <span class="lang-cn hidden">极高</span>
+                                </span>
+                            </div>
+                            <div class="verdict-row">
+                                <span class="text-xs font-bold uppercase tracking-widest text-gray-400">
+                                    <span class="lang-en">Learning Cost</span>
+                                    <span class="lang-cn hidden">学习成本</span>
+                                </span>
+                                <span class="font-medium text-right text-gray-700">
+                                    <span class="lang-en">Low to moderate</span>
+                                    <span class="lang-cn hidden">低至中等</span>
+                                </span>
+                            </div>
+                            <div class="verdict-row">
+                                <span class="text-xs font-bold uppercase tracking-widest text-gray-400">
+                                    <span class="lang-en">Main Gain</span>
+                                    <span class="lang-cn hidden">主要增益</span>
+                                </span>
+                                <span class="font-medium text-right text-gray-700">
+                                    <span class="lang-en">Routes & replayability</span>
+                                    <span class="lang-cn hidden">路线与重玩性</span>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="px-6 py-5 border-t border-gray-100 space-y-3 text-sm">
+                            <a href="../../games/ArkNova.html" class="flex items-center justify-between gap-4 text-gray-600 hover:text-accent transition-colors">
+                                <span class="lang-en">Read Base Game Review</span>
+                                <span class="lang-cn hidden">查看《方舟动物园》本体评测</span>
+                                <i data-lucide="arrow-right" class="w-4 h-4 shrink-0"></i>
+                            </a>
+                            <a href="../../rating_boardgame_home.html#expansion-ratings-en" class="flex items-center justify-between gap-4 text-gray-600 hover:text-accent transition-colors">
+                                <span class="lang-en">Read Expansion Rules</span>
+                                <span class="lang-cn hidden">查看扩展评分规则</span>
+                                <i data-lucide="arrow-right" class="w-4 h-4 shrink-0"></i>
+                            </a>
+                        </div>
+                    </div>
+                </aside>
+            </div>
+        </article>
+    </main>
+
+    <script>
+        function toggleLanguage() {
+            const enEls = document.querySelectorAll('.lang-en');
+            const cnEls = document.querySelectorAll('.lang-cn');
+            enEls.forEach((element) => element.classList.toggle('hidden'));
+            cnEls.forEach((element) => element.classList.toggle('hidden'));
+            document.documentElement.lang = document.documentElement.lang === 'en' ? 'zh-CN' : 'en';
+        }
+
+        lucide.createIcons();
+    </script>
+</body>
+</html>

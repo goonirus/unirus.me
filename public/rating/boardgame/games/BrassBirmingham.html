@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Review: Brass: Birmingham</title>
+    <link rel="icon" href="../../../favicon.svg" type="image/svg+xml">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./rating-game-navigation.css">
+    <script src="./rating-game-navigation.js" defer></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: { sans: ['Inter', 'Noto Sans SC', 'sans-serif'] },
+                    colors: { paper: '#fdfbf7', ink: '#1a1a1a', accent: '#c2410c', secondary: '#f3f4f6' }
+                }
+            }
+        }
+    </script>
+    <style>
+        body { background-color: #fdfbf7; color: #1a1a1a; }
+        .prose p { margin-bottom: 1.45em; line-height: 1.85; color: #4b5563; }
+        .prose h3 { font-weight: 700; font-size: 1.5rem; margin-top: 2.5rem; margin-bottom: 1rem; color: #1a1a1a; border-left: 4px solid #c2410c; padding-left: 1rem; }
+        .score-table th { text-align: left; padding: 0.75rem 1rem; border-bottom: 1px solid #e5e7eb; color: #9ca3af; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.05em; }
+        .score-table td { padding: 0.75rem 1rem; border-bottom: 1px solid #f3f4f6; font-size: 0.875rem; }
+        .score-table tr:last-child td { border-bottom: none; }
+        .score-high { color: #16a34a; font-weight: 700; }
+        .score-mid { color: #4b5563; }
+        .review-header-media {
+            display: flex;
+            align-items: flex-end;
+            justify-content: space-between;
+            gap: 1.25rem;
+            width: 100%;
+        }
+        .review-cover {
+            flex: 0 0 auto;
+            width: 8.5rem;
+            margin: 0;
+        }
+        .review-cover-frame {
+            width: 100%;
+            aspect-ratio: 1 / 1;
+            overflow: hidden;
+            background: #ffffff;
+            border: 1px solid #e5e7eb;
+            border-radius: 2px;
+            box-shadow: 0 8px 22px rgba(17, 24, 39, 0.12);
+        }
+        .review-cover img {
+            display: block;
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            padding: 0.2rem;
+        }
+        .review-cover figcaption {
+            margin-top: 0.45rem;
+            color: #9ca3af;
+            font-size: 0.65rem;
+            line-height: 1.35;
+            text-align: center;
+        }
+        @media (min-width: 1024px) {
+            .review-header-media { width: auto; justify-content: flex-end; }
+            .review-cover { width: 10.5rem; }
+        }
+        @media (max-width: 360px) {
+            .review-header-media { gap: 1rem; }
+            .review-cover { width: 7.5rem; }
+        }
+    </style>
+</head>
+<body class="font-sans antialiased">
+
+    <nav class="fixed w-full z-50 top-0 bg-paper/90 backdrop-blur-sm border-b border-gray-200/50 h-20 flex items-center px-4 sm:px-6 justify-between">
+        <div class="flex flex-1 items-center gap-4 sm:gap-6 min-w-0">
+            <a href="../ratinglist_bg/all_games/all_games.html" class="flex items-center text-gray-500 hover:text-accent transition-colors group">
+                <i data-lucide="arrow-left" class="w-5 h-5 mr-2 group-hover:-translate-x-1 transition-transform"></i>
+                <span class="hidden sm:inline">
+                    <span class="lang-en">Back to List</span>
+                    <span class="lang-cn hidden">返回总表</span>
+                </span>
+            </a>
+            <a href="../rating_boardgame_home.html" class="hidden md:flex items-center text-gray-500 hover:text-accent transition-colors shrink-0">
+                <i data-lucide="layout-list" class="w-4 h-4 mr-2"></i>
+                <span class="lang-en">Rating Overview</span>
+                <span class="lang-cn hidden">评分说明</span>
+            </a>
+            <div class="sticky-game-title" data-sticky-game-title aria-hidden="true">
+                <span class="lang-en">Brass: Birmingham</span>
+                <span class="lang-cn hidden">工业革命：伯明翰</span>
+            </div>
+        </div>
+
+        <button type="button" onclick="toggleLanguage()" aria-label="Switch language" class="flex items-center space-x-2 border border-gray-300 px-3 sm:px-4 py-2 rounded-full hover:border-accent hover:text-accent transition-all text-xs font-bold tracking-widest uppercase bg-white shrink-0">
+            <i data-lucide="globe" class="w-4 h-4"></i>
+            <span id="lang-label">EN / 中文</span>
+        </button>
+    </nav>
+
+    <main class="pt-32 pb-24 px-5 sm:px-6">
+        <article class="max-w-7xl mx-auto">
+            <header class="flex flex-col lg:flex-row justify-between items-start lg:items-end gap-8 mb-12 border-b border-gray-200 pb-12">
+                <div class="min-w-0">
+                    <span class="text-accent font-bold tracking-widest uppercase text-xs mb-2 block">
+                        <span class="lang-en">Economic Network / Industrial Strategy</span>
+                        <span class="lang-cn hidden">经济网络 / 工业策略</span>
+                    </span>
+                    <h1 class="text-4xl sm:text-5xl font-bold text-ink mb-2 break-words" data-review-title>
+                        <span class="lang-en">Brass: Birmingham</span>
+                        <span class="lang-cn hidden">工业革命：伯明翰</span>
+                    </h1>
+                    <p class="text-gray-500 text-lg">
+                        <span class="lang-en">Gavan Brown, Matt Tolman, Martin Wallace · 2018</span>
+                        <span class="lang-cn hidden">Gavan Brown、Matt Tolman、Martin Wallace · 2018</span>
+                    </p>
+                </div>
+                <div class="review-header-media lg:shrink-0">
+                    <div class="flex flex-col items-start lg:items-end gap-3">
+                        <div class="text-left lg:text-right">
+                            <div class="text-xs font-mono tracking-widest uppercase text-gray-400 mb-1">
+                                <span class="lang-en">Weighted Score</span>
+                                <span class="lang-cn hidden">加权评分</span>
+                            </div>
+                            <div class="text-6xl font-bold text-accent leading-none">91.8</div>
+                            <div class="text-xs text-gray-400 mt-1 tracking-widest uppercase">/100</div>
+                        </div>
+                        <div class="text-left lg:text-right">
+                            <span class="text-xs font-mono tracking-widest uppercase text-gray-400">
+                                <span class="lang-en">Impression</span>
+                                <span class="lang-cn hidden">印象分</span>
+                            </span>
+                            <span class="ml-2 text-2xl font-bold text-accent align-middle">94</span>
+                            <span class="text-gray-400">/100</span>
+                        </div>
+                    </div>
+                    <figure class="review-cover">
+                        <div class="review-cover-frame">
+                            <img src="../../../picture/rating_boardgame/brass-birmingham/brass-birmingham-cover.png" alt="Brass: Birmingham / 工业革命：伯明翰 retail box" width="1000" height="1000" decoding="async" fetchpriority="high">
+                        </div>
+                        <figcaption>
+                            <span class="lang-en">Official retail box image · Roxley Games</span>
+                            <span class="lang-cn hidden">官方零售盒图 · Roxley Games</span>
+                        </figcaption>
+                    </figure>
+                </div>
+            </header>
+
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-16">
+                <div class="lg:col-span-2 prose max-w-none">
+                    <h3>
+                        <span class="lang-en">Verdict</span>
+                        <span class="lang-cn hidden">总评</span>
+                    </h3>
+                    <div class="lang-en">
+                        <p>
+                            Brass: Birmingham is one of the rare games whose design can carry the pressure of a number-one reputation. It is not necessarily my personal number one, but if a board-game ranking needs a single game at the top, Birmingham is a defensible answer.
+                        </p>
+                        <p>
+                            More importantly, it is a must-play within modern strategy board games not because its ranking says so, but because it is an unusually complete design. It proves that a low rules load can still support a very deep economic system: the real depth is carried by the numbers underneath, not by a heavy rulebook.
+                        </p>
+                        <p>
+                            This is exactly the kind of "small surface, large depth" design I value: the entry cost is kept as low as possible, while mastery remains meaningfully high. Those two goals often conflict, but Birmingham is one of the rare designs where they coexist.
+                        </p>
+                        <p>
+                            That is also why my impression score sits at 94 rather than 95+: the replayability tradeoff is not my personal favorite, but the central design is strong enough that I would not let that preference drag the game out of the must-play tier.
+                        </p>
+                    </div>
+                    <div class="lang-cn hidden">
+                        <p>
+                            《工业革命：伯明翰》是少数能够承受“总榜第一”声望的作品。它未必一定是我个人心中的第一名，但如果桌游总榜必须有一个第一，它坐在这个位置上是有充分说服力的。
+                        </p>
+                        <p>
+                            更重要的是，它属于现代策略桌游里绕不开的必玩作品；不是因为它排名高，而是因为它本身就是一种极高完成度的设计。它证明了：规则量很低，也可以支撑非常深的经济系统；真正撑起深度的是底层数值关系，而不是厚重的规则书。
+                        </p>
+                        <p>
+                            这非常符合我认可的“以小见大”的设计理念：上手难度越低越好，策略深度越深越好。这两者经常互相冲突，但并不是不能并存。《伯明翰》就是少数真的把它们放在一起成立的作品。
+                        </p>
+                        <p>
+                            这也是为什么我的印象分会落在 94，而不是 95+：重玩性上的取舍并不是我个人最偏好的方向，但核心设计足够强，我不会因为这个个人偏好把它从人生必玩的档位里拉下来。
+                        </p>
+                    </div>
+
+                    <h3 id="section-mechanics" class="rating-section-anchor">
+                        <span class="lang-en">Mechanics: Simple Actions, Dense Consequences</span>
+                        <span class="lang-cn hidden">机制：简单行动，密集后果</span>
+                    </h3>
+                    <div class="lang-en">
+                        <p>
+                            Birmingham's Mechanics score is high because its actions are easy to understand but never empty. Cards decide where you can act and what you must give up. Building changes your board, but also changes supply, access, income, timing, and other players' options. Routes are not just links on a map; they decide who can reach which part of the economy, and when.
+                        </p>
+                        <p>
+                            This is why Mechanics gets 10 and carries the highest weight at 25%. The game is not simply "light on rules"; it is dense in consequence. It reaches a very precise middle point: most players who are willing to try medium-weight strategy games can learn and play it, but playing it well still has a real threshold and a high ceiling.
+                        </p>
+                    </div>
+                    <div class="lang-cn hidden">
+                        <p>
+                            《伯明翰》的机制分高，是因为它的行动很容易理解，却没有一个是空的。卡牌决定你能在哪里行动，也决定你放弃了什么；建造不只是放下一块建筑，还会改变供给、连接、收入、时机，以及其他玩家的选择。铁路也不只是地图上的线，而是决定谁能在什么时候进入哪一片经济网络。
+                        </p>
+                        <p>
+                            所以机制给到 10 分，权值也给到最高的 25%。它不是单纯规则少，而是每条规则的后果足够丰富。《伯明翰》正好卡在一个很舒服的位置：大多数愿意接触中策的玩家都能学会并且玩下去，但想玩好仍然有真实门槛，而且上限也足够高。
+                        </p>
+                    </div>
+
+                    <h3 id="section-depth-replayability" class="rating-section-anchor">
+                        <span class="lang-en">Numerical Depth And Replayability</span>
+                        <span class="lang-cn hidden">数值深度与重玩性</span>
+                    </h3>
+                    <div class="lang-en">
+                        <p>
+                            Birmingham's depth is not stored in rule exceptions. The cards are almost disarmingly simple; building and rail actions are easy to understand; a single action card can explain most of what a player does; and the rulebook is thin. None of that thinness is where the depth disappears. The depth comes from the numbers underneath.
+                        </p>
+                        <p>
+                            Tile counts, building costs, resource circulation, income pressure, and route timing all show how precise the numerical design is. The game often leaves you exactly one coal, iron, beer, route, or action short, cutting off a plan that felt perfectly continuous in a way that is both frustrating and funny. This is where the low entry cost matters again: players do not need to learn very much before the mastery problem begins. In game-design terms, this is emergence in a particularly numerical form: the rules do not list those difficult positions one by one, but resource circulation, costs, and routes produce them through their interaction. That is why Depth/Complex reaches 95/100. It does not reach 100/100 because, once the main answers are understood, the strategic space becomes more bounded than games whose repeated plays keep generating new structures. The design has a high ceiling, but not an endlessly expanding one.
+                        </p>
+                        <p>
+                            Replayability is the other side of that restraint. Birmingham does not have a huge card pool, a deck-building arc, or randomness that regularly changes the basic way you think. Its opening and hand variation are not enough to keep reshaping the strategic problem for very long; once you understand the main questions and the major routes, later games can feel more similar than fresh. That is why Replayability stays at 80/100 rather than joining the game's 90+ dimensions. It is still a good score, but it marks a real ceiling on long-term freshness. The same restraint that limits surprise after mastery also keeps the rules short, the teaching burden low, and the system readable. I personally care a lot about replayability, yet for the broader player base, that accessibility is a major part of why the design succeeds.
+                        </p>
+                    </div>
+                    <div class="lang-cn hidden">
+                        <p>
+                            《伯明翰》的深度不是藏在规则特例里。卡牌浅显到近乎直白，建造和铁路都通俗易懂，一张行动牌基本就能说明白玩家能做什么，说明书也很薄。但这些“薄”和“少”并没有让游戏变浅，因为真正的深度完全由底层数值支撑。
+                        </p>
+                        <p>
+                            不同等级的城市片数量、不同建筑的建造花费、煤铁啤酒的供给和消耗、收入压力和路线时机，都体现出它精妙的数值设计。它经常让你恰好差一个资源，刚好掐断原本连贯的思路，令你哭笑不得。这里也要再次点出低上手成本：玩家需要学习的规则并不多，真正的精通难度是从数值关系里长出来的。这正是游戏设计里所说的“涌现”：规则没有逐条写出那些复杂局面，资源流动、成本与路线之间的牵制却会自然生成它们。所以 Depth/Complex（深度 / 上手成本）可以给到 95/100；但它还不到 100/100，因为掌握主要套路和路线后，策略空间会变得相对有限，不属于那种每次重玩都会不断长出新结构的游戏。它的上限很高，但不是无限外扩的那种高。
+                        </p>
+                        <p>
+                            重玩性则是这种克制的另一面。它没有庞大的卡牌库，也没有“构筑”玩法，随机性也不是那种会持续改变游戏思路的随机；开局变化和手牌变化不足以长期重塑游戏问题。所以当你掌握了游戏的答题思路和几种主要套路后，整体水平会相对稳定，对局也更容易变得相近，难以不断产生新意。这就是为什么重玩性停在 80/100，而不是像机制、平衡、交互、流畅度那样进入 90+；80 仍然是好分，但说明它在长期新鲜感上确实有上限。因为同样是这些“没有”，让《伯明翰》保持了规则短、学习成本低、阅读负担低。哪怕我个人很在乎重玩性，对更广泛的玩家来说，这种易进入、易理解的特质仍然是它成立的重要原因。
+                        </p>
+                    </div>
+
+                    <h3 id="section-interactivity" class="rating-section-anchor">
+                        <span class="lang-en">Player Count And Interaction</span>
+                        <span class="lang-cn hidden">人数与交互</span>
+                    </h3>
+                    <div class="lang-en">
+                        <p>
+                            Four players is clearly the complete experience. The three-player game is scaled down, but very well handled: it feels more like a proportional contraction than a crude removal of worker spaces. The impact on the experience is very small, because the core tempo, resource pressure, and mutual restraint remain mostly intact. That scaling is one of the game's clever design achievements.
+                        </p>
+                        <p>
+                            Birmingham is not a pure interaction game, but its interaction is better designed than raw volume suggests. Most of it comes from route competition, shared resource use, and tempo. At a high level, a tempo swing can certainly decide the result, but high-level play makes many small edges decisive. In broader terms, Birmingham's interaction is meaningful without usually overwhelming the economic puzzle.
+                        </p>
+                        <p>
+                            The turn-order mechanism is the most interesting part. It makes fairness subtle and adds planning space without relying on blunt area control. Birmingham's interaction also has a cooperative edge: using shared resources can help another player convert assets, and opening or occupying a route can reshape opportunities for more than one player. That competition-cooperation tension is a major reason Interactivity rises to 90/100 and deserves a 12% weight.
+                        </p>
+                    </div>
+                    <div class="lang-cn hidden">
+                        <p>
+                            四人局显然是完整的游戏体验。三人局是缩减版，但这个缩减做得很好：它不是那种少一个人就粗暴缩减工位、让地图和交互明显变空的处理，而更像是四人局的等比例缩小。对游戏体验的影响非常小，核心对局节奏、资源压力和玩家之间的互相牵制基本都保留下来了。这也是其设计的高明点之一。
+                        </p>
+                        <p>
+                            《伯明翰》不是那种以高压交互为核心的游戏，但它的交互质量高于单纯的交互量。主要交互来自路线争夺、资源互相利用和对局节奏差异。高端局里，对局节奏的影响或许会对结果产生巨大影响，但高端局本来就对所有细节都极其敏感。放回整体评价里，《伯明翰》的交互是有分量的，却通常不会压倒整个经济谜题。
+                        </p>
+                        <p>
+                            真正值得加分的是先后手机制。它让公平性变得微妙，也增加了规划和博弈空间。这种小巧思，比朴实无华的区控更有设计价值。《伯明翰》的交互还有一层合作意味：使用共享资源可能会帮助别人完成资产转化，路线的开放和占据也会同时改变多名玩家的机会。这种竞争与合作交织在一起的关系，是它交互做得出色的地方，所以交互性可以给到 90/100，权值也应该提高到 12%。
+                        </p>
+                    </div>
+
+                    <h3 id="section-balance-flow" class="rating-section-anchor">
+                        <span class="lang-en">Balance And Flow</span>
+                        <span class="lang-cn hidden">平衡与流畅度</span>
+                    </h3>
+                    <div class="lang-en">
+                        <p>
+                            Balance is one of Birmingham's strongest qualities, and it works on two levels. Numerically, the game is top-tier: tile counts, building costs, resources, income pressure, and route timing are tuned tightly enough to create pressure without collapsing into one obvious answer. This is why Balance can receive a full 10 rather than just a high score.
+                        </p>
+                        <p>
+                            On the play side, turn order is the clearest balance risk, and this is where the turn-order mechanism mentioned above matters. Because spending affects future order, powerful turns carry a tempo cost, while restrained turns can gain timing compensation. That does not remove all advantage, but it prevents a stable first- or last-player edge from dominating the game. The 14% weight reflects this role: balance is not a secondary fairness check here, but the condition that lets the whole economy stay tight without becoming scripted.
+                        </p>
+                        <p>
+                            The flow is also excellent. Downtime is short, and the amount of calculation is usually just enough for players to plan during other turns. The game asks for thought, but it rarely turns waiting into dead time. That supports 93/100 in Flow and a substantial 12% weight.
+                        </p>
+                    </div>
+                    <div class="lang-cn hidden">
+                        <p>
+                            平衡性是《伯明翰》最强的部分之一，而且这里的平衡性分成两层：数值平衡和玩法平衡。数值平衡几乎是顶级的，城市片数量、建筑花费、资源流动、收入压力和路线时机都被调得非常紧，既能制造压力，又不会很快收束成唯一正确答案。这也是为什么平衡性可以给到 10 分，而不只是一个普通高分。
+                        </p>
+                        <p>
+                            玩法平衡里，最容易出问题的是先后手，而这正好要联系到前面“人数与交互”里提到的先后手机制。花费会影响下一轮顺位，所以强行动往往要付出对局节奏上的代价，收敛行动也可能换来时机补偿。它不可能消除所有优势，但足以避免稳定的先手或后手优势压倒整局。14% 的权值来自这里：平衡性不是附带的公平检查，而是整个经济系统能够紧张却不僵死的前提。
+                        </p>
+                        <p>
+                            游玩流畅度也非常恰当。downtime（等待时间）并不长，需要考虑的内容不算特别多，基本上在其他玩家执行回合时，玩家正好能完成自己的规划。它需要思考，但很少把等待变成空耗，所以 Flow（流畅度）可以给到 93/100，也值得承担 12% 的较高权值。
+                        </p>
+                    </div>
+
+                    <h3 id="section-theme-aesthetics" class="rating-section-anchor">
+                        <span class="lang-en">Theme, Art, And Audience</span>
+                        <span class="lang-cn hidden">主题、美术与受众</span>
+                    </h3>
+                    <div class="lang-en">
+                        <p>
+                            Theme is a double-edged part of Birmingham. On the positive side, the industrial setting is not pasted on at all. Industrial expansion, peaceful area control, rails, and resource networks fit the rules so naturally that the game becomes easier to understand than it first appears.
+                        </p>
+                        <p>
+                            The negative side comes from the same source. The industrial theme looks hard before the rules actually are hard, and it can scare players away before they discover that the rules are fairly intuitive and that the real difficulty lies in the numerical calculation. That is why Theme is 7.5: the integration is strong, but the audience cost is real. The art itself is not the issue; it represents the theme accurately and beautifully, which supports an 8.8 for Aesthetics. Both carry a 7% weight: lower than the structural systems, but not negligible, because theme and art shape the first contact with the game even when they are not the main engine.
+                        </p>
+                    </div>
+                    <div class="lang-cn hidden">
+                        <p>
+                            主题是《伯明翰》的一把双刃剑。好的一面在于，它完全不是套皮：工业革命题材非常契合玩法，和平区控、铁路、工业扩张和资源网络都放得很自然。也正因为主题和机制是浑然天成的，它实际学起来比看上去直觉得多。
+                        </p>
+                        <p>
+                            问题也来自同一个地方：这个工业题材会让游戏在玩家真正上手前就显得很硬核，直接触发一部分人的畏难情绪。所以主题可以给 7.5：契合度很强，但受众代价也真实存在。美术本身没有太大问题，甚至可以说准确而精致地表现了主题，因此美术可以到 8.8。主题和美术的权值都为 7%，低于结构性系统，但不能低到像无关项一样；它们依然决定了玩家第一次接触这个游戏时愿不愿意靠近。
+                        </p>
+                    </div>
+
+                    <h3 id="section-innovation" class="rating-section-anchor">
+                        <span class="lang-en">Innovation And Completion</span>
+                        <span class="lang-cn hidden">创新与完成度</span>
+                    </h3>
+                    <div class="lang-en">
+                        <p>
+                            Birmingham is not innovative in the sense of a single unprecedented mechanism. It is not a flash-of-inspiration design. Its strength is closer to a work of integration: every mechanism sits in the right place, and every lever is pulled with the right amount of force.
+                        </p>
+                        <p>
+                            In that sense, it feels calculated rather than improvised. The rules are few, the pressure is enough, the resources are tight, the interaction is moderate, and the flow remains smooth. That kind of completion deserves respect, but it should not automatically become a top innovation score. Innovation stays at 70/100 with a 5% weight. Originality is not Birmingham's main strength, but it still affects the overall evaluation and should not disappear from the weighted score. Its greatest strength remains integration and tuning.
+                        </p>
+                    </div>
+                    <div class="lang-cn hidden">
+                        <p>
+                            《伯明翰》的创新不是那种“灵机一动”的新奇机制。它没有一个完全前所未见的单点创意，也不是靠奇技淫巧给人留下印象。它更像是一部集大成作品：每一个机制都处在合适的位置，力度也把控得正好。
+                        </p>
+                        <p>
+                            它的优秀更像是被“数值计算”算出来的，而不是被一个突然的点子点亮的。规则不多，压力足够，资源紧张，互动适量，游玩流程也足够顺畅。这种完成度本身值得肯定，但如果创新维度评价的是原创性和新机制，它不应该因为整体优秀而被自动打到顶分。创新给到 70/100，权值为 5%。原创性不是《伯明翰》最主要的优势，但它仍然会影响对游戏整体的评价，因此不应该从加权评分中完全消失；它最强的地方仍然是整合与调校。
+                        </p>
+                    </div>
+
+                    <h3>
+                        <span class="lang-en">Recommendation</span>
+                        <span class="lang-cn hidden">推荐边界</span>
+                    </h3>
+                    <div class="lang-en">
+                        <p>
+                            Birmingham is suitable for almost anyone who has already touched medium-weight strategy games, and for anyone who wants to step into that space. It is at least worth one serious try. Players should not be scared away by the industrial style or by the pressure of its BGG ranking.
+                        </p>
+                        <p>
+                            The main group I would not recommend it to is players who only want party games, light social play, or no economic calculation at all.
+                        </p>
+                    </div>
+                    <div class="lang-cn hidden">
+                        <p>
+                            《伯明翰》适合所有已经接触中策、或者想要涉足中策的玩家，至少值得认真玩一次。不要被工业题材、硬核风格，或者 BGG 第一带来的心理压力提前劝退。
+                        </p>
+                        <p>
+                            它主要不适合只玩聚会游戏、只想轻松社交，或者完全不想进行经济计算的玩家。
+                        </p>
+                    </div>
+                </div>
+
+                <aside class="lg:col-span-1">
+                    <div class="bg-white border border-gray-200 rounded-sm shadow-sm overflow-hidden sticky top-32">
+                        <div class="bg-secondary/30 px-6 py-4 border-b border-gray-200">
+                            <h3 class="text-sm font-bold text-ink uppercase tracking-widest">
+                                <span class="lang-en">Rating Breakdown</span>
+                                <span class="lang-cn hidden">评分细则</span>
+                            </h3>
+                        </div>
+                        <table class="w-full score-table">
+                            <thead>
+                                <tr>
+                                    <th><span class="lang-en">Criterion</span><span class="lang-cn hidden">维度</span></th>
+                                    <th class="text-right"><span class="lang-en">Score /100</span><span class="lang-cn hidden">百分制分数</span></th>
+                                    <th class="text-right"><span class="lang-en">Weight</span><span class="lang-cn hidden">权重</span></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr><td class="font-medium text-gray-700"><a href="#section-mechanics" class="score-dimension-link"><span class="lang-en">Mechanics</span><span class="lang-cn hidden">机制</span></a></td><td class="text-right score-high">100</td><td class="text-right text-gray-400">25%</td></tr>
+                                <tr><td class="font-medium text-gray-700"><a href="#section-theme-aesthetics" class="score-dimension-link"><span class="lang-en">Theme</span><span class="lang-cn hidden">主题</span></a></td><td class="text-right text-gray-600">75</td><td class="text-right text-gray-400">7%</td></tr>
+                                <tr><td class="font-medium text-gray-700"><a href="#section-theme-aesthetics" class="score-dimension-link"><span class="lang-en">Aesthetics</span><span class="lang-cn hidden">美术</span></a></td><td class="text-right text-gray-600">88</td><td class="text-right text-gray-400">7%</td></tr>
+                                <tr><td class="font-medium text-gray-700"><a href="#section-balance-flow" class="score-dimension-link"><span class="lang-en">Balance</span><span class="lang-cn hidden">平衡性</span></a></td><td class="text-right score-high">100</td><td class="text-right text-gray-400">14%</td></tr>
+                                <tr><td class="font-medium text-gray-700"><a href="#section-depth-replayability" class="score-dimension-link"><span class="lang-en">Replayability</span><span class="lang-cn hidden">重玩性</span></a></td><td class="text-right text-gray-600">80</td><td class="text-right text-gray-400">8%</td></tr>
+                                <tr><td class="font-medium text-gray-700"><a href="#section-interactivity" class="score-dimension-link"><span class="lang-en">Interactivity</span><span class="lang-cn hidden">交互性</span></a></td><td class="text-right score-high">90</td><td class="text-right text-gray-400">12%</td></tr>
+                                <tr><td class="font-medium text-gray-700"><a href="#section-depth-replayability" class="score-dimension-link"><span class="lang-en">Depth/Complex</span><span class="lang-cn hidden">深度/成本</span></a></td><td class="text-right score-high">95</td><td class="text-right text-gray-400">10%</td></tr>
+                                <tr><td class="font-medium text-gray-700"><a href="#section-balance-flow" class="score-dimension-link"><span class="lang-en">Flow</span><span class="lang-cn hidden">流畅度</span></a></td><td class="text-right score-high">93</td><td class="text-right text-gray-400">12%</td></tr>
+                                <tr><td class="font-medium text-gray-700"><a href="#section-innovation" class="score-dimension-link"><span class="lang-en">Innovation</span><span class="lang-cn hidden">创新</span></a></td><td class="text-right text-gray-600">70</td><td class="text-right text-gray-400">5%</td></tr>
+                            </tbody>
+                        </table>
+                        <div class="bg-gray-50 px-6 py-4 border-t border-gray-200">
+                            <div class="flex justify-between items-center">
+                                <span class="font-bold text-xs uppercase tracking-widest text-gray-400">
+                                    <span class="lang-en">Weighted Score</span>
+                                    <span class="lang-cn hidden">加权评分</span>
+                                </span>
+                                <span class="font-bold text-2xl text-accent">91.8</span>
+                            </div>
+                            <p class="mt-3 text-xs leading-relaxed text-gray-500">
+                                <span class="lang-en">Exceptional mechanics, balance, interaction, and flow, with explicit tradeoffs in replayability and audience reach.</span>
+                                <span class="lang-cn hidden">机制、平衡、交互和流畅度极强，同时明确保留重玩性和受众亲和度上的取舍。</span>
+                            </p>
+                        </div>
+                        <div class="px-6 py-5 border-t border-gray-100 space-y-3 text-sm">
+                            <a href="../ratinglist_bg/all_games/all_games.html" class="flex items-center justify-between text-gray-600 hover:text-accent transition-colors">
+                                <span class="lang-en">Open All Games Table</span>
+                                <span class="lang-cn hidden">打开所有桌游总表</span>
+                                <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                            </a>
+                            <a href="../rating_boardgame_home.html" class="flex items-center justify-between text-gray-600 hover:text-accent transition-colors">
+                                <span class="lang-en">Read Rating Overview</span>
+                                <span class="lang-cn hidden">查看评分说明</span>
+                                <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                            </a>
+                        </div>
+                    </div>
+                </aside>
+            </div>
+        </article>
+    </main>
+
+    <script>
+        lucide.createIcons();
+
+        function toggleLanguage() {
+            const enEls = document.querySelectorAll('.lang-en');
+            const cnEls = document.querySelectorAll('.lang-cn');
+            enEls.forEach(el => el.classList.toggle('hidden'));
+            cnEls.forEach(el => el.classList.toggle('hidden'));
+        }
+    </script>
+</body>
+</html>

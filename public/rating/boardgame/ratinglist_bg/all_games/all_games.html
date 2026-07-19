@@ -9,7 +9,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
     
     <!-- 引入数据库文件 -->
-    <script src="all_games.js"></script>
+    <script src="all_games.js?v=20260716-remove-unplayed-1"></script>
 
     <script>
         tailwind.config = {
@@ -32,17 +32,69 @@
         body { background-color: #fdfbf7; color: #1a1a1a; }
         
         /* 表格样式优化 */
-        th { white-space: nowrap; }
-        td { white-space: nowrap; }
+        .rating-table { table-layout: fixed; min-width: 1260px; }
+        .rating-table th,
+        .rating-table td { vertical-align: middle; }
+        .rating-table th {
+            padding: 0.9rem 0.45rem;
+            font-size: 0.74rem;
+            line-height: 1;
+            letter-spacing: 0;
+            text-transform: none;
+            white-space: nowrap;
+        }
+        .rating-table td {
+            padding: 1.32rem 0.78rem;
+            white-space: nowrap;
+        }
+        .rating-table tbody td {
+            font-size: 1rem;
+            line-height: 1.25;
+        }
+        .rating-table tbody tr { height: 5.6rem; }
+        .rating-table tbody td:not(:first-child) { font-size: 1.05rem; }
+        .rating-table tbody td:last-child { font-size: 1.1rem; }
+        .rating-table th:first-child,
+        .rating-table td:first-child { width: 14%; text-align: left; }
+        .rating-table th:not(:first-child):not(:last-child),
+        .rating-table td:not(:first-child):not(:last-child) { width: 8.5%; text-align: center; }
+        .rating-table th:last-child,
+        .rating-table td:last-child { width: 9.5%; text-align: center; }
+        .game-title {
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            white-space: normal;
+            line-height: 1.35;
+            text-align: left;
+        }
         
         /* 排序图标样式 */
-        .sort-icon { display: inline-block; width: 12px; height: 12px; margin-left: 4px; opacity: 0.3; transition: opacity 0.2s; }
+        .sort-icon { display: inline-block; width: 11px; height: 11px; margin-left: 3px; opacity: 0.3; transition: opacity 0.2s; vertical-align: -2px; }
         th:hover .sort-icon { opacity: 1; }
         th.active-sort .sort-icon { opacity: 1; color: #c2410c; }
 
         /* 固定首列和尾列 */
         .sticky-col-left { position: sticky; left: 0; z-index: 10; background-color: #fdfbf7; }
         .sticky-col-right { position: sticky; right: 0; z-index: 10; background-color: #fdfbf7; box-shadow: -2px 0 5px rgba(0,0,0,0.05); }
+        .sticky-table-header {
+            position: fixed;
+            z-index: 40;
+            display: none;
+            overflow: hidden;
+            border-bottom: 1px solid #d1d5db;
+            background: #f3f4f6;
+            box-shadow: 0 5px 12px rgba(0, 0, 0, 0.09);
+        }
+        .sticky-table-header.is-visible { display: block; }
+        .sticky-table-header-scroll {
+            width: 100%;
+            overflow: hidden;
+        }
+        .sticky-table-header .rating-table { margin: 0; }
+        .sticky-table-header .sticky-col-left,
+        .sticky-table-header .sticky-col-right { background-color: #f3f4f6; }
 
         /* 统一的分数颜色类 (由 JS 动态添加) */
         .score-high { color: #16a34a !important; font-weight: 700; } /* Green >= 9.0 */
@@ -85,20 +137,25 @@
                 </h1>
                 <p class="text-gray-500">
                     <span class="lang-en">
-                        A comprehensive breakdown of scores across 8 design dimensions and some others. <br>
+                        A comprehensive breakdown of scores across 9 rating dimensions, displayed on a 100-point scale. <br>
                         <span class="text-accent text-xs font-bold uppercase tracking-wide">Click column headers to sort</span>
                     </span>
                     <span class="lang-cn hidden">
-                        这里展示了所有桌游在 8 个设计维度（以及若干附加维度）上的详细评分。<br>
+                        这里展示了所有桌游在 9 个评分维度上的详细评分，页面统一显示为百分制。<br>
                         <span class="text-accent text-xs font-bold uppercase tracking-wide">点击列表头可以切换排序</span>
                     </span>
                 </p>
             </div>
         </header>
 
+        <!-- Fixed header shown while the original table header is above the viewport. -->
+        <div id="stickyTableHeader" class="sticky-table-header" aria-hidden="true">
+            <div class="sticky-table-header-scroll"></div>
+        </div>
+
         <!-- Table Container -->
-        <div class="overflow-x-auto border border-gray-200 rounded-sm shadow-sm bg-white mb-6">
-            <table class="w-full text-sm text-left" id="ratingTable">
+        <div id="ratingTableContainer" class="overflow-x-auto border border-gray-200 rounded-sm shadow-sm bg-white mb-6">
+            <table class="rating-table w-full text-sm text-left" id="ratingTable">
                 <thead class="text-xs text-gray-500 uppercase bg-secondary border-b border-gray-200">
                     <tr>
                         <!-- Game Name (Sticky Left) -->
@@ -110,55 +167,55 @@
                         
                         <!-- Data Columns -->
                         <th scope="col" class="px-4 py-4 cursor-pointer hover:bg-gray-100 transition-colors" onclick="sortTable('mechanics')">
-                            <span class="lang-en">Mechanics</span>
-                            <span class="lang-cn hidden">机制</span>
+                            <span class="lang-en" title="Mechanics">Mechanics</span>
+                            <span class="lang-cn hidden" title="机制">机制</span>
                             <i data-lucide="chevrons-up-down" class="sort-icon"></i>
                         </th>
                         <th scope="col" class="px-4 py-4 cursor-pointer hover:bg-gray-100 transition-colors" onclick="sortTable('theme')">
-                            <span class="lang-en">Theme</span>
-                            <span class="lang-cn hidden">主题</span>
+                            <span class="lang-en" title="Theme">Theme</span>
+                            <span class="lang-cn hidden" title="主题">主题</span>
                             <i data-lucide="chevrons-up-down" class="sort-icon"></i>
                         </th>
                         <th scope="col" class="px-4 py-4 cursor-pointer hover:bg-gray-100 transition-colors" onclick="sortTable('aesthetics')">
-                            <span class="lang-en">Aesthetics</span>
-                            <span class="lang-cn hidden">美术</span>
+                            <span class="lang-en" title="Aesthetics">Aesthetics</span>
+                            <span class="lang-cn hidden" title="美术">美术</span>
                             <i data-lucide="chevrons-up-down" class="sort-icon"></i>
                         </th>
                         <th scope="col" class="px-4 py-4 cursor-pointer hover:bg-gray-100 transition-colors" onclick="sortTable('balance')">
-                            <span class="lang-en">Balance</span>
-                            <span class="lang-cn hidden">平衡性</span>
+                            <span class="lang-en" title="Balance">Balance</span>
+                            <span class="lang-cn hidden" title="平衡性">平衡性</span>
                             <i data-lucide="chevrons-up-down" class="sort-icon"></i>
                         </th>
                         <th scope="col" class="px-4 py-4 cursor-pointer hover:bg-gray-100 transition-colors" onclick="sortTable('replayability')">
-                            <span class="lang-en">Replayability</span>
-                            <span class="lang-cn hidden">重玩价值</span>
+                            <span class="lang-en" title="Replayability">Replayability</span>
+                            <span class="lang-cn hidden" title="重玩性">重玩性</span>
                             <i data-lucide="chevrons-up-down" class="sort-icon"></i>
                         </th>
                         <th scope="col" class="px-4 py-4 cursor-pointer hover:bg-gray-100 transition-colors" onclick="sortTable('interactivity')">
-                            <span class="lang-en">Interactivity</span>
-                            <span class="lang-cn hidden">互动性</span>
+                            <span class="lang-en" title="Interactivity">Interactivity</span>
+                            <span class="lang-cn hidden" title="交互性">交互性</span>
                             <i data-lucide="chevrons-up-down" class="sort-icon"></i>
                         </th>
                         <th scope="col" class="px-4 py-4 cursor-pointer hover:bg-gray-100 transition-colors" onclick="sortTable('complexity')">
-                            <span class="lang-en">Complex/Depth</span>
-                            <span class="lang-cn hidden">复杂度 / 深度</span>
+                            <span class="lang-en" title="Depth/Complex">Depth/Complex</span>
+                            <span class="lang-cn hidden" title="深度 / 上手成本">深度/成本</span>
                             <i data-lucide="chevrons-up-down" class="sort-icon"></i>
                         </th>
                         <th scope="col" class="px-4 py-4 cursor-pointer hover:bg-gray-100 transition-colors" onclick="sortTable('flow')">
-                            <span class="lang-en">Flow/Pacing</span>
-                            <span class="lang-cn hidden">节奏 / 流畅度</span>
+                            <span class="lang-en" title="Flow">Flow</span>
+                            <span class="lang-cn hidden" title="流畅度">流畅度</span>
                             <i data-lucide="chevrons-up-down" class="sort-icon"></i>
                         </th>
                         <th scope="col" class="px-4 py-4 cursor-pointer hover:bg-gray-100 transition-colors" onclick="sortTable('others')">
-                            <span class="lang-en">Others</span>
-                            <span class="lang-cn hidden">其他</span>
+                            <span class="lang-en" title="Innovation">Innovation</span>
+                            <span class="lang-cn hidden" title="创新">创新</span>
                             <i data-lucide="chevrons-up-down" class="sort-icon"></i>
                         </th>
 
                         <!-- Total Score (Sticky Right) -->
-                        <th scope="col" class="px-6 py-4 font-bold text-accent cursor-pointer sticky-col-right hover:bg-gray-50 transition-colors text-right" onclick="sortTable('total')">
-                            <span class="lang-en">Total</span>
-                            <span class="lang-cn hidden">总分</span>
+                        <th scope="col" class="px-6 py-4 font-bold text-accent cursor-pointer sticky-col-right hover:bg-gray-50 transition-colors" onclick="sortTable('total')">
+                            <span class="lang-en" title="Weighted Score">Weighted Score</span>
+                            <span class="lang-cn hidden" title="加权评分">加权评分</span>
                             <i data-lucide="chevrons-up-down" class="sort-icon"></i>
                         </th>
                     </tr>
@@ -218,6 +275,8 @@
         let currentData = []; 
         let currentSortKey = 'total';
         let currentSortDir = 'desc';
+        let stickyHeaderElements = null;
+        let stickyHeaderFrame = null;
 
         function initPage() {
             if (typeof gamesDatabase !== 'undefined') {
@@ -225,6 +284,7 @@
                 // 默认按总分降序排列
                 sortData('total', true); 
                 renderTable();
+                setupStickyTableHeader();
             } else {
                 // 如果没找到数据文件，显示一个友好的错误提示
                 document.getElementById('tableBody').innerHTML = '<tr><td colspan="11" class="px-6 py-4 text-center text-red-500">Error: games_data.js not found. Please ensure the database file is in the same folder.</td></tr>';
@@ -294,6 +354,11 @@
                     return 'score-mid';
                 };
 
+                const formatScore = (val) => {
+                    const scaled = val * 10;
+                    return Number.isInteger(scaled) ? scaled.toFixed(0) : scaled.toFixed(1);
+                };
+
                 // 渲染行
                 // 根据当前语言选择显示的游戏名
                 const displayTitle = (currentLang === 'cn' && game.title_cn)
@@ -302,22 +367,102 @@
 
                 // 渲染行
                 tr.innerHTML = `
-                    <td class="px-6 py-4 font-bold text-ink sticky-col-left group-hover:bg-[#fffbf5] transition-colors">
-                        ${displayTitle}
+                    <td class="font-bold text-ink sticky-col-left group-hover:bg-[#fffbf5] transition-colors">
+                        <div class="game-title">${displayTitle}</div>
                     </td>
-                    <td class="px-4 py-4 ${getColorClass(game.mechanics)}">${game.mechanics.toFixed(1)}</td>
-                    <td class="px-4 py-4 ${getColorClass(game.theme)}">${game.theme.toFixed(1)}</td>
-                    <td class="px-4 py-4 ${getColorClass(game.aesthetics)}">${game.aesthetics.toFixed(1)}</td>
-                    <td class="px-4 py-4 ${getColorClass(game.balance)}">${game.balance.toFixed(1)}</td>
-                    <td class="px-4 py-4 ${getColorClass(game.replayability)}">${game.replayability.toFixed(1)}</td>
-                    <td class="px-4 py-4 ${getColorClass(game.interactivity)}">${game.interactivity.toFixed(1)}</td>
-                    <td class="px-4 py-4 ${getColorClass(game.complexity)}">${game.complexity.toFixed(1)}</td>
-                    <td class="px-4 py-4 ${getColorClass(game.flow)}">${game.flow.toFixed(1)}</td>
-                    <td class="px-4 py-4 ${getColorClass(game.others)}">${game.others.toFixed(1)}</td>
-                    <td class="px-6 py-4 text-xl text-right sticky-col-right group-hover:bg-[#fffbf5] ${getColorClass(game.total)}">${game.total.toFixed(1)}</td>
+                    <td class="${getColorClass(game.mechanics)}">${formatScore(game.mechanics)}</td>
+                    <td class="${getColorClass(game.theme)}">${formatScore(game.theme)}</td>
+                    <td class="${getColorClass(game.aesthetics)}">${formatScore(game.aesthetics)}</td>
+                    <td class="${getColorClass(game.balance)}">${formatScore(game.balance)}</td>
+                    <td class="${getColorClass(game.replayability)}">${formatScore(game.replayability)}</td>
+                    <td class="${getColorClass(game.interactivity)}">${formatScore(game.interactivity)}</td>
+                    <td class="${getColorClass(game.complexity)}">${formatScore(game.complexity)}</td>
+                    <td class="${getColorClass(game.flow)}">${formatScore(game.flow)}</td>
+                    <td class="${getColorClass(game.others)}">${formatScore(game.others)}</td>
+                    <td class="font-bold sticky-col-right group-hover:bg-[#fffbf5] ${getColorClass(game.total)}">${formatScore(game.total)}</td>
                 `;
                 tbody.appendChild(tr);
             }
+
+            scheduleStickyHeaderUpdate();
+        }
+
+        function setupStickyTableHeader() {
+            if (stickyHeaderElements) return;
+
+            const sourceTable = document.getElementById('ratingTable');
+            const sourceHeader = sourceTable.tHead;
+            const tableContainer = document.getElementById('ratingTableContainer');
+            const stickyHeader = document.getElementById('stickyTableHeader');
+            const stickyViewport = stickyHeader.querySelector('.sticky-table-header-scroll');
+            const stickyTable = sourceTable.cloneNode(false);
+
+            stickyTable.removeAttribute('id');
+            stickyTable.appendChild(sourceHeader.cloneNode(true));
+            stickyViewport.replaceChildren(stickyTable);
+
+            stickyHeaderElements = {
+                sourceTable,
+                sourceHeader,
+                tableContainer,
+                stickyHeader,
+                stickyViewport,
+                stickyTable
+            };
+
+            window.addEventListener('scroll', scheduleStickyHeaderUpdate, { passive: true });
+            window.addEventListener('resize', scheduleStickyHeaderUpdate);
+            tableContainer.addEventListener('scroll', syncStickyHeaderScroll, { passive: true });
+
+            if ('ResizeObserver' in window) {
+                const resizeObserver = new ResizeObserver(scheduleStickyHeaderUpdate);
+                resizeObserver.observe(sourceTable);
+                resizeObserver.observe(tableContainer);
+                stickyHeaderElements.resizeObserver = resizeObserver;
+            }
+
+            updateStickyTableHeader();
+        }
+
+        function scheduleStickyHeaderUpdate() {
+            if (!stickyHeaderElements || stickyHeaderFrame !== null) return;
+
+            stickyHeaderFrame = requestAnimationFrame(() => {
+                stickyHeaderFrame = null;
+                updateStickyTableHeader();
+            });
+        }
+
+        function syncStickyHeaderScroll() {
+            if (!stickyHeaderElements) return;
+            stickyHeaderElements.stickyViewport.scrollLeft = stickyHeaderElements.tableContainer.scrollLeft;
+        }
+
+        function updateStickyTableHeader() {
+            if (!stickyHeaderElements) return;
+
+            const {
+                sourceTable,
+                sourceHeader,
+                tableContainer,
+                stickyHeader,
+                stickyViewport,
+                stickyTable
+            } = stickyHeaderElements;
+            const navigation = document.querySelector('nav');
+            const navigationBottom = navigation.getBoundingClientRect().bottom;
+            const containerRect = tableContainer.getBoundingClientRect();
+            const sourceHeaderRect = sourceHeader.getBoundingClientRect();
+            const headerHeight = sourceHeaderRect.height;
+            const shouldShow = sourceHeaderRect.top <= navigationBottom
+                && containerRect.bottom > navigationBottom + headerHeight;
+
+            stickyHeader.style.top = `${navigationBottom}px`;
+            stickyHeader.style.left = `${containerRect.left + tableContainer.clientLeft}px`;
+            stickyHeader.style.width = `${tableContainer.clientWidth}px`;
+            stickyTable.style.width = `${sourceTable.scrollWidth}px`;
+            stickyHeader.classList.toggle('is-visible', shouldShow);
+            stickyViewport.scrollLeft = tableContainer.scrollLeft;
         }
 
         function prevPage() {

@@ -97,6 +97,45 @@
             font-style: normal;
             color: #374151;
         }
+
+        .article-visual {
+            overflow: hidden;
+            margin: 2.75rem 0;
+            border: 1px solid rgba(194, 65, 12, 0.16);
+            border-radius: 0.9rem;
+            background: rgba(255, 255, 255, 0.76);
+            box-shadow: 0 18px 45px rgba(31, 41, 55, 0.08);
+        }
+
+        .article-visual img {
+            width: 100%;
+            height: auto;
+            display: block;
+            background: #f3f4f6;
+        }
+
+        .article-visual figcaption {
+            padding: 0.85rem 1rem;
+            color: #6b7280;
+            font-size: 0.8rem;
+            line-height: 1.55;
+        }
+
+        .image-credit {
+            display: block;
+            margin-top: 0.35rem;
+            color: #9ca3af;
+            font-size: 0.72rem;
+        }
+
+        .image-credit a {
+            color: #c2410c;
+            text-decoration: none;
+        }
+
+        .image-credit a:hover {
+            text-decoration: underline;
+        }
         
         /* Patterns 列表样式 */
         .pattern-list ul {
@@ -286,6 +325,14 @@
                         <p>Players <span class="pattern">TAKE TURNS</span> to play this game. First player revealing the top number-<span class="pattern">card</span> and must either take it—an <span class="pattern">IRREVERSIBLE EVENT</span> that adds its value to their <span class="pattern">scores</span> or refuse it by using a <span class="pattern">token</span>. The <span class="pattern">card</span> you reject, along with the <span class="pattern">tokens</span> accumulated on it, will be passed to the next player. This <span class="pattern">card</span> will circulate among the players until someone takes it with all the <span class="pattern">tokens</span> on it and then flips the next <span class="pattern">card</span>.</p>
                         <p>When the deck is exhausted, the <span class="pattern">game over</span> occurs and <span class="pattern">END STATE SCORING</span> is triggered: Each player’s <span class="pattern">score</span> is the sum of their number <span class="pattern">card</span> minus their tokens, with <span class="pattern">Card sequences</span> only counting the value of the smallest <span class="pattern">card</span>. The player with the lowest <span class="pattern">scores</span> wins in the end.</p>
 
+                        <figure class="article-visual">
+                            <img src="../../../picture/deconstruction/BoardGame/No&Catan/nothanks-table-state.jpg" alt="No Thanks table state showing a face-up card, chips, deck, and player card sequences" loading="lazy">
+                            <figcaption>
+                                The whole decision surface of <em>No Thanks!</em> is almost visible here: one current card, a growing token reward, and each player's partial number sequences.
+                                <span class="image-credit">Image source: <a href="https://www.goinganalogshow.com/article/154/7-push-your-luck-board-games-to-tempt-you-into-losing-it-all">Going Analog</a>.</span>
+                            </figcaption>
+                        </figure>
+
                         <!-- Figure 1 -->
                         <div class="figure-container">
                             <div class="img-placeholder bg-gray-50 border-gray-300">
@@ -303,6 +350,14 @@
                         <h3>2.3. <em>Catan</em></h3>
                         <p>This <span class="pattern">MULTIPLAYER GAME</span> has players acting as pioneers focused on <span class="pattern">CONSTRUCTION</span>, <span class="pattern">COLLECTION</span>, and expansion. They build settlements, cities, and roads, choose <span class="pattern">COOPERATION</span> or <span class="pattern">COMPETITION</span>, and aim to reach 10 victory points to <span class="pattern">WIN BY ENDING GAMEPLAY</span>. Players gain <span class="pattern">resources</span> through <span class="pattern">DICE</span> rolls, handle <span class="pattern">RANDOMNESS</span>, practice <span class="pattern">RESOURCE MANAGEMENT</span>, make <span class="pattern">AREA CONTROL</span> decisions, engage in <span class="pattern">TRADING</span>, and use or avoid <span class="pattern">ROBBERY</span> to affect opponents.</p>
                         <p>Each turn begins with rolling two <span class="pattern">DICE</span> to determine which <span class="pattern">Tiles</span> produce <span class="pattern">Resources</span>. Rolling a 7 activates the robber, blocking a <span class="pattern">TILES</span> and allowing the player to hinder others. Otherwise, adjacent settlements gain 1 <span class="pattern">Resource</span> and cities gain 2. The player may then initiate <span class="pattern">TRADE</span>, exchanging <span class="pattern">Resources</span> with the supplier at 4:1, negotiating any ratio with other players. Next, the player chooses whether to proceed with <span class="pattern">CONSTRUCTION</span>. Settlements and cities increase income and points (cities require upgrading from settlements); roads expand building options but give no points; development <span class="pattern">Cards</span> provide single-use abilities.</p>
+                        <figure class="article-visual">
+                            <img src="../../../picture/deconstruction/BoardGame/No&Catan/catan-board-3d-render.jpg" alt="Catan board setup with hex tiles, number tokens, resource cards, roads, settlements, and ports" loading="lazy">
+                            <figcaption>
+                                Compared with <em>No Thanks!</em>, <em>Catan</em> spreads decision-making across several linked surfaces: map position, dice numbers, resources, building costs, ports, and trade.
+                                <span class="image-credit">Image source: <a href="https://www.catan.com/catan">CATAN</a>.</span>
+                            </figcaption>
+                        </figure>
+
                         <p>Figure 2 illustrates the relevant important patterns and their relations.</p>
 
                         <!-- Figure 2 -->
@@ -355,6 +410,14 @@
                         
                         <p><strong><span class="pattern">Area Control</span></strong></p>
                         <p>This is one of the most important decisions in the game. Players must choose which nodes to occupy and how to place their roads. To do this, they need to constantly watch how the <span class="pattern">Tiles</span> change and whether other players are approaching the nodes they intend to claim. They must also consider how to build their own roads to reach those target nodes. This continuously shifting situation keeps players thinking and making decisions, which in turn sustains their engagement.</p>
+
+                        <figure class="article-visual">
+                            <img src="../../../picture/deconstruction/BoardGame/No&Catan/catan-board-close-shot.jpg" alt="Catan board close-up showing number tokens, resource tiles, roads, settlements, and the robber" loading="lazy">
+                            <figcaption>
+                                Area control in <em>Catan</em> is not only spatial blocking. A node's value comes from its resource tiles, dice numbers, neighboring routes, and whether opponents can cut into the same network.
+                                <span class="image-credit">Image source: <a href="https://www.catan.com/catan">CATAN</a>.</span>
+                            </figcaption>
+                        </figure>
 
                         <h3>3.3. Comparison</h3>
                         <p>This two game both introduce <span class="pattern">randomness</span> to keep players exception to the match, but the way and the impact of <span class="pattern">randomness</span> are different. In <em>Catan</em>, the main influence on the game state comes from <span class="pattern">Dice</span>-driven internal <span class="pattern">randomness</span>, which adds uncertainty but also reduces the weight of player decisions and creates a sense of losing control. The internal <span class="pattern">randomness</span> in <em>No Thanks!</em> comes from the revealed <span class="pattern">Cards</span>, which is generally fair and manageable for all players. The main <span class="pattern">randomness</span> in <em>No Thanks!</em> is an external <span class="pattern">randomness</span> - the nine discarded <span class="pattern">Cards</span>, which are the biggest strategic uncertainty. This kind of <span class="pattern">randomness</span> increases the amount of player interaction and also enhances <span class="pattern">Replayability</span>. <em>Catan</em> also has external <span class="pattern">randomness</span> — the placement of the starting map <span class="pattern">Tiles</span>. This is a good design choice that increases <span class="pattern">Replayability</span> without reducing strategic depth. The map setup variation in <em>Gaia Project</em> is similar to this.</p>

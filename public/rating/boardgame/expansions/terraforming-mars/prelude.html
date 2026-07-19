@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Expansion Review: Terraforming Mars: Prelude</title>
+    <link rel="icon" href="../../../../favicon.svg" type="image/svg+xml">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../../games/rating-game-navigation.css">
+    <script src="../../games/rating-game-navigation.js" defer></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: { sans: ['Inter', 'Noto Sans SC', 'sans-serif'] },
+                    colors: {
+                        paper: '#fdfbf7',
+                        ink: '#1a1a1a',
+                        accent: '#c2410c',
+                        secondary: '#f3f4f6',
+                        tier: '#15803d'
+                    }
+                }
+            }
+        };
+    </script>
+    <style>
+        body { background-color: #fdfbf7; color: #1a1a1a; }
+        .prose p { margin-bottom: 1.45em; line-height: 1.85; color: #4b5563; }
+        .prose h3 {
+            font-weight: 700;
+            font-size: 1.5rem;
+            margin-top: 2.75rem;
+            margin-bottom: 1rem;
+            color: #1a1a1a;
+            border-left: 4px solid #c2410c;
+            padding-left: 1rem;
+        }
+        .prose a {
+            color: #9a3412;
+            text-decoration: underline;
+            text-decoration-color: #fdba74;
+            text-underline-offset: 0.18em;
+        }
+        .prose a:hover { color: #c2410c; text-decoration-color: #c2410c; }
+        .review-header-media {
+            display: flex;
+            align-items: flex-end;
+            justify-content: space-between;
+            gap: 1.25rem;
+            width: 100%;
+        }
+        .review-cover {
+            flex: 0 0 auto;
+            width: 8.5rem;
+            margin: 0;
+        }
+        .review-cover-frame {
+            width: 100%;
+            aspect-ratio: 1 / 1;
+            overflow: hidden;
+            background: #ffffff;
+            border: 1px solid #e5e7eb;
+            border-radius: 2px;
+            box-shadow: 0 8px 22px rgba(17, 24, 39, 0.12);
+        }
+        .review-cover img {
+            display: block;
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+        .review-cover figcaption {
+            margin-top: 0.45rem;
+            color: #9ca3af;
+            font-size: 0.65rem;
+            line-height: 1.35;
+            text-align: center;
+        }
+        .verdict-row {
+            display: grid;
+            grid-template-columns: minmax(0, 1fr) auto;
+            gap: 1rem;
+            align-items: center;
+            padding: 1rem 1.5rem;
+            border-bottom: 1px solid #f3f4f6;
+        }
+        .verdict-row:last-child { border-bottom: 0; }
+        @media (min-width: 1024px) {
+            .review-header-media { width: auto; justify-content: flex-end; }
+            .review-cover { width: 10.5rem; }
+        }
+        @media (max-width: 360px) {
+            .review-header-media { gap: 1rem; }
+            .review-cover { width: 7.25rem; }
+        }
+    </style>
+</head>
+<body class="font-sans antialiased">
+    <nav class="fixed w-full z-50 top-0 bg-paper/90 backdrop-blur-sm border-b border-gray-200/50 h-20 flex items-center px-4 sm:px-6 justify-between">
+        <div class="flex flex-1 items-center gap-4 sm:gap-6 min-w-0">
+            <a href="../../games/TerraformingMars.html" class="flex items-center text-gray-500 hover:text-accent transition-colors group shrink-0">
+                <i data-lucide="arrow-left" class="w-5 h-5 mr-2 group-hover:-translate-x-1 transition-transform"></i>
+                <span class="hidden sm:inline">
+                    <span class="lang-en">Back to Terraforming Mars</span>
+                    <span class="lang-cn hidden">返回《殖民火星》</span>
+                </span>
+            </a>
+            <a href="../../rating_boardgame_home.html#expansion-ratings-en" class="hidden md:flex items-center text-gray-500 hover:text-accent transition-colors">
+                <i data-lucide="layers-3" class="w-4 h-4 mr-2"></i>
+                <span class="lang-en">Expansion Rules</span>
+                <span class="lang-cn hidden">扩展评分规则</span>
+            </a>
+            <div class="sticky-game-title" data-sticky-game-title aria-hidden="true">
+                <span class="lang-en">Terraforming Mars: Prelude</span>
+                <span class="lang-cn hidden">殖民火星：前序</span>
+            </div>
+        </div>
+
+        <button type="button" onclick="toggleLanguage()" aria-label="Switch language" class="flex items-center space-x-2 border border-gray-300 px-3 sm:px-4 py-2 rounded-full hover:border-accent hover:text-accent transition-all text-xs font-bold tracking-widest uppercase bg-white shrink-0">
+            <i data-lucide="globe" class="w-4 h-4"></i>
+            <span id="lang-label">EN / 中文</span>
+        </button>
+    </nav>
+
+    <main class="pt-32 pb-24 px-5 sm:px-6">
+        <article class="max-w-7xl mx-auto">
+            <header class="flex flex-col lg:flex-row justify-between items-start lg:items-end gap-8 mb-12 border-b border-gray-200 pb-12">
+                <div class="min-w-0">
+                    <span class="text-accent font-bold tracking-widest uppercase text-xs mb-2 block">
+                        <span class="lang-en">Opening Speed With Almost No Added Burden</span>
+                        <span class="lang-cn hidden">近乎零负担的开局加速器</span>
+                    </span>
+                    <h1 class="text-4xl sm:text-5xl font-bold text-ink mb-3 break-words" data-review-title>
+                        <span class="lang-en">Terraforming Mars: Prelude</span>
+                        <span class="lang-cn hidden">殖民火星：前序</span>
+                    </h1>
+                    <p class="text-gray-500 text-base sm:text-lg">
+                        <span class="lang-en">Jacob Fryxelius · 2018 · Expansion for Terraforming Mars</span>
+                        <span class="lang-cn hidden">Jacob Fryxelius · 2018 · 《殖民火星》扩展</span>
+                    </p>
+                </div>
+                <div class="review-header-media lg:shrink-0">
+                    <div class="flex flex-col items-start lg:items-end gap-4">
+                        <div class="text-left lg:text-right">
+                            <div class="text-xs font-mono tracking-widest uppercase text-gray-400 mb-1">
+                                <span class="lang-en">Quality Tier</span>
+                                <span class="lang-cn hidden">质量档位</span>
+                            </div>
+                            <div class="text-6xl font-bold text-tier leading-none">S+</div>
+                        </div>
+                        <div class="text-left lg:text-right max-w-44">
+                            <div class="text-xs font-mono tracking-widest uppercase text-gray-400 mb-1">
+                                <span class="lang-en">Enable Recommendation</span>
+                                <span class="lang-cn hidden">启用建议</span>
+                            </div>
+                            <div class="text-lg sm:text-xl font-bold text-accent leading-tight">
+                                <span class="lang-en">Always Include</span>
+                                <span class="lang-cn hidden">从第一局开始常驻</span>
+                            </div>
+                        </div>
+                    </div>
+                    <figure class="review-cover">
+                        <div class="review-cover-frame">
+                            <img src="../../../../picture/rating_boardgame/terraforming-mars/expansions/prelude/prelude-cover.png" alt="Terraforming Mars: Prelude / 殖民火星：前序 official product image" width="1310" height="1310" decoding="async" fetchpriority="high">
+                        </div>
+                        <figcaption>
+                            <span class="lang-en">Official product image · FryxGames</span>
+                            <span class="lang-cn hidden">官方商品图 · FryxGames</span>
+                        </figcaption>
+                    </figure>
+                </div>
+            </header>
+
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-12 lg:gap-16">
+                <div class="lg:col-span-2 prose max-w-none min-w-0">
+                    <h3>
+                        <span class="lang-en">Prelude at a Glance</span>
+                        <span class="lang-cn hidden">《前序》概览</span>
+                    </h3>
+                    <div class="lang-en">
+                        <p>
+                            Prelude is a lightweight expansion focused almost entirely on the opening. Before the first generation, two chosen Prelude cards give each player an asymmetrical starting position and an immediate strategic direction; the additional corporations and project cards also use the base game's existing systems rather than creating another one alongside them.
+                        </p>
+                        <p>
+                            This review covers the original 2018 Prelude expansion. Prelude 2 and later promotional Prelude cards are separate content and remain outside its scope.
+                        </p>
+                        <p>
+                            Prelude receives an S+ quality tier and an Always Include recommendation from the first play. It adds almost no rules or upkeep, yet immediately accelerates the opening, increases its variation, and connects corporations, starting projects, and early development more tightly. The improvement is large, while the expansion remains fully inside the original engine.
+                        </p>
+                    </div>
+                    <div class="lang-cn hidden">
+                        <p>
+                            《前序》是一款几乎只作用于开局阶段的轻量扩展。第一时代开始前，玩家通过两张前序牌获得不对称的初始发展与明确的路线起点；同盒新增的企业牌和项目牌也都直接沿用本体系统，而不是在旁边另起一套玩法。
+                        </p>
+                        <p>
+                            本文评价的是 2018 年的初代《前序》扩展，《前序 2》与后续推出的 Promo 前序牌不在本文范围内。
+                        </p>
+                        <p>
+                            《前序》的质量档位是 S+，启用建议是从第一局开始常驻。它几乎不增加规则与维护，却能立刻加快开局、增加变化，并让企业、初始项目牌与早期发展形成更紧密的联系。这份提升足够明显，整个扩展又始终留在原有引擎之中。
+                        </p>
+                    </div>
+
+                    <h3>
+                        <span class="lang-en">Two Cards That Reshape The Opening</span>
+                        <span class="lang-cn hidden">用两张牌重新组织开局</span>
+                    </h3>
+                    <div class="lang-en">
+                        <p>
+                            During setup, each player chooses two Prelude cards from four and resolves them before normal generations begin. Operationally, this is almost nothing more than playing two additional opening cards. Those cards immediately become familiar production, resources, tags, board development, or terraforming progress, so the table moves past the slowest part of early development without learning a second game.
+                        </p>
+                        <p>
+                            The acceleration is only part of the gain. The two cards establish an initial direction and make corporations, starting projects, and early conversion plans relate to one another sooner. Opening variation therefore becomes more consequential, creating a direct replayability gain without requiring a large new deck-building layer or a separate phase that must be maintained throughout the session.
+                        </p>
+                        <p>
+                            What makes this exceptional is not simply that the game becomes faster, but how precisely Prelude controls that tempo. It removes enough slow accumulation for each engine to take shape earlier without replacing the development arc that follows. Similar opening packages are easy to imagine, yet very few later designs have reproduced this balance of impact and restraint as cleanly. That difficulty of imitation is itself evidence of how exact the mechanism is.
+                        </p>
+                    </div>
+                    <div class="lang-cn hidden">
+                        <p>
+                            设置时，每名玩家会从四张前序牌中选择两张，并在正常时代开始前结算。落到实际操作上，它几乎只是开局多打两张牌。这些牌会立刻转化为玩家已经熟悉的产能、资源、标记、版图发展或改造进度，让整桌跳过最迟缓的前期积累，却不需要另外学习一套游戏。
+                        </p>
+                        <p>
+                            加快开局只是其中一部分。两张牌会提前建立发展方向，让企业、初始项目牌和前期资源转换更早形成联系。开局变化因此变得更有意义，直接增加了重玩性，却没有附带庞大的新构筑层，也没有增加一套整局都要反复维护的独立阶段。
+                        </p>
+                        <p>
+                            真正难得的并不只是游戏变快了，而是《前序》对节奏的把控非常准确：它恰好削去了足够多的缓慢积累，让每套引擎更早成形，却没有取代随后仍然完整的发展过程。类似的开局注入机制并不难设想，但后来的设计很少采用，即使有所采用，也很少能把增益与克制处理得这么干净。这种难以复刻，本身就足以说明它的精确。
+                        </p>
+                    </div>
+
+                    <h3>
+                        <span class="lang-en">Integration Without Upkeep</span>
+                        <span class="lang-cn hidden">不增加维护量的融合</span>
+                    </h3>
+                    <div class="lang-en">
+                        <p>
+                            Prelude does not add its own track, currency, recurring phase, or isolated action economy. It speaks through the base game's existing numerical language and then gets out of the way. The new opening changes later decisions because its production, tags, placement, and timing remain relevant, but players do not have to keep returning to a parallel module. The expansion changes the game through its existing systems without adding a second system that demands attention throughout the session.
+                        </p>
+                    </div>
+                    <div class="lang-cn hidden">
+                        <p>
+                            《前序》没有新增专属轨道、货币、循环阶段或孤立的行动经济。它完全使用本体已有的数值语言，完成开局注入以后便退到幕后。新增的产能、标记、板块和时机会持续改变后续决策，但玩家不需要反复回到一套平行模块中处理额外流程。它通过已有系统改变整局游戏，也不会增加一套需要持续分心照看的第二系统。
+                        </p>
+                    </div>
+
+                    <h3>
+                        <span class="lang-en">Low Learning Cost From The First Play</span>
+                        <span class="lang-cn hidden">首局即可承担的学习量</span>
+                    </h3>
+                    <div class="lang-en">
+                        <p>
+                            New players can include Prelude immediately. The added procedure is limited to choosing and resolving two more cards before the first generation. They may not find the best combination of corporation, projects, and Prelude cards on their first attempt, but learning how to value those relationships is part of becoming better at Terraforming Mars rather than learning another rules system.
+                        </p>
+                    </div>
+                    <div class="lang-cn hidden">
+                        <p>
+                            新玩家完全可以从第一局就加入《前序》。新增流程只是在第一时代前选择并结算两张牌。他们第一次尝试时或许找不到企业、项目牌与前序牌之间的最优组合，但如何判断这些关系，本来就是逐渐玩好《殖民火星》的一部分，而不是另一套需要额外学习的规则。
+                        </p>
+                    </div>
+
+                    <h3>
+                        <span class="lang-en">Opening Variance And A Stable Value Baseline</span>
+                        <span class="lang-cn hidden">开局随机与稳定的牌值基线</span>
+                    </h3>
+                    <div class="lang-en">
+                        <p>
+                            The official base-game opening does not use a complete draft, trading some balance protection for a faster start. Prelude enters that existing setup and adds only limited variance of its own, while immediately improving direction, speed, and opening variety.
+                        </p>
+                        <p>
+                            The Prelude cards themselves are also balanced around a notably stable baseline. Most sit close to a roughly 21 M€ value model even though they deliver that value through different resources, production, tags, or board effects. This does not make every opening combination identical, but it keeps the expansion's own numerical foundation sound; its almost cost-free improvement is not purchased by abandoning balance.
+                        </p>
+                    </div>
+                    <div class="lang-cn hidden">
+                        <p>
+                            官方本体的开局没有采用完整轮抽，本来就是用一部分平衡保障换取更快的开局。《前序》进入这套既有设置后，自身只增加了相当有限的随机，开局方向、速度与变化却会立刻得到改善。
+                        </p>
+                        <p>
+                            前序牌本身也建立在相当稳定的数值基线上。虽然价值会以不同的资源、产能、标记或版图效果兑现，但大多数牌都大体围绕约 21 M€ 的模型设计。这当然不代表所有开局组合完全等强，却足以让扩展自身的数值基础保持稳固；它近乎零成本的提升，并不是用放弃平衡换来的。
+                        </p>
+                    </div>
+
+                    <h3>
+                        <span class="lang-en">Final Recommendation</span>
+                        <span class="lang-cn hidden">最终建议</span>
+                    </h3>
+                    <div class="lang-en">
+                        <p>
+                            Few expansions change the opening this much while occupying so little rules space. Prelude accelerates the game, controls that acceleration with unusual precision, gives early decisions a clearer relationship, increases variation, and leaves the original engine intact. Its stable value model makes the achievement even stronger. The result is an S+ expansion that belongs in the game from the first play.
+                        </p>
+                    </div>
+                    <div class="lang-cn hidden">
+                        <p>
+                            很少有扩展能以这么小的规则占用，如此明显而准确地改善开局。《前序》加快游戏，让早期决策更早形成联系，增加变化，同时完整保留本体引擎；稳定的数值模型又让这份成绩更加难得。最终结论是 S+ 档，从第一局开始常驻。
+                        </p>
+                    </div>
+                </div>
+
+                <aside class="lg:col-span-1">
+                    <div class="bg-white border border-gray-200 rounded-sm shadow-sm overflow-hidden lg:sticky lg:top-32">
+                        <div class="bg-secondary/30 px-6 py-4 border-b border-gray-200">
+                            <h3 class="text-sm font-bold text-ink uppercase tracking-widest">
+                                <span class="lang-en">Expansion Verdict</span>
+                                <span class="lang-cn hidden">扩展结论</span>
+                            </h3>
+                        </div>
+                        <div>
+                            <div class="verdict-row">
+                                <span class="text-xs font-bold uppercase tracking-widest text-gray-400">
+                                    <span class="lang-en">Quality</span>
+                                    <span class="lang-cn hidden">质量档位</span>
+                                </span>
+                                <span class="font-bold text-tier">S+</span>
+                            </div>
+                            <div class="verdict-row">
+                                <span class="text-xs font-bold uppercase tracking-widest text-gray-400">
+                                    <span class="lang-en">Enable</span>
+                                    <span class="lang-cn hidden">启用建议</span>
+                                </span>
+                                <span class="font-bold text-right text-accent">
+                                    <span class="lang-en">Always include</span>
+                                    <span class="lang-cn hidden">常驻</span>
+                                </span>
+                            </div>
+                            <div class="verdict-row">
+                                <span class="text-xs font-bold uppercase tracking-widest text-gray-400">
+                                    <span class="lang-en">Integration</span>
+                                    <span class="lang-cn hidden">融合度</span>
+                                </span>
+                                <span class="font-medium text-right text-gray-700">
+                                    <span class="lang-en">Excellent</span>
+                                    <span class="lang-cn hidden">极高</span>
+                                </span>
+                            </div>
+                            <div class="verdict-row">
+                                <span class="text-xs font-bold uppercase tracking-widest text-gray-400">
+                                    <span class="lang-en">Learning Cost</span>
+                                    <span class="lang-cn hidden">学习成本</span>
+                                </span>
+                                <span class="font-medium text-right text-gray-700">
+                                    <span class="lang-en">Near zero</span>
+                                    <span class="lang-cn hidden">近乎为零</span>
+                                </span>
+                            </div>
+                            <div class="verdict-row">
+                                <span class="text-xs font-bold uppercase tracking-widest text-gray-400">
+                                    <span class="lang-en">Scope</span>
+                                    <span class="lang-cn hidden">评价范围</span>
+                                </span>
+                                <span class="font-medium text-right text-gray-700">
+                                    <span class="lang-en">Prelude (2018)</span>
+                                    <span class="lang-cn hidden">初代《前序》</span>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="px-6 py-5 border-t border-gray-100 space-y-3 text-sm">
+                            <a href="../../games/TerraformingMars.html" class="flex items-center justify-between gap-4 text-gray-600 hover:text-accent transition-colors">
+                                <span class="lang-en">Read Base Game Review</span>
+                                <span class="lang-cn hidden">查看《殖民火星》本体评测</span>
+                                <i data-lucide="arrow-right" class="w-4 h-4 shrink-0"></i>
+                            </a>
+                            <a href="../../rating_boardgame_home.html#expansion-ratings-en" class="flex items-center justify-between gap-4 text-gray-600 hover:text-accent transition-colors">
+                                <span class="lang-en">Read Expansion Rules</span>
+                                <span class="lang-cn hidden">查看扩展评分规则</span>
+                                <i data-lucide="arrow-right" class="w-4 h-4 shrink-0"></i>
+                            </a>
+                        </div>
+                    </div>
+                </aside>
+            </div>
+        </article>
+    </main>
+
+    <script>
+        function toggleLanguage() {
+            const enEls = document.querySelectorAll('.lang-en');
+            const cnEls = document.querySelectorAll('.lang-cn');
+            enEls.forEach((element) => element.classList.toggle('hidden'));
+            cnEls.forEach((element) => element.classList.toggle('hidden'));
+            document.documentElement.lang = document.documentElement.lang === 'en' ? 'zh-CN' : 'en';
+        }
+
+        lucide.createIcons();
+    </script>
+</body>
+</html>

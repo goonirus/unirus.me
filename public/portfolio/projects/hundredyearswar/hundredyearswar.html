@@ -1,0 +1,601 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project: Hundred Years' War</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Noto+Sans+SC:wght@300;400;500;700&family=Libre+Baskerville:wght@400;700&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'Noto Sans SC', 'sans-serif'],
+                        serif: ['Libre Baskerville', 'serif'],
+                    },
+                    colors: {
+                        paper: '#f6efe0',
+                        ink: '#201713',
+                        accent: '#8f2f28',
+                        french: '#1f5d8f',
+                        english: '#a53b33',
+                        parchment: '#efe1c2',
+                        brass: '#b59154',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            background:
+                radial-gradient(circle at top left, rgba(181, 145, 84, 0.24), transparent 30rem),
+                linear-gradient(180deg, #f9f3e8 0%, #f1e4cb 48%, #e8d5ad 100%);
+            color: #201713;
+            scroll-behavior: smooth;
+        }
+
+        .sidebar-sticky {
+            position: sticky;
+            top: 8rem;
+            max-height: calc(100vh - 8rem);
+            overflow-y: auto;
+        }
+
+        .section-title {
+            font-family: 'Libre Baskerville', serif;
+            font-weight: 700;
+            font-size: 1.65rem;
+            margin-top: 3.5rem;
+            margin-bottom: 1rem;
+            padding-bottom: 0.7rem;
+            border-bottom: 1px solid rgba(32, 23, 19, 0.18);
+        }
+
+        p {
+            margin-bottom: 1.45em;
+            line-height: 1.85;
+            color: #4b3b31;
+            font-size: 1.05rem;
+        }
+
+        .project-img {
+            width: 100%;
+            background: rgba(255, 251, 242, 0.7);
+            border: 1px solid rgba(76, 52, 36, 0.22);
+            border-radius: 1rem;
+            overflow: hidden;
+            box-shadow: 0 18px 45px rgba(80, 55, 28, 0.14);
+        }
+
+        .project-img img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .image-contain {
+            object-fit: contain;
+            background: #f8f1e2;
+        }
+
+        .info-table th {
+            text-align: left;
+            padding: 0.55rem 0;
+            font-size: 0.72rem;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: #8b7660;
+            vertical-align: top;
+        }
+
+        .info-table td {
+            text-align: right;
+            padding: 0.55rem 0;
+            font-size: 0.88rem;
+            color: #3a2c24;
+            vertical-align: top;
+        }
+
+        .war-card {
+            border: 1px solid rgba(76, 52, 36, 0.18);
+            background: rgba(255, 251, 242, 0.68);
+            box-shadow: 0 14px 35px rgba(80, 55, 28, 0.08);
+        }
+
+        .metric-card {
+            border-left: 4px solid #8f2f28;
+            background: rgba(255, 251, 242, 0.75);
+        }
+
+        #backToTopBtn {
+            display: none;
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            z-index: 99;
+            border: none;
+            outline: none;
+            background-color: rgba(32, 23, 19, 0.82);
+            color: white;
+            cursor: pointer;
+            padding: 0.75rem;
+            border-radius: 999px;
+            backdrop-filter: blur(4px);
+            transition: all 0.3s ease;
+        }
+
+        #backToTopBtn:hover {
+            background-color: rgba(143, 47, 40, 0.92);
+            transform: translateY(-3px);
+        }
+    </style>
+</head>
+<body class="font-sans antialiased">
+
+<nav class="fixed w-full z-50 top-0 bg-paper/90 backdrop-blur-sm border-b border-stone-300/60 h-20 flex items-center px-6 justify-between transition-all duration-300">
+    <div class="flex items-center">
+        <a href="../../portfolio_home.html" class="flex items-center text-stone-500 hover:text-accent transition-colors group mr-8">
+            <i data-lucide="arrow-left" class="w-5 h-5 mr-2 group-hover:-translate-x-1 transition-transform"></i>
+            <span class="lang-en">Back to All Works</span>
+            <span class="lang-cn hidden">返回作品集</span>
+        </a>
+    </div>
+
+    <button onclick="toggleLanguage()" class="flex items-center space-x-2 border border-stone-300 px-4 py-2 rounded-full hover:border-accent hover:text-accent transition-all text-xs font-bold tracking-widest uppercase bg-white/80">
+        <i data-lucide="globe" class="w-4 h-4"></i>
+        <span id="lang-label">EN / 中文</span>
+    </button>
+</nav>
+
+<div class="pt-32 pb-24 max-w-7xl mx-auto px-6 flex flex-col lg:flex-row gap-16">
+
+    <aside class="lg:w-1/4">
+        <div class="lg:sidebar-sticky">
+            <h1 class="text-4xl font-serif font-bold text-ink mb-6 leading-tight">Hundred Years' War</h1>
+
+            <div class="bg-white/72 border border-stone-300/70 rounded-xl shadow-sm mb-8 overflow-hidden">
+                <div class="bg-parchment/70 px-4 py-3 border-b border-stone-300/70">
+                    <h2 class="text-xs font-bold text-ink uppercase tracking-widest">
+                        <span class="lang-en">Project Summary</span>
+                        <span class="lang-cn hidden">项目速览</span>
+                    </h2>
+                </div>
+                <div class="px-4 py-3">
+                    <table class="w-full info-table">
+                        <tbody>
+                            <tr>
+                                <th><span class="lang-en">Type</span><span class="lang-cn hidden">类型</span></th>
+                                <td><span class="lang-en">Board Game</span><span class="lang-cn hidden">桌面战棋</span></td>
+                            </tr>
+                            <tr>
+                                <th><span class="lang-en">Players</span><span class="lang-cn hidden">玩家人数</span></th>
+                                <td>2</td>
+                            </tr>
+                            <tr>
+                                <th><span class="lang-en">Status</span><span class="lang-cn hidden">状态</span></th>
+                                <td><span class="lang-en">Complete board game</span><span class="lang-cn hidden">完整桌游</span></td>
+                            </tr>
+                            <tr>
+                                <th><span class="lang-en">Setting</span><span class="lang-cn hidden">背景</span></th>
+                                <td>1360-1369</td>
+                            </tr>
+                            <tr>
+                                <th><span class="lang-en">Map</span><span class="lang-cn hidden">地图规模</span></th>
+                                <td><span class="lang-en">30 regions / 8 sea zones</span><span class="lang-cn hidden">30 个区域 / 8 个海区</span></td>
+                            </tr>
+                            <tr>
+                                <th><span class="lang-en">Role</span><span class="lang-cn hidden">职责</span></th>
+                                <td>
+                                    <span class="lang-en">Game design, rule system, map, components</span>
+                                    <span class="lang-cn hidden">游戏设计、规则系统、地图与组件制作</span>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="space-y-3 mb-8">
+                <a href="../../../../file/portfolio/boardgame/hundredyearswar/Hundred-Years-War-Rulebook.pdf" class="w-full inline-flex justify-center items-center bg-ink text-white px-5 py-3 rounded-full text-sm font-bold hover:bg-accent transition-colors">
+                    <i data-lucide="book-open" class="w-4 h-4 mr-2"></i>
+                    <span class="lang-en">View Rulebook PDF</span>
+                    <span class="lang-cn hidden">查看规则书 PDF</span>
+                </a>
+            </div>
+
+            <div class="mb-8">
+                <h3 class="text-xs font-bold uppercase tracking-widest text-stone-500 mb-4">
+                    <span class="lang-en">Contents</span>
+                    <span class="lang-cn hidden">页面目录</span>
+                </h3>
+                <nav class="space-y-2 text-sm">
+                    <a href="#overview" class="block text-stone-600 hover:text-accent">01 Overview</a>
+                    <a href="#system" class="block text-stone-600 hover:text-accent">02 Game System</a>
+                    <a href="#map" class="block text-stone-600 hover:text-accent">03 Playable Map</a>
+                    <a href="#battle" class="block text-stone-600 hover:text-accent">04 Battle & Components</a>
+                    <a href="#rules" class="block text-stone-600 hover:text-accent">05 Rules in Play</a>
+                </nav>
+            </div>
+        </div>
+    </aside>
+
+    <main class="lg:w-3/4">
+        <div class="project-img mb-10">
+            <img src="../../../../picture/portfolio/hundredyearswar/hundredyearswar_cover.webp" alt="Hundred Years' War board game cover crop">
+        </div>
+
+        <section id="overview">
+            <h2 class="section-title">
+                <span class="lang-en">A Complete Two-Player Historical Strategy Board Game</span>
+                <span class="lang-cn hidden">一款完整的双人历史战略桌游</span>
+            </h2>
+            <div class="lang-en">
+                <p>
+                    <em>Hundred Years' War</em> is a complete tabletop wargame set during the 1360-1369 turning point of the Hundred Years' War. One player controls England and the other controls France. The game is built around territorial control, sea access, regional income, recruitment, one-round battles, damaged cities, and asymmetrical victory conditions.
+                </p>
+                <p>
+                    The project began from a cartographic question, but it no longer stops at map design. It now has a playable strategic map, a full rulebook, component definitions, unit pieces, a battle board, player-facing setup, variant modules, and production-ready player materials. The map remains central, but it serves a larger playable system.
+                </p>
+            </div>
+            <div class="lang-cn hidden">
+                <p>
+                    <em>Hundred Years' War</em> 是一款设定在百年战争 1360-1369 年转折期的完整桌面战棋。两名玩家分别控制英格兰与法兰西，围绕领土控制、海峡通行、区域收入、招募补员、单轮战斗、破损城市和非对称胜利条件展开长期对抗。
+                </p>
+                <p>
+                    这个项目最初从地图问题出发，但现在已经不是单纯的地图设计。它已经包含可玩的战略地图、完整规则书、组件定义、单位棋子、战斗板、玩家设置流程、可选变体模块和面向玩家的成品材料。地图依然重要，但它服务的是一个完整的可玩系统。
+                </p>
+            </div>
+
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 my-8">
+                <div class="metric-card rounded-xl p-4">
+                    <div class="text-3xl font-bold text-accent">2</div>
+                    <div class="text-xs uppercase tracking-widest text-stone-500 mt-1">Players</div>
+                </div>
+                <div class="metric-card rounded-xl p-4">
+                    <div class="text-3xl font-bold text-accent">30</div>
+                    <div class="text-xs uppercase tracking-widest text-stone-500 mt-1">Regions</div>
+                </div>
+                <div class="metric-card rounded-xl p-4">
+                    <div class="text-3xl font-bold text-accent">8</div>
+                    <div class="text-xs uppercase tracking-widest text-stone-500 mt-1">Sea Zones</div>
+                </div>
+                <div class="metric-card rounded-xl p-4">
+                    <div class="text-3xl font-bold text-accent">6</div>
+                    <div class="text-xs uppercase tracking-widest text-stone-500 mt-1">Battle Columns</div>
+                </div>
+            </div>
+        </section>
+
+        <section id="system">
+            <h2 class="section-title">
+                <span class="lang-en">The Game Is Built Around Pressure, Not Simulation for Its Own Sake</span>
+                <span class="lang-cn hidden">游戏核心是战略压力，而不是为复原而复原</span>
+            </h2>
+            <div class="lang-en">
+                <p>
+                    The design does not try to reproduce every political detail of medieval Europe. Instead, it turns the war into a board-game pressure structure. England begins with strong continental holdings, Calais, and sea access. France begins with lower controlled value, but has interior position, flexible deployment, and the ability to recover ground.
+                </p>
+                <p>
+                    Each round follows a clear sequence: upkeep and income, secret planning, reveal, action resolution, then recruitment and replenishment. This creates a strategic rhythm where players commit intentions before fully knowing the opponent's plan, then resolve movement, battle, production, and recovery through a shared procedure.
+                </p>
+            </div>
+            <div class="lang-cn hidden">
+                <p>
+                    这个设计并不试图复原中世纪欧洲的每一个政治细节，而是把战争转译成桌面游戏里的压力结构。英格兰开局拥有强势大陆据点、加莱和海上通道；法兰西开局控制价值较低，但拥有内线位置、更灵活的部署和收复失地的空间。
+                </p>
+                <p>
+                    每一回合由维护与收入、秘密计划、揭示、行动结算、招募与补员组成。玩家必须在不完全知道对方意图的情况下提前提交计划，再通过统一流程结算移动、战斗、生产和恢复。
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-5 my-8">
+                <div class="war-card rounded-xl p-6">
+                    <h3 class="font-bold text-lg mb-2 text-ink">
+                        <span class="lang-en">Asymmetrical Objectives</span>
+                        <span class="lang-cn hidden">非对称胜利目标</span>
+                    </h3>
+                    <p class="text-sm">
+                        <span class="lang-en">England wins by controlling Ile-de-France; France wins by controlling Southeast England. The victory conditions force both sides to think beyond passive defense.</span>
+                        <span class="lang-cn hidden">英格兰控制法兰西岛即可获胜，法兰西控制英格兰东南部即可获胜。胜利条件迫使双方不能只守成，而必须寻找突破。</span>
+                    </p>
+                </div>
+                <div class="war-card rounded-xl p-6">
+                    <h3 class="font-bold text-lg mb-2 text-ink">
+                        <span class="lang-en">One-Round Battles</span>
+                        <span class="lang-cn hidden">单轮战斗</span>
+                    </h3>
+                    <p class="text-sm">
+                        <span class="lang-en">Battles resolve through one simultaneous damage round, making positioning, flanking, encirclement, and landing penalties matter before dice are rolled.</span>
+                        <span class="lang-cn hidden">战斗只进行一轮同时伤害，因此布阵、夹击、包围、登陆惩罚会在骰点前就决定战斗质量。</span>
+                    </p>
+                </div>
+                <div class="war-card rounded-xl p-6">
+                    <h3 class="font-bold text-lg mb-2 text-ink">
+                        <span class="lang-en">Economic Recovery</span>
+                        <span class="lang-cn hidden">经济恢复</span>
+                    </h3>
+                    <p class="text-sm">
+                        <span class="lang-en">Broken City tokens make conquest productive but not immediately clean. Captured regions need time to recover before they become reliable income sources.</span>
+                        <span class="lang-cn hidden">Broken City 让征服不是立刻变成干净收益。被占领区域需要经过恢复，才会重新成为稳定收入来源。</span>
+                    </p>
+                </div>
+                <div class="war-card rounded-xl p-6">
+                    <h3 class="font-bold text-lg mb-2 text-ink">
+                        <span class="lang-en">Variant Modules</span>
+                        <span class="lang-cn hidden">可选变体模块</span>
+                    </h3>
+                    <p class="text-sm">
+                        <span class="lang-en">City Upgrade, Scorched Earth, Agricultural Reform, Military Reform, Rebel Corps, and Joan of Arc extend the game beyond a single fixed scenario.</span>
+                        <span class="lang-cn hidden">城市升级、焦土、农业改革、军事改革、叛军与圣女贞德模块，让游戏不止停留在单一固定剧本。</span>
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <section id="map">
+            <h2 class="section-title">
+                <span class="lang-en">The Map Is a Playable Board, Not an Atlas</span>
+                <span class="lang-cn hidden">这张地图是可玩的棋盘，不是历史地图册</span>
+            </h2>
+            <div class="lang-en">
+                <p>
+                    The regional map compresses England, France, Flanders, Brittany, Burgundy, Provence, and surrounding seas into readable play spaces. Each region carries game-facing information: strategic value, defensive advantage, initial control, and movement connections. The goal is historical grounding without forcing the historical outcome.
+                </p>
+                <p>
+                    This meant making deliberate abstractions. Some borders are simplified, cities become regional anchors, and sea zones become movement constraints. The important question was always: what does the player need to read during play?
+                </p>
+            </div>
+            <div class="lang-cn hidden">
+                <p>
+                    这张区域地图把英格兰、法兰西、佛兰德斯、布列塔尼、勃艮第、普罗旺斯和周边海域压缩成可读的游戏空间。每个区域都承载玩家需要的信息：战略价值、防御优势、初始控制和移动连接。目标不是强制复现历史结果，而是在历史基础上提供可变的战略局面。
+                </p>
+                <p>
+                    这需要主动抽象：边界会被简化，城市成为区域锚点，海区成为移动限制。真正的判断标准始终是：玩家在游戏过程中需要读到什么？
+                </p>
+            </div>
+
+            <div class="project-img my-8">
+                <img src="../../../../picture/portfolio/hundredyearswar/hundredyearswar_map.webp" alt="Full Hundred Years' War board map" class="image-contain">
+            </div>
+        </section>
+
+        <section id="battle">
+            <h2 class="section-title">
+                <span class="lang-en">From Strategic Movement to a Physical Battle Board</span>
+                <span class="lang-cn hidden">从战略移动到实体战斗板</span>
+            </h2>
+            <div class="lang-en">
+                <p>
+                    The game separates strategic movement from battle resolution. Armies move across the regional map, but when battle happens, units are placed onto a six-column battle board. The defender places first, then players alternate placement, and paired columns deal simultaneous damage.
+                </p>
+                <p>
+                    The component set supports the tabletop game as a physical object: English, French, and neutral units; commanders; money; dice; recruitment markers; Broken City markers; and optional variant markers.
+                </p>
+            </div>
+            <div class="lang-cn hidden">
+                <p>
+                    游戏把战略移动和战斗结算拆开处理。军队在区域地图上移动，但战斗发生时，单位会进入六列战斗板。防守方先放置，随后双方交替布阵，对应列进行一次同时伤害结算。
+                </p>
+                <p>
+                    组件体系让这个游戏不只是规则文本，而是一个可以摆上桌面的实体作品：英法与中立单位、指挥官、钱币、骰子、招募标记、破损城市标记以及可选变体标记都已经定义并制作。
+                </p>
+            </div>
+
+            <div class="project-img my-8">
+                <img src="../../../../picture/portfolio/hundredyearswar/hundredyearswar_battle_board.webp" alt="Hundred Years' War battle board">
+            </div>
+
+            <div class="grid grid-cols-2 md:grid-cols-5 gap-4 my-8">
+                <div class="war-card rounded-xl p-3">
+                    <img src="../../../../picture/portfolio/hundredyearswar/ENG_Infantry.webp" alt="English Infantry component" class="w-full">
+                    <p class="text-xs text-center mt-2 mb-0">English Infantry</p>
+                </div>
+                <div class="war-card rounded-xl p-3">
+                    <img src="../../../../picture/portfolio/hundredyearswar/FRA_Cavalry.webp" alt="French Cavalry component" class="w-full">
+                    <p class="text-xs text-center mt-2 mb-0">French Cavalry</p>
+                </div>
+                <div class="war-card rounded-xl p-3">
+                    <img src="../../../../picture/portfolio/hundredyearswar/Money_token.webp" alt="Money token component" class="w-full">
+                    <p class="text-xs text-center mt-2 mb-0">Money</p>
+                </div>
+                <div class="war-card rounded-xl p-3">
+                    <img src="../../../../picture/portfolio/hundredyearswar/Recruitment_Progress.webp" alt="Recruitment Progress component" class="w-full">
+                    <p class="text-xs text-center mt-2 mb-0">Recruitment</p>
+                </div>
+                <div class="war-card rounded-xl p-3">
+                    <img src="../../../../picture/portfolio/hundredyearswar/Broken_City_Tokens.webp" alt="Broken City component" class="w-full">
+                    <p class="text-xs text-center mt-2 mb-0">Broken City</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="rules">
+            <h2 class="section-title">
+                <span class="lang-en">Rules as Playable Decisions</span>
+                <span class="lang-cn hidden">规则如何变成决策</span>
+            </h2>
+            <div class="lang-en">
+                <p>
+                    The full rulebook is available as a PDF, but the portfolio page should show the rules as game design rather than as manual screenshots. The important part is how the rules create pressure: where players must commit, when they can recover, and how geography turns into strategic risk.
+                </p>
+                <p>
+                    The rule system is organized around a few readable procedures. Each one is simple enough to execute at the table, but together they create a long-form conflict about timing, position, damaged cities, and whether either side can force a decisive territorial break.
+                </p>
+            </div>
+            <div class="lang-cn hidden">
+                <p>
+                    完整规则书会作为 PDF 保留，但 portfolio 页面不应该把规则展示成说明书截图。更重要的是把规则当作游戏设计来呈现：玩家在哪里必须提前承诺，什么时候可以恢复，地理位置又如何转化为战略风险。
+                </p>
+                <p>
+                    这套规则围绕几个清晰流程组织。每个流程本身都要能在桌面上顺畅执行，但组合在一起之后，会形成关于时机、位置、破损城市和关键领土突破的长期对抗。
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-5 my-8">
+                <div class="war-card rounded-xl p-5">
+                    <div class="flex items-center gap-3 mb-3">
+                        <i data-lucide="flag" class="w-5 h-5 text-accent"></i>
+                        <h3 class="font-bold text-ink">
+                            <span class="lang-en">Victory Pressure</span>
+                            <span class="lang-cn hidden">胜利压力</span>
+                        </h3>
+                    </div>
+                    <p class="text-sm mb-0">
+                        <span class="lang-en">England wins by taking Ile-de-France; France wins by taking Southeast England. If neither side breaks through by round 100, the mainland tie-break decides the war.</span>
+                        <span class="lang-cn hidden">英格兰夺取法兰西岛即可获胜，法兰西夺取英格兰东南部即可获胜。若 100 回合内无人完成突破，则由大陆控制情况决定最终胜负。</span>
+                    </p>
+                </div>
+
+                <div class="war-card rounded-xl p-5">
+                    <div class="flex items-center gap-3 mb-3">
+                        <i data-lucide="rotate-cw" class="w-5 h-5 text-accent"></i>
+                        <h3 class="font-bold text-ink">
+                            <span class="lang-en">Turn Structure</span>
+                            <span class="lang-cn hidden">回合结构</span>
+                        </h3>
+                    </div>
+                    <p class="text-sm mb-0">
+                        <span class="lang-en">Each round moves through upkeep and income, secret planning, reveal, action resolution, then recruitment and replenishment. Plans are committed before the opponent's full intent is known.</span>
+                        <span class="lang-cn hidden">每回合依次经过维持与收入、秘密计划、揭示、行动结算、招募与补员。玩家必须在尚未完全知道对手意图时提前提交计划。</span>
+                    </p>
+                </div>
+
+                <div class="war-card rounded-xl p-5">
+                    <div class="flex items-center gap-3 mb-3">
+                        <i data-lucide="ship" class="w-5 h-5 text-accent"></i>
+                        <h3 class="font-bold text-ink">
+                            <span class="lang-en">Movement and Sea Access</span>
+                            <span class="lang-cn hidden">移动与海域通行</span>
+                        </h3>
+                    </div>
+                    <p class="text-sm mb-0">
+                        <span class="lang-en">Land movement takes time, while sea zones create transport routes, landing attacks, and exposed approaches. There are no fleet units; sea battles represent transported land forces fighting at sea.</span>
+                        <span class="lang-cn hidden">陆地移动需要时间，海域则提供运输路线、登陆攻击和暴露的进攻方向。游戏没有舰队单位，海战代表正在运输中的陆军在海上交战。</span>
+                    </p>
+                </div>
+
+                <div class="war-card rounded-xl p-5">
+                    <div class="flex items-center gap-3 mb-3">
+                        <i data-lucide="swords" class="w-5 h-5 text-accent"></i>
+                        <h3 class="font-bold text-ink">
+                            <span class="lang-en">Battle Board Procedure</span>
+                            <span class="lang-cn hidden">战斗板流程</span>
+                        </h3>
+                    </div>
+                    <p class="text-sm mb-0">
+                        <span class="lang-en">The defending region's value sets the active battle columns. The defender places first, players alternate placement, and paired columns deal simultaneous damage in one decisive exchange.</span>
+                        <span class="lang-cn hidden">防守区域的战略价值决定战斗板上的可用列数。防守方先放置，随后双方交替布阵，对应列在一次决定性交换中同时造成伤害。</span>
+                    </p>
+                </div>
+
+                <div class="war-card rounded-xl p-5">
+                    <div class="flex items-center gap-3 mb-3">
+                        <i data-lucide="coins" class="w-5 h-5 text-accent"></i>
+                        <h3 class="font-bold text-ink">
+                            <span class="lang-en">Economy and Recovery</span>
+                            <span class="lang-cn hidden">经济与恢复</span>
+                        </h3>
+                    </div>
+                    <p class="text-sm mb-0">
+                        <span class="lang-en">Income arrives every 5 rounds, commanders every 20 rounds, and Broken City markers slow conquered regions before they recover. Conquest is powerful, but damaged territory takes time to become useful.</span>
+                        <span class="lang-cn hidden">收入每 5 回合结算一次，指挥官每 20 回合产生一次，破损城市会让被征服区域在恢复前效率下降。征服很强，但被打坏的领土需要时间才能重新变得有用。</span>
+                    </p>
+                </div>
+
+                <div class="war-card rounded-xl p-5">
+                    <div class="flex items-center gap-3 mb-3">
+                        <i data-lucide="layers" class="w-5 h-5 text-accent"></i>
+                        <h3 class="font-bold text-ink">
+                            <span class="lang-en">Variant Modules</span>
+                            <span class="lang-cn hidden">可选变体模块</span>
+                        </h3>
+                    </div>
+                    <p class="text-sm mb-0">
+                        <span class="lang-en">Scorched Earth, City Upgrade, Agricultural Reform, Military Reform, Rebel Corps, and Joan of Arc can be added to change the scale and texture of the war without replacing the core rules.</span>
+                        <span class="lang-cn hidden">焦土、城市升级、农业改革、军事改革、叛军与圣女贞德可以作为模块加入，在不替换核心规则的前提下改变战争的尺度和质感。</span>
+                    </p>
+                </div>
+            </div>
+
+            <div class="war-card rounded-xl p-6 my-8">
+                <h3 class="font-bold text-lg mb-3 text-ink">
+                    <span class="lang-en">The design focus</span>
+                    <span class="lang-cn hidden">设计重点</span>
+                </h3>
+                <p class="text-sm mb-0">
+                    <span class="lang-en">The rules are written to keep the game legible at the table: strategic geography gives players goals, secret planning creates commitment, battle columns make combat physical, and damaged cities prevent conquest from becoming a simple snowball.</span>
+                    <span class="lang-cn hidden">这套规则的重点是让游戏在桌面上保持可读：战略地理提供目标，秘密计划制造承诺，战斗列让战斗变成实体操作，而破损城市避免征服变成单纯滚雪球。</span>
+                </p>
+            </div>
+        </section>
+    </main>
+</div>
+
+<footer class="bg-ink text-stone-200 py-20 px-6 mt-8 border-t border-stone-900">
+    <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+        <div>
+            <h2 class="text-3xl md:text-4xl font-bold mb-6 text-white">
+                <span class="lang-en">Let's talk board games and systems.</span>
+                <span class="lang-cn hidden">欢迎聊聊桌游与系统设计。</span>
+            </h2>
+            <a href="mailto:donglinyan2000@outlook.com" class="inline-flex items-center text-brass hover:text-white transition-colors text-lg font-medium">
+                donglinyan2000@outlook.com
+                <i data-lucide="arrow-right" class="ml-2 w-5 h-5"></i>
+            </a>
+        </div>
+        <div class="flex flex-col md:items-end space-y-4">
+            <p class="text-sm text-stone-400 uppercase tracking-widest mb-4">
+                <span class="lang-en">Social Media</span>
+                <span class="lang-cn hidden">社交媒体</span>
+            </p>
+            <a href="#" class="text-stone-300 hover:text-brass transition-colors flex items-center">
+                <i data-lucide="twitter" class="w-5 h-5 mr-3"></i> Twitter / X
+            </a>
+            <a href="#" class="text-stone-300 hover:text-brass transition-colors flex items-center">
+                <i data-lucide="linkedin" class="w-5 h-5 mr-3"></i> LinkedIn
+            </a>
+        </div>
+    </div>
+    <div class="max-w-7xl mx-auto mt-20 pt-8 border-t border-stone-800 text-center md:text-left text-xs text-stone-500">
+        &copy; 2025 Game Designer Portfolio. All rights reserved.
+    </div>
+</footer>
+
+<button id="backToTopBtn" onclick="scrollToTop()" title="Go to top">
+    <i data-lucide="arrow-up" class="w-6 h-6"></i>
+</button>
+
+<script>
+    lucide.createIcons();
+
+    const backToTopBtn = document.getElementById("backToTopBtn");
+
+    window.addEventListener('scroll', function() {
+        const nav = document.querySelector('nav');
+        if (window.scrollY > 50) {
+            nav.classList.add('shadow-lg');
+            nav.classList.add('bg-paper/95');
+        } else {
+            nav.classList.remove('shadow-lg');
+            nav.classList.remove('bg-paper/95');
+        }
+
+        backToTopBtn.style.display = window.scrollY > 300 ? "block" : "none";
+    });
+
+    function scrollToTop() {
+        window.scrollTo({top: 0, behavior: 'smooth'});
+    }
+
+    function toggleLanguage() {
+        const enEls = document.querySelectorAll('.lang-en');
+        const cnEls = document.querySelectorAll('.lang-cn');
+        enEls.forEach(el => el.classList.toggle('hidden'));
+        cnEls.forEach(el => el.classList.toggle('hidden'));
+    }
+</script>
+</body>
+</html>

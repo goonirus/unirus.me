@@ -1,0 +1,594 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wondrous Creatures: Busy, But Not Deep Enough | Deconstructing Design</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Sans+SC:wght@300;400;500;700&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+
+    <script src="../deconstruction_article.js"></script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'Noto Sans SC', 'sans-serif'],
+                        serif: ['Playfair Display', 'serif'],
+                    },
+                    colors: { 'paper': '#fdfbf7', 'ink': '#1a1a1a', 'accent': '#c2410c', 'secondary': '#f3f4f6' }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            background-color: #fdfbf7;
+            color: #1a1a1a;
+            overflow-x: hidden;
+        }
+
+        .sidebar-sticky {
+            position: sticky;
+            top: 6rem;
+        }
+
+        .prose p {
+            margin-bottom: 1.8em;
+            line-height: 1.9;
+            color: #374151;
+            font-family: 'Inter', sans-serif;
+            font-size: 1.125rem;
+        }
+
+        .prose h2 {
+            font-family: 'Inter', sans-serif;
+            font-weight: 700;
+            font-size: 1.75rem;
+            margin-top: 3.5rem;
+            margin-bottom: 1.5rem;
+            color: #1a1a1a;
+            border-bottom: 1px solid #e5e7eb;
+            padding-bottom: 0.5rem;
+            scroll-margin-top: 100px;
+        }
+
+        .prose h3 {
+            font-family: 'Inter', sans-serif;
+            font-weight: 600;
+            font-size: 1.35rem;
+            margin-top: 2.5rem;
+            margin-bottom: 1rem;
+            color: #1a1a1a;
+            scroll-margin-top: 100px;
+        }
+
+        .prose blockquote {
+            border-left: 4px solid #c2410c;
+            padding-left: 1.5rem;
+            font-style: italic;
+            color: #6b7280;
+            margin: 2.5rem 0;
+            font-family: 'Playfair Display', serif;
+            font-size: 1.25rem;
+            background-color: rgba(194, 65, 12, 0.05);
+            padding: 1.5rem;
+            border-radius: 0 0.5rem 0.5rem 0;
+        }
+
+        .prose .lead-note {
+            margin: 0 0 3rem;
+            padding: 0 0 2rem;
+            border-bottom: 1px solid rgba(194, 65, 12, 0.22);
+            color: #1f2937;
+            font-family: 'Inter', 'Noto Sans SC', sans-serif;
+            font-size: 1.35rem;
+            font-weight: 500;
+            line-height: 1.8;
+            letter-spacing: -0.01em;
+        }
+
+        .analysis-question {
+            margin: 0 0 3rem;
+            padding: 1.25rem 1.5rem;
+            border: 1px solid rgba(194, 65, 12, 0.24);
+            background: rgba(194, 65, 12, 0.05);
+            border-radius: 0.5rem;
+            color: #374151;
+            font-size: 1rem;
+            line-height: 1.75;
+        }
+
+        .analysis-question strong {
+            display: block;
+            margin-bottom: 0.35rem;
+            color: #9a3412;
+            font-size: 0.75rem;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+        }
+
+        .article-visual {
+            overflow: hidden;
+            margin: 3rem 0;
+            border: 1px solid rgba(194, 65, 12, 0.16);
+            border-radius: 0.9rem;
+            background: rgba(255, 255, 255, 0.76);
+            box-shadow: 0 18px 45px rgba(31, 41, 55, 0.08);
+        }
+
+        .article-visual img {
+            width: 100%;
+            height: auto;
+            display: block;
+            background: #f3f4f6;
+        }
+
+        .article-visual.contain {
+            max-width: 760px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .article-visual.contain img {
+            object-fit: contain;
+            padding: 1rem;
+            background: #f8fafc;
+        }
+
+        .article-visual figcaption {
+            padding: 0.85rem 1rem;
+            color: #6b7280;
+            font-size: 0.78rem;
+            line-height: 1.55;
+        }
+
+        .image-credit {
+            display: block;
+            margin-top: 0.35rem;
+            color: #9ca3af;
+            font-size: 0.72rem;
+        }
+
+        .image-credit a {
+            color: #c2410c;
+            text-decoration: none;
+        }
+
+        .image-credit a:hover {
+            text-decoration: underline;
+        }
+
+        .toc-link {
+            display: block;
+            padding: 0.3rem 0;
+            color: #6b7280;
+            text-decoration: none;
+            transition: all 0.2s;
+            font-size: 0.9rem;
+            border-left: 2px solid transparent;
+            padding-left: 1rem;
+        }
+
+        .toc-link:hover {
+            color: #c2410c;
+            border-left-color: #c2410c;
+            background-color: rgba(194, 65, 12, 0.05);
+        }
+
+        .toc-sub-link {
+            padding-left: 2rem;
+            font-size: 0.85rem;
+            color: #9ca3af;
+        }
+
+        .tag-analysis {
+            color: #c2410c;
+            border: 1px solid #c2410c;
+        }
+
+        .recent-link:hover h4 {
+            color: #c2410c;
+        }
+    </style>
+</head>
+<body class="font-sans antialiased">
+
+    <nav class="fixed w-full z-50 top-0 bg-paper/90 backdrop-blur-sm border-b border-gray-200/50 h-20 flex items-center px-6 justify-between">
+        <div class="flex items-center">
+            <a href="../deconstruction_home.html" class="flex items-center text-gray-500 hover:text-accent transition-colors group mr-8">
+                <i data-lucide="arrow-left" class="w-5 h-5 mr-2 group-hover:-translate-x-1 transition-transform"></i>
+                Back to Archive
+            </a>
+        </div>
+        <div class="hidden md:block text-xs font-bold text-gray-300 uppercase tracking-widest">
+            Board Game Deconstruction
+        </div>
+    </nav>
+
+    <div class="pt-20 w-full max-w-[95%] mx-auto px-6 py-12">
+
+        <div class="grid grid-cols-1 lg:grid-cols-[3fr_11fr_2fr] gap-12">
+
+            <aside class="hidden lg:block">
+                <div class="sidebar-sticky pt-4 border-r border-gray-200 pr-6">
+                    <h3 class="text-xs font-bold uppercase tracking-widest text-gray-400 mb-6 flex items-center">
+                        <i data-lucide="list" class="w-4 h-4 mr-2"></i> Contents
+                    </h3>
+                    <nav class="space-y-1 max-h-[calc(100vh-10rem)] overflow-y-auto pr-2 custom-scrollbar">
+                        <a href="#heavy" class="toc-link font-medium">1. When a Pretty Engine Starts to Feel Heavy</a>
+                        <a href="#not-against-thinking" class="toc-link toc-sub-link">1.1 The Problem Is Not That It Asks Me to Think</a>
+                        <a href="#low-altitude" class="toc-link toc-sub-link">1.2 High Calculation, Low Altitude</a>
+
+                        <a href="#route-stabilizers" class="toc-link font-medium mt-2">2. A Card Engine Without Enough Route Stabilizers</a>
+                        <a href="#noise" class="toc-link toc-sub-link">2.1 Diversity Turns into Noise</a>
+                        <a href="#scavenging" class="toc-link toc-sub-link">2.2 Building Becomes Scavenging</a>
+                        <a href="#buffer" class="toc-link toc-sub-link">2.3 The Missing Buffer</a>
+
+                        <a href="#comparisons" class="toc-link font-medium mt-2">3. The Comparisons It Invites and Cannot Afford</a>
+                        <a href="#ark-nova" class="toc-link toc-sub-link">3.1 Ark Nova Lets Preparation Stay Useful</a>
+                        <a href="#wingspan" class="toc-link toc-sub-link">3.2 Wingspan Is Lighter Because It Knows Its Ceiling</a>
+                        <a href="#forest-shuffle" class="toc-link toc-sub-link">3.3 Forest Shuffle Makes Card Flow Part of the Game</a>
+
+                        <a href="#complexity-rent" class="toc-link font-medium mt-2">4. Complexity Has to Pay Rent</a>
+                        <a href="#audience" class="toc-link toc-sub-link">4.1 Who This Game May Still Serve</a>
+                        <a href="#closing" class="toc-link toc-sub-link">4.2 When Fatigue Does Not Become Satisfaction</a>
+                    </nav>
+                </div>
+            </aside>
+
+            <main>
+                <article>
+
+                    <header class="mb-16 border-b border-gray-200 pb-12 text-center">
+                        <div class="flex justify-center items-center gap-3 mb-6">
+                            <span class="tag-analysis text-[10px] font-bold px-2 py-0.5 rounded-sm uppercase tracking-wider">Deconstruction</span>
+                            <time class="text-sm text-gray-400 font-mono">Jul 7, 2026</time>
+                        </div>
+                        <h1 class="text-4xl md:text-6xl font-bold text-ink leading-tight mb-6 tracking-tight">
+                            Wondrous Creatures:<br>
+                            <span class="font-serif italic font-normal text-4xl md:text-5xl text-gray-600">Busy, But Not Deep Enough</span>
+                        </h1>
+                        <p class="text-gray-500 text-base md:text-lg max-w-2xl mx-auto leading-relaxed">
+                            On learning cost, card diversity, and complexity that does not fully pay for itself.
+                        </p>
+                        <div class="text-gray-500 text-sm flex justify-center items-center gap-2 mt-4">
+                            <i data-lucide="user" class="w-4 h-4"></i> <span class="font-medium text-ink">Donglin Yan</span>
+                            <span class="mx-2">-</span>
+                            <span class="italic">University of Gothenburg</span>
+                        </div>
+                    </header>
+
+                    <div class="prose prose-lg max-w-none">
+
+                        <div class="analysis-question">
+                            <strong>Design question</strong>
+                            When does card variety become strategic depth, and when does it remain input complexity: more information to read, but not enough stable structure to build around?
+                        </div>
+
+                        <h2 id="heavy">1. When a Pretty Engine Starts to Feel Heavy</h2>
+                        <p class="lead-note">
+                            The problem with <em>Wondrous Creatures</em> is not that it is complex.
+                            The problem is that the complexity feels expensive: the game asks for a lot of attention at the input end,
+                            but the decisions it returns often remain at the level of small arithmetic.
+                        </p>
+                        <p>
+                            <em>Wondrous Creatures</em> makes a strong first impression. It has a charming creature theme,
+                            attractive production, a large deck of creature cards, eggs, achievements, captain powers,
+                            resource management, recall timing, and a two-space worker placement system that looks fresh on the table.
+                            From a distance, it seems to promise the pleasure of a rich modern engine game.
+                        </p>
+                        <p>
+                            That promise is not fake. There is real craft here. The board gives players many small opportunities,
+                            the creature cards create moments of discovery, and the achievement race gives the table something to watch besides personal efficiency.
+                            But after playing, the feeling that stayed with me was not wonder. It was fatigue.
+                        </p>
+
+                        <figure class="article-visual contain">
+                            <img src="../../../picture/deconstruction/BoardGame/wondrous-creatures-board-closeup-1.jpg" alt="Wondrous Creatures full table setup with central board, cards, resources, and player boards" loading="lazy">
+                            <figcaption>
+                                The full table already shows the kind of attention the game asks for: central map, card row, resources, achievements, player boards, and multiple short-term targets at once.
+                                <span class="image-credit">Image source: <a href="https://dsvgames.nl/products/wondrous-creatures-bordspel">DSV Games</a>.</span>
+                            </figcaption>
+                        </figure>
+
+                        <p>
+                            I kept calculating. Which worker position gives one more resource? Which card can I barely afford?
+                            Can this egg satisfy an achievement? Is it time to recall? Does the market have anything I can use?
+                            The game kept giving me problems to solve, but most of them felt local, tactical, and low to the ground.
+                        </p>
+
+                        <h3 id="not-against-thinking">1.1 The Problem Is Not That It Asks Me to Think</h3>
+                        <p>
+                            This distinction matters. I do not dislike games that ask players to calculate.
+                            A good board game often is a machine for making calculation meaningful.
+                            The pleasure can come from weighing route efficiency, timing a conversion, delaying a reward,
+                            or choosing one painful commitment over another.
+                        </p>
+                        <p>
+                            What bothers me is calculation that stays on the surface. A game can make me busy without making me feel that I am operating at a high strategic level.
+                            I may spend a full turn optimizing details and still feel that the decision was only about losing slightly less,
+                            gaining one extra icon, or squeezing out one more resource.
+                        </p>
+
+                        <h3 id="low-altitude">1.2 High Calculation, Low Altitude</h3>
+                        <p>
+                            That is the phrase that best describes my experience: high calculation, low altitude.
+                            The game has many things to read and many small efficiencies to compare,
+                            but it does not often force the kind of structural choice that makes a heavier game satisfying.
+                        </p>
+                        <p>
+                            A deeper strategic game might ask: should I change route now? Should I sacrifice short-term tempo for a later engine?
+                            Should I fight for a public goal even if it damages my plan? Should I commit to a build that only pays off after several turns?
+                            These questions create tension because they reshape the whole game.
+                        </p>
+                        <p>
+                            In <em>Wondrous Creatures</em>, the questions I faced more often were smaller:
+                            which spot is slightly better, which card is currently playable, which achievement is barely reachable,
+                            and which resource gap is least annoying. These are valid decisions, but they rarely made me feel that I was discovering a powerful system.
+                        </p>
+                        <blockquote>
+                            The game made my brain busy, but it did not often make my plan feel ambitious.
+                        </blockquote>
+
+                        <figure class="article-visual contain">
+                            <img src="../../../picture/deconstruction/BoardGame/wondrous-creatures-mechanism-1.webp" alt="Wondrous Creatures central board with visible cards, map spaces, workers, and achievement track" loading="lazy">
+                            <figcaption>
+                                This is the article's main complaint in visual form: many visible inputs, many small comparisons, but not always a higher-level route that grows out of them.
+                                <span class="image-credit">Image source: <a href="https://dsvgames.nl/products/wondrous-creatures-bordspel">DSV Games</a>.</span>
+                            </figcaption>
+                        </figure>
+
+                        <h2 id="route-stabilizers">2. A Card Engine Without Enough Route Stabilizers</h2>
+                        <p>
+                            The most important issue is not randomness by itself. Randomness can be exciting when a game gives players tools to shape it.
+                            The problem is that <em>Wondrous Creatures</em> has a card pool that asks for combo planning,
+                            but does not give me enough stable ways to plan those combos.
+                        </p>
+
+                        <h3 id="noise">2.1 Diversity Turns into Noise</h3>
+                        <p>
+                            A large and varied deck can be a great source of replayability. It can support adaptation, discovery, and different routes.
+                            But card diversity is not automatically depth. The more varied the deck becomes,
+                            the more the game needs strong card flow, broad market access, search, flexible costs, loose tags,
+                            or some way to turn unwanted cards into useful movement.
+                        </p>
+                        <p>
+                            Without those stabilizers, variety starts to feel like noise.
+                            The player is not asking, "How do I assemble the engine I am planning?"
+                            The player is asking, "What can I do with whatever happened to appear?"
+                            That is not the same kind of play.
+                        </p>
+
+                        <h3 id="scavenging">2.2 Building Becomes Scavenging</h3>
+                        <p>
+                            This is where the game often disappointed me. A card-engine game usually becomes satisfying when early pieces prepare later pieces:
+                            A makes B cheaper, B makes C stronger, C turns D into a payoff. Even if the exact plan changes,
+                            the player feels they are building a direction.
+                        </p>
+                        <p>
+                            In <em>Wondrous Creatures</em>, I often felt closer to scavenging than building.
+                            The market offers a limited window. The resources required by future cards are uncertain.
+                            Species and habitat needs may or may not align with the achievements in reach.
+                            Sometimes the best result is not a clever combo, but simply managing to play a creature at all.
+                        </p>
+                        <p>
+                            That is a dangerous place for an engine game to land. If the system visually promises combo construction,
+                            but the actual play often becomes opportunistic patchwork, the player can feel that the game is withholding the fun it advertises.
+                        </p>
+
+                        <h3 id="buffer">2.3 The Missing Buffer</h3>
+                        <p>
+                            I think the game lacks enough route stabilizers. A diversified card game usually needs at least one strong buffer:
+                            abundant card draw, a wide public market, reliable search by type, flexible resources, generous tag matching,
+                            useful discard conversion, or long-term goals that remain valuable even when the perfect card does not appear.
+                        </p>
+                        <p>
+                            <em>Wondrous Creatures</em> has achievements, and those achievements do give direction.
+                            But direction is not the same as control. A goal can tell me where I want to go,
+                            while the card market and resource system still fail to give me a stable road toward it.
+                        </p>
+                        <p>
+                            That creates the strange feeling of planning without enough planning power.
+                            The game says: build a route, find synergies, chase achievements.
+                            The system often says: here are a few cards and a few resource gaps, please improvise.
+                        </p>
+
+                        <figure class="article-visual contain">
+                            <img src="../../../picture/deconstruction/BoardGame/wondrous-creatures-mechanism-2.webp" alt="Wondrous Creatures resource tokens, goals, and achievement area" loading="lazy">
+                            <figcaption>
+                                Achievements and resources can point the player somewhere, but pointing is not the same as giving stable tools to build toward that place.
+                                <span class="image-credit">Image source: <a href="https://dsvgames.nl/products/wondrous-creatures-bordspel">DSV Games</a>.</span>
+                            </figcaption>
+                        </figure>
+
+                        <h2 id="comparisons">3. The Comparisons It Invites and Cannot Afford</h2>
+                        <p>
+                            The easiest way to explain the mismatch is through neighboring games.
+                            <em>Wondrous Creatures</em> can feel as if it borrows the component density and card pressure of heavier games,
+                            while its eventual decision ceiling sits closer to lighter personal-engine games.
+                            That combination is what makes the complexity feel uneconomical.
+                        </p>
+
+                        <h3 id="ark-nova">3.1 Ark Nova Lets Preparation Stay Useful</h3>
+                        <p>
+                            <em>Ark Nova</em> also has a large deck and a significant learning curve, but its systems give players more ways to prepare usefully.
+                            Money is a broad resource. Enclosures can be built before the exact animal appears.
+                            Association actions, conservation projects, action-card upgrades, map development, and icon planning all create long-term handles.
+                        </p>
+                        <p>
+                            Even when the perfect card does not arrive, a player can still do things that are probably useful later:
+                            improve income, prepare space, upgrade tempo, secure institutions, or pivot toward a conservation path.
+                            Its complexity creates several layers of strategic tension.
+                        </p>
+                        <p>
+                            That is the difference. <em>Ark Nova</em> can ask me to learn more because it later lets me do more with what I learned.
+                            Its heavy front end pays rent through painful long-term choices.
+                            <em>Wondrous Creatures</em> asks for a noticeable amount of reading and tracking,
+                            but too often pays me back with local efficiency puzzles.
+                        </p>
+
+                        <h3 id="wingspan">3.2 Wingspan Is Lighter Because It Knows Its Ceiling</h3>
+                        <p>
+                            <em>Wingspan</em> has a lower ceiling, but it is more honest about that ceiling.
+                            Its action structure is clear: play birds, gain food, lay eggs, draw cards, and let habitats improve over time.
+                            Its combos are usually not so precise that the whole game collapses if one specific bird does not appear.
+                        </p>
+                        <p>
+                            That makes its limitations easier to accept. If <em>Wingspan</em> becomes a gentle personal engine puzzle,
+                            that is largely what it presented itself as. The learning cost is restrained enough that the ceiling does not feel like a betrayal.
+                        </p>
+                        <p>
+                            <em>Wondrous Creatures</em> is more awkward. It feels like a heavier entrance into a similar kind of personal-engine satisfaction.
+                            It is not really <em>Ark Nova</em>-lite. It is closer to <em>Wingspan</em>-plus,
+                            and too much of that plus lands on rules, icons, card reading, and resource arithmetic rather than on deeper strategic life.
+                        </p>
+
+                        <h3 id="forest-shuffle">3.3 Forest Shuffle Makes Card Flow Part of the Game</h3>
+                        <p>
+                            <em>Forest Shuffle</em> is useful as a different comparison because it also has varied cards and combo incentives,
+                            but its card flow is much better integrated into the experience.
+                            Cards are not only things you play; they are also part of the cost system.
+                            Unwanted cards can move into a public clearing and become opportunities for other players.
+                        </p>
+                        <p>
+                            That design turns card variety into a moving information stream. You see more cards,
+                            you cycle unwanted cards, and the shared space becomes a second market with memory and timing.
+                            A card that is useless to me is not simply dead weight; it can still push the system forward.
+                        </p>
+                        <p>
+                            This is the kind of compensation a diverse deck often needs.
+                            When the deck is broad, players need ways to process that breadth.
+                            Otherwise variety stops feeling like possibility and starts feeling like interference.
+                        </p>
+
+                        <h2 id="complexity-rent">4. Complexity Has to Pay Rent</h2>
+                        <p>
+                            This is why my final criticism is not that <em>Wondrous Creatures</em> is badly designed.
+                            It is that its complexity structure does not feel economical enough.
+                            It puts a lot of weight on the input side: many cards, many icons, many resources, many positional rewards, many achievement conditions.
+                            But not all of that weight becomes high-level decision space.
+                        </p>
+
+                        <h3 id="audience">4.1 Who This Game May Still Serve</h3>
+                        <p>
+                            I can still see the audience for it. If someone enjoys beautiful production,
+                            medium-weight engines, indirect competition, achievement races, and constant small optimization,
+                            this game may hit a comfortable place. The two-space worker placement system has novelty,
+                            and the game gives players something to do nearly every turn.
+                        </p>
+                        <p>
+                            It may also work well for groups that want something heavier-looking than <em>Wingspan</em>
+                            but shorter and less strategically punishing than <em>Ark Nova</em>.
+                            In that space, its charm and component presence matter.
+                        </p>
+                        <p>
+                            But that does not erase the problem for me. A game can be pleasant and still be inefficient.
+                            It can have attractive pieces and still make me question whether the mental load is buying enough depth.
+                        </p>
+
+                        <h3 id="closing">4.2 When Fatigue Does Not Become Satisfaction</h3>
+                        <p>
+                            My experience of <em>Wondrous Creatures</em> can be summarized like this:
+                            the card pool feels like a construction game, the action system feels like an efficiency Euro,
+                            and the resource system often feels like a guessing problem. The result is not emptiness.
+                            The result is busyness without enough height.
+                        </p>
+                        <p>
+                            I kept making calculations, but they rarely became a plan I felt proud of.
+                            I kept solving turns, but I rarely felt that I was growing a system with real upper-limit pressure.
+                            I was thinking often, but too much of that thinking was about how not to waste the moment in front of me.
+                        </p>
+                        <blockquote>
+                            Its complexity is mostly crowded at the entrance. The room beyond that entrance is not quite large enough.
+                        </blockquote>
+                        <p>
+                            I do not mind a medium-heavy game making me tired. In fact, that is often part of the appeal.
+                            The important question is what the tiredness turns into. Does it become a sharper route,
+                            a painful commitment, a surprising engine, or a sense that mastery opens new space?
+                        </p>
+                        <p>
+                            <em>Wondrous Creatures</em> made me tired. It did not fully convince me that the tiredness had become depth.
+                        </p>
+                    </div>
+
+                    <div class="mt-24 pt-12 border-t border-gray-200 text-sm text-gray-500 flex flex-col sm:flex-row sm:justify-between gap-3">
+                        <span>Status: <span class="font-bold text-ink">Board Game Deconstruction</span></span>
+                        <span>Tags: #WondrousCreatures #BoardGame #EngineBuilding #Complexity</span>
+                    </div>
+
+                </article>
+            </main>
+
+            <aside class="hidden lg:block">
+                <div class="pt-4 border-l border-gray-200 pl-6">
+                    <h3 class="text-xs font-bold uppercase tracking-widest text-gray-400 mb-6 flex items-center">
+                        <i data-lucide="trending-up" class="w-4 h-4 mr-2"></i> Recent Deconstructions
+                    </h3>
+
+                    <div id="recent-articles-list" class="space-y-6"></div>
+
+                    <div class="mt-10 pt-8 border-t border-gray-100">
+                        <h3 class="text-xs font-bold uppercase tracking-widest text-gray-400 mb-4">Focus Areas</h3>
+                        <div class="flex flex-wrap gap-2">
+                            <a href="#" class="text-xs text-gray-500 bg-gray-100 px-2 py-1 rounded-sm hover:bg-accent hover:text-white transition-colors">#EngineBuilding</a>
+                            <a href="#" class="text-xs text-gray-500 bg-gray-100 px-2 py-1 rounded-sm hover:bg-accent hover:text-white transition-colors">#Complexity</a>
+                            <a href="#" class="text-xs text-gray-500 bg-gray-100 px-2 py-1 rounded-sm hover:bg-accent hover:text-white transition-colors">#BoardGame</a>
+                        </div>
+                    </div>
+
+                </div>
+            </aside>
+
+        </div>
+    </div>
+
+    <script>
+        function resolveRecentLink(link) {
+          if (!link) return "#";
+          if (link.startsWith("http") || link.startsWith("#") || link.startsWith("/")) return link;
+
+          const parts = window.location.pathname.split("/").filter(Boolean);
+          const currentDir = parts.length ? parts[parts.length - 2] : "";
+
+          if (currentDir === "BoardGame" && link.startsWith("BoardGame/")) return link.replace(/^BoardGame\//, "");
+          return link;
+        }
+
+        function renderRecentArticles() {
+            const container = document.getElementById("recent-articles-list");
+            if (!container) return;
+
+            if (typeof recentArticlesData === "undefined") {
+                console.error("Error: recentArticlesData is not defined.");
+                container.innerHTML = "<p class='text-xs text-red-500'>Failed to load recent deconstructions.</p>";
+                return;
+            }
+
+            const displayData = recentArticlesData.slice(0, 10);
+
+            const html = displayData.map(article => {
+                const href = resolveRecentLink(article.link);
+                return `
+            <a href="${href}" class="recent-link block group">
+              <div class="h-24 bg-gray-100 rounded-sm mb-3 overflow-hidden relative">
+                <img src="${article.image}" alt="${article.title}" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105 opacity-80 group-hover:opacity-100">
+              </div>
+              <span class="text-[10px] font-bold ${article.categoryColor} uppercase tracking-wider mb-1 block">${article.category}</span>
+              <h4 class="text-sm font-bold text-ink leading-snug transition-colors">${article.title}</h4>
+            </a>
+          `;
+            }).join("");
+
+            container.innerHTML = html;
+        }
+
+        document.addEventListener("DOMContentLoaded", () => {
+            renderRecentArticles();
+            lucide.createIcons();
+        });
+    </script>
+</body>
+</html>
